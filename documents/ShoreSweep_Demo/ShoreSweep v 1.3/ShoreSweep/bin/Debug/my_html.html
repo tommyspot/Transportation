@@ -1,0 +1,119 @@
+﻿<html>
+<head>
+
+    <title>Google Maps Multiple Markers</title>
+    <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+</head>
+<body>
+    <!--<input type='file' accept='text/plain' onchange='openFile(event)'><br>-->
+    <!--<div id='output'>
+        ...
+    </div>-->
+    <div id="map" style="height: 100%; width: 100%;">
+    </div>
+    <!--<script type="text/javascript">
+        function DisplayName(name) {
+        alert("here");
+       }
+    </script>-->
+    <script type="text/javascript">
+        var dir = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
+        //alert(dir + "/LatLong.txt");
+        var loc = dir + "/LatLong.txt";
+        var locations = [];
+        //alert(loc);
+        readTextFile(loc);
+        function readTextFile(file) {
+            var rawFile = new ActiveXObject("MSXML2.XMLHTTP");
+            rawFile.open("GET", file, false);
+            rawFile.onreadystatechange = function () {
+                if (rawFile.readyState === 4) {
+                    if (rawFile.status === 200 || rawFile.status == 0) {
+                        var allText = rawFile.responseText;
+                        //alert(allText);
+                        var lines = allText.split('\n');
+                        locations = [];
+                        for (var line = 0; line < lines.length; line++) {
+                            var cordinates = lines[line].split(',');
+                            //alert(cordinates);
+                            if (cordinates.length == 2) {
+                                locations.push(cordinates);
+                            }
+                        }
+                                var map = new google.maps.Map(document.getElementById('map'), {
+                                    zoom: 10,
+                                    center: new google.maps.LatLng(locations[0][0], locations[0][1]),
+                                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                                });
+
+                                var infowindow = new google.maps.InfoWindow();
+
+                                var marker, i;
+
+                                for (i = 0; i < locations.length; i++) {
+                                    marker = new google.maps.Marker({
+                                        position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+                                        map: map
+                                    });
+
+                                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                                        return function () {
+                                            //infowindow.setContent(locations[i][0]);
+                                            infowindow.open(map, marker);
+                                        }
+                                    })(marker, i));
+                                }
+                    }
+                }
+            }
+            rawFile.send(null);
+        }
+
+        //var openFile = function (event) {
+
+        //    var input = event.target;
+
+        //    var reader = new FileReader();
+        //    reader.onload = function () {
+        //        //var text = reader.result;
+        //        //var node = document.getElementById('output');
+        //        //node.innerText = text;
+        //        var lines = reader.result.split('\n');
+        //        locations = [];
+        //        for (var line = 0; line < lines.length; line++) {
+        //            var cordinates = lines[line].split(',');
+        //            if (cordinates.length == 2) {
+        //                locations.push(cordinates);
+        //            }
+        //        }
+        //        var map = new google.maps.Map(document.getElementById('map'), {
+        //            zoom: 10,
+        //            center: new google.maps.LatLng(locations[0][0], locations[0][1]),
+        //            mapTypeId: google.maps.MapTypeId.ROADMAP
+        //        });
+
+        //        var infowindow = new google.maps.InfoWindow();
+
+        //        var marker, i;
+
+        //        for (i = 0; i < locations.length; i++) {
+        //            marker = new google.maps.Marker({
+        //                position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+        //                map: map
+        //            });
+
+        //            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+        //                return function () {
+        //                    //infowindow.setContent(locations[i][0]);
+        //                    infowindow.open(map, marker);
+        //                }
+        //            })(marker, i));
+        //        }
+        //    };
+        //    reader.readAsText(input.files[0]);
+        //};
+
+
+    </script>
+</body>
+</html>

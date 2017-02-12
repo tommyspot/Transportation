@@ -1,0 +1,21 @@
+<html>
+<head>
+<base href="file:///C:/Users/Abhishek/Downloads/ShoreSweep_Proposal/ShoreSweep/ShoreSweep/bin/Debug/LatLong.txt"/>
+<script>
+window.onload = function(){
+    var iframe = document.createElement('iframe');
+    iframe.id = 'iframe';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    iframe.src = 'mytext.txt';
+    setTimeout(function(){
+        var text = document.getElementById('iframe').contentDocument.body.firstChild.innerHTML;
+        alert(text);
+    }, 1000);
+}
+</script>
+</head>
+<body>
+<h1>Hello World!</h1>
+</body>
+</html>

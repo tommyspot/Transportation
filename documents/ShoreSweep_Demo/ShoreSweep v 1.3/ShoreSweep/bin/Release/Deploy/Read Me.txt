@@ -1,0 +1,10 @@
+1. Extract the content of Deploy file.
+2. Install .Net Framework by launching dotNetFx45_Full_setup.exe
+3. Run ShoreSweep.exe
+4. Import the trashList.csv into ShoreSweep.
+
+1. The new release include the map for selected record in the listview.
+2. Images fetch from trashout URL 
+3. Create more admin users
+4. Login
+5. Splash 

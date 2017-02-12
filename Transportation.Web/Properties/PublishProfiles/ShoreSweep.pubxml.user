@@ -1,0 +1,451 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>D:\Huynh_Quoc_Thao\Deploy\ShoreSweep_08222016</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/Conjurer.dll">
+      <publishTime>08/18/2016 13:18:10</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>08/18/2016 13:18:10</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.SqlServer.dll">
+      <publishTime>08/18/2016 13:18:10</publishTime>
+    </File>
+    <File Include="bin/Epinion.Clarity.Api.dll">
+      <publishTime>08/20/2016 22:04:32</publishTime>
+    </File>
+    <File Include="bin/Epinion.Clarity.dll">
+      <publishTime>08/20/2016 22:04:31</publishTime>
+    </File>
+    <File Include="bin/Epinion.Clarity.Web.dll">
+      <publishTime>08/20/2016 22:04:33</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>08/18/2016 13:18:11</publishTime>
+    </File>
+    <File Include="bin/ShoreSweep.Api.dll">
+      <publishTime>08/22/2016 00:17:54</publishTime>
+    </File>
+    <File Include="bin/ShoreSweep.dll">
+      <publishTime>08/22/2016 00:17:54</publishTime>
+    </File>
+    <File Include="bin/ShoreSweep.Web.dll">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="css/font-awsome/font-awesome.css">
+      <publishTime>08/18/2016 13:18:16</publishTime>
+    </File>
+    <File Include="css/font-awsome/font-awesome.min.css">
+      <publishTime>08/18/2016 13:18:16</publishTime>
+    </File>
+    <File Include="css/jquery-ui.css">
+      <publishTime>08/18/2016 13:18:16</publishTime>
+    </File>
+    <File Include="css/jquery-ui.min.css">
+      <publishTime>08/18/2016 13:18:16</publishTime>
+    </File>
+    <File Include="css/main-style.css">
+      <publishTime>08/20/2016 03:05:51</publishTime>
+    </File>
+    <File Include="css/sass/components/_input_select.scss">
+      <publishTime>08/18/2016 13:18:16</publishTime>
+    </File>
+    <File Include="css/sass/main-style.scss">
+      <publishTime>08/20/2016 03:05:50</publishTime>
+    </File>
+    <File Include="default-editable.html">
+      <publishTime>08/20/2016 23:11:48</publishTime>
+    </File>
+    <File Include="default.html">
+      <publishTime>08/22/2016 00:18:03</publishTime>
+    </File>
+    <File Include="font/changi_etrs/icomoon.eot">
+      <publishTime>08/18/2016 13:18:16</publishTime>
+    </File>
+    <File Include="font/changi_etrs/icomoon.svg">
+      <publishTime>08/18/2016 13:18:16</publishTime>
+    </File>
+    <File Include="font/changi_etrs/icomoon.ttf">
+      <publishTime>08/18/2016 13:18:16</publishTime>
+    </File>
+    <File Include="font/changi_etrs/icomoon.woff">
+      <publishTime>08/18/2016 13:18:16</publishTime>
+    </File>
+    <File Include="font/fa/fontawesome-webfont.eot">
+      <publishTime>08/18/2016 13:18:16</publishTime>
+    </File>
+    <File Include="font/fa/fontawesome-webfont.svg">
+      <publishTime>08/18/2016 13:18:16</publishTime>
+    </File>
+    <File Include="font/fa/fontawesome-webfont.ttf">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/fa/fontawesome-webfont.woff">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/fa/FontAwesome.otf">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/hal/icomoon.eot">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/hal/icomoon.svg">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/hal/icomoon.ttf">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/hal/icomoon.woff">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/roboto/Roboto-Black.ttf">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/roboto/Roboto-BlackItalic.ttf">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/roboto/Roboto-Bold.ttf">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/roboto/Roboto-BoldItalic.ttf">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/roboto/Roboto-Italic.ttf">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/roboto/Roboto-Light.ttf">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/roboto/Roboto-LightItalic.ttf">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/roboto/Roboto-Medium.ttf">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/roboto/Roboto-MediumItalic.ttf">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/roboto/Roboto-Regular.ttf">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/roboto/Roboto-Thin.ttf">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="font/roboto/Roboto-ThinItalic.ttf">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="gulpfile.js">
+      <publishTime>08/20/2016 09:59:11</publishTime>
+    </File>
+    <File Include="html/access-denied.html">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="html/admin-header.html">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="html/color-dialog.html">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="html/error.html">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="html/google-map-dialog.html">
+      <publishTime>08/21/2016 22:11:30</publishTime>
+    </File>
+    <File Include="html/index.html">
+      <publishTime>08/21/2016 22:57:17</publishTime>
+    </File>
+    <File Include="html/kiosks-survey.html">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="html/login.html">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="html/login_form.html">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="html/modal-form.html">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="html/not-authorized.html">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="html/not-found.html">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="html/pre-loading.html">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="html/user.html">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="img/check-ico.png">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="img/lake-lanier-logo.png">
+      <publishTime>08/20/2016 09:30:21</publishTime>
+    </File>
+    <File Include="img/loading.gif">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="img/logo-changi-small.png">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="img/logo-changi.png">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="img/logo-epinion.png">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="img/logo-incite.png">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="img/shore_sweep.jpg">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="js/all.min.js">
+      <publishTime>08/22/2016 00:18:03</publishTime>
+    </File>
+    <File Include="js/clarity-app.js">
+      <publishTime>08/20/2016 10:00:17</publishTime>
+    </File>
+    <File Include="js/controllers/authentication/LoginController.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/controllers/authentication/LogoutController.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/controllers/IController.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/controllers/MainController.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/directives/GoogleMap.js">
+      <publishTime>08/21/2016 23:37:04</publishTime>
+    </File>
+    <File Include="js/helpers/MainHelper.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/model/BaseModel.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/model/KioskLogModel.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/model/TerminalModel.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/model/TrashInformationModel.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/model/TrashModel.js">
+      <publishTime>08/20/2016 23:24:45</publishTime>
+    </File>
+    <File Include="js/model/UserLogModel.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/model/UserModel.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/services/AuthenticationService.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/services/BaseService.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/services/IService.ts">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="js/services/KioskLogService.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/services/LocationService.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/services/TerminalService.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/services/TrashService.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/services/UserLogService.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="js/services/UserService.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="lib/angular-material/angular-animate.js">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="lib/angular-material/angular-animate.min.js">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="lib/angular-material/angular-aria.js">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="lib/angular-material/angular-aria.min.js">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="lib/angular-material/angular-material.css">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="lib/angular-material/angular-material.js">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="lib/angular-material/angular-material.min.css">
+      <publishTime>08/18/2016 13:18:17</publishTime>
+    </File>
+    <File Include="lib/angular-material/angular-material.min.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/angular-spec/angular-mocks.d.ts">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/angular-spec/angular-mocks.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/angular/angular-cookies.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/angular/angular-cookies.min.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/angular/angular-cookies.min.js.map">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/angular/angular-route.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/angular/angular-route.min.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/angular/angular-route.min.js.map">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/angular/angular.d.ts">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/angular/angular.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/angular/angular.min.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/angular/angular.min.js.map">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/angular/ng-context-menu.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/angular/ng-context-menu.min.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/angular/ui-bootstrap.min.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/blanket/blanket.min.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/blanket/jasmine-blanket.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/jasmine/jasmine-html.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/jasmine/jasmine.css">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/jasmine/jasmine.d.ts">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/jasmine/jasmine.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/jquery/jquery-1.9.1.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/jquery/jquery-1.9.1.min.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/jquery/jquery-ui.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/jquery/jquery-ui.min.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/jquery/jquery.d.ts">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/jquery/jquery.scrollUp.min.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/select2/angular-ui/angular-ui.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/select2/angular-ui/select2.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/select2/select2-spinner.gif">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/select2/select2.css">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/select2/select2.js">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/select2/select2.png">
+      <publishTime>08/18/2016 13:18:18</publishTime>
+    </File>
+    <File Include="lib/sortable/sortable.js">
+      <publishTime>08/18/2016 13:18:19</publishTime>
+    </File>
+    <File Include="package.json">
+      <publishTime>08/18/2016 13:18:30</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>08/18/2016 13:18:30</publishTime>
+    </File>
+    <File Include="Robots.txt">
+      <publishTime>08/18/2016 13:18:31</publishTime>
+    </File>
+    <File Include="spec/controllers/authentication/LoginControllerSpec.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="spec/controllers/authentication/LogoutControllerSpec.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="spec/controllers/MainControllerSpec.js">
+      <publishTime>08/22/2016 00:17:56</publishTime>
+    </File>
+    <File Include="spec/runner.html">
+      <publishTime>08/18/2016 13:18:31</publishTime>
+    </File>
+    <File Include="spec/services/AuthenticationServiceSpec.js">
+      <publishTime>08/18/2016 13:18:31</publishTime>
+    </File>
+    <File Include="spec/services/BaseServiceSpec.js">
+      <publishTime>08/18/2016 13:18:31</publishTime>
+    </File>
+    <File Include="spec/spec-helper.js">
+      <publishTime>08/18/2016 13:18:31</publishTime>
+    </File>
+    <File Include="template/trashList.csv">
+      <publishTime>08/18/2016 13:18:31</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>08/20/2016 23:24:54</publishTime>
+    </File>
+  </ItemGroup>
+</Project>
