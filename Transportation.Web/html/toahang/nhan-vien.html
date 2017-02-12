@@ -1,0 +1,98 @@
+﻿<div id="employeeList" class="bootstrap view-page">
+  <div class="container">
+    <div class="row action-row">
+      <div class="col-sm-9">
+        <span>
+          <label for="numOfTrucks">Hiển thị</label>
+          <select id="numOfTrucks" class="form-control show-records-per-page" data-ng-model="viewModel.pageSize" data-ng-change="viewModel.initPagination()" convert-to-number>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="99999">All</option>
+          </select>
+        </span>
+        <button type="button" class="btn btn-default" data-ng-click="viewModel.directToUserForm()">
+          <span class="glyphicon glyphicon-plus"></span>
+          <span class="hidden-xs">Tạo nhân viên mới</span>
+        </button>
+        <button type="button" class="btn btn-default" data-ng-click="viewModel.removeUser()">
+          <span class="glyphicon glyphicon-trash"></span>
+          <span class="hidden-xs">Xóa nhân viên</span>
+        </button>
+      </div>
+      <div class="col-sm-3">
+        <input class="form-control" type="text" data-ng-change="viewModel.filterUserList(searchText)" data-ng-model="searchText" placeholder="Search" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered">
+            <thead>
+              <tr>
+                <th class="column-60 align-center">
+                  <label class="cover-checkbox" for="checkAllUsers">
+                    <input id="checkAllUsers" type="checkbox" data-ng-model="viewModel.isCheckedAll" data-ng-change="viewModel.selectAllUsersOnPage()" />
+                  </label>
+                </th>
+                <th class="align-center hidden-xs">Name</th>
+                <th class="align-center">Username</th>
+                <th class="align-center hidden-xs">Email</th>
+                <th class="align-center hidden-xs">Role</th>
+                <th class="align-center hidden-xs">Group</th>
+                <th class="align-center">Created Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="pointer" data-ng-repeat="user in viewModel.getUserListOnPage()"
+                  data-ng-click="viewModel.$location.path('/user/' + user._id)">
+                <td class="align-center" data-ng-click="$event.stopPropagation();">
+                  <label class="cover-checkbox" for="user-{{$index}}">
+                    <input id="user-{{$index}}" type="checkbox" data-ng-model="user.isChecked" />
+                  </label>
+                </td>
+                <td class="align-center hidden-xs">{{user.firstName}} {{user.lastName}}</td>
+                <td class="align-center">{{user.userName}}</td>
+                <td class="align-center hidden-xs">{{user.email}}</td>
+                <td class="align-center hidden-xs">{{viewModel.modelHelper.getUserRole(user.role)}}</td>
+                <td class="align-center hidden-xs">{{viewModel.modelHelper.getGroupName(user.groupId)}}</td>
+                <td class="align-center">{{viewModel.modelHelper.formatCreatedDate(user.createdDate)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <nav aria-label="navigation" data-ng-if="viewModel.numOfPages > 0">
+          <ul class="pagination">
+            <li class="pointer" ng-class="{'disabled': viewModel.currentPage === 1}"
+                data-ng-click="viewModel.goToPreviousPage()">
+              <a aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+
+            <li class="pointer" data-ng-repeat="pageIndex in viewModel.getNumberPage() track by $index"
+                data-ng-click="viewModel.goToPage($index + 1)"
+                ng-class="{'active': $index + 1 === viewModel.currentPage}">
+              {{pageIndex}}
+              <span>{{$index + 1}}</span>
+            </li>
+
+            <li class="pointer" ng-class="{'disabled': viewModel.currentPage >= viewModel.numOfPages}"
+                data-ng-click="viewModel.goToNextPage()">
+              <a aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+  </div>
+</div>

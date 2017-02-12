@@ -155,16 +155,18 @@ div.bootstrap{
         }
     }
 
-    #mainPage{
+    #mainPage, #qlToaHangPage{
         margin-top: 40px;
 
         .manage-box{
-            height: 200px;
-            width: 200px;
-            background-color: #0578D4;
+            height: 208px;
+            width: 208px;
+            background-color: #2980B9;
             float: left;
             text-align: center;
             color: white;
+            margin: 0 20px 20px 0;
+            cursor: pointer;
 
             .icon{
                 font-size: 50px;
@@ -173,14 +175,40 @@ div.bootstrap{
             }
         }
         .manage-box.long-box{
-            width: 400px;
+            width: 416px;
         }
         .manage-box.garage-box{
-            background-color: #CC3C1F;
+            background-color: #C0392B;
+        }
+        .manage-box.xe-box{
+            background-color: #2C3E50;
+        }
+        .manage-box.nv-box{
+            background-color: #3498db;
+        }
+        .manage-box.kh-box{
+            background-color: #2ecc71;
+        }
+        .manage-box.th-box{
+            background-color: #f1c40f;
+        }
+        .manage-box.qt-box{
+            background-color: #e74c3c;
         }
     }
 
+    .view-page{
 
+        .show-records-per-page{
+            width: auto;
+            display: inline-block;
+        }
+
+        .action-row{
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    }
 
     .margin-bottom-20{
         margin-bottom: 20px;
@@ -192,6 +220,14 @@ div.bootstrap{
 
     .right-align{
         text-align: right;
+    }
+
+    .pointer{
+        cursor: pointer;
+    }
+
+    .no-margin-right{
+        margin-right: 0px;
     }
 
 }

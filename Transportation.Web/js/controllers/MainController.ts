@@ -20,7 +20,34 @@ module Clarity.Controller {
 
       $scope.viewModel = this;
 
-		}
+    }
+
+    goToWagonsManagement() {
+      this.$location.path('/ql-toa-hang');
+    }
+    goToGarageManagement() {
+      this.$location.path('/ql-garage');
+    }
+
+    goToTruckSection() {
+      this.$location.path('/ql-toa-hang/xe');
+    }
+
+    goToEmployeeSection() {
+      this.$location.path('/ql-toa-hang/nhan-vien');
+    }
+
+    goToCustomerSection() {
+      this.$location.path('/ql-toa-hang/khach-hang');
+    }
+
+    goToWagonsSection() {
+      this.$location.path('/ql-toa-hang/toa-hang');
+    }
+
+    goToSettlementSection() {
+      this.$location.path('/ql-toa-hang/quyet-toan');
+    }
 
 	}
 }

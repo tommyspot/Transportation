@@ -25,6 +25,23 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
       controller: 'LoginController',
       access: 'public'
     })
+    .when('/ql-toa-hang', {
+      templateUrl: '/html/toahang/ql-toa-hang.html' + '?v=' + VERSION_NUMBER,
+      controller: 'MainController',
+      access: 'authorized'
+    })
+    .when('/ql-toa-hang/xe', {
+      templateUrl: '/html/toahang/xe.html' + '?v=' + VERSION_NUMBER,
+      controller: 'WagonsManagementController',
+      access: 'authorized'
+    })
+    .when('/ql-toa-hang/nhan-vien', {
+      templateUrl: '/html/toahang/nhan-vien.html' + '?v=' + VERSION_NUMBER,
+      controller: 'WagonsManagementController',
+      access: 'authorized'
+    })
+
+
     .when('/not_found', {
       templateUrl: '/html/not-found.html' + '?v=' + VERSION_NUMBER,
       controller: '',
@@ -120,6 +137,7 @@ clarityApp.service('userService', Clarity.Service.UserService);
 clarityApp.controller('LoginController', Clarity.Controller.LoginController);
 clarityApp.controller('LogoutController', Clarity.Controller.LogoutController);
 clarityApp.controller('MainController', Clarity.Controller.MainController);
+clarityApp.controller('WagonsManagementController', Clarity.Controller.WagonsManagementController);
 
 clarityApp.filter('start', function () {
   return function (input, start) {

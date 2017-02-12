@@ -101,9 +101,12 @@
     <Content Include="css\main-style.css" />
     <Content Include="css\jquery-ui.css" />
     <Content Include="css\jquery-ui.min.css" />
+    <Content Include="css\transportation-style.css" />
     <Content Include="default-editable.html" />
     <Content Include="font\bootstrap\glyphicons-halflings-regular.svg" />
-    <Content Include="font\fa\fontawesome-webfont.svg" />
+    <Content Include="font\font-awesome\css\font-awesome.css" />
+    <Content Include="font\font-awesome\css\font-awesome.min.css" />
+    <Content Include="font\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="gulpfile.js" />
     <Content Include="html\index.html" />
     <Content Include="html\not-authorized.html" />
@@ -116,14 +119,17 @@
     <Content Include="html\not-found.html" />
     <Content Include="html\login.html" />
     <Content Include="html\pre-loading.html" />
+    <Content Include="html\toahang\nhan-vien.html" />
+    <Content Include="html\toahang\xe.html" />
+    <Content Include="html\toahang\ql-toa-hang.html" />
     <Content Include="html\user.html" />
     <Content Include="img\logo_dh.png" />
     <Content Include="img\menu-ico.svg" />
-    <Content Include="img\check-ico.png" />
     <Content Include="img\loading.gif" />
     <Content Include="img\white-transparent.png" />
     <Content Include="js\all.min.js" />
     <Content Include="js\clarity-app.js" />
+    <TypeScriptCompile Include="js\controllers\WagonsManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\MainController.ts" />
     <TypeScriptCompile Include="js\controllers\authentication\LoginController.ts" />
     <TypeScriptCompile Include="js\controllers\authentication\LogoutController.ts" />
@@ -283,14 +289,15 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="package.json" />
-    <Content Include="font\fa\fontawesome-webfont.eot" />
-    <Content Include="font\fa\fontawesome-webfont.ttf" />
-    <Content Include="font\fa\fontawesome-webfont.woff" />
-    <Content Include="font\fa\FontAwesome.otf" />
     <Content Include="font\bootstrap\glyphicons-halflings-regular.eot" />
     <Content Include="font\bootstrap\glyphicons-halflings-regular.ttf" />
     <Content Include="font\bootstrap\glyphicons-halflings-regular.woff" />
     <Content Include="font\bootstrap\glyphicons-halflings-regular.woff2" />
+    <Content Include="font\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="font\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="font\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="font\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="font\font-awesome\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\Changi_eTRS.pubxml" />
     <None Include="Properties\PublishProfiles\Clarity.pubxml" />
     <None Include="Properties\PublishProfiles\Forecourt.pubxml" />
