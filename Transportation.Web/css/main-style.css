@@ -4955,9 +4955,6 @@ div.bootstrap {
     div.bootstrap .hidden-print {
       display: none !important; } }
 
-.thaotest {
-  color: red; }
-
 #ng-app {
   height: 100%;
   /*LOADING*/
@@ -5048,9 +5045,40 @@ div.bootstrap {
           cursor: pointer; }
           #ng-app .login-wrapper .login-section .login-form button.submit:hover {
             opacity: 0.8; }
-  #ng-app .banner .logo {
-    height: 100px; }
+  #ng-app .banner {
+    background-color: #DDF7B1; }
+    #ng-app .banner .log-out-section {
+      height: 100px;
+      line-height: 100px; }
+      #ng-app .banner .log-out-section .log-out-btn {
+        background: #49AE00;
+        line-height: 27px;
+        border: 1px solid #49AE00;
+        color: white;
+        font-size: 16px;
+        padding: 2px 8px; }
+    #ng-app .banner .logo {
+      height: 100px; }
+  #ng-app #mainPage {
+    margin-top: 40px; }
+    #ng-app #mainPage .manage-box {
+      height: 200px;
+      width: 200px;
+      background-color: #0578D4;
+      float: left;
+      text-align: center;
+      color: white; }
+      #ng-app #mainPage .manage-box .icon {
+        font-size: 50px;
+        margin-top: 50px;
+        margin-bottom: 10px; }
+    #ng-app #mainPage .manage-box.long-box {
+      width: 400px; }
+    #ng-app #mainPage .manage-box.garage-box {
+      background-color: #CC3C1F; }
   #ng-app .margin-bottom-20 {
     margin-bottom: 20px; }
+  #ng-app .margin-left-40 {
+    margin-left: 40px; }
   #ng-app .right-align {
     text-align: right; }

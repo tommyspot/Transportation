@@ -12,10 +12,6 @@ div.bootstrap{
     @import "bootstrap/stylesheets/bootstrap";
 }
 
-.thaotest{
-    color: red;
-}
-
 #ng-app{
     height: 100%;
 
@@ -138,13 +134,60 @@ div.bootstrap{
 
     /*BANNER*/
     .banner{
+        background-color: $transport-color-2;
+
+        .log-out-section{
+            height: 100px;
+            line-height: 100px;
+
+            .log-out-btn{
+                background: $transport-color-1;
+                line-height: 27px;
+                border: 1px solid $transport-color-1;
+                color: white;
+                font-size: 16px;
+                padding: 2px 8px;
+            }
+
+        }
         .logo{
             height: 100px;
         }
     }
 
+    #mainPage{
+        margin-top: 40px;
+
+        .manage-box{
+            height: 200px;
+            width: 200px;
+            background-color: #0578D4;
+            float: left;
+            text-align: center;
+            color: white;
+
+            .icon{
+                font-size: 50px;
+                margin-top: 50px;
+                margin-bottom: 10px;
+            }
+        }
+        .manage-box.long-box{
+            width: 400px;
+        }
+        .manage-box.garage-box{
+            background-color: #CC3C1F;
+        }
+    }
+
+
+
     .margin-bottom-20{
         margin-bottom: 20px;
+    }
+
+    .margin-left-40{
+        margin-left: 40px;
     }
 
     .right-align{

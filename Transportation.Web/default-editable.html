@@ -19,27 +19,28 @@
 
   <body data-ng-init="VERSION_NUMBER = '$VERSION_NUMBER$'">
     <div data-ng-include data-src="'/html/pre-loading.html?v=' + VERSION_NUMBER"></div>
-
+    <!--BANNER-->
     <div class="bootstrap banner" data-ng-if="locationPath !== undefined && locationPath !== '/login'">
       <div class="container">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-6 col-sm-6">
             <a href="#">
               <img class="logo" src="/img/logo_dh.png" alt="Duyen Hai" />
             </a>
           </div>
-          <div class="col-md-6 right-align">
-            <a class="pointer">
-              <span class="glyphicon glyphicon-log-out"></span>
-            </a>
+          <div class="col-md-6 col-sm-6 right-align log-out-section" data-ng-controller="LogoutController">
+            <button class="log-out-btn" data-ng-click="viewModel.submit()">
+              <span>Đăng xuất</span>
+            </button>
           </div>
         </div>
       </div>
     </div>
 
+    <div data-ng-class="{'full-page' : locationPath === '/login'}" data-ng-view=""></div>
 
+    <!--FOOTER-->
 
-    <div class="full-page" data-ng-view=""></div>
   </body>
 
 </html>

@@ -10,36 +10,37 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta http-equiv="content-type" content="text/html; charset=UTF8">
       
-      <link type="text/css" rel="stylesheet" href="/css/transportation-style.css?v=1702121717" />
+      <link type="text/css" rel="stylesheet" href="/css/transportation-style.css?v=1702121843" />
       <script type="text/javascript">
-        var VERSION_NUMBER = '1702121717';
+        var VERSION_NUMBER = '1702121843';
       </script>
-      <script type="text/javascript" src="/js/all.min.js?v=1702121717"></script>
+      <script type="text/javascript" src="/js/all.min.js?v=1702121843"></script>
   </head>
 
-  <body data-ng-init="VERSION_NUMBER = '1702121717'">
+  <body data-ng-init="VERSION_NUMBER = '1702121843'">
     <div data-ng-include data-src="'/html/pre-loading.html?v=' + VERSION_NUMBER"></div>
-
+    <!--BANNER-->
     <div class="bootstrap banner" data-ng-if="locationPath !== undefined && locationPath !== '/login'">
       <div class="container">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-6 col-sm-6">
             <a href="#">
               <img class="logo" src="/img/logo_dh.png" alt="Duyen Hai" />
             </a>
           </div>
-          <div class="col-md-6 right-align">
-            <a class="pointer">
-              <span class="glyphicon glyphicon-log-out"></span>
-            </a>
+          <div class="col-md-6 col-sm-6 right-align log-out-section" data-ng-controller="LogoutController">
+            <button class="log-out-btn" data-ng-click="viewModel.submit()">
+              <span>Đăng xuất</span>
+            </button>
           </div>
         </div>
       </div>
     </div>
 
+    <div data-ng-class="{'full-page' : locationPath === '/login'}" data-ng-view=""></div>
 
+    <!--FOOTER-->
 
-    <div class="full-page" data-ng-view=""></div>
   </body>
 
 </html>
