@@ -1,0 +1,192 @@
+﻿<div id="kiosksSurvey" layout="column" layout-sm="column" layout-wrap>
+	<div class="progress-bar" data-ng-style="{'opacity': viewModel.showSpinner ? '1':'0'}">
+		<md-progress-linear md-mode="indeterminate"></md-progress-linear>
+	</div>
+
+	<md-toolbar class="header">
+		<div layout="row" layout-align="center center" class="sv-header">
+			<div flex="55">
+				<img src="../img/lake-lanier-logo.png" style="height:50px;" />
+			</div>
+			<div flex="40" class="text-overflow">
+				<span class="login-name">{{viewModel.userName}}</span>
+			</div>
+			<div flex="5" data-ng-controller="LogoutController">
+				<span class="logout-section">
+					<i class="fa fa-sign-out ico-logout" data-ng-click="viewModel.submit()"></i>
+				</span>
+			</div>
+		</div>
+
+		<div layout="row" layout-align="center center" class="sv-header-action">
+			<div flex="65">
+				<md-button class="md-raised md-primary" data-ng-click="viewModel.showMapAndTrash()"
+									 data-ng-disabled="!viewModel.enableUpdateOrShowMap()">Print Records</md-button>
+				<md-button class="md-raised md-primary" data-ng-click="viewModel.updateRecord($event)"
+									 data-ng-disabled="!viewModel.enableUpdateOrShowMap()">Update Records</md-button>
+				<md-button class="md-raised md-primary" data-ng-click="viewModel.deleteRecord($event)"
+									 data-ng-disabled="!viewModel.enableUpdateOrShowMap()">Delete Records</md-button>
+				<!--<md-button class="md-raised md-primary" data-ng-click="viewModel.dropRecord($event)">Drop CSV&KML Table</md-button>-->
+			</div>
+			<div flex="15">
+				<select name="status" class="select-search-box" data-ng-model="viewModel.searchType" data-ng-change="viewModel.onSearchTypeChange()">
+					<option value="0">ID</option>
+					<option value="1">Description</option>
+					<option value="2">Comment</option>
+					<option value="3">Status</option>
+					<option value="4">Size</option>
+					<option value="5">Type</option>
+					<option value="6">Section</option>
+					<option value="7">Assignee</option>
+				</select>
+			</div>
+			<div flex="15" data-ng-if="!viewModel.showSearchDropDowList()">
+				<input type="text" class="search-text" data-ng-model="viewModel.searchText" placeholder="Search text" />
+			</div>
+			<div flex="15" data-ng-if="viewModel.showSearchDropDowList()">
+				<select name="status" class="select-search-box" data-ng-model="viewModel.searchText" data-ng-if="viewModel.searchType != '6'">
+					<option data-ng-repeat="status in viewModel.statusList" value="{{ status }}" data-ng-bind="viewModel.getStatusString(status)" data-ng-if="viewModel.searchType == '3'"></option>
+					<option data-ng-repeat="size in viewModel.sizesList" value="{{ size }}" data-ng-bind="size" data-ng-if="viewModel.searchType == '4'"></option>
+					<option data-ng-repeat="type in viewModel.typesList" value="{{ type }}" data-ng-bind="type" data-ng-if="viewModel.searchType == '5'"></option>
+					<option data-ng-repeat="assignee in viewModel.assigneeList" value="{{ assignee.id }}" data-ng-bind="assignee.username" data-ng-if="viewModel.searchType == '7'"></option>
+				</select>
+				<select name="status" class="select-search-box" data-ng-model="viewModel.searchText" data-ng-if="viewModel.searchType == '6'">
+					<option value="null"> No Section </option>
+					<option data-ng-repeat="section in viewModel.polygonList" value="{{ section.name }}" data-ng-bind="section.name"></option>
+				</select>
+			</div>
+			<div layout="column" flex="5" layout-align="center right">
+				<md-menu>
+					<md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+						<!--<md-icon md-menu-origin md-svg-src="/img/menu-ico.svg"></md-icon>-->
+						<i class="fa fa-bars ico" style="font-size: 26px"></i>
+					</md-button>
+					<md-menu-content width="3">
+						<md-menu-item>
+							<md-button ng-click="viewModel.showImportCSVDialog()"> <span md-menu-align-target>Import CSV File</span></md-button>
+						</md-menu-item>
+						<md-menu-item>
+							<md-button ng-click="viewModel.showImportKMLDialog()"> <span md-menu-align-target>Import KML File</span></md-button>
+						</md-menu-item>
+						<md-menu-item>
+							<md-button ng-click="viewModel.showAssigneeDialog()"> <span md-menu-align-target>Create Assignee</span></md-button>
+						</md-menu-item>
+						<md-menu-item>
+							<md-button ng-click="viewModel.showAdminUserDialog()"> <span md-menu-align-target>Create Admin User</span></md-button>
+						</md-menu-item>
+					</md-menu-content>
+				</md-menu>
+			</div>
+		</div>
+
+		<div layout="row" layout-align="left center" class="sv-header-paging">
+			<div flex="20">
+				<strong>Show</strong>
+				<select class="input-page" data-ng-model="viewModel.itemsPerPage" convert-to-number
+								data-ng-change="viewModel.itemsPerPageChanged(viewModel.itemsPerPage)">
+					<option value="50">50</option>
+					<option value="100">100</option>
+					<option value="150">150</option>
+					<option value="200">200</option>
+					<option value="{{viewModel.trashInfoViewModelList.length}}">All</option>
+				</select>
+				<strong>records / page</strong>
+			</div>
+
+      <div flex="10">
+        <span class="num-of-records">{{viewModel.trashInfoViewModelsOnPage.length}}</span>
+      </div>
+
+			<div flex="70" data-ng-if="viewModel.numPages >= 1">
+				<div class="number-page">
+					<span data-ng-if="viewModel.currentPage > 1">
+						<i class="fa fa-chevron-left ico" data-ng-click="viewModel.goToPreviousPage()"></i>
+					</span> &nbsp;
+					<span class="section-number">{{viewModel.getPageNumber()}} / {{ viewModel.numPages }}</span>
+					&nbsp;
+					<span data-ng-if="viewModel.currentPage < viewModel.numPages">
+						<i class="fa fa-chevron-right ico" data-ng-click="viewModel.goToNextPage()"></i>
+					</span>
+				</div>
+			</div>
+		</div>
+	</md-toolbar>
+
+	<md-content flex layout-padding>
+		<md-card>
+			<md-card-content>
+				<div layout="row" layout-align="center center" class="md-row sv-header-type">
+					<div class="flex-4-custom md-cell border-right">
+						<md-checkbox class="select-all" data-ng-model="viewModel.selectedAll" aria-label="selectedAll"
+												 data-ng-change="viewModel.onchangeSelectedAll()"></md-checkbox>
+					</div>
+					<div class="flex-6-custom md-cell border-right pointer" data-ng-click="viewModel.sortBy('id')">
+						ID&nbsp;
+						<span data-ng-show="viewModel.propertyName === 'id'">
+							<i class="fa" data-ng-class="viewModel.isReverse ? 'fa-sort-desc ico-sort-desc' : 'fa-sort-asc ico-sort-asc'" aria-hidden="true"></i>
+						</span>
+					</div>
+					<div flex="10" class="md-cell border-right pointer" data-ng-click="viewModel.sortBy('modifiedDate')">
+						Modified Date&nbsp;
+						<span data-ng-show="viewModel.propertyName === 'modifiedDate'">
+							<i class="fa" data-ng-class="viewModel.isReverse ? 'fa-sort-desc ico-sort-desc' : 'fa-sort-asc ico-sort-asc'" aria-hidden="true"></i>
+						</span>
+					</div>
+					<div flex="10" class="md-cell border-right">Description</div>
+					<div flex="10" class="md-cell border-right">Status</div>
+					<div flex="10" class="md-cell border-right">Picture</div>
+					<div flex="10" class="md-cell border-right">Size</div>
+					<div flex="10" class="md-cell border-right">Type</div>
+					<div flex="10" class="md-cell border-right">Section</div>
+					<div flex="10" class="md-cell border-right">Comment</div>
+					<div flex="10" class="md-cell border-right">Assignee</div>
+				</div>
+
+				<div layout="row" layout-align="center center"
+						 data-ng-repeat="trashInfo in viewModel.trashInfoViewModelList | orderBy: viewModel.propertyName: viewModel.isReverse | filter: viewModel.search | start: (viewModel.currentPage - 1) * viewModel.itemsPerPage | limitTo: viewModel.itemsPerPage" class="md-row">
+					<div class="flex-4-custom md-cell border-right">
+						<md-checkbox data-ng-model="trashInfo.isSelected" aria-label="selected"></md-checkbox>
+					</div>
+					<div class="flex-6-custom md-cell border-right">{{trashInfo.customId}}</div>
+					<div flex="10" class="md-cell border-right two-lines">
+						<md-tooltip md-direction="top">{{trashInfo.modifiedDate.toLocaleString()}}</md-tooltip>
+						{{trashInfo.formatedModifiedDate}}
+					</div>
+					<div flex="10" class="md-cell border-right text-overflow">
+						<md-tooltip data-ng-if="trashInfo.description.length > 0" md-direction="top">{{trashInfo.description}}</md-tooltip>
+						{{trashInfo.description}}
+					</div>
+					<div flex="10" class="md-cell border-right">
+						<select name="status" class="field" data-ng-model="trashInfo.status" data-ng-change="viewModel.updateTrashInfoChange(trashInfo)" convert-to-number>
+							<option value="0">Unconfirmed</option>
+							<option value="1">Confirmed</option>
+							<option value="2">Cleaned</option>
+						</select>
+					</div>
+          <!--<div flex="10" class="md-cell border-right" data-ng-click="viewModel.showMapAndImages(trashInfo)" style="cursor: pointer;">-->
+          <div flex="10" class="md-cell border-right" data-ng-click="viewModel.showGoogleMapDialog(trashInfo, $event)" style="cursor: pointer;">
+            <img data-ng-src="{{trashInfo.images[0]}}" style="width:80%; height: 80%" />
+          </div>
+					<div flex="10" class="md-cell border-right">{{trashInfo.size}}</div>
+					<div flex="10" class="md-cell border-right text-overflow">
+						<md-tooltip data-ng-if="trashInfo.type.length > 0" md-direction="top">{{trashInfo.type}}</md-tooltip>
+						{{trashInfo.type}}
+					</div>
+					<div flex="10" class="md-cell border-right text-overflow">
+						<md-tooltip data-ng-if="trashInfo.sectionName.length > 0" md-direction="top">{{trashInfo.sectionName}}</md-tooltip>
+						{{trashInfo.sectionName}}
+					</div>
+					<div flex="10" class="md-cell border-right">
+						<input type="text" class="comment" data-ng-model="trashInfo.comment" data-ng-blur="viewModel.updateTrashInfoChange(trashInfo)" placeholder="Comment" />
+					</div>
+					<div flex="10" class="md-cell border-right">
+						<select name="status" class="field" data-ng-model="trashInfo.assigneeId" data-ng-change="viewModel.updateTrashInfoChange(trashInfo)" convert-to-number>
+							<option data-ng-repeat="assignee in viewModel.assigneeList" value="{{ assignee.id }}" data-ng-bind="assignee.username"></option>
+						</select>
+					</div>
+				</div>
+			</md-card-content>
+		</md-card>
+	</md-content>
+
+</div>

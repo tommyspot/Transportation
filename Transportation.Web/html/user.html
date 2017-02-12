@@ -1,0 +1,118 @@
+﻿<form name="userGroupForm" data-ng-show="viewModel.userGroupFormVisible">
+  <div class="wrapper clearfix">
+    <div class="tpl-form frm-manage-user-group clearfix">
+      <!-- form heading -->
+      <div class="tpl-heading">
+        <h2>Manage User Groups</h2>
+      </div>
+      <h3 class="lbl-name">{{ viewModel.user.username }}</h3>
+      <div class="tpl-list-user-wrapper clearfix">
+        <ul class="list-user">
+          <li class="eachRow-user" data-ng-repeat="group in viewModel.groups">
+            <div class="list-user-name">{{ group.name }}</div>
+            <div class="list-user-setting clearfix">
+              <button name="addGroup" class="se-icon-plus-sign btnAddUser" data-ng-click="viewModel.addGroup(group)" data-ng-show="!group.isAdded"></button>
+              <button name="removeGroup" class="se-icon-remove btnRemoveUser" data-ng-click="viewModel.removeGroup(group)" data-ng-show="group.isAdded"></button>
+            </div>
+            <div class="clr"></div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- form submit -->
+      <div class="tpl-submit clearfix">
+        <button type="button" data-ng-click="viewModel.hideUserGroupForm()" class="b-f-submit">Close</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="bg-white">
+    <div data-ng-include data-src=" 'html/user-form.html?v=' + VERSION_NUMBER " class=" wrapper" data-ng-show="viewModel.userFormVisible"></div>
+</div>
+<div data-ng-include data-src="'/html/admin-header.html?v=' + VERSION_NUMBER" data-ng-show="!viewModel.userFormVisible"></div>
+
+  <spinner data-turn-on="viewModel.isDeleteLoading"></spinner>
+
+<div class="wrapper clearfix" data-ng-show="!viewModel.userFormVisible">
+
+  <div class="breabcum-wrapper clearfix">
+    <ul id="lstBC" class="clearfix">
+      <li>
+        <a href="#">
+          <em>Main Menu</em>
+          <span class="se-icon-arrow-right"></span>
+        </a>
+      </li>
+      <li>
+        <a href="#/user">
+          <em>User</em>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="tpl-button clearfix">
+    <button name="createUser" data-ng-click="viewModel.createUser()" class="btnStyle-1">
+      <span class="se-icon-plus"></span>
+      Create User
+    </button>
+
+    <button name="createUser" data-ng-click="viewModel.importUser()" class="btnStyle-1">
+      <span class="fa fa-file-excel-o"></span>
+      Import User
+    </button>
+
+  </div>
+  <section class="lstDataset user-dataset-section clearfix">
+
+    <pagination total-items="viewModel.filterUsers.length" items-per-page="viewModel.itemsPerPage" page="viewModel.currentPage" boundary-links="true"
+      max-size="viewModel.maxPageSize" rotate="false"></pagination>
+
+    <div class="each-row-heading">
+      <div class="col col-1">
+        <input type="checkbox" data-ng-model="viewModel.includeAllUsers" data-ng-click="viewModel.checkAllUsers()"/>
+      </div>
+      <div class="col col-2">
+        <input type="text" style="width: 200px" data-ng-model="viewModel.filterUser" placeholder="Username"/>
+      </div>
+      <div class="col col-3">
+        <strong>Show 
+          <select ui-select2 class="select" data-ng-model="viewModel.itemsPerPage" data-ng-change="viewModel.itemsPerPageChanged()">
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="{{viewModel.users.length}}">All</option>
+          </select>
+          users / page
+        </strong>
+      </div>
+      <div class="col col-4">
+        <div class="e-d-setting user-option">
+          <button name="deleteUser" data-ng-click="viewModel.deleteSelectedUsers()" class="se-icon-remove btnDelDataset"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="each-row" data-ng-repeat="user in viewModel.users | filterName: viewModel.filterUser | start: (viewModel.currentPage - 1) * viewModel.itemsPerPage | limitTo: viewModel.itemsPerPage">
+      <div class="col col-1">
+        <input type="checkbox" id="{{user.username}}" data-ng-model="user.included" />
+      </div>
+      <div class="col col-2">
+        <label for="{{user.username}}">{{ user.username }}</label>
+      </div>
+      <div class="col col-3">
+        <div class="e-d-setting user-option">
+          <button name="deleteUser" data-ng-click="viewModel.deleteUser(user)" class="se-icon-remove btnDelDataset"></button>
+          <button name="editUserGroup" data-ng-click="viewModel.editUserGroup(user)" class="se-icon-user_close_edit btnEditUser"></button>
+          <button name="editUser" data-ng-click="viewModel.editUser(user)" class="se-icon-edit btnEditDataset"></button>
+        </div>
+      </div>    
+      <div class="clr"></div>
+
+    </div>
+
+    <pagination total-items="viewModel.filterUsers.length" items-per-page="viewModel.itemsPerPage" page="viewModel.currentPage" boundary-links="true"
+      max-size="viewModel.maxPageSize" rotate="false"></pagination>
+
+  </section>
+</div>

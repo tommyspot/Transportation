@@ -1,0 +1,398 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{057A7706-245A-49EE-8FBA-91A645190CF0}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Transportation.Web</RootNamespace>
+    <AssemblyName>Transportation.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <JSLintSkip>\lib\</JSLintSkip>
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>0</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DeployIisAppPath>Default Web Site/</DeployIisAppPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Conjurer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Conjurer.1.0.0\lib\net35\Conjurer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="css\main-style.css" />
+    <Content Include="css\jquery-ui.css" />
+    <Content Include="css\jquery-ui.min.css" />
+    <Content Include="default-editable.html" />
+    <Content Include="font\bootstrap\glyphicons-halflings-regular.svg" />
+    <Content Include="font\fa\fontawesome-webfont.svg" />
+    <Content Include="gulpfile.js" />
+    <Content Include="html\index.html" />
+    <Content Include="html\not-authorized.html" />
+    <Content Include="default.html" />
+    <Content Include="Global.asax" />
+    <Content Include="html\access-denied.html" />
+    <Content Include="html\login_form.html" />
+    <Content Include="html\modal-form.html" />
+    <Content Include="html\error.html" />
+    <Content Include="html\not-found.html" />
+    <Content Include="html\login.html" />
+    <Content Include="html\pre-loading.html" />
+    <Content Include="html\user.html" />
+    <Content Include="img\logo_dh.png" />
+    <Content Include="img\menu-ico.svg" />
+    <Content Include="img\check-ico.png" />
+    <Content Include="img\loading.gif" />
+    <Content Include="img\white-transparent.png" />
+    <Content Include="js\all.min.js" />
+    <Content Include="js\clarity-app.js" />
+    <TypeScriptCompile Include="js\controllers\MainController.ts" />
+    <TypeScriptCompile Include="js\controllers\authentication\LoginController.ts" />
+    <TypeScriptCompile Include="js\controllers\authentication\LogoutController.ts" />
+    <Content Include="font\roboto\Roboto-Regular.ttf" />
+    <TypeScriptCompile Include="js\controllers\IController.ts" />
+    <TypeScriptCompile Include="js\helpers\MainHelper.ts" />
+    <TypeScriptCompile Include="js\services\BaseService.ts" />
+    <TypeScriptCompile Include="js\model\BaseModel.ts" />
+    <TypeScriptCompile Include="js\model\UserModel.ts" />
+    <TypeScriptCompile Include="js\services\AuthenticationService.ts" />
+    <TypeScriptCompile Include="lib\angular\angular-cookies.d.ts" />
+    <TypeScriptCompile Include="js\services\UserService.ts" />
+    <Content Include="js\services\IService.ts" />
+    <Content Include="lib\angular-spec\angular-mocks.d.ts" />
+    <Content Include="lib\angular-spec\angular-mocks.js" />
+    <Content Include="lib\angular\angular-cookies.js" />
+    <Content Include="lib\angular\angular-cookies.min.js" />
+    <Content Include="lib\angular\angular-route.js" />
+    <Content Include="lib\angular\angular-route.min.js" />
+    <Content Include="lib\angular\angular.d.ts" />
+    <Content Include="lib\angular\angular.js" />
+    <Content Include="lib\angular\angular.min.js" />
+    <Content Include="lib\angular\ng-context-menu.js" />
+    <Content Include="lib\angular\ng-context-menu.min.js" />
+    <Content Include="lib\angular\ui-bootstrap.min.js" />
+    <Content Include="lib\blanket\blanket.min.js" />
+    <Content Include="lib\blanket\jasmine-blanket.js" />
+    <Content Include="lib\jasmine\jasmine-html.js" />
+    <Content Include="lib\jasmine\jasmine.css" />
+    <Content Include="lib\jasmine\jasmine.d.ts" />
+    <Content Include="lib\jasmine\jasmine.js" />
+    <Content Include="lib\jquery\jquery-1.9.1.js" />
+    <Content Include="lib\jquery\jquery-1.9.1.min.js" />
+    <Content Include="lib\jquery\jquery-ui.js" />
+    <Content Include="lib\jquery\jquery-ui.min.js" />
+    <Content Include="lib\jquery\jquery.d.ts" />
+    <Content Include="lib\jquery\jquery.scrollUp.min.js" />
+    <Content Include="lib\select2\angular-ui\angular-ui.js" />
+    <Content Include="lib\select2\angular-ui\select2.js" />
+    <Content Include="lib\select2\select2-spinner.gif" />
+    <Content Include="lib\select2\select2.css" />
+    <Content Include="lib\select2\select2.js" />
+    <Content Include="lib\select2\select2.png" />
+    <Content Include="lib\sortable\sortable.js" />
+    <Content Include="Robots.txt" />
+    <Content Include="spec\controllers\authentication\LoginControllerSpec.js" />
+    <Content Include="spec\controllers\authentication\LogoutControllerSpec.js" />
+    <TypeScriptCompile Include="spec\controllers\authentication\LogoutControllerSpec.ts" />
+    <TypeScriptCompile Include="spec\controllers\authentication\LoginControllerSpec.ts" />
+    <TypeScriptCompile Include="spec\controllers\MainControllerSpec.ts" />
+    <Content Include="spec\runner.html" />
+    <Content Include="spec\services\AuthenticationServiceSpec.js" />
+    <Content Include="spec\services\BaseServiceSpec.js" />
+    <Content Include="spec\spec-helper.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="js\directives\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="lib\angular\angular-route.min.js.map" />
+    <Content Include="lib\angular\angular.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="lib\angular\angular-cookies.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="css\sass\components\_input_select.scss" />
+    <Content Include="css\sass\main-style.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_alerts.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_background-variant.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_border-radius.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_buttons.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_center-block.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_clearfix.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_forms.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_gradients.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_grid-framework.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_grid.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_hide-text.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_image.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_labels.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_list-group.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_nav-divider.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_nav-vertical-align.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_opacity.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_pagination.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_panels.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_progress-bar.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_reset-filter.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_reset-text.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_resize.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_responsive-visibility.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_size.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_tab-focus.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_table-row.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_text-emphasis.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_text-overflow.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\mixins\_vendor-prefixes.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_alerts.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_badges.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_breadcrumbs.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_button-groups.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_buttons.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_carousel.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_close.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_code.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_component-animations.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_dropdowns.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_forms.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_glyphicons.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_grid.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_input-groups.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_jumbotron.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_labels.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_list-group.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_media.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_mixins.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_modals.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_navbar.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_navs.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_normalize.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_pager.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_pagination.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_panels.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_popovers.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_print.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_progress-bars.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_responsive-embed.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_responsive-utilities.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_scaffolding.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_tables.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_theme.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_thumbnails.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_tooltip.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_type.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_utilities.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_variables.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\bootstrap\_wells.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\_bootstrap-compass.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\_bootstrap-mincer.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\_bootstrap-sprockets.scss" />
+    <Content Include="css\sass\bootstrap\stylesheets\_bootstrap.scss" />
+    <None Include="Epinion.Clarity.Web.wpp.targets">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="package.json" />
+    <Content Include="font\fa\fontawesome-webfont.eot" />
+    <Content Include="font\fa\fontawesome-webfont.ttf" />
+    <Content Include="font\fa\fontawesome-webfont.woff" />
+    <Content Include="font\fa\FontAwesome.otf" />
+    <Content Include="font\bootstrap\glyphicons-halflings-regular.eot" />
+    <Content Include="font\bootstrap\glyphicons-halflings-regular.ttf" />
+    <Content Include="font\bootstrap\glyphicons-halflings-regular.woff" />
+    <Content Include="font\bootstrap\glyphicons-halflings-regular.woff2" />
+    <None Include="Properties\PublishProfiles\Changi_eTRS.pubxml" />
+    <None Include="Properties\PublishProfiles\Clarity.pubxml" />
+    <None Include="Properties\PublishProfiles\Forecourt.pubxml" />
+    <Content Include="template\trashList.csv" />
+    <None Include="Properties\PublishProfiles\ShoreSweep.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Transportation.Api\Transportation.Api.csproj">
+      <Project>{e285c106-353d-469a-9aba-ce41b24bfaa7}</Project>
+      <Name>Transportation.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Transportation\Transportation.csproj">
+      <Project>{6f2e7475-1ce0-4569-b24e-81cf1d572edc}</Project>
+      <Name>Transportation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AutoDeploy|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>9090</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <UsingTask TaskName="TokenReplace" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <SourceFile ParameterType="System.String" Required="true" />
+      <TargetFile ParameterType="System.String" Required="true" />
+      <Token ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        DateTime now = DateTime.Now;
+        string version = now.ToString("yyMMddHHmm");
+
+        string content = File.ReadAllText(SourceFile);
+        content = content.Replace(Token, version);
+
+        File.WriteAllText(TargetFile, content);
+        ]]></Code>
+    </Task>
+  </UsingTask>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>-->
+  <Target Name="AfterBuild">
+    <TokenReplace SourceFile="$(MSBuildProjectDirectory)\default-editable.html" TargetFile="$(MSBuildProjectDirectory)\default.html" Token="$VERSION_NUMBER$" />
+  </Target>
+  <PropertyGroup>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptIncludeComments>false</TypeScriptIncludeComments>
+    <TypeScriptSourceMap>false</TypeScriptSourceMap>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <CompileDependsOn>
+		$(CompileDependsOn);
+		MinifyAndCombineJsAndCss;
+	</CompileDependsOn>
+  </PropertyGroup>
+  <Target Name="MinifyAndCombineJsAndCss" DependsOnTargets="CompileTypeScript">
+    <Exec Command="gulp" />
+  </Target>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <CompileDependsOn>
+		$(CompileDependsOn);
+		CombineJsAndCss;
+	</CompileDependsOn>
+  </PropertyGroup>
+  <Target Name="CombineJsAndCss" DependsOnTargets="CompileTypeScript">
+    <Exec Command="gulp combine-only" />
+  </Target>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" />
+</Project>

@@ -1,0 +1,45 @@
+<!doctype html>
+<!--<html xmlns:ng="http://angularjs.org" id="ng-app">-->
+<!--[if IE 8 ]>    <html xmlns:ng="http://angularjs.org" id="ng-app" class="ie8"> <![endif]-->
+<!--[if (gt IE 8)|!(IE)]><!-->
+<html xmlns:ng="http://angularjs.org" id="ng-app">
+<!--<![endif]-->
+
+  <head>
+    <title>Vận chuyển Duyên Hải</title>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="content-type" content="text/html; charset=UTF8">
+      
+      <link type="text/css" rel="stylesheet" href="/css/transportation-style.css?v=1702121029" />
+      <script type="text/javascript">
+        var VERSION_NUMBER = '1702121029';
+      </script>
+      <script type="text/javascript" src="/js/all.min.js?v=1702121029"></script>
+  </head>
+
+  <body data-ng-init="VERSION_NUMBER = '1702121029'">
+    <div data-ng-include data-src="'/html/pre-loading.html?v=' + VERSION_NUMBER"></div>
+
+    <div class="bootstrap banner" data-ng-if="locationPath !== undefined && locationPath !== '/login'">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <a href="#">
+              <img class="logo" src="/img/logo_dh.png" alt="Duyen Hai" />
+            </a>
+          </div>
+          <div class="col-md-6 right-align">
+            <a class="pointer">
+              <span class="glyphicon glyphicon-log-out"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="full-page" data-ng-view=""></div>
+  </body>
+
+</html>

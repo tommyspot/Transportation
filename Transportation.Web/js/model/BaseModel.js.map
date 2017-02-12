@@ -1,0 +1,1 @@
+{"version":3,"file":"BaseModel.js","sourceRoot":"","sources":["BaseModel.ts"],"names":["Clarity","Clarity.Model","Clarity.Model.BaseModel","Clarity.Model.BaseModel.constructor"],"mappings":"AACA,IAAO,OAAO;AAMb,CAND,UAAO,OAAO;KAAdA,UAAeA,KAAKA;QAElBC,QAAQA;QACRA;YAAAC;YAEAC,CAACA;AAAAD,YAADA,iBAACA;QAADA,CAACA,IAAAD;QAFDA,4BAECA;IACHA,CAACA,yCAAAD;8BAAAA;AAADA,CAACA,6BAAA"}

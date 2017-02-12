@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Jasmine Spec Runner</title>
+
+  <script type="text/javascript">
+    var VERSION_NUMBER = '';
+  </script>
+  
+  <link rel="stylesheet" type="text/css" href="../lib/jasmine/jasmine.css">
+
+  <script type="text/javascript" src="../lib/jasmine/jasmine.js"></script>
+  <script type="text/javascript" src="../lib/jasmine/jasmine-html.js"></script>
+
+  <script type="text/javascript" src="../lib/blanket/blanket.min.js" data-cover-adapter="../lib/blanket/jasmine-blanket.js"></script>
+
+  <script type="text/javascript" src="/lib/jquery/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="/lib/jquery/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="/lib/jquery/jquery.scrollUp.min.js"></script>
+
+  <script type="text/javascript" src="/lib/select2/select2.js"></script>
+
+  <script type="text/javascript" src="/lib/angular/angular.min.js"></script>
+  <script type="text/javascript" src="/lib/angular/angular-route.min.js"></script>
+  <script type="text/javascript" src="/lib/angular/angular-cookies.min.js"></script>
+  <script type="text/javascript" src="/lib/angular/ui-bootstrap.min.js"></script>
+  <script type="text/javascript" src="/lib/angular/angular-inview.js"></script>
+  <script type="text/javascript" src="/lib/angular-material/angular-aria.js"></script>
+  <script type="text/javascript" src="/lib/angular-material/angular-animate.js"></script>
+  <script type="text/javascript" src="/lib/angular-material/angular-material.js"></script>
+  <script type="text/javascript" src="/lib/select2/angular-ui/angular-ui.js"></script>
+  <script type="text/javascript" src="/lib/select2/angular-ui/select2.js"></script>
+  <script type="text/javascript" src="/lib/sortable/sortable.js"></script>
+ 
+  <script type="text/javascript" src="/lib/angular-spec/angular-mocks.js"></script>
+
+  <script type="text/javascript" src="/js/helpers/MainHelper.js"></script>
+
+  <script type="text/javascript" src="/js/model/BaseModel.js"></script>
+  <script type="text/javascript" src="/js/model/UserModel.js"></script>
+  <script type="text/javascript" src="/js/model/KioskLogModel.js"></script>
+  <script type="text/javascript" src="/js/model/StaffLogModel.js"></script>
+  <script type="text/javascript" src="/js/model/TerminalModel.js"></script>
+  <script type="text/javascript" src="/js/model/UserLogModel.js"></script>
+
+  <script type="text/javascript" src="/js/services/IService.js"></script>
+  <script type="text/javascript" src="/js/services/BaseService.js"></script>
+  <script type="text/javascript" src="/js/services/AuthenticationService.js"></script>
+  <script type="text/javascript" src="/js/services/KioskLogService.js"></script>
+  <script type="text/javascript" src="/js/services/LocationService.js"></script>
+  <script type="text/javascript" src="/js/services/TerminalService.js"></script>
+  <script type="text/javascript" src="/js/services/UserService.js"></script>
+  <script type="text/javascript" src="/js/services/UserLogService.js"></script>
+  <script type="text/javascript" src="/js/services/TrashService.js"></script>
+
+  <script type="text/javascript" src="/js/controllers/IController.js"></script>
+  <script type="text/javascript" src="/js/controllers/authentication/LoginController.js"></script>
+  <script type="text/javascript" src="/js/controllers/authentication/LogoutController.js"></script>
+  <script type="text/javascript" src="/js/controllers/MainController.js"></script>
+
+  <script type="text/javascript" src="/js/clarity-app.js"></script>
+
+  <!-- include spec files here... -->
+  <script type="text/javascript" src="spec-helper.js"></script>
+
+  <script type="text/javascript" src="/spec/controllers/authentication/LoginControllerSpec.js"></script>
+  <script type="text/javascript" src="/spec/controllers/authentication/LogoutControllerSpec.js"></script>
+  <script type="text/javascript" src="/spec/controllers/MainControllerSpec.js"></script>
+  <script type="text/javascript" src="/spec/services/BaseServiceSpec.js"></script>
+  <script type="text/javascript" src="/spec/services/AuthenticationServiceSpec.js"></script>
+
+  <script type="text/javascript">
+    (function () {
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 1000;
+
+      var htmlReporter = new jasmine.HtmlReporter();
+
+      jasmineEnv.addReporter(htmlReporter);
+
+      jasmineEnv.specFilter = function (spec) {
+        return htmlReporter.specFilter(spec);
+      };
+
+      var currentWindowOnload = window.onload;
+
+      window.onload = function () {
+        if (currentWindowOnload) {
+          currentWindowOnload();
+        }
+        execJasmine();
+      };
+
+      function execJasmine() {
+        jasmineEnv.execute();
+      }
+
+    })();
+  </script>
+
+</head>
+
+<body>
+</body>
+</html>

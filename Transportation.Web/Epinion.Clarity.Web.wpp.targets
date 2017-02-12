@@ -1,0 +1,28 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  ToolsVersion="4.0">
+  <!--
+  ********************************************************************
+   Task Custom ACLs 
+  ********************************************************************
+  -->
+  <PropertyGroup>
+       <!-- Extends the AfterAddIisSettingAndFileContentsToSourceManifest action to also set ACLs-->
+    <IncludeCustomACLs>TRUE</IncludeCustomACLs>
+    <AfterAddIisSettingAndFileContentsToSourceManifest Condition="'$(AfterAddIisSettingAndFileContentsToSourceManifest)'==''">
+      $(AfterAddIisSettingAndFileContentsToSourceManifest);
+      SetCustomACLs;
+    </AfterAddIisSettingAndFileContentsToSourceManifest>
+  </PropertyGroup>
+  
+  <Target Name="SetCustomACLs">
+    <Message Text="Adding Custom ACls" />
+    <ItemGroup>
+      <!--Make sure the by default Networkservice/AppPoolIdentity have write permission to the root-->
+      <MsDeploySourceManifest Include="setAcl" Condition="$(IncludeSetAclProviderOnDestination)">
+  		  <Path>$(_MSDeployDirPath_FullPath)</Path>
+  		  <setAclAccess>Read,Write,Modify</setAclAccess>
+  		  <setAclResourceType>Directory</setAclResourceType>
+  		  <AdditionalProviderSettings>setAclResourceType;setAclAccess</AdditionalProviderSettings>
+  	  </MsDeploySourceManifest>
+    </ItemGroup>
+  </Target>
+</Project>

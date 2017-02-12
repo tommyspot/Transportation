@@ -1,0 +1,31 @@
+﻿<div class="login-wrapper">
+  <div class="logo-section">
+    <a class="logo" href="#"><img src="/img/logo_dh.png" alt="Duyen Hai" /></a>
+  </div>
+  
+  <div class="login-section">
+    <form name="loginForm" class="login-form" data-ng-submit="viewModel.submit()">
+      <label class="error-message" data-ng-show="viewModel.errorMessage.length > 0">{{ viewModel.errorMessage }}</label>
+
+      <div class="margin-bottom-20">
+        <input type="text" id="login-username" class="form-input" placeholder="Username" name="username" data-ng-model="viewModel.user.username" required>
+      </div>
+
+      <div class="margin-bottom-20">
+        <input type="password" id="login-password" class="form-input" placeholder="Password" name="password" data-ng-model="viewModel.user.password" required autocomplete="off">
+      </div>
+
+      <div>
+        <button type="submit" value="submit" class="submit" data-ng-disabled="loginForm.$invalid" id="btnLogin">Login</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="footer-section">
+    <!--<div id="powered">
+      Powered by&nbsp;
+            <span><a href="http://epinionglobal.com" target="_blank">
+              <img src="img/logo-epinion.png" alt="Epinion"></a></span>
+    </div>-->
+  </div>
+</div>
