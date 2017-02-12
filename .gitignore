@@ -2,38 +2,38 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/ShoreSweep/bin/Debug
-/ShoreSweep/obj/Debug/Epinion.Clarity.dll
-/ShoreSweep/obj/Debug/Epinion.Clarity.pdb
-/ShoreSweep/obj/Debug/ShoreSweep.csprojResolveAssemblyReference.cache
-/ShoreSweep/obj/Release
+/Transportation/bin/Debug
+/Transportation/obj/Debug/Epinion.Clarity.dll
+/Transportation/obj/Debug/Epinion.Clarity.pdb
+/Transportation/obj/Debug/Transportation.csprojResolveAssemblyReference.cache
+/Transportation/obj/Release
 
-/ShoreSweep.Api/bin/Debug
-/ShoreSweep.Api/obj/Debug/Epinion.Clarity.Api.dll
-/ShoreSweep.Api/obj/Debug/Epinion.Clarity.Api.pdb
-/ShoreSweep.Api/obj/Debug/ShoreSweep.Api.csprojResolveAssemblyReference.cache
-/ShoreSweep.Api/obj/Release
+/Transportation.Api/bin/Debug
+/Transportation.Api/obj/Debug/Epinion.Clarity.Api.dll
+/Transportation.Api/obj/Debug/Epinion.Clarity.Api.pdb
+/Transportation.Api/obj/Debug/Transportation.Api.csprojResolveAssemblyReference.cache
+/Transportation.Api/obj/Release
 
-/ShoreSweep.IntegrationTests/bin/Debug
-/ShoreSweep.IntegrationTests/obj/Debug/Epinion.Clarity.IntegrationTests.dll
-/ShoreSweep.IntegrationTests/obj/Debug/Epinion.Clarity.IntegrationTests.pdb
-/ShoreSweep.IntegrationTests/obj/Debug/ShoreSweep.IntegrationTests.csprojResolveAssemblyReference.cache
+/Transportation.IntegrationTests/bin/Debug
+/Transportation.IntegrationTests/obj/Debug/Epinion.Clarity.IntegrationTests.dll
+/Transportation.IntegrationTests/obj/Debug/Epinion.Clarity.IntegrationTests.pdb
+/Transportation.IntegrationTests/obj/Debug/Transportation.IntegrationTests.csprojResolveAssemblyReference.cache
 
-/ShoreSweep.UnitTests/obj/Debug/Epinion.Clarity.UnitTests.dll
-/ShoreSweep.UnitTests/obj/Debug/Epinion.Clarity.UnitTests.pdb
-/ShoreSweep.UnitTests/obj/Debug/ShoreSweep.UnitTests.csprojResolveAssemblyReference.cache
-/ShoreSweep.UnitTests/bin/Debug
+/Transportation.UnitTests/obj/Debug/Epinion.Clarity.UnitTests.dll
+/Transportation.UnitTests/obj/Debug/Epinion.Clarity.UnitTests.pdb
+/Transportation.UnitTests/obj/Debug/Transportation.UnitTests.csprojResolveAssemblyReference.cache
+/Transportation.UnitTests/bin/Debug
 
-/ShoreSweep.Web/bin
-/ShoreSweep.Web/obj/Debug/Epinion.Clarity.Web.dll
-/ShoreSweep.Web/obj/Debug/Epinion.Clarity.Web.pdb
-/ShoreSweep.Web/obj/Debug/ShoreSweep.Web.csprojResolveAssemblyReference.cache
-/ShoreSweep.Web/obj/Release
+/Transportation.Web/bin
+/Transportation.Web/obj/Debug/Epinion.Clarity.Web.dll
+/Transportation.Web/obj/Debug/Epinion.Clarity.Web.pdb
+/Transportation.Web/obj/Debug/Transportation.Web.csprojResolveAssemblyReference.cache
+/Transportation.Web/obj/Release
 
 .vs/
 /.vs/config/applicationhost.config
-/ShoreSweep.csproj.user
-/ShoreSweep.Web/Properties/PublishProfiles
+/Transportation.csproj.user
+/Transportation.Web/Properties/PublishProfiles
 
 
 *.dll
