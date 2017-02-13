@@ -45,6 +45,11 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
       controller: 'EmployeeManagementController',
       access: 'authorized'
     })
+		.when('/ql-toa-hang/xe/tao', {
+			templateUrl: '/html/toahang/xe-form.html' + '?v=' + VERSION_NUMBER,
+			controller: 'TruckManagementController',
+			access: 'authorized'
+		})
 
 
 

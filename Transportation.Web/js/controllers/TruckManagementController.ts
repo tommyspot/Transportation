@@ -10,7 +10,9 @@ module Clarity.Controller {
 	import helper = Clarity.Helper;
 
   export class TruckManagementController {
-
+		public currentTruck: Model.TruckModel;
+    public truckService: service.TruckService;
+    public truckList: Array<Model.TruckModel>;
     constructor(private $scope,
       public $rootScope: IRootScope,
       private $http: ng.IHttpService,
@@ -18,11 +20,28 @@ module Clarity.Controller {
       public $window: ng.IWindowService,
       public $filter: ng.IFilterService) {
 
+			this.truckService = new service.TruckService($http);
       $scope.viewModel = this;
-
+      this.initTruck();
     }
 
-    goToEmployeeForm() {
+		initTruck() {
+      this.currentTruck = new Model.TruckModel();
+
+      this.truckService.getAll((results: Array<Model.TruckModel>) => {
+        this.truckList = results;
+      }, null);
+    }
+
+    createTruck(truck: Model.TruckModel) {
+      this.truckService.create(truck,
+        (data) => {
+          this.$location.path('/ql-toa-hang/xe');
+        },
+        () => { });
+    }
+
+    goToTruckForm() {
       this.$location.path('/ql-toa-hang/xe/tao');
     }
 

@@ -79,6 +79,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Truck.cs" />
     <Compile Include="Entities\Enums\Role.cs" />
     <Compile Include="Entities\Enums\Size.cs" />
     <Compile Include="Entities\Enums\Status.cs" />

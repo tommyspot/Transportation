@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationService.cs" />
+    <Compile Include="TruckService.cs" />
     <Compile Include="EmployeeService.cs" />
     <Compile Include="PolygonService.cs" />
     <Compile Include="UserService.cs" />
