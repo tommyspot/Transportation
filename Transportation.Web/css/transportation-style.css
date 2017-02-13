@@ -5575,7 +5575,8 @@ div.bootstrap {
   height: 100%;
   /*LOADING*/
   /*LOGIN FORM*/
-  /*BANNER*/ }
+  /*BANNER*/
+  /*BREADCRUMB*/ }
   #ng-app body {
     height: 100%;
     margin: 0;
@@ -5675,11 +5676,89 @@ div.bootstrap {
         padding: 2px 8px; }
     #ng-app .banner .logo {
       height: 100px; }
+  #ng-app .breadcrumb-trail {
+    list-style: none;
+    overflow: hidden;
+    margin-top: 4px;
+    margin-bottom: 20px;
+    padding: 0;
+    background-color: #ECF0F1;
+    font-size: 14px; }
+    #ng-app .breadcrumb-trail li {
+      float: left; }
+      #ng-app .breadcrumb-trail li a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 0 10px 40px;
+        background: brown;
+        /* fallback color */
+        background: #808d8e;
+        position: relative;
+        display: block;
+        float: left; }
+        #ng-app .breadcrumb-trail li a:after {
+          content: " ";
+          display: block;
+          width: 0;
+          height: 0;
+          border-top: 50px solid transparent;
+          /* Go big on the size, and let overflow hide */
+          border-bottom: 50px solid transparent;
+          border-left: 24px solid #808d8e;
+          position: absolute;
+          top: 50%;
+          margin-top: -50px;
+          left: 100%;
+          z-index: 2; }
+        #ng-app .breadcrumb-trail li a:before {
+          content: " ";
+          display: block;
+          width: 0;
+          height: 0;
+          border-top: 50px solid transparent;
+          /* Go big on the size, and let overflow hide */
+          border-bottom: 50px solid transparent;
+          border-left: 24px solid transparent;
+          position: absolute;
+          top: 50%;
+          margin-top: -50px;
+          margin-left: 1px;
+          left: 100%;
+          z-index: 1; }
+      #ng-app .breadcrumb-trail li:first-child a {
+        padding-left: 10px; }
+      #ng-app .breadcrumb-trail li:nth-child(2) a {
+        background: #9ba6a6; }
+      #ng-app .breadcrumb-trail li:nth-child(2) a:after {
+        border-left-color: #9ba6a6; }
+      #ng-app .breadcrumb-trail li:nth-child(3) a {
+        background: #b6bebe; }
+      #ng-app .breadcrumb-trail li:nth-child(3) a:after {
+        border-left-color: #b6bebe; }
+      #ng-app .breadcrumb-trail li:nth-child(4) a {
+        background: #d1d6d6; }
+      #ng-app .breadcrumb-trail li:nth-child(4) a:after {
+        border-left-color: #d1d6d6; }
+      #ng-app .breadcrumb-trail li:nth-child(5) a {
+        background: #eceeee; }
+      #ng-app .breadcrumb-trail li:nth-child(5) a:after {
+        border-left-color: #eceeee; }
+      #ng-app .breadcrumb-trail li:last-child a {
+        background: transparent !important;
+        color: black;
+        pointer-events: none;
+        cursor: default; }
+      #ng-app .breadcrumb-trail li:last-child a:after {
+        border: 0; }
+      #ng-app .breadcrumb-trail li a:hover {
+        background: #677374; }
+      #ng-app .breadcrumb-trail li a:hover:after {
+        border-left-color: #677374 !important; }
   #ng-app #mainPage, #ng-app #qlToaHangPage {
-    margin-top: 40px; }
+    margin-top: 20px; }
     #ng-app #mainPage .manage-box, #ng-app #qlToaHangPage .manage-box {
-      height: 208px;
-      width: 208px;
+      height: 212px;
+      width: 212px;
       background-color: #2980B9;
       float: left;
       text-align: center;
@@ -5691,7 +5770,7 @@ div.bootstrap {
         margin-top: 50px;
         margin-bottom: 10px; }
     #ng-app #mainPage .manage-box.long-box, #ng-app #qlToaHangPage .manage-box.long-box {
-      width: 416px; }
+      width: 424px; }
     #ng-app #mainPage .manage-box.garage-box, #ng-app #qlToaHangPage .manage-box.garage-box {
       background-color: #C0392B; }
     #ng-app #mainPage .manage-box.xe-box, #ng-app #qlToaHangPage .manage-box.xe-box {
@@ -5704,12 +5783,23 @@ div.bootstrap {
       background-color: #f1c40f; }
     #ng-app #mainPage .manage-box.qt-box, #ng-app #qlToaHangPage .manage-box.qt-box {
       background-color: #e74c3c; }
+    #ng-app #mainPage .no-margin-right, #ng-app #qlToaHangPage .no-margin-right {
+      margin-right: 0px; }
   #ng-app .view-page .show-records-per-page {
     width: auto;
     display: inline-block; }
   #ng-app .view-page .action-row {
     margin-top: 20px;
     margin-bottom: 20px; }
+  #ng-app .form {
+    margin: 20px 0;
+    color: #34495E;
+    font-size: 14px; }
+    #ng-app .form .required-symbol {
+      color: #C0392B; }
+    #ng-app .form .required-field {
+      color: #C0392B;
+      font-size: 12px; }
   #ng-app .margin-bottom-20 {
     margin-bottom: 20px; }
   #ng-app .margin-left-40 {
@@ -5718,5 +5808,3 @@ div.bootstrap {
     text-align: right; }
   #ng-app .pointer {
     cursor: pointer; }
-  #ng-app .no-margin-right {
-    margin-right: 0px; }

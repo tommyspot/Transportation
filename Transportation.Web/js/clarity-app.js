@@ -40,6 +40,12 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
       controller: 'WagonsManagementController',
       access: 'authorized'
     })
+    .when('/ql-toa-hang/nhan-vien/tao', {
+      templateUrl: '/html/toahang/nhan-vien-form.html' + '?v=' + VERSION_NUMBER,
+      controller: 'WagonsManagementController',
+      access: 'authorized'
+    })
+
 
 
     .when('/not_found', {
@@ -162,6 +168,7 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
         }
 
         $rootScope.locationPath = $location.path();
+        $rootScope.initBreadcrumbs();
     });
 
     $rootScope.onError = function (error) {
@@ -208,4 +215,59 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
     $rootScope.disableElements = function () {
         $('.wait-data-loading').attr('disabled', 'disabled');
     }
+
+    $rootScope.initBreadcrumbs = function () {
+      $rootScope.breadCrumbs = [];
+      $rootScope.breadCrumbs.push({ 'name': 'Trang chủ', 'path': '/' });
+
+      var path = $rootScope.locationPath;
+      if (path) {
+        var paths = path.split('/');
+        paths.splice(0, 1);
+
+        var navigations = [];
+        var pathTemp = '';
+
+        //proccess path
+        for (var index = 0; index < paths.length; index++) {
+          pathTemp += index > 0 ? '/' + paths[index - 1] : '';
+          var fullPath = pathTemp + '/' + paths[index];
+          navigations.push(fullPath);
+        }
+
+        for (var index = 0; index < navigations.length; index++) {
+          var nav = navigations[index];
+          if (nav !== '/') {
+            var breadCrumb = {};
+            breadCrumb.path = nav;
+
+            switch(nav) {
+              case '/ql-toa-hang':
+                breadCrumb.name = 'Quản lý toa hàng';
+                break;
+              case '/ql-toa-hang/nhan-vien':
+                breadCrumb.name = 'Nhân viên';
+                break;
+              case '/ql-toa-hang/xe':
+                breadCrumb.name = 'Xe';
+                break;
+              case '/ql-toa-hang/nhan-vien/tao':
+                breadCrumb.name = 'Tạo mới';
+                break;
+              case '/ql-garage':
+                breadCrumb.name = 'Quản lý garage';
+                break;
+            }
+
+            $rootScope.breadCrumbs.push(breadCrumb);
+
+          }
+        }
+      }
+    }
+
+    $rootScope.directToNav = function (path) {
+      $location.path(path);
+    }
+
 });

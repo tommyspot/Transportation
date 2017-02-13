@@ -23,7 +23,7 @@ module Clarity.Controller {
     }
 
     goToEmployeeForm() {
-      this.$location.path('/');
+      this.$location.path('/ql-toa-hang/nhan-vien/tao');
     }
 
 	}

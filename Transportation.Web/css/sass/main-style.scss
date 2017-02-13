@@ -1,6 +1,6 @@
 @font-face {
-  font-family: Roboto;
-  src: url('../../font/roboto/Roboto-Regular.ttf') format('woff2');
+    font-family: Roboto;
+    src: url('../../font/roboto/Roboto-Regular.ttf') format('woff2');
 }
 
 $transport-color-1: #49AE00;
@@ -8,46 +8,46 @@ $transport-color-2: #DDF7B1;
 $transport-hover-color-1: #49AE00;
 
 /*Apply Bootstrap Framework*/
-div.bootstrap{
+div.bootstrap {
     @import "bootstrap/stylesheets/bootstrap";
 }
 
-#ng-app{
+#ng-app {
     height: 100%;
 
-    body{
+    body {
         height: 100%;
         margin: 0;
         font-family: 'Roboto', sans-serif;
     }
 
-    .full-page{
+    .full-page {
         height: 100%;
     }
-
     /*LOADING*/
     div.bg-preload {
-	    display: none;
-	    position: fixed;
-	    z-index: 500;
-	    width: 100%;
-	    height: 100%;
-	    left: 0; top: 0;
-	    background-color: rgba(255,255,255,0.8);
-	    span.img-loading{
-		    background: transparent url('/img/loading.gif') 0 0 no-repeat;
-		    width: 33px;
-		    height: 33px;
-		    margin-left: -16px;
-		    margin-top: -16px;
-		    left: 50%;
-		    top: 50%;
-		    text-indent: -9999px;
-		    position: fixed;
-		    z-index: 600;
-	    }
-    }
+        display: none;
+        position: fixed;
+        z-index: 500;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-color: rgba(255,255,255,0.8);
 
+        span.img-loading {
+            background: transparent url('/img/loading.gif') 0 0 no-repeat;
+            width: 33px;
+            height: 33px;
+            margin-left: -16px;
+            margin-top: -16px;
+            left: 50%;
+            top: 50%;
+            text-indent: -9999px;
+            position: fixed;
+            z-index: 600;
+        }
+    }
     /*LOGIN FORM*/
     .login-wrapper {
         overflow-y: auto;
@@ -55,36 +55,36 @@ div.bootstrap{
         width: 100%;
         padding-top: 0;
         background-color: #DDF7B1;
-        
 
-	    .logo-section {
-		    height: 40%;
-		    display: table;
-		    margin: auto;
 
-		    .logo {
-			    display: table-cell;
-			    vertical-align: bottom;
-            
-                img{
+        .logo-section {
+            height: 40%;
+            display: table;
+            margin: auto;
+
+            .logo {
+                display: table-cell;
+                vertical-align: bottom;
+
+                img {
                     height: 200px;
                 }
-		    }
-	    }
+            }
+        }
 
-	    .login-section {
-		    height: 60%;
-		    display: table;
-		    margin: auto;
+        .login-section {
+            height: 60%;
+            display: table;
+            margin: auto;
             padding-top: 5%;
 
-		    .login-form {
-			    width: 400px;
-			    height: auto;
-			    display: table-cell;
-			    vertical-align: top;
+            .login-form {
+                width: 400px;
+                height: auto;
+                display: table-cell;
+                vertical-align: top;
 
-			    .error-message {
+                .error-message {
                     background: rgba(218, 68, 83, 0.7);
                     display: block;
                     height: 36px;
@@ -96,51 +96,47 @@ div.bootstrap{
                     margin-bottom: 20px;
                     padding: 0 10px;
                     border-radius: 4px;
-			    }
+                }
 
-			    input[type=text], input[type=password] {
+                input[type=text], input[type=password] {
                     font-family: 'Roboto', sans-serif;
-				    padding: 0 10px;
-				    width: 100%;
-				    border: 1px solid #CCC;
-				    height: 36px;
-				    line-height: 36px;
-				    border-radius: 4px;
+                    padding: 0 10px;
+                    width: 100%;
+                    border: 1px solid #CCC;
+                    height: 36px;
+                    line-height: 36px;
+                    border-radius: 4px;
                     box-sizing: border-box;
-			    }
+                }
 
-			    button.submit {
+                button.submit {
                     font-family: 'Roboto', sans-serif;
-			        height: 36px;
-				    width: 100%;
-				    background: #49AE00;
-				    color: white;
-				    text-transform: uppercase;
-				    border-style: none;
-				    outline: none;
-				    border-radius: 4px;
+                    height: 36px;
+                    width: 100%;
+                    background: #49AE00;
+                    color: white;
+                    text-transform: uppercase;
+                    border-style: none;
+                    outline: none;
+                    border-radius: 4px;
                     cursor: pointer;
 
-				    &:hover {
-					    opacity: 0.8;
-				    }
-			    }
-		    }
-
-	    }
-
-
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                }
+            }
+        }
     }
-
     /*BANNER*/
-    .banner{
+    .banner {
         background-color: $transport-color-2;
 
-        .log-out-section{
+        .log-out-section {
             height: 100px;
             line-height: 100px;
 
-            .log-out-btn{
+            .log-out-btn {
                 background: $transport-color-1;
                 line-height: 27px;
                 border: 1px solid $transport-color-1;
@@ -148,19 +144,123 @@ div.bootstrap{
                 font-size: 16px;
                 padding: 2px 8px;
             }
-
         }
-        .logo{
+
+        .logo {
             height: 100px;
         }
     }
 
-    #mainPage, #qlToaHangPage{
-        margin-top: 40px;
+    /*BREADCRUMB*/
+    .breadcrumb-trail {
+        list-style: none;
+        overflow: hidden;
+        margin-top: 4px;
+        margin-bottom: 20px;
+        padding: 0;
+        background-color: #ECF0F1;
+        font-size: 14px;
 
-        .manage-box{
-            height: 208px;
-            width: 208px;
+        li {
+            float: left;
+
+            a {
+                color: white;
+                text-decoration: none;
+                padding: 10px 0 10px 40px;
+                background: brown; /* fallback color */
+                background: hsla(184, 6%, 53%, 1);
+                position: relative;
+                display: block;
+                float: left;
+
+                &:after {
+                    content: " ";
+                    display: block;
+                    width: 0;
+                    height: 0;
+                    border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
+                    border-bottom: 50px solid transparent;
+                    border-left: 24px solid hsla(184, 6%, 53%, 1);
+                    position: absolute;
+                    top: 50%;
+                    margin-top: -50px;
+                    left: 100%;
+                    z-index: 2;
+                }
+
+                &:before {
+                    content: " ";
+                    display: block;
+                    width: 0;
+                    height: 0;
+                    border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
+                    border-bottom: 50px solid transparent;
+                    border-left: 24px solid transparent;
+                    position: absolute;
+                    top: 50%;
+                    margin-top: -50px;
+                    margin-left: 1px;
+                    left: 100%;
+                    z-index: 1;
+                }
+
+            }
+        
+            &:first-child a {
+                padding-left: 10px;
+            }  
+            &:nth-child(2) a {
+                background: hsla(184, 6%, 63%, 1);
+            }
+            &:nth-child(2) a:after {
+                border-left-color: hsla(184, 6%, 63%, 1);
+            }
+            &:nth-child(3) a {
+                background: hsla(184, 6%, 73%, 1);
+            }
+            &:nth-child(3) a:after {
+                border-left-color: hsla(184, 6%, 73%, 1);
+            }
+            &:nth-child(4) a {
+                background:hsla(184, 6%, 83%, 1);
+            }
+            &:nth-child(4) a:after {
+                border-left-color: hsla(184, 6%, 83%, 1);
+            }
+            &:nth-child(5) a {
+                background: hsla(184, 6%, 93%, 1);
+            }
+            &:nth-child(5) a:after {
+                border-left-color: hsla(184, 6%, 93%, 1);
+            }
+            &:last-child a {
+                background: transparent !important;
+                color: black;
+                pointer-events: none;
+                cursor: default;
+            }
+            &:last-child a:after {
+                border: 0;
+            }
+
+            a:hover {
+                background: hsla(184, 6%, 43%, 1);
+            }
+
+            a:hover:after {
+                border-left-color:hsla(184, 6%, 43%, 1) !important;
+            }
+        }
+    }
+
+
+    #mainPage, #qlToaHangPage {
+        margin-top: 20px;
+
+        .manage-box {
+            height: 212px;
+            width: 212px;
             background-color: #2980B9;
             float: left;
             text-align: center;
@@ -168,70 +268,87 @@ div.bootstrap{
             margin: 0 20px 20px 0;
             cursor: pointer;
 
-            .icon{
+            .icon {
                 font-size: 50px;
                 margin-top: 50px;
                 margin-bottom: 10px;
             }
         }
-        .manage-box.long-box{
-            width: 416px;
+
+        .manage-box.long-box {
+            width: 424px;
         }
-        .manage-box.garage-box{
+
+        .manage-box.garage-box {
             background-color: #C0392B;
         }
-        .manage-box.xe-box{
+
+        .manage-box.xe-box {
             background-color: #2C3E50;
         }
-        .manage-box.nv-box{
+
+        .manage-box.nv-box {
             background-color: #3498db;
         }
-        .manage-box.kh-box{
+
+        .manage-box.kh-box {
             background-color: #2ecc71;
         }
-        .manage-box.th-box{
+
+        .manage-box.th-box {
             background-color: #f1c40f;
         }
-        .manage-box.qt-box{
+
+        .manage-box.qt-box {
             background-color: #e74c3c;
+        }
+
+        .no-margin-right {
+            margin-right: 0px;
         }
     }
 
-    .view-page{
+    .view-page {
 
-        .show-records-per-page{
+        .show-records-per-page {
             width: auto;
             display: inline-block;
         }
 
-        .action-row{
+        .action-row {
             margin-top: 20px;
             margin-bottom: 20px;
         }
     }
 
-    .margin-bottom-20{
+    .form {
+        margin: 20px 0;
+        color: #34495E;
+        font-size: 14px;
+
+        .required-symbol {
+            color: #C0392B;
+        }
+
+        .required-field {
+            color: #C0392B;
+            font-size: 12px;
+        }
+    }
+
+    .margin-bottom-20 {
         margin-bottom: 20px;
     }
 
-    .margin-left-40{
+    .margin-left-40 {
         margin-left: 40px;
     }
 
-    .right-align{
+    .right-align {
         text-align: right;
     }
 
-    .pointer{
+    .pointer {
         cursor: pointer;
     }
-
-    .no-margin-right{
-        margin-right: 0px;
-    }
-
 }
-
-
-
-

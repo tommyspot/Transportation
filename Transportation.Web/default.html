@@ -10,15 +10,15 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta http-equiv="content-type" content="text/html; charset=UTF8">
       
-      <link type="text/css" rel="stylesheet" href="/font/font-awesome/css/font-awesome.min.css?v=1702130104" />
-      <link type="text/css" rel="stylesheet" href="/css/transportation-style.css?v=1702130104" />
+      <link type="text/css" rel="stylesheet" href="/font/font-awesome/css/font-awesome.min.css?v=1702131243" />
+      <link type="text/css" rel="stylesheet" href="/css/transportation-style.css?v=1702131243" />
       <script type="text/javascript">
-        var VERSION_NUMBER = '1702130104';
+        var VERSION_NUMBER = '1702131243';
       </script>
-      <script type="text/javascript" src="/js/all.min.js?v=1702130104"></script>
+      <script type="text/javascript" src="/js/all.min.js?v=1702131243"></script>
   </head>
 
-  <body data-ng-init="VERSION_NUMBER = '1702130104'">
+  <body data-ng-init="VERSION_NUMBER = '1702131243'">
     <div data-ng-include data-src="'/html/pre-loading.html?v=' + VERSION_NUMBER"></div>
     <!--BANNER-->
     <div class="bootstrap banner" data-ng-if="locationPath !== undefined && locationPath !== '/login'">
@@ -33,6 +33,21 @@
             <button class="log-out-btn" data-ng-click="viewModel.submit()">
               <span>Đăng xuất</span>
             </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--BREADCRUMBS-->
+    <div class="bootstrap" data-ng-if="locationPath !== undefined && locationPath !== '/login'">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <ul class="breadcrumb-trail">
+              <li data-ng-repeat="nav in breadCrumbs">
+                <a href="" ng-click="directToNav(nav.path)"><span>{{nav.name}}</span></a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

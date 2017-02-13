@@ -38,6 +38,21 @@
       </div>
     </div>
 
+    <!--BREADCRUMBS-->
+    <div class="bootstrap" data-ng-if="locationPath !== undefined && locationPath !== '/login'">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <ul class="breadcrumb-trail">
+              <li data-ng-repeat="nav in breadCrumbs">
+                <a href="" ng-click="directToNav(nav.path)"><span>{{nav.name}}</span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div data-ng-class="{'full-page' : locationPath === '/login'}" data-ng-view=""></div>
 
     <!--FOOTER-->
