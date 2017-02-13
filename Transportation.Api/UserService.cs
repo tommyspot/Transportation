@@ -59,16 +59,5 @@ namespace Transportation.Api
             }
             return array;
         }
-
-        private JArray BuildAssigneeJsonArray(IEnumerable<Assignee> users)
-        {
-            JArray array = new JArray();
-
-            foreach (Assignee user in users)
-            {
-                array.Add(user.ToJson());
-            }
-            return array;
-        }
     }
 }

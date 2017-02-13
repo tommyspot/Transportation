@@ -21,6 +21,7 @@ D:\Users\cphung\Workspaces\Transportation\Transportation.UnitTests\bin\Debug\nun
 D:\Users\cphung\Workspaces\Transportation\Transportation.UnitTests\obj\Debug\Transportation.UnitTests.csprojResolveAssemblyReference.cache
 D:\Users\cphung\Workspaces\Transportation\Transportation.UnitTests\obj\Debug\Transportation.UnitTests.dll
 D:\Users\cphung\Workspaces\Transportation\Transportation.UnitTests\obj\Debug\Transportation.UnitTests.pdb
+D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.UnitTests\obj\Debug\Transportation.UnitTests.csprojResolveAssemblyReference.cache
 D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.UnitTests\bin\Debug\Transportation.UnitTests.dll.config
 D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.UnitTests\bin\Debug\Transportation.UnitTests.dll
 D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.UnitTests\bin\Debug\Transportation.UnitTests.pdb
@@ -41,6 +42,5 @@ D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.UnitTests\b
 D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.UnitTests\bin\Debug\Moq.xml
 D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.UnitTests\bin\Debug\Newtonsoft.Json.xml
 D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.UnitTests\bin\Debug\nunit.framework.xml
-D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.UnitTests\obj\Debug\Transportation.UnitTests.csprojResolveAssemblyReference.cache
 D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.UnitTests\obj\Debug\Transportation.UnitTests.dll
 D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.UnitTests\obj\Debug\Transportation.UnitTests.pdb

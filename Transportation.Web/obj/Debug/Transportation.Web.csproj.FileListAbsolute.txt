@@ -15,6 +15,7 @@ D:\Users\cphung\Workspaces\Transportation\Transportation.Web\bin\Newtonsoft.Json
 D:\Users\cphung\Workspaces\Transportation\Transportation.Web\obj\Debug\Transportation.Web.csprojResolveAssemblyReference.cache
 D:\Users\cphung\Workspaces\Transportation\Transportation.Web\obj\Debug\Transportation.Web.dll
 D:\Users\cphung\Workspaces\Transportation\Transportation.Web\obj\Debug\Transportation.Web.pdb
+D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.Web\obj\Debug\Transportation.Web.csprojResolveAssemblyReference.cache
 D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.Web\bin\Transportation.Web.dll.config
 D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.Web\bin\Transportation.Web.dll
 D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.Web\bin\Transportation.Web.pdb
@@ -29,6 +30,5 @@ D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.Web\bin\Tra
 D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.Web\bin\EntityFramework.xml
 D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.Web\bin\EntityFramework.SqlServer.xml
 D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.Web\bin\Newtonsoft.Json.xml
-D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.Web\obj\Debug\Transportation.Web.csprojResolveAssemblyReference.cache
 D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.Web\obj\Debug\Transportation.Web.dll
 D:\Huynh_Quoc_Thao\Projects\Freelancer\Transportation\Transportation.Web\obj\Debug\Transportation.Web.pdb
