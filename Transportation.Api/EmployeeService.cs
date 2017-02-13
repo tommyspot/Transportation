@@ -14,10 +14,9 @@ namespace Transportation.Api
 {
     public class EmployeeService
     {
-
         public EmployeeService() { }
 
-        [Route(HttpVerb.Get, "/employee")]
+        [Route(HttpVerb.Get, "/employees")]
         public RestApiResult GetAll()
         {
             var employees = ClarityDB.Instance.Employees;
@@ -25,7 +24,7 @@ namespace Transportation.Api
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(employees) };
         }
 
-        [Route(HttpVerb.Post, "/employee")]
+        [Route(HttpVerb.Post, "/employees")]
         public RestApiResult Create(JObject json)
         {
             if (json == null)
@@ -39,6 +38,53 @@ namespace Transportation.Api
             ClarityDB.Instance.SaveChanges();
 
             return new RestApiResult { StatusCode = HttpStatusCode.OK };
+        }
+
+        [Route(HttpVerb.Get, "/employees/{id}")]
+        public RestApiResult GetEmployeeByID(long id)
+        {
+            Employee employee = ClarityDB.Instance.Employees.FirstOrDefault(x => x.ID == id);
+
+            if (employee == null)
+            {
+                return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
+            }
+
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = employee.ToJson() };
+        }
+
+        [Route(HttpVerb.Delete, "/employees/{id}")]
+        public RestApiResult Delete(long id)
+        {
+            Employee employee = ClarityDB.Instance.Employees.FirstOrDefault(x => x.ID == id);
+
+            if (employee == null) {
+                return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
+            }
+
+            ClarityDB.Instance.Employees.Remove(employee);
+            ClarityDB.Instance.SaveChanges();
+
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = employee.ToJson() };
+        }
+
+        [Route(HttpVerb.Put, "/employees/{id}")]
+        public RestApiResult Update(long id, JObject json)
+        {
+            Employee employee = ClarityDB.Instance.Employees.FirstOrDefault(x => x.ID == id);
+
+            if (employee == null) {
+                return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
+            }
+
+            employee.ApplyJson(json);
+
+            //if (employee.IsInvalid())
+            //    return new RestApiResult { StatusCode = HttpStatusCode.BadRequest };
+
+            ClarityDB.Instance.SaveChanges();
+
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json};
         }
 
         private JArray BuildJsonArray(IEnumerable<Employee> employees)

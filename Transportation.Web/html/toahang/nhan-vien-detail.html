@@ -1,0 +1,39 @@
+﻿<div id="employeeInfo" class="bootstrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3">
+        <img class="avatar" src="/img/avatar1.jpeg" style="width: 100%"/>
+      </div>
+      <div class="col-sm-9">
+        <div class="list-group-item user-info">
+          <h2 class="text-center title-name">{{viewModel.currentEmployee.fullName}}</h2>
+          <p><span class="bold-text">CMND:</span> <span>{{viewModel.currentEmployee.cardId}}</span></p>
+          <p><span class="bold-text">Địa chỉ:</span> <span>{{viewModel.currentEmployee.address}}</span></p>
+          <p><span class="bold-text">Điện thoại:</span> <span>{{viewModel.currentEmployee.mobile}}</span></p>
+          <p><span class="bold-text">Hạng :</span> <span>{{viewModel.currentEmployee.driverLicenseRank}}</span></p>
+          <p><span class="bold-text">Số GPLX:</span> <span>{{viewModel.currentEmployee.driverLicenseId}}</span></p>
+          <p><span class="bold-text">Nơi cấp GPLX:</span> <span>{{viewModel.currentEmployee.driverLicenseAddress}}</span></p>
+          <p><span class="bold-text">Ngày cấp GPLX:</span> <span>{{viewModel.currentEmployee.driverLicenseDate}}</span></p>
+          <p><span class="bold-text">Ngày hết hạn GPLX:</span> <span>{{viewModel.currentEmployee.driverLicenseExpirationDate}}</span></p>
+          <p><span class="bold-text">Ngày bắt đầu làm việc:</span> <span>{{viewModel.currentEmployee.startDate}}</span></p>
+          <p><span class="bold-text">Vi phạm:</span> <span>{{viewModel.currentEmployee.violation}}</span></p>
+          <p><span class="bold-text">Ghi chú:</span> <span>{{viewModel.currentEmployee.notes}}</span></p>
+          <p><span class="bold-text">Chức vụ:</span> <span>{{viewModel.currentEmployee.title}}</span></p>
+
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien')">
+            <span class="glyphicon glyphicon-arrow-left"></span><span>&nbsp;Back</span>
+          </button>
+
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien/sua/' + viewModel.currentEmployee.id)">
+            <span class="glyphicon glyphicon-pencil"></span><span>&nbsp;Edit</span>
+          </button>
+
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.removeEmployeeInDetail(viewModel.currentEmployee)">
+            <span class="glyphicon glyphicon-remove"></span><span>&nbsp;Remove</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

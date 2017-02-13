@@ -7,7 +7,7 @@ module Clarity.Service {
 
     constructor($http: ng.IHttpService) {
       super($http);
-      this.url = '/api/employee';
+      this.url = '/api/employees';
     }
   }
 }
