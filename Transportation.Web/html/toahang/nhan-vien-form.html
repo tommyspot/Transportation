@@ -6,14 +6,14 @@
           <div class="form-group">
             <label for="fullName">Họ và tên <span class="required-symbol">*</span></label>
             <span class="required-field" ng-if="employeeForm.fullName.$touched && employeeForm.fullName.$invalid">('Họ và tên' is required or invalid)</span>
-            <input id="fullName" name="fullName" class="form-control" type="text" ng-model="viewModel.currentUser.email" required>
+            <input id="fullName" name="fullName" class="form-control" type="text" ng-model="viewModel.currentEmployee.fullName" required>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="form-group">
             <label for="idNumber">CMND <span class="required-symbol">*</span></label>
             <span class="required-field" ng-if="employeeForm.idNumber.$touched && employeeForm.idNumber.$invalid">('CMND' is required or invalid)</span>
-            <input id="idNumber" name="idNumber" class="form-control" type="text" ng-model="viewModel.currentUser.email" required>
+            <input id="idNumber" name="idNumber" class="form-control" type="text" ng-model="viewModel.currentEmployee.cardId" required>
           </div>
         </div>
       </div>
@@ -22,13 +22,13 @@
         <div class="col-sm-6">
           <div class="form-group">
             <label for="address">Địa chỉ</label>
-            <input id="address" name="address" class="form-control" type="text" ng-model="viewModel.currentUser.email" required>
+            <input id="address" name="address" class="form-control" type="text" ng-model="viewModel.currentEmployee.address">
           </div>
         </div>
         <div class="col-sm-6">
           <div class="form-group">
             <label for="mobile">Số điện thoại</label>
-            <input id="mobile" name="mobile" class="form-control" type="text" ng-model="viewModel.currentUser.email" required>
+            <input id="mobile" name="mobile" class="form-control" type="text" ng-model="viewModel.currentEmployee.mobile">
           </div>
         </div>
       </div>
@@ -37,13 +37,13 @@
         <div class="col-sm-6">
           <div class="form-group">
             <label for="driverLicenseRank">Hạng (GPLX)</label>
-            <input id="rankDriverLicense" name="rankDriverLicense" class="form-control" type="text" ng-model="viewModel.currentUser.email" required>
+            <input id="driverLicenseRank" name="driverLicenseRank" class="form-control" type="text" ng-model="viewModel.currentEmployee.driverLicenseRank">
           </div>
         </div>
         <div class="col-sm-6">
           <div class="form-group">
             <label for="driverLicenseId">Số GPLX</label>
-            <input id="driverLicenseId" name="driverLicenseId" class="form-control" type="text" ng-model="viewModel.currentUser.email" required>
+            <input id="driverLicenseId" name="driverLicenseId" class="form-control" type="text" ng-model="viewModel.currentEmployee.driverLicenseId">
           </div>
         </div>
       </div>
@@ -52,13 +52,13 @@
         <div class="col-sm-6">
           <div class="form-group">
             <label for="driverLicenseAddress">Nơi cấp (GPLX)</label>
-            <input id="driverLicenseAddress" name="driverLicenseAddress" class="form-control" type="text" ng-model="viewModel.currentUser.email" required>
+            <input id="driverLicenseAddress" name="driverLicenseAddress" class="form-control" type="text" ng-model="viewModel.currentEmployee.driverLicenseAddress">
           </div>
         </div>
         <div class="col-sm-6">
           <div class="form-group">
             <label for="driverLicenseDate">Ngày cấp (GPLX)</label>
-            <input id="driverLicenseDate" name="driverLicenseDate" class="form-control" type="text" ng-model="viewModel.currentUser.email" required>
+            <input id="driverLicenseDate" name="driverLicenseDate" class="form-control" type="text" ng-model="viewModel.currentEmployee.driverLicenseDate">
           </div>
         </div>
       </div>
@@ -66,7 +66,7 @@
         <div class="col-sm-6">
           <div class="form-group">
             <label for="driverLicenseExpirationDate">Ngày hết hạn (GPLX)</label>
-            <input id="driverLicenseExpirationDate" name="driverLicenseExpirationDate" class="form-control" type="text" ng-model="viewModel.currentUser.email" required>
+            <input id="driverLicenseExpirationDate" name="driverLicenseExpirationDate" class="form-control" type="text" ng-model="viewModel.currentEmployee.driverLicenseExpirationDate">
           </div>
         </div>
         <div class="col-sm-6">
@@ -77,13 +77,13 @@
         <div class="col-sm-6">
           <div class="form-group">
             <label for="startDate">Ngày bắt đầu làm việc</label>
-            <input id="startDate" name="startDate" class="form-control" type="text" ng-model="viewModel.currentUser.email" required>
+            <input id="startDate" name="startDate" class="form-control" type="text" ng-model="viewModel.currentEmployee.startDate">
           </div>
         </div>
         <div class="col-sm-6">
           <div class="form-group">
             <label for="violation">Vi phạm</label>
-            <input id="violation" name="violation" class="form-control" type="text" ng-model="viewModel.currentUser.email" required>
+            <input id="violation" name="violation" class="form-control" type="text" ng-model="viewModel.currentEmployee.violation">
           </div>
         </div>
       </div>
@@ -92,27 +92,27 @@
         <div class="col-sm-6">
           <div class="form-group">
             <label for="notes">Ghi chú</label>
-            <input id="notes" name="notes" class="form-control" type="text" ng-model="viewModel.currentUser.email" required>
+            <input id="notes" name="notes" class="form-control" type="text" ng-model="viewModel.currentEmployee.notes">
           </div>
         </div>
         <div class="col-sm-6">
           <div class="form-group">
             <label for="title">Chức vụ</label>
-            <input id="title" name="title" class="form-control" type="text" ng-model="viewModel.currentUser.email" required>
+            <input id="title" name="title" class="form-control" type="text" ng-model="viewModel.currentEmployee.title">
           </div>
         </div>
       </div>
   </form>
 
   <button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/tao'"
-          data-ng-click="viewModel.addUser(viewModel.currentUser)" data-ng-disabled="addUserForm.$invalid">
+    data-ng-click="viewModel.createEmployee(viewModel.currentEmployee)" data-ng-disabled="employeeForm.$invalid">
     <span class="glyphicon glyphicon-ok"></span><span>&nbsp;Save</span>
   </button>
 
-  <button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/user/edit/' + viewModel.currentUser._id"
-          data-ng-click="viewModel.updateUser(viewModel.currentUser)" data-ng-disabled="addUserForm.$invalid">
+  <!--<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/user/edit/' + viewModel.currentUser._id"
+          data-ng-click="viewModel.updateUser(viewModel.currentUser)" data-ng-disabled="employeeForm.$invalid">
     <span class="glyphicon glyphicon-ok"></span><span>&nbsp;Update</span>
-  </button>
+  </button>-->
 
   <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien')">
     <span class="glyphicon glyphicon-remove"></span><span>&nbsp;Cancel</span>

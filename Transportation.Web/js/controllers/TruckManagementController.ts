@@ -9,7 +9,7 @@ module Clarity.Controller {
 	import service = Clarity.Service;
 	import helper = Clarity.Helper;
 
-  export class WagonsManagementController {
+  export class TruckManagementController {
 
     constructor(private $scope,
       public $rootScope: IRootScope,
@@ -23,7 +23,7 @@ module Clarity.Controller {
     }
 
     goToEmployeeForm() {
-      this.$location.path('/ql-toa-hang/nhan-vien/tao');
+      this.$location.path('/ql-toa-hang/xe/tao');
     }
 
 	}

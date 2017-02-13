@@ -32,17 +32,17 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
     })
     .when('/ql-toa-hang/xe', {
       templateUrl: '/html/toahang/xe.html' + '?v=' + VERSION_NUMBER,
-      controller: 'WagonsManagementController',
+      controller: 'TruckManagementController',
       access: 'authorized'
     })
     .when('/ql-toa-hang/nhan-vien', {
       templateUrl: '/html/toahang/nhan-vien.html' + '?v=' + VERSION_NUMBER,
-      controller: 'WagonsManagementController',
+      controller: 'EmployeeManagementController',
       access: 'authorized'
     })
     .when('/ql-toa-hang/nhan-vien/tao', {
       templateUrl: '/html/toahang/nhan-vien-form.html' + '?v=' + VERSION_NUMBER,
-      controller: 'WagonsManagementController',
+      controller: 'EmployeeManagementController',
       access: 'authorized'
     })
 
@@ -139,20 +139,14 @@ clarityApp.config(function ($controllerProvider, $provide, $compileProvider, $ht
 clarityApp.service('authenticationService', Clarity.Service.AuthenticationService);
 clarityApp.service('baseService', Clarity.Service.BaseService);
 clarityApp.service('userService', Clarity.Service.UserService);
+clarityApp.service('employeeService', Clarity.Service.EmployeeService);
 
 clarityApp.controller('LoginController', Clarity.Controller.LoginController);
 clarityApp.controller('LogoutController', Clarity.Controller.LogoutController);
 clarityApp.controller('MainController', Clarity.Controller.MainController);
-clarityApp.controller('WagonsManagementController', Clarity.Controller.WagonsManagementController);
+clarityApp.controller('EmployeeManagementController', Clarity.Controller.EmployeeManagementController);
+clarityApp.controller('TruckManagementController', Clarity.Controller.TruckManagementController);
 
-clarityApp.filter('start', function () {
-  return function (input, start) {
-    if (!input || !input.length) { return; }
-
-    start = +start;
-    return input.slice(start);
-  };
-});
 
 clarityApp.run(function ($rootScope, $routeParams, $location, authenticationService, $http, $cookieStore, $window) {
 

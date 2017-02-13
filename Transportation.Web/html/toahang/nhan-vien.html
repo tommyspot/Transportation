@@ -31,33 +31,29 @@
           <table class="table table-hover table-bordered">
             <thead>
               <tr>
-                <th class="column-60 align-center">
-                  <label class="cover-checkbox" for="checkAllUsers">
-                    <input id="checkAllUsers" type="checkbox" data-ng-model="viewModel.isCheckedAll" data-ng-change="viewModel.selectAllUsersOnPage()" />
-                  </label>
+                <th class="align-center">
+                  <input id="checkAllEmployees" type="checkbox" data-ng-model="viewModel.isCheckedAll"/>
                 </th>
-                <th class="align-center hidden-xs">Name</th>
-                <th class="align-center">Username</th>
-                <th class="align-center hidden-xs">Email</th>
-                <th class="align-center hidden-xs">Role</th>
-                <th class="align-center hidden-xs">Group</th>
-                <th class="align-center">Created Date</th>
+                <th class="align-center hidden-xs">ID</th>
+                <th class="align-center">Họ và tên</th>
+                <th class="align-center hidden-xs">CMND</th>
+                <th class="align-center hidden-xs">Số GPLX</th>
+                <th class="align-center hidden-xs">Ngày làm việc</th>
+                <th class="align-center">Chức vụ</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="pointer" data-ng-repeat="user in viewModel.getUserListOnPage()"
+              <tr class="pointer" data-ng-repeat="employee in viewModel.employeeList"
                   data-ng-click="viewModel.$location.path('/user/' + user._id)">
                 <td class="align-center" data-ng-click="$event.stopPropagation();">
-                  <label class="cover-checkbox" for="user-{{$index}}">
-                    <input id="user-{{$index}}" type="checkbox" data-ng-model="user.isChecked" />
-                  </label>
+                  <input id="employee-{{$index}}" type="checkbox" data-ng-model="employee.isChecked" />
                 </td>
-                <td class="align-center hidden-xs">{{user.firstName}} {{user.lastName}}</td>
-                <td class="align-center">{{user.userName}}</td>
-                <td class="align-center hidden-xs">{{user.email}}</td>
-                <td class="align-center hidden-xs">{{viewModel.modelHelper.getUserRole(user.role)}}</td>
-                <td class="align-center hidden-xs">{{viewModel.modelHelper.getGroupName(user.groupId)}}</td>
-                <td class="align-center">{{viewModel.modelHelper.formatCreatedDate(user.createdDate)}}</td>
+                <td class="align-center hidden-xs">{{employee.id}}</td>
+                <td class="align-center">{{employee.fullName}}</td>
+                <td class="align-center hidden-xs">{{employee.cardId}}</td>
+                <td class="align-center hidden-xs">{{employee.driverLicenseId}}</td>
+                <td class="align-center hidden-xs">{{employee.startDate}}</td>
+                <td class="align-center">{{employee.title}}</td>
               </tr>
             </tbody>
           </table>
@@ -65,7 +61,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <!--<div class="row">
       <div class="col-sm-12">
         <nav aria-label="navigation" data-ng-if="viewModel.numOfPages > 0">
           <ul class="pagination">
@@ -92,7 +88,7 @@
           </ul>
         </nav>
       </div>
-    </div>
+    </div>-->
 
   </div>
 </div>

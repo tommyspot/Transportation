@@ -5192,3 +5192,5 @@ div.bootstrap {
     text-align: right; }
   #ng-app .pointer {
     cursor: pointer; }
+  #ng-app .align-center {
+    text-align: center; }

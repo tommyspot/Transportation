@@ -36,17 +36,20 @@ var config = {
 
     , 'js/model/BaseModel.js'
     , 'js/model/UserModel.js'
+    , 'js/model/EmployeeModel.js'
     
     , 'js/services/IService.js'
     , 'js/services/BaseService.js'
     , 'js/services/AuthenticationService.js'
     , 'js/services/UserService.js'
+    , 'js/services/EmployeeService.js'
 
     , 'js/controllers/IController.js'
     , 'js/controllers/authentication/LoginController.js'
     , 'js/controllers/authentication/LogoutController.js'
     , 'js/controllers/MainController.js'
-    , 'js/controllers/WagonsManagementController.js'
+    , 'js/controllers/EmployeeManagementController.js'
+    , 'js/controllers/TruckManagementController.js'
 
     // controllers, services written with TypeScript must be placed before clarity-app.js
     , 'js/clarity-app.js'

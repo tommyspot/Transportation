@@ -42,9 +42,7 @@ namespace Transportation
         }
 
         public virtual IDbSet<User> Users { get; set; }
-        public virtual IDbSet<Assignee> Assignees { get; set; }
-        public virtual IDbSet<TrashInformation> TrashInformations { get; set; }
-        public virtual IDbSet<Polygon> Polygons { get; set; }
+        public virtual IDbSet<Employee> Employees { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -6,9 +6,7 @@ namespace Transportation
     public interface IClarityDB : IDisposable
     {
         IDbSet<User> Users { get; set; }
-        IDbSet<Assignee> Assignees { get; set; }
-        IDbSet<TrashInformation> TrashInformations { get; set; }
-        IDbSet<Polygon> Polygons { get; set; }
+        IDbSet<Employee> Employees { get; set; }
         Database Database { get; }
 
         void AddEntity<T>(T entity) where T : class;
