@@ -16,6 +16,7 @@ module Clarity.Model {
     public violation: string;
     public notes: string;
     public title: string;
+    public isChecked: boolean;
   }
 
 }

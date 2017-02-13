@@ -45,7 +45,16 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
       controller: 'EmployeeManagementController',
       access: 'authorized'
     })
-
+    .when('/ql-toa-hang/nhan-vien/:employee_id', {
+      templateUrl: '/html/toahang/nhan-vien-detail.html' + '?v=' + VERSION_NUMBER,
+    	controller: 'EmployeeManagementController',
+    	access: 'authorized'
+    })
+    .when('/ql-toa-hang/nhan-vien/sua/:employee_id', {
+      templateUrl: '/html/toahang/nhan-vien-form.html' + '?v=' + VERSION_NUMBER,
+      controller: 'EmployeeManagementController',
+      access: 'authorized'
+    })
 
 
     .when('/not_found', {
@@ -67,16 +76,6 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
       templateUrl: '/html/not-authorized.html' + '?v=' + VERSION_NUMBER,
       controller: '',
       access: 'share'
-    })
-    .when('/show_map_and_trash', {
-        templateUrl: '/html/map-and-trash.html' + '?v=' + VERSION_NUMBER,
-        controller: 'MapController',
-        access: 'authorized'
-    })
-    .when('/map_and_images', {
-      templateUrl: '/html/map-and-images.html' + '?v=' + VERSION_NUMBER,
-      controller: 'MapController',
-      access: 'authorized'
     })
     .otherwise({ redirectTo: '/' });
 });
@@ -136,17 +135,22 @@ clarityApp.config(function ($controllerProvider, $provide, $compileProvider, $ht
   }
 });
 
-clarityApp.service('authenticationService', Clarity.Service.AuthenticationService);
-clarityApp.service('baseService', Clarity.Service.BaseService);
-clarityApp.service('userService', Clarity.Service.UserService);
-clarityApp.service('employeeService', Clarity.Service.EmployeeService);
 
-clarityApp.controller('LoginController', Clarity.Controller.LoginController);
-clarityApp.controller('LogoutController', Clarity.Controller.LogoutController);
-clarityApp.controller('MainController', Clarity.Controller.MainController);
-clarityApp.controller('EmployeeManagementController', Clarity.Controller.EmployeeManagementController);
-clarityApp.controller('TruckManagementController', Clarity.Controller.TruckManagementController);
-
+clarityApp.directive('convertToNumber', function () {
+  return {
+    require: 'ngModel',
+    link: function (scope, element, attrs, ngModel) {
+      ngModel.$parsers.push(function (val) {
+        return parseInt(val, 10);
+      });
+      ngModel.$formatters.push(function (val) {
+        if (val === undefined)
+          return '';
+        return '' + val;
+      });
+    }
+  };
+});
 
 clarityApp.run(function ($rootScope, $routeParams, $location, authenticationService, $http, $cookieStore, $window) {
 
@@ -248,6 +252,9 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
               case '/ql-toa-hang/nhan-vien/tao':
                 breadCrumb.name = 'Tạo mới';
                 break;
+              case '/ql-toa-hang/nhan-vien/sua':
+                breadCrumb.name = 'Sửa';
+                break;
               case '/ql-garage':
                 breadCrumb.name = 'Quản lý garage';
                 break;
@@ -265,3 +272,14 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
     }
 
 });
+
+clarityApp.service('authenticationService', Clarity.Service.AuthenticationService);
+clarityApp.service('baseService', Clarity.Service.BaseService);
+clarityApp.service('userService', Clarity.Service.UserService);
+clarityApp.service('employeeService', Clarity.Service.EmployeeService);
+
+clarityApp.controller('LoginController', Clarity.Controller.LoginController);
+clarityApp.controller('LogoutController', Clarity.Controller.LogoutController);
+clarityApp.controller('MainController', Clarity.Controller.MainController);
+clarityApp.controller('EmployeeManagementController', Clarity.Controller.EmployeeManagementController);
+clarityApp.controller('TruckManagementController', Clarity.Controller.TruckManagementController);

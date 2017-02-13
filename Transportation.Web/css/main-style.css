@@ -4964,7 +4964,8 @@ div.bootstrap {
   #ng-app body {
     height: 100%;
     margin: 0;
-    font-family: 'Roboto', sans-serif; }
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px; }
   #ng-app .full-page {
     height: 100%; }
   #ng-app div.bg-preload {
@@ -5066,8 +5067,7 @@ div.bootstrap {
     margin-top: 4px;
     margin-bottom: 20px;
     padding: 0;
-    background-color: #ECF0F1;
-    font-size: 14px; }
+    background-color: #ECF0F1; }
     #ng-app .breadcrumb-trail li {
       float: left; }
       #ng-app .breadcrumb-trail li a {
