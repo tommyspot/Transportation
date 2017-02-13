@@ -37,12 +37,14 @@ var config = {
     , 'js/model/BaseModel.js'
     , 'js/model/UserModel.js'
     , 'js/model/EmployeeModel.js'
+		, 'js/model/TruckModel.js'
     
     , 'js/services/IService.js'
     , 'js/services/BaseService.js'
     , 'js/services/AuthenticationService.js'
     , 'js/services/UserService.js'
     , 'js/services/EmployeeService.js'
+		, 'js/services/TruckService.js'
 
     , 'js/controllers/IController.js'
     , 'js/controllers/authentication/LoginController.js'

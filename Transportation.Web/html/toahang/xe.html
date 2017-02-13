@@ -11,7 +11,7 @@
             <option value="99999">All</option>
           </select>
         </span>
-        <button type="button" class="btn btn-default" data-ng-click="viewModel.directToUserForm()">
+        <button type="button" class="btn btn-default" data-ng-click="viewModel.goToTruckForm()">
           <span class="glyphicon glyphicon-plus"></span>
           <span class="hidden-xs">Tạo xe mới</span>
         </button>
@@ -36,28 +36,28 @@
                     <input id="checkAllUsers" type="checkbox" data-ng-model="viewModel.isCheckedAll" data-ng-change="viewModel.selectAllUsersOnPage()" />
                   </label>
                 </th>
-                <th class="align-center hidden-xs">Name</th>
-                <th class="align-center">Username</th>
-                <th class="align-center hidden-xs">Email</th>
-                <th class="align-center hidden-xs">Role</th>
-                <th class="align-center hidden-xs">Group</th>
-                <th class="align-center">Created Date</th>
+                <th class="align-center hidden-xs">Mã xe</th>
+                <th class="align-center">Bien so</th>
+                <th class="align-center hidden-xs">Số khung</th>
+                <th class="align-center hidden-xs">Số máy</th>
+                <th class="align-center hidden-xs">năm sx</th>
+                <th class="align-center">nhãn hiệu</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="pointer" data-ng-repeat="user in viewModel.getUserListOnPage()"
+              <tr class="pointer" data-ng-repeat="truck in viewModel.truckList"
                   data-ng-click="viewModel.$location.path('/user/' + user._id)">
                 <td class="align-center" data-ng-click="$event.stopPropagation();">
                   <label class="cover-checkbox" for="user-{{$index}}">
                     <input id="user-{{$index}}" type="checkbox" data-ng-model="user.isChecked" />
                   </label>
                 </td>
-                <td class="align-center hidden-xs">{{user.firstName}} {{user.lastName}}</td>
-                <td class="align-center">{{user.userName}}</td>
-                <td class="align-center hidden-xs">{{user.email}}</td>
-                <td class="align-center hidden-xs">{{viewModel.modelHelper.getUserRole(user.role)}}</td>
-                <td class="align-center hidden-xs">{{viewModel.modelHelper.getGroupName(user.groupId)}}</td>
-                <td class="align-center">{{viewModel.modelHelper.formatCreatedDate(user.createdDate)}}</td>
+                <td class="align-center hidden-xs">{{truck.code}}</td>
+                <td class="align-center">{{truck.licensePlate}}</td>
+                <td class="align-center hidden-xs">{{truck.vin}}</td>
+                <td class="align-center hidden-xs">{{truck.engineNo}}</td>
+                <td class="align-center hidden-xs">{{truck.yearOfManufacture}}</td>
+                <td class="align-center">{{truck.brand}}</td>
               </tr>
             </tbody>
           </table>

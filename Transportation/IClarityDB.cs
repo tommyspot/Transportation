@@ -7,7 +7,8 @@ namespace Transportation
     {
         IDbSet<User> Users { get; set; }
         IDbSet<Employee> Employees { get; set; }
-        Database Database { get; }
+		IDbSet<Truck> Trucks { get; set; }
+		Database Database { get; }
 
         void AddEntity<T>(T entity) where T : class;
         int SaveChanges();

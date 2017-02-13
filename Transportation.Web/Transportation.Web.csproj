@@ -121,6 +121,7 @@
     <Content Include="html\pre-loading.html" />
     <Content Include="html\toahang\toa-hang.html" />
     <Content Include="html\toahang\nhan-vien-detail.html" />
+    <Content Include="html\toahang\xe-form.html" />
     <Content Include="html\toahang\nhan-vien-form.html" />
     <Content Include="html\toahang\nhan-vien.html" />
     <Content Include="html\toahang\xe.html" />
@@ -141,6 +142,7 @@
     <Content Include="font\roboto\Roboto-Regular.ttf" />
     <TypeScriptCompile Include="js\controllers\IController.ts" />
     <TypeScriptCompile Include="js\helpers\MainHelper.ts" />
+    <TypeScriptCompile Include="js\model\TruckModel.ts" />
     <TypeScriptCompile Include="js\model\WagonSetlementModel.ts" />
     <TypeScriptCompile Include="js\model\WagonModel.ts" />
     <TypeScriptCompile Include="js\model\EmployeeModel.ts" />
@@ -148,6 +150,7 @@
     <TypeScriptCompile Include="js\model\BaseModel.ts" />
     <TypeScriptCompile Include="js\model\UserModel.ts" />
     <TypeScriptCompile Include="js\services\AuthenticationService.ts" />
+    <TypeScriptCompile Include="js\services\TruckService.ts" />
     <TypeScriptCompile Include="js\services\EmployeeService.ts" />
     <TypeScriptCompile Include="lib\angular\angular-cookies.d.ts" />
     <TypeScriptCompile Include="js\services\UserService.ts" />
