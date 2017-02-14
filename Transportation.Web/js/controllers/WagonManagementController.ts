@@ -160,6 +160,14 @@ module Clarity.Controller {
       }, null);
     }
 
+    createWagonSettlement(wagon: Model.WagonModel) {
+      if (wagon.wagonSettlements == null) {
+        wagon.wagonSettlements = [];
+      }
+      var wagonSettlement = new Model.WagonSetlementModel();
+      wagon.wagonSettlements.push(wagonSettlement);
+    }
+
     goToWagonForm() {
       this.$location.path('/ql-toa-hang/toa-hang/tao');
     }

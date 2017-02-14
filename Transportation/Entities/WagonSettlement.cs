@@ -60,9 +60,9 @@ namespace Transportation
             return json;
         }
 
-        public static Wagon FromJson(JObject json)
+        public static WagonSettlement FromJson(JObject json)
         {
-            Wagon wagon = new Wagon();
+            WagonSettlement wagon = new WagonSettlement();
             wagon.ApplyJson(json);
 
             return wagon;

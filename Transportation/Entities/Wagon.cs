@@ -42,6 +42,7 @@ namespace Transportation
         public long PaymentOfOthers { get; set; }
 
         public Wagon() {
+            WagonSetlements = new Collection<WagonSettlement>();
         }
 
         public JObject ToJson()
@@ -103,6 +104,15 @@ namespace Transportation
             PaymentOfHangVe = json.Value<long>("paymentOfHangVe");
             PaymentOf10Percent = json.Value<long>("paymentOf10Percent");
             PaymentOfOthers = json.Value<long>("paymentOfOthers");
+
+            var wagonSettlementJsons = json.Value<JArray>("wagonSettlements");
+            if (wagonSettlementJsons != null)
+            {
+                foreach (JObject wagonSettlementJson in wagonSettlementJsons)
+                {
+                    WagonSetlements.Add(WagonSettlement.FromJson(wagonSettlementJson));
+                }
+            }
         }
 
         private JArray BuildJsonArray(Collection<WagonSettlement> wagonSettlements)

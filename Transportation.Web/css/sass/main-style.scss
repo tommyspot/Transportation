@@ -3,9 +3,8 @@
     src: url('../../font/roboto/Roboto-Regular.ttf') format('woff2');
 }
 
-$transport-color-1: #49AE00;
-$transport-color-2: #DDF7B1;
-$transport-hover-color-1: #49AE00;
+$transport-color-1: #34495E;
+$transport-color-2: #C0392B;
 
 /*Apply Bootstrap Framework*/
 div.bootstrap {
@@ -55,7 +54,7 @@ div.bootstrap {
         height: 100%;
         width: 100%;
         padding-top: 0;
-        background-color: #DDF7B1;
+        background-color: $transport-color-1;
 
 
         .logo-section {
@@ -114,7 +113,7 @@ div.bootstrap {
                     font-family: 'Roboto', sans-serif;
                     height: 36px;
                     width: 100%;
-                    background: #49AE00;
+                    background: $transport-color-2;
                     color: white;
                     text-transform: uppercase;
                     border-style: none;
@@ -131,24 +130,30 @@ div.bootstrap {
     }
     /*BANNER*/
     .banner {
-        background-color: $transport-color-2;
+        background-color: $transport-color-1;
+        height: 60px;
+        line-height: 60px;
 
         .log-out-section {
-            height: 100px;
-            line-height: 100px;
+            line-height: 60px;
 
             .log-out-btn {
-                background: $transport-color-1;
+                background: transparent;
                 line-height: 27px;
-                border: 1px solid $transport-color-1;
+                border: none;
                 color: white;
                 font-size: 16px;
                 padding: 2px 8px;
+                outline: none;
+
+                &:hover{
+                    color: $transport-color-2;
+                }
             }
         }
 
         .logo {
-            height: 100px;
+            height: 44px;
         }
     }
 
@@ -160,6 +165,7 @@ div.bootstrap {
         margin-bottom: 20px;
         padding: 0;
         background-color: #ECF0F1;
+        border-left: 4px solid $transport-color-1;
 
         li {
             float: left;
@@ -254,9 +260,30 @@ div.bootstrap {
         }
     }
 
+    .company-image-section{
+        margin-top: 4px;
+        .company-image-wrapper{
+            padding-left: 2px;
+            padding-right: 2px;
+
+            .company-image{
+                height: 160px;
+                width: 100%;
+            }
+        }
+        .first-image{
+            padding-left: 15px;
+        }
+        .last-image{
+            padding-right: 15px;
+        }
+    }
+    
+
+
+
 
     #mainPage, #qlToaHangPage {
-        margin-top: 20px;
 
         .manage-box {
             height: 212px;
@@ -316,23 +343,37 @@ div.bootstrap {
         }
 
         .action-row {
-            margin-top: 20px;
             margin-bottom: 20px;
         }
     }
 
-    .form {
-        margin: 20px 0;
-        color: #34495E;
-        font-size: 14px;
+    #wagonFormSection{
+        form {
+            color: $transport-color-1;
 
-        .required-symbol {
-            color: #C0392B;
-        }
+            .required-symbol {
+                color: $transport-color-2;
+            }
 
-        .required-field {
-            color: #C0392B;
-            font-size: 12px;
+            .required-field {
+                color: $transport-color-2;
+                font-size: 12px;
+            }
+
+            .nav-tabs{
+                border-bottom: 1px solid $transport-color-2;
+            }
+            .tab-content{
+                margin-top: 20px;
+            }
+            .nav-tabs > li > a{
+                color: $transport-color-1;
+            }
+            .nav-tabs > li.active > a{
+                color: $transport-color-2;
+                border: 1px solid $transport-color-2;
+                border-bottom-color: transparent;
+            }
         }
     }
 

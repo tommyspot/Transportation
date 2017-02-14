@@ -15,7 +15,7 @@ module Clarity.Model {
     public departure: string;
     public destination: string;
     public unitPrice: number;
-    public totalAmount: number;
+    //public totalAmount: number;
     public notes: string;
   }
 }

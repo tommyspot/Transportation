@@ -119,6 +119,7 @@
     <Content Include="html\not-found.html" />
     <Content Include="html\login.html" />
     <Content Include="html\pre-loading.html" />
+    <Content Include="html\toahang\toa-hang-form.html" />
     <Content Include="html\toahang\toa-hang.html" />
     <Content Include="html\toahang\nhan-vien-detail.html" />
     <Content Include="html\toahang\xe-form.html" />
@@ -128,6 +129,11 @@
     <Content Include="html\toahang\ql-toa-hang.html" />
     <Content Include="html\user.html" />
     <Content Include="img\avatar1.jpeg" />
+    <Content Include="img\hinh1.jpg" />
+    <Content Include="img\hinh2.jpg" />
+    <Content Include="img\hinh3.jpg" />
+    <Content Include="img\hinh4.jpg" />
+    <Content Include="img\logo.gif" />
     <Content Include="img\logo_dh.png" />
     <Content Include="img\menu-ico.svg" />
     <Content Include="img\loading.gif" />

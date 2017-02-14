@@ -26,7 +26,7 @@
         <div class="row">
           <div class="col-md-6 col-sm-6">
             <a href="#/">
-              <img class="logo" src="/img/logo_dh.png" alt="Duyen Hai" />
+              <img class="logo" src="/img/logo.gif" alt="Duyen Hai" />
             </a>
           </div>
           <div class="col-md-6 col-sm-6 right-align log-out-section" data-ng-controller="LogoutController">
@@ -39,8 +39,23 @@
     </div>
 
     <!--BREADCRUMBS-->
-    <div class="bootstrap" data-ng-if="locationPath !== undefined && locationPath !== '/login'">
+    <div class="bootstrap company-image-section" data-ng-if="locationPath !== undefined && locationPath !== '/login'">
       <div class="container">
+        <div class="row" data-ng-if="locationPath === '/'">
+          <div class="col-sm-3 company-image-wrapper first-image">
+            <img class="company-image" src="img/hinh1.jpg" />
+          </div>
+          <div class="col-sm-3 company-image-wrapper">
+            <img class="company-image" src="img/hinh2.jpg" />
+          </div>
+          <div class="col-sm-3 company-image-wrapper">
+            <img class="company-image" src="img/hinh3.jpg" />
+          </div>
+          <div class="col-sm-3 company-image-wrapper last-image">
+            <img class="company-image" src="img/hinh4.jpg" />
+          </div>
+        </div>
+
         <div class="row">
           <div class="col-sm-12">
             <ul class="breadcrumb-trail">

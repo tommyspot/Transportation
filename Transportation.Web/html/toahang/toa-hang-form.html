@@ -1,0 +1,273 @@
+﻿<div id="wagonFormSection" class="bootstrap">
+  <div class="container">
+    <form name="wagonForm">
+
+      <ul class="nav nav-tabs" ng-init="tab = 1">
+        <li ng-class="{'active': tab === 1}"><a data-toggle="tab" data-ng-click="tab = 1">Thông tin</a></li>
+        <li ng-class="{'active': tab === 2}"><a data-toggle="tab" data-ng-click="tab = 2">Khách hàng</a></li>
+        <li ng-class="{'active': tab === 3}"><a data-toggle="tab" data-ng-click="tab = 3">Chi</a></li>
+        <li ng-class="{'active': tab === 4}"><a data-toggle="tab" data-ng-click="tab = 4">Thanh toán với công ty</a></li>
+      </ul>
+
+      <div class="tab-content">
+        <!--TAB 1-->
+        <div class="tab-pane fade" ng-class="{'in active': tab === 1}" data-ng-show="tab === 1">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="departDate">Ngày đi <span class="required-symbol">*</span></label>
+                <span class="required-field" ng-if="wagonForm.departDate.$touched && wagonForm.departDate.$invalid">(Ngày đi phải được nhập)</span>
+                <input id="departDate" name="departDate" class="form-control" type="text" ng-model="viewModel.currentWagon.departDate" required>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="returnDate">Ngày đến <span class="required-symbol">*</span></label>
+                <span class="required-field" ng-if="wagonForm.returnDate.$touched && wagonForm.returnDate.$invalid">(Ngày đến phải được nhập)</span>
+                <input id="returnDate" name="returnDate" class="form-control" type="text" ng-model="viewModel.currentWagon.returnDate" required>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="truckId">Số xe</label>
+                <select id="truckId" class="form-control" data-ng-model="viewModel.currentWagon.truckId">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="mobile">Tài xế</label>
+                <select id="truckId" class="form-control" data-ng-model="viewModel.currentWagon.employeeId">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--TAB 2-->
+        <div class="tab-pane fade" ng-class="{'in active': tab === 2}" data-ng-show="tab === 2">
+          KHACH HANG <span class="glyphicon glyphicon-plus" data-ng-click="viewModel.createWagonSettlement(viewModel.currentWagon)"></span>
+
+          <div data-ng-repeat="wagonSettlement in viewModel.currentWagon.wagonSettlements">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="wagonSettlementCustomerId-{{$index}}">Khách hàng</label>
+                  <select id="wagonSettlementCustomerId-{{$index}}" class="form-control" data-ng-model="wagonSettlement.customerId">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="wagonSettlementEmployeeId-{{$index}}">Người thu</label>
+                  <select id="wagonSettlementEmployeeId-{{$index}}" class="form-control" data-ng-model="wagonSettlement.employeeId">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="wagonSettlementDate-{{$index}}">Ngày</label>
+                  <input id="wagonSettlementDate-{{$index}}" class="form-control" type="number" ng-model="wagonSettlement.date">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="wagonSettlementPayment-{{$index}}">Số tiền trả</label>
+                  <input id="wagonSettlementPayment-{{$index}}" class="form-control" type="number" ng-model="wagonSettlement.payment">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="wagonSettlementUnit-{{$index}}">Đơn vị tính</label>
+                  <input id="wagonSettlementUnit-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.unit">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="wagonSettlementQuantity-{{$index}}">Số lượng</label>
+                  <input id="wagonSettlementQuantity-{{$index}}" class="form-control" type="number" ng-model="wagonSettlement.quantity">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="wagonSettlementDeparture-{{$index}}">Nơi đi</label>
+                  <input id="wagonSettlementDeparture-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.departure">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="wagonSettlementDestination-{{$index}}">Nơi đến</label>
+                  <input id="wagonSettlementDestination-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.destination">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="wagonSettlementUnitPrice-{{$index}}">Đơn giá</label>
+                  <input id="wagonSettlementUnitPrice-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.unitPrice">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="wagonSettlementNotes-{{$index}}">Ghi chú</label>
+                  <input id="wagonSettlementNotes-{{$index}}" class="form-control" type="number" ng-model="wagonSettlement.notes">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--TAB 3-->
+        <div class="tab-pane fade" ng-class="{'in active': tab === 3}" data-ng-show="tab === 3">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="costOfTruck">Phí xe</label>
+                <input id="costOfTruck" name="costOfTruck" class="form-control" type="number" ng-model="viewModel.currentWagon.costOfTruck">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="costOfService">Điện thoại + Dịch vụ</label>
+                <input id="costOfService" name="costOfService" class="form-control" type="number" ng-model="viewModel.currentWagon.costOfService">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="driverLicenseAddress">Tăng bo xe</label>
+                <input id="driverLicenseAddress" name="driverLicenseAddress" class="form-control" type="text" ng-model="viewModel.currentWagon.driverLicenseAddress">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="costOfTangBoXe">Ngày cấp (GPLX)</label>
+                <input id="costOfTangBoXe" name="costOfTangBoXe" class="form-control" type="number" ng-model="viewModel.currentWagon.costOfTangBoXe">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="costOfPenalty">Biên bản phạt</label>
+                <input id="costOfPenalty" name="costOfPenalty" class="form-control" type="number" ng-model="viewModel.currentWagon.costOfPenalty">
+              </div>
+            </div>
+            <div class="col-sm-6">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="costOfExtra">Diễn giải phụ</label>
+                <input id="costOfExtra" name="costOfExtra" class="form-control" type="number" ng-model="viewModel.currentWagon.costOfExtra">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="violation">Vi phạm</label>
+                <input id="violation" name="violation" class="form-control" type="text" ng-model="viewModel.currentWagon.violation">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--TAB 4-->
+        <div class="tab-pane fade in" ng-class="{'active': tab === 4}" data-ng-show="tab === 4">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="paymentOfTruck">Tiền xe</label>
+                <input id="paymentOfTruck" name="paymentOfTruck" class="form-control" type="number" ng-model="viewModel.currentWagon.paymentOfTruck">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="paymentOfRepairing">Sữa xe</label>
+                <input id="paymentOfRepairing" name="paymentOfRepairing" class="form-control" type="number" ng-model="viewModel.currentWagon.paymentOfRepairing">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="paymentOfOil">Tiền dầu</label>
+                <input id="paymentOfOil" name="paymentOfOil" class="form-control" type="number" ng-model="viewModel.currentWagon.paymentOfOil">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="paymentOfLuong">Lượng</label>
+                <input id="paymentOfLuong" name="paymentOfLuong" class="form-control" type="number" ng-model="viewModel.currentWagon.paymentOfLuong">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="paymentOfService">Dịch vụ</label>
+                <input id="paymentOfService" name="paymentOfService" class="form-control" type="number" ng-model="viewModel.currentWagon.paymentOfService">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="paymentOfHangVe">Hàng về</label>
+                <input id="paymentOfHangVe" name="paymentOfHangVe" class="form-control" type="number" ng-model="viewModel.currentWagon.paymentOfHangVe">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="paymentOf10Percent">Trích 10%</label>
+                <input id="paymentOf10Percent" name="paymentOf10Percent" class="form-control" type="number" ng-model="viewModel.currentWagon.paymentOf10Percent">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="paymentOfOthers">Khác</label>
+                <input id="paymentOfOthers" name="paymentOfOthers" class="form-control" type="number" ng-model="viewModel.currentWagon.paymentOfOthers">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/toa-hang/tao'"
+            data-ng-click="viewModel.createWagon(viewModel.currentWagon)" data-ng-disabled="wagonForm.$invalid">
+      <span class="glyphicon glyphicon-ok"></span><span>&nbsp;Save</span>
+    </button>
+
+    <button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/toa-hang/sua/' + viewModel.currentWagon.id"
+            data-ng-click="viewModel.updateWagon(viewModel.currentWagon)" data-ng-disabled="wagonForm.$invalid">
+      <span class="glyphicon glyphicon-ok"></span><span>&nbsp;Update</span>
+    </button>
+
+    <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/toa-hang')">
+      <span class="glyphicon glyphicon-remove"></span><span>&nbsp;Cancel</span>
+    </button>
+  </div>
+</div>
