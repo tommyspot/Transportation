@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Data;
+using System.Collections.ObjectModel;
 
 namespace Transportation
 {
@@ -18,13 +19,12 @@ namespace Transportation
         public string ReturnDate { get; set; }
         [Required]
         public long TruckID { get; set; }
-        //[Required]
-        //public virtual Truck Truck { get; set; }
+        public virtual Truck Truck { get; set; }
         [Required]
         public long EmployeeID { get; set; }
         public virtual Employee Employee{ get; set; }
 
-        //public virtual WagonSetlementCollection WagonSetlements { get; set; }
+        public virtual Collection<WagonSettlement> WagonSetlements { get; set; }
 
         public long CostOfTruck { get; set; }
         public long CostOfService { get; set; }
@@ -67,7 +67,8 @@ namespace Transportation
             json["paymentOfHangVe"] = PaymentOfHangVe;
             json["paymentOf10Percent"] = PaymentOf10Percent;
             json["paymentOfOthers"] = PaymentOfOthers;
-            //miss sth
+            json["wagonSettlements"] = BuildJsonArray(WagonSetlements);
+
             return json;
         }
 
@@ -102,6 +103,18 @@ namespace Transportation
             PaymentOfHangVe = json.Value<long>("paymentOfHangVe");
             PaymentOf10Percent = json.Value<long>("paymentOf10Percent");
             PaymentOfOthers = json.Value<long>("paymentOfOthers");
+        }
+
+        private JArray BuildJsonArray(Collection<WagonSettlement> wagonSettlements)
+        {
+            JArray jsons = new JArray();
+
+            foreach (WagonSettlement wagonSettlement in wagonSettlements)
+            {
+                jsons.Add(wagonSettlement.ToJson());
+            }
+
+            return jsons;
         }
     }
 }

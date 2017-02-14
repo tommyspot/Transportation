@@ -134,6 +134,7 @@
     <Content Include="img\white-transparent.png" />
     <Content Include="js\all.min.js" />
     <Content Include="js\clarity-app.js" />
+    <TypeScriptCompile Include="js\controllers\WagonManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\TruckManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\EmployeeManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\MainController.ts" />
@@ -150,6 +151,7 @@
     <TypeScriptCompile Include="js\model\BaseModel.ts" />
     <TypeScriptCompile Include="js\model\UserModel.ts" />
     <TypeScriptCompile Include="js\services\AuthenticationService.ts" />
+    <TypeScriptCompile Include="js\services\WagonService.ts" />
     <TypeScriptCompile Include="js\services\TruckService.ts" />
     <TypeScriptCompile Include="js\services\EmployeeService.ts" />
     <TypeScriptCompile Include="lib\angular\angular-cookies.d.ts" />

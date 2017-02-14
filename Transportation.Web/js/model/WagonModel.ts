@@ -23,5 +23,6 @@ module Clarity.Model {
     public paymentOf10Percent: number;
     public paymentOfOthers: number;
     public wagonSettlements: Array<Model.WagonSetlementModel>;
+    public isChecked: boolean;
   }
 }

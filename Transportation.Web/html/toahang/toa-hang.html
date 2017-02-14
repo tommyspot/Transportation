@@ -11,11 +11,11 @@
             <option value="99999">All</option>
           </select>
         </span>
-        <button type="button" class="btn btn-default" data-ng-click="viewModel.goToEmployeeForm()">
+        <button type="button" class="btn btn-default" data-ng-click="viewModel.goToWagonForm()">
           <span class="glyphicon glyphicon-plus"></span>
           <span class="hidden-xs">Tạo toa hàng mới</span>
         </button>
-        <button type="button" class="btn btn-default" data-ng-click="viewModel.removeEmployees()">
+        <button type="button" class="btn btn-default" data-ng-click="viewModel.removeWagons()">
           <span class="glyphicon glyphicon-trash"></span>
           <span class="hidden-xs">Xóa toa hàng</span>
         </button>
@@ -32,29 +32,25 @@
             <thead>
               <tr>
                 <th class="align-center">
-                  <input id="checkAllEmployees" type="checkbox" data-ng-model="viewModel.isCheckedAll"
-                         data-ng-change="viewModel.selectAllEmployeesOnPage()"/>
+                  <input id="checkAllWagons" type="checkbox" data-ng-model="viewModel.isCheckedAll"
+                         data-ng-change="viewModel.selectAllWagonsOnPage()"/>
                 </th>
                 <th class="align-center hidden-xs">ID</th>
-                <th class="align-center">Họ và tên</th>
-                <th class="align-center hidden-xs">CMND</th>
-                <th class="align-center hidden-xs">Số GPLX</th>
-                <th class="align-center hidden-xs">Ngày làm việc</th>
-                <th class="align-center">Chức vụ</th>
+                <th class="align-center">Ngày</th>
+                <th class="align-center hidden-xs">Xe</th>
+                <th class="align-center hidden-xs">Tổng tiền hàng</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="pointer" data-ng-repeat="employee in viewModel.getEmployeeListOnPage()"
-                  data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien/' + employee.id)">
+              <tr class="pointer" data-ng-repeat="wagon in viewModel.getWagonListOnPage()"
+                  data-ng-click="viewModel.$location.path('/ql-toa-hang/toa-hang/' + wagon.id)">
                 <td class="align-center" data-ng-click="$event.stopPropagation();">
-                  <input id="employee-{{$index}}" type="checkbox" data-ng-model="employee.isChecked" />
+                  <input id="wagon-{{$index}}" type="checkbox" data-ng-model="wagon.isChecked" />
                 </td>
-                <td class="align-center hidden-xs">{{employee.id}}</td>
-                <td class="align-center">{{employee.fullName}}</td>
-                <td class="align-center hidden-xs">{{employee.cardId}}</td>
-                <td class="align-center hidden-xs">{{employee.driverLicenseId}}</td>
-                <td class="align-center hidden-xs">{{employee.startDate}}</td>
-                <td class="align-center">{{employee.title}}</td>
+                <td class="align-center hidden-xs">{{wagon.id}}</td>
+                <td class="align-center">{{wagon.date}}</td>
+                <td class="align-center hidden-xs">{{wagon.truckId}}</td>
+                <td class="align-center hidden-xs">Tinh toan</td>
               </tr>
             </tbody>
           </table>

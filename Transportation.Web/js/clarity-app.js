@@ -304,3 +304,4 @@ clarityApp.controller('LogoutController', Clarity.Controller.LogoutController);
 clarityApp.controller('MainController', Clarity.Controller.MainController);
 clarityApp.controller('EmployeeManagementController', Clarity.Controller.EmployeeManagementController);
 clarityApp.controller('TruckManagementController', Clarity.Controller.TruckManagementController);
+clarityApp.controller('WagonManagementController', Clarity.Controller.WagonManagementController);
