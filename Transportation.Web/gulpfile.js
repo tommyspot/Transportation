@@ -48,6 +48,7 @@ var config = {
     , 'js/services/EmployeeService.js'
 		, 'js/services/TruckService.js'
     , 'js/services/WagonService.js'
+    , 'js/services/ExportService.js'
 
     , 'js/controllers/IController.js'
     , 'js/controllers/authentication/LoginController.js'

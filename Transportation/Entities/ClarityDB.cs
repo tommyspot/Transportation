@@ -66,6 +66,11 @@ namespace Transportation
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<SqlCePropertyMaxLengthConvention>();
 
+
+            modelBuilder.Entity<WagonSettlement>()
+                .HasRequired(x => x.Wagon)
+                .WithMany(x => x.WagonSetlements)
+                .WillCascadeOnDelete();
         }
     }
 }

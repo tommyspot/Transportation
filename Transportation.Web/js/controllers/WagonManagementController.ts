@@ -17,6 +17,7 @@ module Clarity.Controller {
     public employeeList: Array<Model.EmployeeModel>
     public truckService: service.TruckService;
     public employeeService: service.EmployeeService;
+    public exportService: service.ExportService;
 
     public wagonList: Array<Model.WagonModel>;
     public wagonListTmp: Array<Model.WagonModel>;
@@ -36,6 +37,7 @@ module Clarity.Controller {
       this.wagonService = new service.WagonService($http);
       this.truckService = new service.TruckService($http);
       this.employeeService = new service.EmployeeService($http);
+      this.exportService = new service.ExportService($http);
       $scope.viewModel = this;
 
       this.pageSize = 5;
@@ -166,6 +168,12 @@ module Clarity.Controller {
           this.$location.path('/ql-toa-hang/toa-hang');
         }, null);
       }
+    }
+
+    exportWagonToExcel(wagon: Model.WagonModel) {
+      this.exportService.exportWagonToExcel(wagon, (data) => {
+        window.location.href = '/output/' + data['fileName'];
+      }, null);
     }
 
     createWagon(wagon: Model.WagonModel) {

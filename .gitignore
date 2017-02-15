@@ -68,3 +68,4 @@ bld/
 # Visual Studio 2015 cache/options directory
 .vs/
 /Transportation.Web/node_modules
+/Transportation.Web/output
