@@ -102,21 +102,24 @@
           </div>
         </div>
       </div>
-  </form>
+    </form>
 
-  <button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/tao'"
-    data-ng-click="viewModel.createEmployee(viewModel.currentEmployee)" data-ng-disabled="employeeForm.$invalid">
-    <span class="glyphicon glyphicon-ok"></span><span>&nbsp;Save</span>
-  </button>
+    <button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/tao'"
+            data-ng-click="viewModel.createEmployee(viewModel.currentEmployee)" data-ng-disabled="employeeForm.$invalid">
+      <span class="glyphicon glyphicon-ok"></span>
+      <span>Lưu</span>
+    </button>
 
-  <button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/sua/' + viewModel.currentEmployee.id"
-    data-ng-click="viewModel.updateEmployee(viewModel.currentEmployee)" data-ng-disabled="employeeForm.$invalid">
-    <span class="glyphicon glyphicon-ok"></span><span>&nbsp;Update</span>
-  </button>
+    <button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/sua/' + viewModel.currentEmployee.id"
+            data-ng-click="viewModel.updateEmployee(viewModel.currentEmployee)" data-ng-disabled="employeeForm.$invalid">
+      <span class="glyphicon glyphicon-ok"></span>
+      <span>Cập nhật</span>
+    </button>
 
-  <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien')">
-    <span class="glyphicon glyphicon-remove"></span><span>&nbsp;Cancel</span>
-  </button>
+    <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien')">
+      <span class="glyphicon glyphicon-remove"></span>
+      <span>Hủy</span>
+    </button>
 
-</div>
+  </div>
 </div>

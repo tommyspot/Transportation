@@ -13,6 +13,11 @@ module Clarity.Controller {
     public currentWagon: Model.WagonModel;
     public wagonService: service.WagonService;
 
+    public truckList: Array<Model.TruckModel>
+    public employeeList: Array<Model.EmployeeModel>
+    public truckService: service.TruckService;
+    public employeeService: service.EmployeeService;
+
     public wagonList: Array<Model.WagonModel>;
     public wagonListTmp: Array<Model.WagonModel>;
     public numOfPages: number;
@@ -29,6 +34,8 @@ module Clarity.Controller {
       private $routeParams: any) {
 
       this.wagonService = new service.WagonService($http);
+      this.truckService = new service.TruckService($http);
+      this.employeeService = new service.EmployeeService($http);
       $scope.viewModel = this;
 
       this.pageSize = 5;
@@ -60,6 +67,8 @@ module Clarity.Controller {
         }
       } else {
         if (this.$location.path() === '/ql-toa-hang/toa-hang/tao') {
+          this.initTruckList();
+          this.initEmployeeList();
           this.currentWagon = new Model.WagonModel();
         } else if (this.$location.path() === '/ql-toa-hang/toa-hang') {
           this.initWagonList();
@@ -75,6 +84,18 @@ module Clarity.Controller {
         });
         this.wagonListTmp = this.wagonList;
         this.initPagination();
+      }, null);
+    }
+
+    initTruckList() {
+      this.truckService.getAll((results: Array<Model.TruckModel>) => {
+        this.truckList = results;
+      }, null);
+    }
+
+    initEmployeeList() {
+      this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
+        this.employeeList = results;
       }, null);
     }
 

@@ -350,6 +350,9 @@ div.bootstrap {
     #wagonFormSection{
         form {
             color: $transport-color-1;
+            border: 1px solid $transport-color-1;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
 
             .required-symbol {
                 color: $transport-color-2;
@@ -361,24 +364,70 @@ div.bootstrap {
             }
 
             .nav-tabs{
-                border-bottom: 1px solid $transport-color-2;
+                border-bottom: 1px solid $transport-color-1;
             }
             .tab-content{
-                margin-top: 20px;
+                height: 320px;
+                overflow-y: auto;
+                padding-top: 20px;
+
+                .row{
+                    margin-left: 0px;
+                    margin-right: 0px;
+                }
             }
             .nav-tabs > li > a{
                 color: $transport-color-1;
+                border-radius: 0px;
+                &:hover{
+                    cursor: default;
+                }
             }
+
+            .nav-tabs > li:first-child > a{
+                border-top-left-radius: 10px;
+            }
+
             .nav-tabs > li.active > a{
-                color: $transport-color-2;
+                color: #FFFFFF;
+                background-color: $transport-color-2;
                 border: 1px solid $transport-color-2;
                 border-bottom-color: transparent;
             }
         }
     }
 
+    .form-detail{
+        border: 1px solid $transport-color-1;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-bottom: 10px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    button{
+        outline: none;
+    }
+
+    .bold-text{
+        font-weight: bold;
+    }
+
     .margin-bottom-20 {
         margin-bottom: 20px;
+    }
+
+    .margin-bottom-15 {
+        margin-bottom: 15px;
+    }
+
+    .margin-top-20 {
+        margin-top: 20px;
+    }
+
+    .margin-top-15 {
+        margin-top: 15px;
     }
 
     .margin-left-40 {
@@ -396,4 +445,5 @@ div.bootstrap {
     .align-center{
         text-align: center;
     }
+    
 }

@@ -5190,24 +5190,55 @@ div.bootstrap {
   #ng-app .view-page .action-row {
     margin-bottom: 20px; }
   #ng-app #wagonFormSection form {
-    color: #34495E; }
+    color: #34495E;
+    border: 1px solid #34495E;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px; }
     #ng-app #wagonFormSection form .required-symbol {
       color: #C0392B; }
     #ng-app #wagonFormSection form .required-field {
       color: #C0392B;
       font-size: 12px; }
     #ng-app #wagonFormSection form .nav-tabs {
-      border-bottom: 1px solid #C0392B; }
+      border-bottom: 1px solid #34495E; }
     #ng-app #wagonFormSection form .tab-content {
-      margin-top: 20px; }
+      height: 320px;
+      overflow-y: auto;
+      padding-top: 20px; }
+      #ng-app #wagonFormSection form .tab-content .row {
+        margin-left: 0px;
+        margin-right: 0px; }
     #ng-app #wagonFormSection form .nav-tabs > li > a {
-      color: #34495E; }
+      color: #34495E;
+      border-radius: 0px; }
+      #ng-app #wagonFormSection form .nav-tabs > li > a:hover {
+        cursor: default; }
+    #ng-app #wagonFormSection form .nav-tabs > li:first-child > a {
+      border-top-left-radius: 10px; }
     #ng-app #wagonFormSection form .nav-tabs > li.active > a {
-      color: #C0392B;
+      color: #FFFFFF;
+      background-color: #C0392B;
       border: 1px solid #C0392B;
       border-bottom-color: transparent; }
+  #ng-app .form-detail {
+    border: 1px solid #34495E;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px; }
+  #ng-app button {
+    outline: none; }
+  #ng-app .bold-text {
+    font-weight: bold; }
   #ng-app .margin-bottom-20 {
     margin-bottom: 20px; }
+  #ng-app .margin-bottom-15 {
+    margin-bottom: 15px; }
+  #ng-app .margin-top-20 {
+    margin-top: 20px; }
+  #ng-app .margin-top-15 {
+    margin-top: 15px; }
   #ng-app .margin-left-40 {
     margin-left: 40px; }
   #ng-app .right-align {

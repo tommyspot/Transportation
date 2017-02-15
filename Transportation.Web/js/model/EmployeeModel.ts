@@ -18,5 +18,4 @@ module Clarity.Model {
     public title: string;
     public isChecked: boolean;
   }
-
 }

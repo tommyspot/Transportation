@@ -21,15 +21,18 @@
           <p><span class="bold-text">Chức vụ:</span> <span>{{viewModel.currentEmployee.title}}</span></p>
 
           <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien')">
-            <span class="glyphicon glyphicon-arrow-left"></span><span>&nbsp;Back</span>
+            <span class="glyphicon glyphicon-arrow-left"></span>
+            <span>Quay lại</span>
           </button>
 
           <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien/sua/' + viewModel.currentEmployee.id)">
-            <span class="glyphicon glyphicon-pencil"></span><span>&nbsp;Edit</span>
+            <span class="glyphicon glyphicon-pencil"></span>
+            <span>Sửa nhân viên</span>
           </button>
 
           <button class="btn btn-default negative-btn" data-ng-click="viewModel.removeEmployeeInDetail(viewModel.currentEmployee)">
-            <span class="glyphicon glyphicon-remove"></span><span>&nbsp;Remove</span>
+            <span class="glyphicon glyphicon-trash"></span>
+            <span>Xóa nhân viên</span>
           </button>
         </div>
       </div>

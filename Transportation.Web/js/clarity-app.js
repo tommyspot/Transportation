@@ -70,7 +70,11 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
       controller: 'WagonManagementController',
       access: 'authorized'
     })
-
+    .when('/ql-toa-hang/toa-hang/:wagon_id', {
+      templateUrl: '/html/toahang/toa-hang-detail.html' + '?v=' + VERSION_NUMBER,
+      controller: 'WagonManagementController',
+      access: 'authorized'
+    })
 
     .when('/not_found', {
       templateUrl: '/html/not-found.html' + '?v=' + VERSION_NUMBER,
