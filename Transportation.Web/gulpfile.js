@@ -134,3 +134,6 @@ gulp.task('watch', function () {
 // combine js, css files only
 gulp.task('combine-only', ['combine-js', 'combine-css'], function () { });
 
+// set a default tasks
+gulp.task('default', ['combine-minify-js', 'combine-css'], function () { });
+

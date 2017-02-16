@@ -325,6 +325,7 @@
     <None Include="Properties\PublishProfiles\Forecourt.pubxml" />
     <None Include="Properties\PublishProfiles\ShoreSweep.pubxml" />
     <Content Include="template\ToaHang_Report_Template.xlsx" />
+    <None Include="Properties\PublishProfiles\Transportation.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Transportation.Api\Transportation.Api.csproj">
