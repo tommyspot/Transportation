@@ -60,6 +60,16 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
 			controller: 'TruckManagementController',
 			access: 'authorized'
 		})
+		.when('/ql-toa-hang/xe/:employee_id', {
+			templateUrl: '/html/toahang/xe-detail.html' + '?v=' + VERSION_NUMBER,
+			controller: 'TruckManagementController',
+			access: 'authorized'
+		})
+		.when('/ql-toa-hang/xe/sua/:employee_id', {
+			templateUrl: '/html/toahang/xe-form.html' + '?v=' + VERSION_NUMBER,
+			controller: 'TruckManagementController',
+			access: 'authorized'
+		})
     .when('/ql-toa-hang/toa-hang', {
       templateUrl: '/html/toahang/toa-hang.html' + '?v=' + VERSION_NUMBER,
       controller: 'WagonManagementController',

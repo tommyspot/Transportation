@@ -17,7 +17,7 @@ namespace Transportation.Api
 
         public TruckService() { }
 
-        [Route(HttpVerb.Get, "/truck")]
+        [Route(HttpVerb.Get, "/trucks")]
         public RestApiResult GetAll()
         {
             var trucks = ClarityDB.Instance.Trucks;
@@ -25,7 +25,7 @@ namespace Transportation.Api
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(trucks) };
         }
 
-        [Route(HttpVerb.Post, "/truck")]
+        [Route(HttpVerb.Post, "/trucks")]
         public RestApiResult Create(JObject json)
         {
             if (json == null)
@@ -41,7 +41,53 @@ namespace Transportation.Api
             return new RestApiResult { StatusCode = HttpStatusCode.OK };
         }
 
-        private JArray BuildJsonArray(IEnumerable<Truck> trucks)
+		[Route(HttpVerb.Get, "/trucks/{id}")]
+		public RestApiResult GetTruckByID(long id)
+		{
+			Truck truck = ClarityDB.Instance.Trucks.FirstOrDefault(x => x.ID == id);
+
+			if (truck == null)
+			{
+				return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
+			}
+
+			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = truck.ToJson() };
+		}
+
+		[Route(HttpVerb.Delete, "/trucks/{id}")]
+		public RestApiResult Delete(long id)
+		{
+			Truck truck = ClarityDB.Instance.Trucks.FirstOrDefault(x => x.ID == id);
+
+			if (truck == null)
+			{
+				return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
+			}
+
+			ClarityDB.Instance.Trucks.Remove(truck);
+			ClarityDB.Instance.SaveChanges();
+
+			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = truck.ToJson() };
+		}
+
+		[Route(HttpVerb.Put, "/trucks/{id}")]
+		public RestApiResult Update(long id, JObject json)
+		{
+			Truck truck = ClarityDB.Instance.Trucks.FirstOrDefault(x => x.ID == id);
+
+			if (truck == null)
+			{
+				return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
+			}
+
+			truck.ApplyJson(json);
+
+			ClarityDB.Instance.SaveChanges();
+
+			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
+		}
+
+		private JArray BuildJsonArray(IEnumerable<Truck> trucks)
         {
             JArray array = new JArray();
 

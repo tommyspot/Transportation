@@ -119,6 +119,7 @@
     <Content Include="html\not-found.html" />
     <Content Include="html\login.html" />
     <Content Include="html\pre-loading.html" />
+    <Content Include="html\toahang\xe-detail.html" />
     <Content Include="html\toahang\toa-hang-detail.html" />
     <Content Include="html\toahang\toa-hang-form.html" />
     <Content Include="html\toahang\toa-hang.html" />
@@ -323,7 +324,7 @@
     <None Include="Properties\PublishProfiles\Changi_eTRS.pubxml" />
     <None Include="Properties\PublishProfiles\Clarity.pubxml" />
     <None Include="Properties\PublishProfiles\Forecourt.pubxml" />
-    <None Include="Properties\PublishProfiles\ShoreSweep.pubxml" />
+    <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <Content Include="template\ToaHang_Report_Template.xlsx" />
     <None Include="Properties\PublishProfiles\Transportation.pubxml" />
   </ItemGroup>
