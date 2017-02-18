@@ -5049,13 +5049,12 @@ div.bootstrap {
             opacity: 0.8; }
   #ng-app .banner {
     background-color: #34495E;
-    height: 60px;
-    line-height: 60px; }
+    height: 70px;
+    line-height: 70px; }
     #ng-app .banner .log-out-section {
-      line-height: 60px; }
+      line-height: 70px; }
       #ng-app .banner .log-out-section .log-out-btn {
         background: transparent;
-        line-height: 27px;
         border: none;
         color: white;
         font-size: 16px;
@@ -5064,7 +5063,7 @@ div.bootstrap {
         #ng-app .banner .log-out-section .log-out-btn:hover {
           color: #C0392B; }
     #ng-app .banner .logo {
-      height: 44px; }
+      height: 54px; }
   #ng-app .breadcrumb-trail {
     list-style: none;
     overflow: hidden;
