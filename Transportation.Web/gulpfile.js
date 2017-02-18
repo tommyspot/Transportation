@@ -38,6 +38,7 @@ var config = {
     , 'js/model/UserModel.js'
     , 'js/model/EmployeeModel.js'
 		, 'js/model/TruckModel.js'
+		, 'js/model/CustomerModel.js'
     , 'js/model/WagonModel.js'
     , 'js/model/WagonSetlementModel.js'
     
@@ -47,6 +48,7 @@ var config = {
     , 'js/services/UserService.js'
     , 'js/services/EmployeeService.js'
 		, 'js/services/TruckService.js'
+		, 'js/services/CustomerService.js'
     , 'js/services/WagonService.js'
     , 'js/services/ExportService.js'
 
@@ -56,6 +58,7 @@ var config = {
     , 'js/controllers/MainController.js'
     , 'js/controllers/EmployeeManagementController.js'
     , 'js/controllers/TruckManagementController.js'
+		, 'js/controllers/CustomerManagementController.js'
     , 'js/controllers/WagonManagementController.js'
 
     // controllers, services written with TypeScript must be placed before clarity-app.js

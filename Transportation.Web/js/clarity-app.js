@@ -30,11 +30,64 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
       controller: 'MainController',
       access: 'authorized'
     })
+		.when('/ql-toa-hang/toa-hang', {
+			templateUrl: '/html/toahang/toa-hang.html' + '?v=' + VERSION_NUMBER,
+			controller: 'WagonManagementController',
+			access: 'authorized'
+		})
+    .when('/ql-toa-hang/toa-hang/tao', {
+    	templateUrl: '/html/toahang/toa-hang-form.html' + '?v=' + VERSION_NUMBER,
+    	controller: 'WagonManagementController',
+    	access: 'authorized'
+    })
+    .when('/ql-toa-hang/toa-hang/:wagon_id', {
+    	templateUrl: '/html/toahang/toa-hang-detail.html' + '?v=' + VERSION_NUMBER,
+    	controller: 'WagonManagementController',
+    	access: 'authorized'
+    })
+
     .when('/ql-toa-hang/xe', {
       templateUrl: '/html/toahang/xe.html' + '?v=' + VERSION_NUMBER,
       controller: 'TruckManagementController',
       access: 'authorized'
     })
+		.when('/ql-toa-hang/xe/tao', {
+			templateUrl: '/html/toahang/xe-form.html' + '?v=' + VERSION_NUMBER,
+			controller: 'TruckManagementController',
+			access: 'authorized'
+		})
+		.when('/ql-toa-hang/xe/:employee_id', {
+			templateUrl: '/html/toahang/xe-detail.html' + '?v=' + VERSION_NUMBER,
+			controller: 'TruckManagementController',
+			access: 'authorized'
+		})
+		.when('/ql-toa-hang/xe/sua/:employee_id', {
+			templateUrl: '/html/toahang/xe-form.html' + '?v=' + VERSION_NUMBER,
+			controller: 'TruckManagementController',
+			access: 'authorized'
+		})
+
+		.when('/ql-toa-hang/khach-hang', {
+			templateUrl: '/html/toahang/khach-hang.html' + '?v=' + VERSION_NUMBER,
+			controller: 'CustomerManagementController',
+			access: 'authorized'
+		})
+		.when('/ql-toa-hang/khach-hang/tao', {
+			templateUrl: '/html/toahang/khach-hang-form.html' + '?v=' + VERSION_NUMBER,
+			controller: 'CustomerManagementController',
+			access: 'authorized'
+		})
+		.when('/ql-toa-hang/khach-hang/:customer_id', {
+			templateUrl: '/html/toahang/khach-hang-detail.html' + '?v=' + VERSION_NUMBER,
+			controller: 'CustomerManagementController',
+			access: 'authorized'
+		})
+		.when('/ql-toa-hang/khach-hang/sua/:customer_id', {
+			templateUrl: '/html/toahang/khach-hang-form.html' + '?v=' + VERSION_NUMBER,
+			controller: 'CustomerManagementController',
+			access: 'authorized'
+		})
+
     .when('/ql-toa-hang/nhan-vien', {
       templateUrl: '/html/toahang/nhan-vien.html' + '?v=' + VERSION_NUMBER,
       controller: 'EmployeeManagementController',
@@ -53,36 +106,6 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
     .when('/ql-toa-hang/nhan-vien/sua/:employee_id', {
       templateUrl: '/html/toahang/nhan-vien-form.html' + '?v=' + VERSION_NUMBER,
       controller: 'EmployeeManagementController',
-      access: 'authorized'
-    })
-		.when('/ql-toa-hang/xe/tao', {
-			templateUrl: '/html/toahang/xe-form.html' + '?v=' + VERSION_NUMBER,
-			controller: 'TruckManagementController',
-			access: 'authorized'
-		})
-		.when('/ql-toa-hang/xe/:employee_id', {
-			templateUrl: '/html/toahang/xe-detail.html' + '?v=' + VERSION_NUMBER,
-			controller: 'TruckManagementController',
-			access: 'authorized'
-		})
-		.when('/ql-toa-hang/xe/sua/:employee_id', {
-			templateUrl: '/html/toahang/xe-form.html' + '?v=' + VERSION_NUMBER,
-			controller: 'TruckManagementController',
-			access: 'authorized'
-		})
-    .when('/ql-toa-hang/toa-hang', {
-      templateUrl: '/html/toahang/toa-hang.html' + '?v=' + VERSION_NUMBER,
-      controller: 'WagonManagementController',
-      access: 'authorized'
-    })
-    .when('/ql-toa-hang/toa-hang/tao', {
-      templateUrl: '/html/toahang/toa-hang-form.html' + '?v=' + VERSION_NUMBER,
-      controller: 'WagonManagementController',
-      access: 'authorized'
-    })
-    .when('/ql-toa-hang/toa-hang/:wagon_id', {
-      templateUrl: '/html/toahang/toa-hang-detail.html' + '?v=' + VERSION_NUMBER,
-      controller: 'WagonManagementController',
       access: 'authorized'
     })
 
@@ -278,21 +301,28 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
               case '/ql-toa-hang/xe':
                 breadCrumb.name = 'Xe';
                 break;
-              case '/ql-toa-hang/nhan-vien/tao':
+            	case '/ql-toa-hang/khach-hang':
+            		breadCrumb.name = 'Khách hàng';
+            		break;
+            	case '/ql-garage':
+            		breadCrumb.name = 'Quản lý garage';
+            		break;
+            	case '/ql-toa-hang/toa-hang':
+            		breadCrumb.name = 'Toa Hàng';
+            		break;
+            	case '/ql-toa-hang/nhan-vien/tao':
+            	case '/ql-toa-hang/xe/tao':
+            	case '/ql-toa-hang/khach-hang/tao':
+            	case '/ql-toa-hang/toa-hang/tao':
                 breadCrumb.name = 'Tạo mới';
                 break;
-              case '/ql-toa-hang/nhan-vien/sua':
+            	case '/ql-toa-hang/nhan-vien/sua':
+            	case '/ql-toa-hang/xe/sua':
+            	case '/ql-toa-hang/khach-hang/sua':
+            	case '/ql-toa-hang/toa-hang/sua':
                 breadCrumb.name = 'Sửa';
                 break;
-              case '/ql-garage':
-                breadCrumb.name = 'Quản lý garage';
-                break;
-              case '/ql-toa-hang/toa-hang':
-                breadCrumb.name = 'Toa Hàng';
-                break;
-              case '/ql-toa-hang/toa-hang/tao':
-                breadCrumb.name = 'Tạo mới';
-                break;
+              
             }
 
             //Especial case: edit/detail
@@ -324,10 +354,13 @@ clarityApp.service('authenticationService', Clarity.Service.AuthenticationServic
 clarityApp.service('baseService', Clarity.Service.BaseService);
 clarityApp.service('userService', Clarity.Service.UserService);
 clarityApp.service('employeeService', Clarity.Service.EmployeeService);
+clarityApp.service('truckService', Clarity.Service.TruckService);
+clarityApp.service('customerService', Clarity.Service.CusmtomerService);
 
 clarityApp.controller('LoginController', Clarity.Controller.LoginController);
 clarityApp.controller('LogoutController', Clarity.Controller.LogoutController);
 clarityApp.controller('MainController', Clarity.Controller.MainController);
 clarityApp.controller('EmployeeManagementController', Clarity.Controller.EmployeeManagementController);
 clarityApp.controller('TruckManagementController', Clarity.Controller.TruckManagementController);
+clarityApp.controller('CustomerManagementController', Clarity.Controller.CustomerManagementController);
 clarityApp.controller('WagonManagementController', Clarity.Controller.WagonManagementController);

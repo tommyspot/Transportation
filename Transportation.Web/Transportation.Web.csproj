@@ -119,11 +119,14 @@
     <Content Include="html\not-found.html" />
     <Content Include="html\login.html" />
     <Content Include="html\pre-loading.html" />
+    <Content Include="html\toahang\khach-hang-detail.html" />
+    <Content Include="html\toahang\khach-hang.html" />
     <Content Include="html\toahang\xe-detail.html" />
     <Content Include="html\toahang\toa-hang-detail.html" />
     <Content Include="html\toahang\toa-hang-form.html" />
     <Content Include="html\toahang\toa-hang.html" />
     <Content Include="html\toahang\nhan-vien-detail.html" />
+    <Content Include="html\toahang\khach-hang-form.html" />
     <Content Include="html\toahang\xe-form.html" />
     <Content Include="html\toahang\nhan-vien-form.html" />
     <Content Include="html\toahang\nhan-vien.html" />
@@ -142,6 +145,7 @@
     <Content Include="img\white-transparent.png" />
     <Content Include="js\all.min.js" />
     <Content Include="js\clarity-app.js" />
+    <TypeScriptCompile Include="js\controllers\CustomerManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\WagonManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\TruckManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\EmployeeManagementController.ts" />
@@ -151,6 +155,7 @@
     <Content Include="font\roboto\Roboto-Regular.ttf" />
     <TypeScriptCompile Include="js\controllers\IController.ts" />
     <TypeScriptCompile Include="js\helpers\MainHelper.ts" />
+    <TypeScriptCompile Include="js\model\CustomerModel.ts" />
     <TypeScriptCompile Include="js\model\TruckModel.ts" />
     <TypeScriptCompile Include="js\model\WagonSetlementModel.ts" />
     <TypeScriptCompile Include="js\model\WagonModel.ts" />
@@ -160,6 +165,7 @@
     <TypeScriptCompile Include="js\model\UserModel.ts" />
     <TypeScriptCompile Include="js\services\AuthenticationService.ts" />
     <TypeScriptCompile Include="js\services\ExportService.ts" />
+    <TypeScriptCompile Include="js\services\CustomerService.ts" />
     <TypeScriptCompile Include="js\services\WagonService.ts" />
     <TypeScriptCompile Include="js\services\TruckService.ts" />
     <TypeScriptCompile Include="js\services\EmployeeService.ts" />

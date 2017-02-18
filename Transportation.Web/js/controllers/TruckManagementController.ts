@@ -139,7 +139,7 @@ module Clarity.Controller {
       var confirmDialog = this.$window.confirm('Do you want to delete the truck?');
       if (confirmDialog) {
         this.truckService.deleteEntity(truck, (data) => {
-          this.$location.path('/ql-toa-hang/nhan-vien');
+          this.$location.path('/ql-toa-hang/xe');
         }, null);
       }
     }
@@ -154,7 +154,7 @@ module Clarity.Controller {
 
 		updateTruck(truck: Model.TruckModel) {
       this.truckService.update(truck, (data) => {
-        this.$location.path('/ql-toa-hang/nhan-vien');
+        this.$location.path('/ql-toa-hang/xe');
       }, null);
     }
 
