@@ -17,6 +17,7 @@ module Clarity.Model {
     public monthlyPayment: string;
     public checkDate: string;
 		public insuranceDate: string;
+		public isChecked: boolean;
   }
 
 }

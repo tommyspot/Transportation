@@ -15,13 +15,13 @@
           <span class="glyphicon glyphicon-plus"></span>
           <span class="hidden-xs">Tạo xe mới</span>
         </button>
-        <button type="button" class="btn btn-default" data-ng-click="viewModel.removeUser()">
+        <button type="button" class="btn btn-default" data-ng-click="viewModel.removeTrucks()">
           <span class="glyphicon glyphicon-trash"></span>
           <span class="hidden-xs">Xóa xe</span>
         </button>
       </div>
       <div class="col-sm-3">
-        <input class="form-control" type="text" data-ng-change="viewModel.filterUserList(searchText)" data-ng-model="searchText" placeholder="Search" />
+        <input class="form-control" type="text" data-ng-model="searchText" placeholder="Search" />
       </div>
     </div>
 
@@ -31,25 +31,24 @@
           <table class="table table-hover table-bordered">
             <thead>
               <tr>
-                <th class="column-60 align-center">
-                  <label class="cover-checkbox" for="checkAllUsers">
-                    <input id="checkAllUsers" type="checkbox" data-ng-model="viewModel.isCheckedAll" data-ng-change="viewModel.selectAllUsersOnPage()" />
-                  </label>
+                <th class="align-center">
+									<input id="checkAllTrucks" type="checkbox" data-ng-model="viewModel.isCheckedAll"
+												 data-ng-change="viewModel.selectAllTrucksOnPage()" />
                 </th>
-                <th class="align-center hidden-xs">Mã xe</th>
-                <th class="align-center">Bien so</th>
-                <th class="align-center hidden-xs">Số khung</th>
-                <th class="align-center hidden-xs">Số máy</th>
-                <th class="align-center hidden-xs">năm sx</th>
-                <th class="align-center">nhãn hiệu</th>
+                <th class="align-center hidden-xs">Mã Xe</th>
+                <th class="align-center">Biển Số </th>
+                <th class="align-center hidden-xs">Số Khung</th>
+                <th class="align-center hidden-xs">Số Máy</th>
+                <th class="align-center hidden-xs">Năm SX</th>
+                <th class="align-center">Nhãn Hiệu</th>
               </tr>
             </thead>
             <tbody>
               <tr class="pointer" data-ng-repeat="truck in viewModel.truckList"
-                  data-ng-click="viewModel.$location.path('/user/' + user._id)">
+                  data-ng-click="viewModel.$location.path('/ql-toa-hang/xe/' + truck.id)">
                 <td class="align-center" data-ng-click="$event.stopPropagation();">
                   <label class="cover-checkbox" for="user-{{$index}}">
-                    <input id="user-{{$index}}" type="checkbox" data-ng-model="user.isChecked" />
+                    <input id="truck-{{$index}}" type="checkbox" data-ng-model="truck.isChecked" />
                   </label>
                 </td>
                 <td class="align-center hidden-xs">{{truck.code}}</td>
