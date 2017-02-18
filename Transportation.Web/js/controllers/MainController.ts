@@ -19,7 +19,6 @@ module Clarity.Controller {
 			public $filter: ng.IFilterService) {
 
       $scope.viewModel = this;
-
     }
 
     goToWagonsManagement() {
