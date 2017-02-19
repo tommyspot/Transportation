@@ -8,7 +8,8 @@ namespace Transportation
         IDbSet<User> Users { get; set; }
         IDbSet<Employee> Employees { get; set; }
 		IDbSet<Truck> Trucks { get; set; }
-        IDbSet<Wagon> Wagons { get; set; }
+		IDbSet<Customer> Customers { get; set; }
+		IDbSet<Wagon> Wagons { get; set; }
         IDbSet<WagonSettlement> WagonSettlements { get; set; }
         Database Database { get; }
 

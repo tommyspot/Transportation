@@ -21,14 +21,14 @@ namespace Transportation
         public string YearOfManufacture { get; set; }
         public string Brand { get; set; }
         public string Weight { get; set; }
-        public string StartUsingDate { get; set; }
-        public string DriverId { get; set; }
+        public DateTime StartUsingDate { get; set; }
+        public string EmployeeId { get; set; }
         public string Stock { get; set; }
-        public string BuyingDate { get; set; }
+        public DateTime BuyingDate { get; set; }
         public string MonthlyPayment { get; set; }
-        public string CheckDate { get; set; }
-		public string InsuranceDate { get; set; }
-
+        public DateTime CheckDate { get; set; }
+		public DateTime InsuranceDate { get; set; }
+		public DateTime CreatedDate { get; set; }
 		public Truck() {
         }
 
@@ -45,7 +45,7 @@ namespace Transportation
             json["brand"] = Brand;
             json["weight"] = Weight;
             json["startUsingDate"] = StartUsingDate;
-            json["driverId"] = DriverId;
+            json["employeeId"] = EmployeeId;
             json["stock"] = Stock;
 
             json["buyingDate"] = BuyingDate;
@@ -76,14 +76,14 @@ namespace Transportation
             YearOfManufacture = json.Value<string>("yearOfManufacture");
             Brand = json.Value<string>("brand");
             Weight = json.Value<string>("weight");
-            StartUsingDate = json.Value<string>("startUsingDate");
-            DriverId = json.Value<string>("driverId");
+            StartUsingDate = json.Value<DateTime>("startUsingDate");
+            EmployeeId = json.Value<string>("employeeId");
 
             Stock = json.Value<string>("stock");
-            BuyingDate = json.Value<string>("buyingDate");
+            BuyingDate = json.Value<DateTime>("buyingDate");
             MonthlyPayment = json.Value<string>("monthlyPayment");
-            CheckDate = json.Value<string>("checkDate");
-			InsuranceDate = json.Value<string>("insuranceDate");
+            CheckDate = json.Value<DateTime>("checkDate");
+			InsuranceDate = json.Value<DateTime>("insuranceDate");
 		}
     }
 }

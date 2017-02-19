@@ -34,7 +34,7 @@ namespace Transportation.Api
             }
 
             Truck truck = Truck.FromJson(json);
-
+			truck.CreatedDate = DateTime.Now;
             ClarityDB.Instance.Trucks.Add(truck);
             ClarityDB.Instance.SaveChanges();
 
@@ -81,7 +81,7 @@ namespace Transportation.Api
 			}
 
 			truck.ApplyJson(json);
-
+			truck.CreatedDate = DateTime.Now;
 			ClarityDB.Instance.SaveChanges();
 
 			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };

@@ -1,0 +1,83 @@
+﻿<div id="employeeFormSection" class="bootstrap form">
+	<div class="container">
+		<form name="employeeForm">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="fullName">Họ và tên<span class="required-symbol">*</span></label>
+						<span class="required-field" ng-if="employeeForm.fullName.$touched && employeeForm.fullName.$invalid">('Họ và tên' phải được nhập)</span>
+						<input id="fullName" name="fullName" class="form-control" type="text" ng-model="viewModel.currentCustomer.fullName" required>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="idNumber">Khu vực<span class="required-symbol">*</span></label>
+						<span class="required-field" ng-if="employeeForm.idNumber.$touched && employeeForm.idNumber.$invalid">('Khu vực' phải được nhập)</span>
+						<input id="idNumber" name="idNumber" class="form-control" type="text" ng-model="viewModel.currentCustomer.area" required>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="address">Nhân viên(Đại lý)</label>
+						<select id="employeeId" class="form-control" data-ng-model="viewModel.currentCustomer.employeeId">
+							<option value="">--Chọn tài xế--</option>
+							<option ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="mobile">Tổng Nợ</label>
+						<input id="mobile" name="mobile" class="form-control" type="text" ng-model="viewModel.currentCustomer.totalOwned">
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="driverLicenseRank">Tổng trả</label>
+						<input id="driverLicenseRank" name="driverLicenseRank" class="form-control" type="text" ng-model="viewModel.currentCustomer.totalPay">
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="driverLicenseId">Còn lại</label>
+						<input id="driverLicenseId" name="driverLicenseId" class="form-control" type="text" ng-model="viewModel.currentCustomer.totalDebt">
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="driverLicenseAddress">Xếp loại</label>
+						<input id="driverLicenseAddress" name="driverLicenseAddress" class="form-control" type="text" ng-model="viewModel.currentCustomer.type">
+					</div>
+				</div>
+			</div>
+
+			<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/khach-hang/tao'"
+							data-ng-click="viewModel.createCustomer(viewModel.currentCustomer)" data-ng-disabled="employeeForm.$invalid">
+				<span class="glyphicon glyphicon-ok"></span>
+				<span>Lưu</span>
+			</button>
+
+			<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/khach-hang/sua/' + viewModel.currentCustomer.id"
+							data-ng-click="viewModel.updateCustomer(viewModel.currentCustomer)" data-ng-disabled="employeeForm.$invalid">
+				<span class="glyphicon glyphicon-ok"></span>
+				<span>Cập nhật</span>
+			</button>
+
+			<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/khach-hang')">
+				<span class="glyphicon glyphicon-remove"></span>
+				<span>Hủy</span>
+			</button>
+
+		</form>
+			</div>
+
+</div>

@@ -12,6 +12,8 @@ module Clarity.Controller {
   export class TruckManagementController {
 		public currentTruck: Model.TruckModel;
     public truckService: service.TruckService;
+		public employeeService: service.EmployeeService;
+		public employeeList: Array<Model.EmployeeModel>;
     public truckList: Array<Model.TruckModel>;
 		public truckListTmp: Array<Model.TruckModel>;
     public numOfPages: number;
@@ -28,6 +30,7 @@ module Clarity.Controller {
 			private $routeParams: any) {
 
 			this.truckService = new service.TruckService($http);
+			this.employeeService = new service.EmployeeService($http);
       $scope.viewModel = this;
 			this.pageSize = 5;
       this.initTruck();
@@ -52,12 +55,17 @@ module Clarity.Controller {
           if (this.currentTruck == null) {
             this.truckService.getById(truckId, (data) => {
               this.currentTruck = data;
+							this.currentTruck.startUsingDate = new Date(data.startUsingDate);
+							this.currentTruck.buyingDate = new Date(data.buyingDate);
+							this.currentTruck.checkDate = new Date(data.checkDate);
+							this.currentTruck.insuranceDate = new Date(data.insuranceDate);
             }, null);
           }
         }
       } else {
         if (this.$location.path() === '/ql-toa-hang/xe/tao') {
           this.currentTruck = new Model.TruckModel();
+					this.initEmployeeList();
         } else if (this.$location.path() === '/ql-toa-hang/xe') {
           this.initTruckList();
         }
@@ -72,6 +80,12 @@ module Clarity.Controller {
         });
         this.truckListTmp = this.truckList;
         this.initPagination();
+      }, null);
+    }
+
+		initEmployeeList() {
+      this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
+        this.employeeList = results;
       }, null);
     }
 
@@ -139,7 +153,7 @@ module Clarity.Controller {
       var confirmDialog = this.$window.confirm('Do you want to delete the truck?');
       if (confirmDialog) {
         this.truckService.deleteEntity(truck, (data) => {
-          this.$location.path('/ql-toa-hang/nhan-vien');
+          this.$location.path('/ql-toa-hang/xe');
         }, null);
       }
     }
@@ -154,7 +168,7 @@ module Clarity.Controller {
 
 		updateTruck(truck: Model.TruckModel) {
       this.truckService.update(truck, (data) => {
-        this.$location.path('/ql-toa-hang/nhan-vien');
+        this.$location.path('/ql-toa-hang/xe');
       }, null);
     }
 
@@ -162,5 +176,18 @@ module Clarity.Controller {
       this.$location.path('/ql-toa-hang/xe/tao');
     }
 
+		changeDateFormat(date) {
+			var formatedDate = '';
+			if (date) {
+				var newDate = new Date(date);
+				var dateNo = newDate.getDate().toString();
+				dateNo = dateNo.toString().length == 2 ? dateNo : '0' + dateNo;
+				var monthNo = (newDate.getMonth() + 1).toString();
+				monthNo = monthNo.toString().length == 2 ? monthNo : '0' + monthNo;
+				var yearNo = newDate.getFullYear();
+				formatedDate = dateNo + '/' + monthNo + '/' + yearNo;
+			}
+			return formatedDate;
+		}
 	}
 }
