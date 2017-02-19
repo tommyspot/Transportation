@@ -5,7 +5,7 @@ module Clarity.Model {
   export class WagonSetlementModel extends Model.BaseModel {
     public customerId: number;
     public wagonId: number;
-    public date: string;
+    public date: Date;
     public employeeId: number;
     //public sumPayment: number;
     public payment: number;

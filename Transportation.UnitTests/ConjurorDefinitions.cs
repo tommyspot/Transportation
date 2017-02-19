@@ -23,6 +23,7 @@ public class ConjurerDefinitions
                 x.FirstName = "First Name";
                 x.LastName = "Last Name";
                 x.Role = Role.Normal;
+                x.CreatedDate = DateTime.Now;
             });
 
             Presto.PersistAction = entity => {

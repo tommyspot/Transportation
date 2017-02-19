@@ -33,6 +33,7 @@ namespace Transportation.Api
             }
 
             Employee employee = Employee.FromJson(json);
+            employee.CreatedDate = DateTime.Now;
 
             ClarityDB.Instance.Employees.Add(employee);
             ClarityDB.Instance.SaveChanges();

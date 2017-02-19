@@ -13,6 +13,8 @@ namespace Transportation
     public class Employee : Entity
     {
         [Required]
+        public string Code { get; set; }
+        [Required]
         public string FullName { get; set; }
         [Required]
         public string CardID { get; set; }
@@ -27,6 +29,7 @@ namespace Transportation
         public string Violation { get; set; }
         public string Notes { get; set; }
         public string Title { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         public Employee() {
         }
@@ -35,6 +38,7 @@ namespace Transportation
         {
             JObject json = new JObject();
             json["id"] = ID;
+            json["code"] = Code;
             json["fullName"] = FullName;
             json["cardId"] = CardID;
             json["address"] = Address;
@@ -66,6 +70,7 @@ namespace Transportation
         {
             ID = json.Value<long>("id");
 
+            Code = json.Value<string>("code");
             FullName = json.Value<string>("fullName");
             CardID = json.Value<string>("cardId");
             Address = json.Value<string>("address");

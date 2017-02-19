@@ -25,6 +25,7 @@ namespace Transportation
         public byte[] Salt { get; set; }
 
         public Role Role { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         public User() {
         }

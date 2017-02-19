@@ -4,15 +4,24 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
+            <label for="code">Mã nhân viên <span class="required-symbol">*</span></label>
+            <span class="required-field" ng-if="employeeForm.code.$touched && employeeForm.code.$invalid">(Mã NV phải được nhập)</span>
+            <input id="code" name="code" class="form-control" type="text" ng-model="viewModel.currentEmployee.code" required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
             <label for="fullName">Họ và tên <span class="required-symbol">*</span></label>
-            <span class="required-field" ng-if="employeeForm.fullName.$touched && employeeForm.fullName.$invalid">('Họ và tên' is required or invalid)</span>
+            <span class="required-field" ng-if="employeeForm.fullName.$touched && employeeForm.fullName.$invalid">(Họ và tên phải được nhập)</span>
             <input id="fullName" name="fullName" class="form-control" type="text" ng-model="viewModel.currentEmployee.fullName" required>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="form-group">
             <label for="idNumber">CMND <span class="required-symbol">*</span></label>
-            <span class="required-field" ng-if="employeeForm.idNumber.$touched && employeeForm.idNumber.$invalid">('CMND' is required or invalid)</span>
+            <span class="required-field" ng-if="employeeForm.idNumber.$touched && employeeForm.idNumber.$invalid">(CMND phải được nhập)</span>
             <input id="idNumber" name="idNumber" class="form-control" type="text" ng-model="viewModel.currentEmployee.cardId" required>
           </div>
         </div>

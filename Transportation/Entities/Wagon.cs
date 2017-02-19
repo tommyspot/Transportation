@@ -13,17 +13,19 @@ namespace Transportation
 {
     public class Wagon : Entity
     {
+        public DateTime CreatedDate { get; set; }
         [Required]
-        public string DepartDate { get; set; }
+        public string Code { get; set; }
         [Required]
-        public string ReturnDate { get; set; }
+        public DateTime DepartDate { get; set; }
+        [Required]
+        public DateTime ReturnDate { get; set; }
         [Required]
         public long TruckID { get; set; }
         public virtual Truck Truck { get; set; }
         [Required]
         public long EmployeeID { get; set; }
         public virtual Employee Employee{ get; set; }
-
         public virtual Collection<WagonSettlement> WagonSetlements { get; set; }
 
         public long CostOfTruck { get; set; }
@@ -49,6 +51,8 @@ namespace Transportation
         {
             JObject json = new JObject();
             json["id"] = ID;
+
+            json["code"] = Code;
             json["departDate"] = DepartDate;
             json["returnDate"] = ReturnDate;
             json["truckId"] = TruckID;
@@ -85,8 +89,9 @@ namespace Transportation
         {
             ID = json.Value<long>("id");
 
-            DepartDate = json.Value<string>("departDate");
-            ReturnDate = json.Value<string>("returnDate");
+            Code = json.Value<string>("code");
+            DepartDate = json.Value<DateTime>("departDate");
+            ReturnDate = json.Value<DateTime>("returnDate");
             TruckID = json.Value<long>("truckId");
             EmployeeID = json.Value<long>("employeeId");
 

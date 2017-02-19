@@ -3,6 +3,7 @@
 module Clarity.Model {
 
   export class EmployeeModel extends Model.BaseModel {
+    public code: string;
     public fullName: string;
     public cardId: string;
     public address: string;

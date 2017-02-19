@@ -33,6 +33,7 @@ namespace Transportation.Api
                 return new RestApiResult { StatusCode = HttpStatusCode.BadRequest };
 
             User user = User.FromJson(json);
+            user.CreatedDate = DateTime.Now;
 
             if (ClarityDB.Instance.Users.Any(x => x.UserName.ToLower() == user.UserName.ToLower()))
             {

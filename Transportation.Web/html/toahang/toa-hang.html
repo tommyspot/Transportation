@@ -35,9 +35,10 @@
                   <input id="checkAllWagons" type="checkbox" data-ng-model="viewModel.isCheckedAll"
                          data-ng-change="viewModel.selectAllWagonsOnPage()"/>
                 </th>
-                <th class="align-center hidden-xs">ID</th>
-                <th class="align-center">Ngày</th>
-                <th class="align-center hidden-xs">Xe</th>
+                <th class="align-center hidden-xs">Mã toa hàng</th>
+                <th class="align-center">Ngày đi</th>
+                <th class="align-center">Ngày đến</th>
+                <th class="align-center hidden-xs">Mã xe</th>
                 <th class="align-center hidden-xs">Tổng tiền hàng</th>
               </tr>
             </thead>
@@ -47,8 +48,9 @@
                 <td class="align-center" data-ng-click="$event.stopPropagation();">
                   <input id="wagon-{{$index}}" type="checkbox" data-ng-model="wagon.isChecked" />
                 </td>
-                <td class="align-center hidden-xs">{{wagon.id}}</td>
-                <td class="align-center">{{wagon.date}}</td>
+                <td class="align-center hidden-xs">{{wagon.code}}</td>
+                <td class="align-center">{{wagon.departDate.toDateString()}}</td>
+                <td class="align-center">{{wagon.returnDate.toDateString()}}</td>
                 <td class="align-center hidden-xs">{{wagon.truckId}}</td>
                 <td class="align-center hidden-xs">Tinh toan</td>
               </tr>

@@ -5784,7 +5784,37 @@ div.bootstrap {
       margin-top: 50px;
       margin-bottom: 10px; }
   #ng-app #mainPage .manage-box.long-box, #ng-app #qlToaHangPage .manage-box.long-box {
-    width: 424px; }
+    width: 444px; }
+  @media (min-width: 768px) {
+    #ng-app #mainPage .manage-box, #ng-app #qlToaHangPage .manage-box {
+      height: 140px;
+      width: 140px; }
+      #ng-app #mainPage .manage-box .icon, #ng-app #qlToaHangPage .manage-box .icon {
+        font-size: 40px;
+        margin-top: 30px;
+        margin-bottom: 10px; }
+    #ng-app #mainPage .manage-box.long-box, #ng-app #qlToaHangPage .manage-box.long-box {
+      width: 270px; } }
+  @media (min-width: 992px) {
+    #ng-app #mainPage .manage-box, #ng-app #qlToaHangPage .manage-box {
+      height: 176px;
+      width: 176px; }
+      #ng-app #mainPage .manage-box .icon, #ng-app #qlToaHangPage .manage-box .icon {
+        font-size: 50px;
+        margin-top: 40px;
+        margin-bottom: 10px; }
+    #ng-app #mainPage .manage-box.long-box, #ng-app #qlToaHangPage .manage-box.long-box {
+      width: 362px; } }
+  @media (min-width: 1200px) {
+    #ng-app #mainPage .manage-box, #ng-app #qlToaHangPage .manage-box {
+      height: 212px;
+      width: 212px; }
+      #ng-app #mainPage .manage-box .icon, #ng-app #qlToaHangPage .manage-box .icon {
+        font-size: 60px;
+        margin-top: 50px;
+        margin-bottom: 10px; }
+    #ng-app #mainPage .manage-box.long-box, #ng-app #qlToaHangPage .manage-box.long-box {
+      width: 444px; } }
   #ng-app #mainPage .manage-box.garage-box, #ng-app #qlToaHangPage .manage-box.garage-box {
     background-color: #C0392B; }
   #ng-app #mainPage .manage-box.xe-box, #ng-app #qlToaHangPage .manage-box.xe-box {
@@ -5809,11 +5839,6 @@ div.bootstrap {
     border: 1px solid #34495E;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px; }
-    #ng-app #wagonFormSection form .required-symbol {
-      color: #C0392B; }
-    #ng-app #wagonFormSection form .required-field {
-      color: #C0392B;
-      font-size: 12px; }
     #ng-app #wagonFormSection form .nav-tabs {
       border-bottom: 1px solid #34495E; }
     #ng-app #wagonFormSection form .tab-content {
@@ -5862,3 +5887,8 @@ div.bootstrap {
     cursor: pointer; }
   #ng-app .align-center {
     text-align: center; }
+  #ng-app .required-symbol {
+    color: #C0392B; }
+  #ng-app .required-field {
+    color: #C0392B;
+    font-size: 12px; }

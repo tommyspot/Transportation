@@ -12,15 +12,16 @@ namespace Transportation
 {
     public class WagonSettlement : Entity
     {
+        public DateTime CreatedDate { get; set; }
         [Required]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         [Required]
         public long CustomerID { get; set; }
         //[Required]
         //public virtual Customer Customer { get; set; }
         [Required]
         public long WagonID { get; set; }
-        public virtual Wagon Wagon{ get; set; }
+        public virtual Wagon Wagon { get; set; }
         [Required]
         public long EmployeeID { get; set; }
         public virtual Employee Employee { get; set; }
@@ -74,7 +75,7 @@ namespace Transportation
 
             CustomerID = json.Value<long>("customerId");
             WagonID = json.Value<long>("wagonId");
-            Date = json.Value<string>("date");
+            Date = json.Value<DateTime>("date");
             EmployeeID = json.Value<long>("employeeId");
 
             Payment = json.Value<long>("payment");

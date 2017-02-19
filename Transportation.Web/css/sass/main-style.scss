@@ -302,7 +302,55 @@ div.bootstrap {
         }
 
         .manage-box.long-box {
-            width: 424px;
+            width: 444px;
+        }
+
+        @media (min-width: 768px) {
+            .manage-box {
+                height: 140px;
+                width: 140px;
+
+                .icon {
+                    font-size: 40px;
+                    margin-top: 30px;
+                    margin-bottom: 10px;
+                }
+            }
+            .manage-box.long-box {
+                width: 270px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .manage-box {
+                height: 176px;
+                width: 176px;
+
+                .icon {
+                    font-size: 50px;
+                    margin-top: 40px;
+                    margin-bottom: 10px;
+                }
+            }
+            .manage-box.long-box {
+                width: 362px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .manage-box {
+                height: 212px;
+                width: 212px;
+
+                .icon {
+                    font-size: 60px;
+                    margin-top: 50px;
+                    margin-bottom: 10px;
+                }
+            }
+            .manage-box.long-box {
+                width: 444px;
+            }
         }
 
         .manage-box.garage-box {
@@ -352,15 +400,6 @@ div.bootstrap {
             border: 1px solid $transport-color-1;
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
-
-            .required-symbol {
-                color: $transport-color-2;
-            }
-
-            .required-field {
-                color: $transport-color-2;
-                font-size: 12px;
-            }
 
             .nav-tabs{
                 border-bottom: 1px solid $transport-color-1;
@@ -444,5 +483,15 @@ div.bootstrap {
     .align-center{
         text-align: center;
     }
+
+    .required-symbol {
+        color: $transport-color-2;
+    }
+
+    .required-field {
+        color: $transport-color-2;
+        font-size: 12px;
+    }
+
     
 }

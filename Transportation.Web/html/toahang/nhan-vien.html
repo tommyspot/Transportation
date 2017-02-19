@@ -35,7 +35,7 @@
                   <input id="checkAllEmployees" type="checkbox" data-ng-model="viewModel.isCheckedAll"
                          data-ng-change="viewModel.selectAllEmployeesOnPage()"/>
                 </th>
-                <th class="align-center hidden-xs">ID</th>
+                <th class="align-center hidden-xs">Mã NV</th>
                 <th class="align-center">Họ và tên</th>
                 <th class="align-center hidden-xs">CMND</th>
                 <th class="align-center hidden-xs">Số GPLX</th>
@@ -49,7 +49,7 @@
                 <td class="align-center" data-ng-click="$event.stopPropagation();">
                   <input id="employee-{{$index}}" type="checkbox" data-ng-model="employee.isChecked" />
                 </td>
-                <td class="align-center hidden-xs">{{employee.id}}</td>
+                <td class="align-center hidden-xs">{{employee.code}}</td>
                 <td class="align-center">{{employee.fullName}}</td>
                 <td class="align-center hidden-xs">{{employee.cardId}}</td>
                 <td class="align-center hidden-xs">{{employee.driverLicenseId}}</td>

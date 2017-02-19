@@ -33,6 +33,11 @@ namespace Transportation.Api
             }
 
             Wagon wagon = Wagon.FromJson(json);
+            //update CreatedDate
+            wagon.CreatedDate = DateTime.Now;
+            foreach (WagonSettlement wagonSettlement in wagon.WagonSetlements) {
+                wagonSettlement.CreatedDate = DateTime.Now;
+            }
 
             ClarityDB.Instance.Wagons.Add(wagon);
             ClarityDB.Instance.SaveChanges();

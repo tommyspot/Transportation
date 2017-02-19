@@ -17,6 +17,15 @@
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
+                    <label for="code">Mã toa hàng <span class="required-symbol">*</span></label>
+                    <span class="required-field" ng-if="wagonForm.code.$touched && wagonForm.code.$invalid">(Mã toa hàng phải được nhập)</span>
+                    <input id="code" name="code" class="form-control" type="text" ng-model="viewModel.currentWagon.code" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
                     <label for="departDate">Ngày đi <span class="required-symbol">*</span></label>
                     <span class="required-field" ng-if="wagonForm.departDate.$touched && wagonForm.departDate.$invalid">(Ngày đi phải được nhập)</span>
                     <input id="departDate" name="departDate" class="form-control" type="date" ng-model="viewModel.currentWagon.departDate" required>
@@ -246,21 +255,24 @@
         </form>
       </div>
     </div>
-    
+
     <div class="row margin-top-20">
       <div class="col-sm-12">
         <button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/toa-hang/tao'"
                 data-ng-click="viewModel.createWagon(viewModel.currentWagon)" data-ng-disabled="wagonForm.$invalid">
-          <span class="glyphicon glyphicon-ok"></span><span>&nbsp;Save</span>
+          <span class="glyphicon glyphicon-ok"></span>
+          <span>Lưu</span>
         </button>
 
         <button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/toa-hang/sua/' + viewModel.currentWagon.id"
                 data-ng-click="viewModel.updateWagon(viewModel.currentWagon)" data-ng-disabled="wagonForm.$invalid">
-          <span class="glyphicon glyphicon-ok"></span><span>&nbsp;Update</span>
+          <span class="glyphicon glyphicon-ok"></span>
+          <span>Sửa</span>
         </button>
 
         <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/toa-hang')">
-          <span class="glyphicon glyphicon-remove"></span><span>&nbsp;Cancel</span>
+          <span class="glyphicon glyphicon-remove"></span>
+          <span>Hủy</span>
         </button>
       </div>
     </div>
