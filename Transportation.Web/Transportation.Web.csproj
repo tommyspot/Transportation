@@ -157,7 +157,7 @@
     <TypeScriptCompile Include="js\helpers\MainHelper.ts" />
     <TypeScriptCompile Include="js\model\CustomerModel.ts" />
     <TypeScriptCompile Include="js\model\TruckModel.ts" />
-    <TypeScriptCompile Include="js\model\WagonSetlementModel.ts" />
+    <TypeScriptCompile Include="js\model\WagonSettlementModel.ts" />
     <TypeScriptCompile Include="js\model\WagonModel.ts" />
     <TypeScriptCompile Include="js\model\EmployeeModel.ts" />
     <TypeScriptCompile Include="js\services\BaseService.ts" />

@@ -309,6 +309,9 @@ div.bootstrap {
             .manage-box {
                 height: 140px;
                 width: 140px;
+                h4{
+                    font-size: 14px;
+                }
 
                 .icon {
                     font-size: 40px;
@@ -323,33 +326,36 @@ div.bootstrap {
 
         @media (min-width: 992px) {
             .manage-box {
-                height: 176px;
-                width: 176px;
+                height: 180px;
+                width: 180px;
 
                 .icon {
-                    font-size: 50px;
+                    font-size: 60px;
                     margin-top: 40px;
                     margin-bottom: 10px;
                 }
             }
             .manage-box.long-box {
-                width: 362px;
+                width: 360px;
             }
         }
 
         @media (min-width: 1200px) {
             .manage-box {
-                height: 212px;
-                width: 212px;
+                width: 220px;
+                height: 200px;
+                h4{
+                    font-size: 20px;
+                }
 
                 .icon {
-                    font-size: 60px;
-                    margin-top: 50px;
+                    font-size: 70px;
+                    margin-top: 40px;
                     margin-bottom: 10px;
                 }
             }
             .manage-box.long-box {
-                width: 444px;
+                width: 440px;
             }
         }
 

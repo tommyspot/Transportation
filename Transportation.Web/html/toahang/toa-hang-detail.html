@@ -6,7 +6,7 @@
         
         <div class="row">
           <div class="col-sm-12">
-            <h2 class="text-center">TOA HÀNG - {{viewModel.currentWagon.id}}</h2>
+            <h2 class="text-center">TOA HÀNG - {{viewModel.currentWagon.code}}</h2>
           </div>
         </div>
 
@@ -20,10 +20,10 @@
           <div class="col-sm-12">
             <div class="row">
               <div class="col-sm-4">
-                <p><span class="bold-text">Ngày đi:</span> <span>{{viewModel.currentWagon.departDate}}</span></p>
+                <p><span class="bold-text">Ngày đi:</span> <span>{{viewModel.currentWagon.departDate.toDateString()}}</span></p>
               </div>
               <div class="col-sm-4">
-                <p><span class="bold-text">Ngày về:</span> <span>{{viewModel.currentWagon.returnDate}}</span></p>
+                <p><span class="bold-text">Ngày về:</span> <span>{{viewModel.currentWagon.returnDate.toDateString()}}</span></p>
               </div>
               <div class="col-sm-4">
               </div>

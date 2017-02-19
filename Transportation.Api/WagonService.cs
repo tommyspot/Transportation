@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Data;
+using System.Data.Entity.Validation;
 
 namespace Transportation.Api
 {
@@ -33,14 +34,12 @@ namespace Transportation.Api
             }
 
             Wagon wagon = Wagon.FromJson(json);
-            //update CreatedDate
             wagon.CreatedDate = DateTime.Now;
-            foreach (WagonSettlement wagonSettlement in wagon.WagonSetlements) {
-                wagonSettlement.CreatedDate = DateTime.Now;
-            }
 
             ClarityDB.Instance.Wagons.Add(wagon);
             ClarityDB.Instance.SaveChanges();
+
+            AddWagonSettlementsFromJson(wagon.ID, json);         
 
             return new RestApiResult { StatusCode = HttpStatusCode.OK };
         }
@@ -83,9 +82,42 @@ namespace Transportation.Api
             }
 
             wagon.ApplyJson(json);
+            UpdateWagonSettlementsFromJson(wagon.ID, json);
+
             ClarityDB.Instance.SaveChanges();
 
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json};
+        }
+
+        private void AddWagonSettlementsFromJson(long wagonID, JObject json) {
+            Wagon wagon = ClarityDB.Instance.Wagons.FirstOrDefault(x => x.ID == wagonID);
+
+            var wagonSettlementJsons = json.Value<JArray>("wagonSettlements");
+            if (wagonSettlementJsons != null)
+            {
+                foreach (JObject wagonSettlementJson in wagonSettlementJsons)
+                {
+                    WagonSettlement wagonSettlement = WagonSettlement.FromJson(wagonSettlementJson);
+                    wagonSettlement.CreatedDate = DateTime.Now;
+                    wagonSettlement.WagonID = wagonID;
+                    wagon.WagonSetlements.Add(wagonSettlement);
+                }
+                ClarityDB.Instance.SaveChanges();
+            }
+        }
+
+        private void UpdateWagonSettlementsFromJson(long wagonID, JObject json)
+        {
+            DeleteWagonSettements(wagonID);
+            AddWagonSettlementsFromJson(wagonID, json);
+        }
+
+        private void DeleteWagonSettements(long wagonID)
+        {
+            var wagonSettlements = ClarityDB.Instance.WagonSettlements.Where(x => x.WagonID == wagonID);
+            foreach(WagonSettlement wagonSettlement in wagonSettlements) {
+                ClarityDB.Instance.WagonSettlements.Remove(wagonSettlement);
+            }
         }
 
         private JArray BuildJsonArray(IEnumerable<Wagon> wagons)

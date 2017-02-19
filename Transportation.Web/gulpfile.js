@@ -40,7 +40,7 @@ var config = {
 		, 'js/model/TruckModel.js'
 		, 'js/model/CustomerModel.js'
     , 'js/model/WagonModel.js'
-    , 'js/model/WagonSetlementModel.js'
+    , 'js/model/WagonSettlementModel.js'
     
     , 'js/services/IService.js'
     , 'js/services/BaseService.js'

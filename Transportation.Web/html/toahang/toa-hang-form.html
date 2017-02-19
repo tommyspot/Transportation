@@ -43,7 +43,7 @@
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="truckId">Số xe</label>
-                    <select id="truckId" class="form-control" data-ng-model="viewModel.currentWagon.truckId">
+                    <select id="truckId" class="form-control" data-ng-model="viewModel.currentWagon.truckId" convert-to-number>
                       <option value="">--Chọn số xe--</option>
                       <option ng-repeat="truck in viewModel.truckList" value="{{truck.id}}">{{truck.licensePlate}}</option>
                     </select>
@@ -52,7 +52,7 @@
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="employeeId">Tài xế</label>
-                    <select id="employeeId" class="form-control" data-ng-model="viewModel.currentWagon.employeeId">
+                    <select id="employeeId" class="form-control" data-ng-model="viewModel.currentWagon.employeeId" convert-to-number>
                       <option value="">--Chọn tài xế--</option>
                       <option ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
                     </select>
@@ -77,20 +77,18 @@
                   <div class="col-sm-4">
                     <div class="form-group">
                       <label for="wagonSettlementCustomerId-{{$index}}">Khách hàng</label>
-                      <select id="wagonSettlementCustomerId-{{$index}}" class="form-control" data-ng-model="wagonSettlement.customerId">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                      <select id="wagonSettlementCustomerId-{{$index}}" class="form-control" data-ng-model="wagonSettlement.customerId" convert-to-number>
+                        <option value="">--Chọn khách hàng --</option>
+                        <option ng-repeat="customer in viewModel.customerList" value="{{customer.id}}">{{customer.fullName}}</option>
                       </select>
                     </div>
                   </div>
                   <div class="col-sm-4">
                     <div class="form-group">
                       <label for="wagonSettlementEmployeeId-{{$index}}">Người thu</label>
-                      <select id="wagonSettlementEmployeeId-{{$index}}" class="form-control" data-ng-model="wagonSettlement.employeeId">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                      <select id="wagonSettlementEmployeeId-{{$index}}" class="form-control" data-ng-model="wagonSettlement.employeeId" convert-to-number>
+                        <option value="">--Chọn nhân viên thu --</option>
+                        <option ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
                       </select>
                     </div>
                   </div>
@@ -171,8 +169,8 @@
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="driverLicenseAddress">Tăng bo xe</label>
-                    <input id="driverLicenseAddress" name="driverLicenseAddress" class="form-control" type="text" ng-model="viewModel.currentWagon.driverLicenseAddress">
+                    <label for="costOfTangBoXe">Tăng bo xe</label>
+                    <input id="costOfTangBoXe" name="costOfTangBoXe" class="form-control" type="text" ng-model="viewModel.currentWagon.costOfTangBoXe">
                   </div>
                 </div>
                 <div class="col-sm-6">

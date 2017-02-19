@@ -2,7 +2,7 @@
 
 module Clarity.Model {
 
-  export class WagonSetlementModel extends Model.BaseModel {
+  export class WagonSettlementModel extends Model.BaseModel {
     public customerId: number;
     public wagonId: number;
     public date: Date;

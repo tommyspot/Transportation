@@ -15,8 +15,10 @@ module Clarity.Controller {
 
     public truckList: Array<Model.TruckModel>
     public employeeList: Array<Model.EmployeeModel>
+    public customerList: Array<Model.CustomerModel>
     public truckService: service.TruckService;
     public employeeService: service.EmployeeService;
+    public customerService: service.CustomerService;
     public exportService: service.ExportService;
 
     public wagonList: Array<Model.WagonModel>;
@@ -37,6 +39,7 @@ module Clarity.Controller {
       this.wagonService = new service.WagonService($http);
       this.truckService = new service.TruckService($http);
       this.employeeService = new service.EmployeeService($http);
+      this.customerService = new service.CustomerService($http);
       this.exportService = new service.ExportService($http);
       $scope.viewModel = this;
 
@@ -50,7 +53,6 @@ module Clarity.Controller {
           self.initPagination();
         }
       });
-
     }
 
     initWagon() {
@@ -61,6 +63,10 @@ module Clarity.Controller {
             this.currentWagon = data;
           }, null);
         } else if (this.$location.path() === '/ql-toa-hang/toa-hang/sua/' + wagonId) {
+          this.initTruckList();
+          this.initEmployeeList();
+          this.initCustomerList();
+
           if (this.currentWagon == null) {
             this.wagonService.getById(wagonId, (data) => {
               this.currentWagon = data;
@@ -71,6 +77,7 @@ module Clarity.Controller {
         if (this.$location.path() === '/ql-toa-hang/toa-hang/tao') {
           this.initTruckList();
           this.initEmployeeList();
+          this.initCustomerList();
           this.currentWagon = new Model.WagonModel();
         } else if (this.$location.path() === '/ql-toa-hang/toa-hang') {
           this.initWagonList();
@@ -98,6 +105,12 @@ module Clarity.Controller {
     initEmployeeList() {
       this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
         this.employeeList = results;
+      }, null);
+    }
+
+    initCustomerList() {
+      this.customerService.getAll((results: Array<Model.CustomerModel>) => {
+        this.customerList = results;
       }, null);
     }
 
@@ -193,7 +206,7 @@ module Clarity.Controller {
       if (wagon.wagonSettlements == null) {
         wagon.wagonSettlements = [];
       }
-      var wagonSettlement = new Model.WagonSetlementModel();
+      var wagonSettlement = new Model.WagonSettlementModel();
       wagon.wagonSettlements.push(wagonSettlement);
     }
 

@@ -17,8 +17,7 @@ namespace Transportation
         public DateTime Date { get; set; }
         [Required]
         public long CustomerID { get; set; }
-        //[Required]
-        //public virtual Customer Customer { get; set; }
+        public virtual Customer Customer { get; set; }
         [Required]
         public long WagonID { get; set; }
         public virtual Wagon Wagon { get; set; }
