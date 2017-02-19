@@ -12,6 +12,8 @@ module Clarity.Controller {
   export class CustomerManagementController {
 		public currentCustomer: Model.CustomerModel;
     public customerService: service.CustomerService;
+		public employeeService: service.EmployeeService;
+		public employeeList: Array<Model.EmployeeModel>;
     public customerList: Array<Model.CustomerModel>;
 		public customerListTmp: Array<Model.CustomerModel>;
     public numOfPages: number;
@@ -28,6 +30,7 @@ module Clarity.Controller {
 			private $routeParams: any) {
 
 			this.customerService = new service.CustomerService($http);
+			this.employeeService = new service.EmployeeService($http);
       $scope.viewModel = this;
 			this.pageSize = 5;
       this.initCustomer();
@@ -42,7 +45,7 @@ module Clarity.Controller {
     }
 
 		initCustomer() {
-      var customerId = this.$routeParams.employee_id;
+      var customerId = this.$routeParams.customer_id;
       if (customerId) {
         if (this.$location.path() === '/ql-toa-hang/khach-hang/' + customerId) {
           this.customerService.getById(customerId, (data) => {
@@ -58,13 +61,14 @@ module Clarity.Controller {
       } else {
         if (this.$location.path() === '/ql-toa-hang/khach-hang/tao') {
           this.currentCustomer = new Model.CustomerModel();
+					this.initEmployeeList();
         } else if (this.$location.path() === '/ql-toa-hang/khach-hang') {
-          this.initcustomerList();
+          this.initCustomerList();
         }
       }
     }
 
-		initcustomerList() {
+		initCustomerList() {
       this.customerService.getAll((results: Array<Model.CustomerModel>) => {
         this.customerList = results;
         this.customerList.sort(function (a: any, b: any) {
@@ -75,13 +79,19 @@ module Clarity.Controller {
       }, null);
     }
 
+		initEmployeeList() {
+      this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
+        this.employeeList = results;
+      }, null);
+    }
+
     initPagination() {
       this.currentPage = 1;
       this.numOfPages = this.customerList.length % this.pageSize === 0 ?
         this.customerList.length / this.pageSize : Math.floor(this.customerList.length / this.pageSize) + 1;
     }
 
-		getcustomerListOnPage() {
+		getCustomerListOnPage() {
       if (this.customerList && this.customerList.length > 0) {
         var startIndex = this.pageSize * (this.currentPage - 1);
         var endIndex = startIndex + this.pageSize;
@@ -113,29 +123,29 @@ module Clarity.Controller {
       }
     }
 
-    selectAllcustomersOnPage() {
-      var customerOnPage = this.getcustomerListOnPage();
+    selectAllCustomersOnPage() {
+      var customerOnPage = this.getCustomerListOnPage();
       for (let index = 0; index < customerOnPage.length; index++) {
         var customer = customerOnPage[index];
         customer.isChecked = this.isCheckedAll;
       }
     }
 
-    removecustomers() {
+    removeCustomers() {
       var confirmDialog = this.$window.confirm('Do you want to delete the Customer?');
       if (confirmDialog) {
         for (let i = 0; i < this.customerList.length; i++) {
           var Customer = this.customerList[i];
           if (Customer.isChecked) {
             this.customerService.deleteEntity(Customer, (data) => {
-              this.initcustomerList();
+              this.initCustomerList();
             }, () => { });
           }
         }
       }
     }
 
-    removecustomerInDetail(Customer: Model.CustomerModel) {
+    removeCustomerInDetail(Customer: Model.CustomerModel) {
       var confirmDialog = this.$window.confirm('Do you want to delete the Customer?');
       if (confirmDialog) {
         this.customerService.deleteEntity(Customer, (data) => {
@@ -144,16 +154,16 @@ module Clarity.Controller {
       }
     }
 
-    createcustomer(Customer: Model.CustomerModel) {
-      this.customerService.create(Customer,
+    createCustomer(customer: Model.CustomerModel) {
+      this.customerService.create(customer,
         (data) => {
           this.$location.path('/ql-toa-hang/khach-hang');
         },
         () => { });
     }
 
-		updateCustomer(Customer: Model.CustomerModel) {
-      this.customerService.update(Customer, (data) => {
+		updateCustomer(customer: Model.CustomerModel) {
+      this.customerService.update(customer, (data) => {
         this.$location.path('/ql-toa-hang/khach-hang');
       }, null);
     }

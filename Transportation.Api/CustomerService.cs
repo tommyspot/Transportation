@@ -33,9 +33,10 @@ namespace Transportation.Api
                 return new RestApiResult { StatusCode = HttpStatusCode.BadRequest };
             }
 
-            Customer Customer = Customer.FromJson(json);
+            Customer customer = Customer.FromJson(json);
+			customer.CreatedDate = DateTime.Now;
 
-            ClarityDB.Instance.Customers.Add(Customer);
+			ClarityDB.Instance.Customers.Add(customer);
             ClarityDB.Instance.SaveChanges();
 
             return new RestApiResult { StatusCode = HttpStatusCode.OK };
@@ -44,44 +45,44 @@ namespace Transportation.Api
 		[Route(HttpVerb.Get, "/customers/{id}")]
 		public RestApiResult GetCustomerByID(long id)
 		{
-			Customer Customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == id);
+			Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == id);
 
-			if (Customer == null)
+			if (customer == null)
 			{
 				return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
 			}
 
-			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = Customer.ToJson() };
+			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = customer.ToJson() };
 		}
 
 		[Route(HttpVerb.Delete, "/customers/{id}")]
 		public RestApiResult Delete(long id)
 		{
-			Customer Customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == id);
+			Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == id);
 
-			if (Customer == null)
+			if (customer == null)
 			{
 				return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
 			}
 
-			ClarityDB.Instance.Customers.Remove(Customer);
+			ClarityDB.Instance.Customers.Remove(customer);
 			ClarityDB.Instance.SaveChanges();
 
-			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = Customer.ToJson() };
+			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = customer.ToJson() };
 		}
 
 		[Route(HttpVerb.Put, "/customers/{id}")]
 		public RestApiResult Update(long id, JObject json)
 		{
-			Customer Customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == id);
+			Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == id);
 
-			if (Customer == null)
+			if (customer == null)
 			{
 				return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
 			}
 
-			Customer.ApplyJson(json);
-
+			customer.ApplyJson(json);
+			customer.CreatedDate = DateTime.Now;
 			ClarityDB.Instance.SaveChanges();
 
 			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
@@ -91,9 +92,9 @@ namespace Transportation.Api
         {
             JArray array = new JArray();
 
-            foreach (Customer Customer in customers)
+            foreach (Customer customer in customers)
             {
-                array.Add(Customer.ToJson());
+                array.Add(customer.ToJson());
             }
 
             return array;

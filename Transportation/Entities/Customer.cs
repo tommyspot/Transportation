@@ -28,7 +28,8 @@ namespace Transportation
         public JObject ToJson()
         {
             JObject json = new JObject();
-            json["fullName"] = ID;
+			json["id"] = ID;
+			json["fullName"] = FullName;
 			json["area"] = Area;
 			json["employeeId"] = EmployeeID;
             json["totalOwned"] = TotalOwned;

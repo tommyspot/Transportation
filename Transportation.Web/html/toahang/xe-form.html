@@ -1,19 +1,19 @@
 ﻿<div id="employeeFormSection" class="bootstrap form">
 	<div class="container">
-		<form name="employeeForm">
+		<form name="truckForm">
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="fullName">Mã Xe <span class="required-symbol">*</span></label>
-						<span class="required-field" ng-if="employeeForm.fullName.$touched && employeeForm.fullName.$invalid">('Họ và tên' is required or invalid)</span>
-						<input id="fullName" name="fullName" class="form-control" type="text" ng-model="viewModel.currentTruck.code" required>
+						<label for="code">Mã Xe <span class="required-symbol">*</span></label>
+						<span class="required-field" ng-if="truckForm.code.$touched && truckForm.code.$invalid">('Mã xe' phải được nhập)</span>
+						<input id="code" name="code" class="form-control" type="text" ng-model="viewModel.currentTruck.code" required>
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="idNumber">Biển Số <span class="required-symbol">*</span></label>
-						<span class="required-field" ng-if="employeeForm.idNumber.$touched && employeeForm.idNumber.$invalid">('CMND' is required or invalid)</span>
-						<input id="idNumber" name="idNumber" class="form-control" type="text" ng-model="viewModel.currentTruck.licensePlate" required>
+						<label for="licensePlate">Biển Số <span class="required-symbol">*</span></label>
+						<span class="required-field" ng-if="truckForm.licensePlate.$touched && truckForm.licensePlate.$invalid">('Biển số' phải được nhập)</span>
+						<input id="licensePlate" name="licensePlate" class="form-control" type="text" ng-model="viewModel.currentTruck.licensePlate" required>
 					</div>
 				</div>
 			</div>
@@ -57,8 +57,8 @@
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="driverLicenseDate">Ngày Bắt Đầu Lưu Hành</label>
-						<input id="driverLicenseDate" name="driverLicenseDate" class="form-control" type="text" ng-model="viewModel.currentTruck.startUsingDate">
+						<label for="startUsingDate">Ngày Bắt Đầu Lưu Hành</label>
+						<input id="startUsingDate" name="startUsingDate" class="form-control" type="date" ng-model="viewModel.currentTruck.startUsingDate">
 					</div>
 				</div>
 			</div>
@@ -67,7 +67,10 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="driverLicenseExpirationDate">Tài Xế Chịu Trách Nhiệm</label>
-						<input id="driverLicenseExpirationDate" name="driverLicenseExpirationDate" class="form-control" type="text" ng-model="viewModel.currentTruck.driverId">
+						<select id="employeeId" class="form-control" data-ng-model="viewModel.currentTruck.employeeId">
+							<option value="">--Chọn tài xế--</option>
+							<option ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
+						</select>
 					</div>
 				</div>
 				<div class="col-sm-6">
@@ -82,7 +85,7 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="violation">Ngày Bắt Đầu Mua</label>
-						<input id="violation" name="violation" class="form-control" type="text" ng-model="viewModel.currentTruck.buyingDate">
+						<input id="violation" name="violation" class="form-control" type="date" ng-model="viewModel.currentTruck.buyingDate">
 					</div>
 				</div>
 				<div class="col-sm-6">
@@ -97,25 +100,25 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="title">Ngày Đăng Kiểm Gần Nhất</label>
-						<input id="title" name="title" class="form-control" type="text" ng-model="viewModel.currentTruck.checkDate">
+						<input id="title" name="title" class="form-control" type="date" ng-model="viewModel.currentTruck.checkDate">
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="title">Bảo Hiểm Đến</label>
-						<input id="title" name="title" class="form-control" type="text" ng-model="viewModel.currentTruck.insuranceDate">
+						<input id="title" name="title" class="form-control" type="date" ng-model="viewModel.currentTruck.insuranceDate">
 					</div>
 				</div>
 			</div>
 
 			<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/xe/tao'"
-							data-ng-click="viewModel.createTruck(viewModel.currentTruck)" data-ng-disabled="employeeForm.$invalid">
+							data-ng-click="viewModel.createTruck(viewModel.currentTruck)" data-ng-disabled="truckForm.$invalid">
 				<span class="glyphicon glyphicon-ok"></span>
 				<span>Lưu</span>
 			</button>
 
 			<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/xe/sua/' + viewModel.currentTruck.id"
-							data-ng-click="viewModel.updateTruck(viewModel.currentTruck)" data-ng-disabled="employeeForm.$invalid">
+							data-ng-click="viewModel.updateTruck(viewModel.currentTruck)" data-ng-disabled="truckForm.$invalid">
 				<span class="glyphicon glyphicon-ok"></span>
 				<span>Cập nhật</span>
 			</button>
