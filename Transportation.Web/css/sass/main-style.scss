@@ -48,6 +48,7 @@ div.bootstrap {
             z-index: 600;
         }
     }
+    
     /*LOGIN FORM*/
     .login-wrapper {
         overflow-y: auto;
@@ -128,6 +129,7 @@ div.bootstrap {
             }
         }
     }
+    
     /*BANNER*/
     .banner {
         background-color: $transport-color-1;
@@ -154,6 +156,28 @@ div.bootstrap {
         .logo {
             height: 54px;
         }
+    }
+
+    /*PAGING*/
+    .pagination > .active > a,
+    .pagination > .active > a:hover,
+    .pagination > .active > a:focus,
+    .pagination > .active > span,
+    .pagination > .active > span:hover,
+    .pagination > .active > span:focus{
+        background-color: $transport-color-2;
+        border-color: $transport-color-2;
+        color: #FFFFFF;
+    }
+    .pagination > li > a,
+    .pagination > li > span{
+        color: $transport-color-2;
+    }
+
+    /*TABLE*/
+    .table-bordered > thead > tr > th,
+    .table-bordered > thead > tr > td{
+        border-bottom-width: 1px;
     }
 
     /*BREADCRUMB*/
@@ -411,7 +435,7 @@ div.bootstrap {
                 border-bottom: 1px solid $transport-color-1;
             }
             .tab-content{
-                height: 320px;
+                height: 360px;
                 overflow-y: auto;
                 padding-top: 20px;
 
@@ -438,6 +462,22 @@ div.bootstrap {
                 border: 1px solid $transport-color-2;
                 border-bottom-color: transparent;
             }
+
+            .remove-section{
+                text-align: right;
+                .remove-wagonSettlement{
+                    margin-left: 4px;
+                }
+            }
+
+            .wagonSettlement{
+                margin-bottom: 10px;
+
+                .customer-color{
+                    color: $transport-color-2;
+                }
+            }
+
         }
     }
 

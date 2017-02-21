@@ -47,9 +47,7 @@
               <tr class="pointer" data-ng-repeat="customer in viewModel.customerList"
                   data-ng-click="viewModel.$location.path('/ql-toa-hang/khach-hang/' + customer.id)">
                 <td class="align-center" data-ng-click="$event.stopPropagation();">
-                  <label class="cover-checkbox" for="user-{{$index}}">
-                    <input id="customer-{{$index}}" type="checkbox" data-ng-model="customer.isChecked" />
-                  </label>
+                  <input id="customer-{{$index}}" type="checkbox" data-ng-model="customer.isChecked" />
                 </td>
                 <td class="align-center hidden-xs">{{customer.fullName}}</td>
                 <td class="align-center">{{customer.area}}</td>

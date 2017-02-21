@@ -64,19 +64,27 @@
             <!--TAB 2-->
             <div class="tab-pane fade" ng-class="{'in active': tab === 2}" data-ng-show="tab === 2">
               <div class="row margin-bottom-15">
-                <div class="col-sm-12">
+                <div class="col-sm-3">
                   <button type="button" class="btn btn-default" data-ng-click="viewModel.createWagonSettlement(viewModel.currentWagon)">
                     <span class="glyphicon glyphicon-plus"></span>
                     <span class="hidden-xs">Tạo khách hàng</span>
                   </button>
                 </div>
+                <div class="col-sm-9 remove-section">
+                  <span>Xóa khách hàng</span>
+                  <button type="button" class="btn btn-default remove-wagonSettlement" data-ng-repeat="wagonSettlement in viewModel.currentWagon.wagonSettlements"
+                           data-ng-click="viewModel.deleteWagonSettlement($index)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    <span class="hidden-xs">{{wagonSettlement.customerId}}</span>
+                  </button>
+                </div>
               </div>
 
-              <div data-ng-repeat="wagonSettlement in viewModel.currentWagon.wagonSettlements">
+              <div class="wagonSettlement" data-ng-repeat="wagonSettlement in viewModel.currentWagon.wagonSettlements">
                 <div class="row">
                   <div class="col-sm-4">
                     <div class="form-group">
-                      <label for="wagonSettlementCustomerId-{{$index}}">Khách hàng</label>
+                      <label class="customer-color" for="wagonSettlementCustomerId-{{$index}}">Khách hàng {{$index + 1}}</label>
                       <select id="wagonSettlementCustomerId-{{$index}}" class="form-control" data-ng-model="wagonSettlement.customerId" convert-to-number>
                         <option value="">--Chọn khách hàng --</option>
                         <option ng-repeat="customer in viewModel.customerList" value="{{customer.id}}">{{customer.fullName}}</option>

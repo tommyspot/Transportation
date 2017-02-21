@@ -210,6 +210,10 @@ module Clarity.Controller {
       wagon.wagonSettlements.push(wagonSettlement);
     }
 
+    deleteWagonSettlement(index: number) {
+      this.currentWagon.wagonSettlements.splice(index, 1);
+    }
+
     goToWagonForm() {
       this.$location.path('/ql-toa-hang/toa-hang/tao');
     }

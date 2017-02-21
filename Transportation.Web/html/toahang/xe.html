@@ -47,9 +47,7 @@
               <tr class="pointer" data-ng-repeat="truck in viewModel.truckList"
                   data-ng-click="viewModel.$location.path('/ql-toa-hang/xe/' + truck.id)">
                 <td class="align-center" data-ng-click="$event.stopPropagation();">
-                  <label class="cover-checkbox" for="user-{{$index}}">
-                    <input id="truck-{{$index}}" type="checkbox" data-ng-model="truck.isChecked" />
-                  </label>
+                  <input id="truck-{{$index}}" type="checkbox" data-ng-model="truck.isChecked" />
                 </td>
                 <td class="align-center hidden-xs">{{truck.code}}</td>
                 <td class="align-center">{{truck.licensePlate}}</td>
