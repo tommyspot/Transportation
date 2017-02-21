@@ -50,6 +50,7 @@ var config = {
 		, 'js/services/TruckService.js'
 		, 'js/services/CustomerService.js'
     , 'js/services/WagonService.js'
+    , 'js/services/WagonSettlementService.js'
     , 'js/services/ExportService.js'
 
     , 'js/controllers/IController.js'
@@ -60,6 +61,7 @@ var config = {
     , 'js/controllers/TruckManagementController.js'
 		, 'js/controllers/CustomerManagementController.js'
     , 'js/controllers/WagonManagementController.js'
+    , 'js/controllers/WagonSettlementManagementController.js'
 
     // controllers, services written with TypeScript must be placed before clarity-app.js
     , 'js/clarity-app.js'

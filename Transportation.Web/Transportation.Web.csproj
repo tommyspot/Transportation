@@ -121,6 +121,8 @@
     <Content Include="html\pre-loading.html" />
     <Content Include="html\toahang\khach-hang-detail.html" />
     <Content Include="html\toahang\khach-hang.html" />
+    <Content Include="html\toahang\quyet-toan.html" />
+    <Content Include="html\toahang\quyet-toan-detail.html" />
     <Content Include="html\toahang\xe-detail.html" />
     <Content Include="html\toahang\toa-hang-detail.html" />
     <Content Include="html\toahang\toa-hang-form.html" />
@@ -146,6 +148,7 @@
     <Content Include="js\all.min.js" />
     <Content Include="js\clarity-app.js" />
     <TypeScriptCompile Include="js\controllers\CustomerManagementController.ts" />
+    <TypeScriptCompile Include="js\controllers\WagonSettlementManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\WagonManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\TruckManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\EmployeeManagementController.ts" />
@@ -166,6 +169,7 @@
     <TypeScriptCompile Include="js\services\AuthenticationService.ts" />
     <TypeScriptCompile Include="js\services\ExportService.ts" />
     <TypeScriptCompile Include="js\services\CustomerService.ts" />
+    <TypeScriptCompile Include="js\services\WagonSettlementService.ts" />
     <TypeScriptCompile Include="js\services\WagonService.ts" />
     <TypeScriptCompile Include="js\services\TruckService.ts" />
     <TypeScriptCompile Include="js\services\EmployeeService.ts" />

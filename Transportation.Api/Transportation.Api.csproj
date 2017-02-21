@@ -93,6 +93,7 @@
     <Compile Include="AuthenticationService.cs" />
     <Compile Include="ExportService.cs" />
     <Compile Include="CustomerService.cs" />
+    <Compile Include="WagonSettlementService.cs" />
     <Compile Include="WagonService.cs" />
     <Compile Include="TruckService.cs" />
     <Compile Include="EmployeeService.cs" />

@@ -3,17 +3,22 @@
 
 module Clarity.Service {
 
-  export class WagonSettlementService extends BaseService {
+  export class WagonService extends BaseService {
 
     constructor($http: ng.IHttpService) {
       super($http);
-      this.url = '/api/wagonSettlements';
+      this.url = '/api/wagons';
     }
 
     getById(id: number, successCallback: Function, errorCallback: Function) {
       this.http({ method: 'GET', url: this.url + '/' + id })
-        .success((data: Model.WagonSettlementModel) => {
-          data.date = new Date(data.date.toString());
+        .success((data: Model.WagonModel) => {
+          data.departDate = new Date(data.departDate.toString());
+          data.returnDate = new Date(data.returnDate.toString());
+          data.wagonSettlements = data.wagonSettlements.map(function (wagonSettlement, index) {
+            wagonSettlement.date = new Date(wagonSettlement.date.toString());
+            return wagonSettlement;
+          });
           this.doCallback(successCallback, data);
         })
         .error((data, status) => { this.doCallback(errorCallback, data, status); });
@@ -21,11 +26,13 @@ module Clarity.Service {
 
     getAll(successCallback: Function, errorCallback: Function) {
       this.http.get(this.url)
-        .success((data: Array<Model.WagonSettlementModel>) => {
+        .success((data: Array<Model.WagonModel>) => {
           for (let i = 0; i < data.length; i++) {
             var wagon = data[i];
-            wagon.date = new Date(wagon.date.toString());
+            wagon.departDate = new Date(wagon.departDate.toString());
+            wagon.returnDate = new Date(wagon.returnDate.toString());
           }
+
           this.doCallback(successCallback, data);
         })
         .error((data, status) => { this.doCallback(errorCallback, data, status); });

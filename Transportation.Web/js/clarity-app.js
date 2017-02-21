@@ -114,6 +114,17 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
       access: 'authorized'
     })
 
+    .when('/ql-toa-hang/quyet-toan', {
+      templateUrl: '/html/toahang/quyet-toan.html' + '?v=' + VERSION_NUMBER,
+      controller: 'WagonSettlementManagementController',
+      access: 'authorized'
+    })
+    .when('/ql-toa-hang/quyet-toan/:wagonSettlement_id', {
+      templateUrl: '/html/toahang/quyet-toan-detail.html' + '?v=' + VERSION_NUMBER,
+      controller: 'WagonSettlementManagementController',
+      access: 'authorized'
+    })
+
     .when('/not_found', {
       templateUrl: '/html/not-found.html' + '?v=' + VERSION_NUMBER,
       controller: '',
@@ -309,12 +320,16 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
             	case '/ql-toa-hang/khach-hang':
             		breadCrumb.name = 'Khách hàng';
             		break;
-            	case '/ql-garage':
-            		breadCrumb.name = 'Quản lý garage';
-            		break;
             	case '/ql-toa-hang/toa-hang':
-            		breadCrumb.name = 'Toa Hàng';
+            		breadCrumb.name = 'Toa hàng';
             		break;
+              case '/ql-toa-hang/quyet-toan':
+                breadCrumb.name = 'Quyết toán';
+                break;
+              case '/ql-garage':
+                breadCrumb.name = 'Quản lý garage';
+                break;
+
             	case '/ql-toa-hang/nhan-vien/tao':
             	case '/ql-toa-hang/xe/tao':
             	case '/ql-toa-hang/khach-hang/tao':
@@ -327,18 +342,19 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
             	case '/ql-toa-hang/toa-hang/sua':
                 breadCrumb.name = 'Sửa';
                 break;
-              
             }
 
             //Especial case: edit/detail
             var employeeDetailPattern = /\/ql-toa-hang\/nhan-vien\/(\d*)$/g;
             var wagonDetailPattern = /\/ql-toa-hang\/toa-hang\/(\d*)$/g;
+            var wagonSettlementDetailPattern = /\/ql-toa-hang\/quyet-toan\/(\d*)$/g;
 
             var employeeEditorPattern = /\/ql-toa-hang\/nhan-vien\/sua\/(\d*)$/g;
             var wagonEditorPattern = /\/ql-toa-hang\/toa-hang\/sua\/(\d*)$/g;
 
             if (employeeDetailPattern.test(nav) || employeeEditorPattern.test(nav)
-              || wagonDetailPattern.test(nav) || wagonEditorPattern.test(nav)) {
+              || wagonDetailPattern.test(nav) || wagonEditorPattern.test(nav)
+              || wagonSettlementDetailPattern.test(nav)) {
               var pieces = nav.split('/');
               breadCrumb.name = pieces[pieces.length - 1];
             }
@@ -369,3 +385,4 @@ clarityApp.controller('EmployeeManagementController', Clarity.Controller.Employe
 clarityApp.controller('TruckManagementController', Clarity.Controller.TruckManagementController);
 clarityApp.controller('CustomerManagementController', Clarity.Controller.CustomerManagementController);
 clarityApp.controller('WagonManagementController', Clarity.Controller.WagonManagementController);
+clarityApp.controller('WagonSettlementManagementController', Clarity.Controller.WagonSettlementManagementController);
