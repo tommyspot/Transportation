@@ -13,22 +13,21 @@ namespace Transportation
     public class Truck : Entity
     {
         [Required]
-        public string Code { get; set; }
-        [Required]
         public string LicensePlate { get; set; }
         public string Vin { get; set; }
         public string EngineNo { get; set; }
         public string YearOfManufacture { get; set; }
         public string Brand { get; set; }
         public string Weight { get; set; }
-        public DateTime StartUsingDate { get; set; }
+        public string StartUsingDate { get; set; }
         public string EmployeeId { get; set; }
         public string Stock { get; set; }
-        public DateTime BuyingDate { get; set; }
+        public string BuyingDate { get; set; }
         public string MonthlyPayment { get; set; }
-        public DateTime CheckDate { get; set; }
-		public DateTime InsuranceDate { get; set; }
-		public DateTime CreatedDate { get; set; }
+        public string CheckDate { get; set; }
+		public string InsuranceDate { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime CreatedDate { get; set; }
 		public Truck() {
         }
 
@@ -36,7 +35,6 @@ namespace Transportation
         {
             JObject json = new JObject();
             json["id"] = ID;
-			json["code"] = Code;
 			json["licensePlate"] = LicensePlate;
             json["vin"] = Vin;
             json["engineNo"] = EngineNo;
@@ -52,6 +50,7 @@ namespace Transportation
             json["monthlyPayment"] = MonthlyPayment;
             json["checkDate"] = CheckDate;
             json["insuranceDate"] = InsuranceDate;
+            json["isDeleted"] = IsDeleted;
 
             return json;
         }
@@ -68,7 +67,6 @@ namespace Transportation
         {
             ID = json.Value<long>("id");
 
-            Code = json.Value<string>("code");
             LicensePlate = json.Value<string>("licensePlate");
             Vin = json.Value<string>("vin");
             EngineNo = json.Value<string>("engineNo");
@@ -76,14 +74,31 @@ namespace Transportation
             YearOfManufacture = json.Value<string>("yearOfManufacture");
             Brand = json.Value<string>("brand");
             Weight = json.Value<string>("weight");
-            StartUsingDate = json.Value<DateTime>("startUsingDate");
+
+            if (!String.IsNullOrEmpty(json.Value<string>("startUsingDate")))
+            {
+                StartUsingDate = json.Value<string>("startUsingDate");
+            }
+            
             EmployeeId = json.Value<string>("employeeId");
 
             Stock = json.Value<string>("stock");
-            BuyingDate = json.Value<DateTime>("buyingDate");
+
+            if (!String.IsNullOrEmpty( json.Value<string>("buyingDate")))
+            {
+                BuyingDate = json.Value<string>("buyingDate");
+            }
             MonthlyPayment = json.Value<string>("monthlyPayment");
-            CheckDate = json.Value<DateTime>("checkDate");
-			InsuranceDate = json.Value<DateTime>("insuranceDate");
+
+            if (!String.IsNullOrEmpty( json.Value<string>("checkDate")))
+            {
+                CheckDate = json.Value<string>("checkDate");
+            }
+            if (!String.IsNullOrEmpty( json.Value<string>("insuranceDate")))
+            {
+                InsuranceDate = json.Value<string>("insuranceDate");
+            }
+			
 		}
     }
 }

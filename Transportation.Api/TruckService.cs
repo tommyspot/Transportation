@@ -64,7 +64,8 @@ namespace Transportation.Api
 				return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
 			}
 
-			ClarityDB.Instance.Trucks.Remove(truck);
+            //ClarityDB.Instance.Trucks.Remove(truck);
+            truck.IsDeleted = true;
 			ClarityDB.Instance.SaveChanges();
 
 			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = truck.ToJson() };

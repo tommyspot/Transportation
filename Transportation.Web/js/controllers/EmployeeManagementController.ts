@@ -54,7 +54,10 @@ module Clarity.Controller {
         } else if (this.$location.path() === '/ql-toa-hang/nhan-vien/sua/' + employeeId) {
           if (this.currentEmployee == null) {
             this.employeeService.getById(employeeId, (data) => {
-              this.currentEmployee = data;
+                this.currentEmployee = data;
+                this.currentEmployee.driverLicenseDate = (data.driverLicenseDate != null && data.driverLicenseDate != null) ? new Date(data.driverLicenseDate) : null;
+                this.currentEmployee.driverLicenseExpirationDate = (data.driverLicenseExpirationDate != null && data.driverLicenseExpirationDate != null) ? new Date(data.driverLicenseExpirationDate) : null;
+                this.currentEmployee.startDate = (data.startDate != null && data.startDate != null) ? new Date(data.startDate) : null;
             }, null);
           }
         }
@@ -162,6 +165,20 @@ module Clarity.Controller {
 
     goToEmployeeForm() {
       this.$location.path('/ql-toa-hang/nhan-vien/tao');
+    }
+
+    changeDateFormat(date) {
+        var formatedDate = '';
+        if (date) {
+            var newDate = new Date(date);
+            var dateNo = newDate.getDate().toString();
+            dateNo = dateNo.toString().length == 2 ? dateNo : '0' + dateNo;
+            var monthNo = (newDate.getMonth() + 1).toString();
+            monthNo = monthNo.toString().length == 2 ? monthNo : '0' + monthNo;
+            var yearNo = newDate.getFullYear();
+            formatedDate = dateNo + '/' + monthNo + '/' + yearNo;
+        }
+        return formatedDate;
     }
 
 	}
