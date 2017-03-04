@@ -45,6 +45,7 @@ namespace Transportation
         public virtual IDbSet<Employee> Employees { get; set; }
 		public virtual IDbSet<Truck> Trucks { get; set; }
 		public virtual IDbSet<Customer> Customers { get; set; }
+		public virtual IDbSet<CustomerOrder> CustomerOrders { get; set; }
 		public virtual IDbSet<Wagon> Wagons { get; set; }
         public virtual IDbSet<WagonSettlement> WagonSettlements { get; set; }
 

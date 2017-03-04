@@ -79,6 +79,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\CustomerOrder.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Truck.cs" />
     <Compile Include="Entities\WagonSettlement.cs" />

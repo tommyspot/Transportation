@@ -40,6 +40,10 @@ module Clarity.Controller {
       this.$location.path('/ql-toa-hang/khach-hang');
     }
 
+    goToCustomerOrderSection() {
+        this.$location.path('/ql-toa-hang/don-hang-cua-khach');
+    }
+
     goToWagonsSection() {
       this.$location.path('/ql-toa-hang/toa-hang');
     }

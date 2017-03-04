@@ -39,6 +39,7 @@ var config = {
     , 'js/model/EmployeeModel.js'
 		, 'js/model/TruckModel.js'
 		, 'js/model/CustomerModel.js'
+		, 'js/model/CustomerOrderModel.js'
     , 'js/model/WagonModel.js'
     , 'js/model/WagonSettlementModel.js'
     
@@ -49,6 +50,7 @@ var config = {
     , 'js/services/EmployeeService.js'
 		, 'js/services/TruckService.js'
 		, 'js/services/CustomerService.js'
+		, 'js/services/CustomerOrderService.js'
     , 'js/services/WagonService.js'
     , 'js/services/WagonSettlementService.js'
     , 'js/services/ExportService.js'
@@ -60,6 +62,7 @@ var config = {
     , 'js/controllers/EmployeeManagementController.js'
     , 'js/controllers/TruckManagementController.js'
 		, 'js/controllers/CustomerManagementController.js'
+		, 'js/controllers/CustomerOrderManagementController.js'
     , 'js/controllers/WagonManagementController.js'
     , 'js/controllers/WagonSettlementManagementController.js'
 
