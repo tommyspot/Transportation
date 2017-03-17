@@ -98,7 +98,15 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="title">Chức vụ</label>
-                        <input id="title" name="title" class="form-control" type="text" ng-model="viewModel.currentEmployee.title">
+                        <!--<input id="title" name="title" class="form-control" type="text" ng-model="viewModel.currentEmployee.title">-->
+											<select id="title" class="form-control" data-ng-model="viewModel.currentEmployee.title">
+												<option value="">--Chọn chức vụ--</option>
+												<option value="0">Giám Đốc</option>
+												<option value="1">Quản Lý</option>
+												<option value="2">Đại Lý</option>
+												<option value="3">Tài Xế</option>
+												<option value="4">Kế Toán</option>
+											</select>
                     </div>
                 </div>
             </div>

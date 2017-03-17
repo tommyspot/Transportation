@@ -16,14 +16,14 @@ namespace Transportation
         public string LicensePlate { get; set; }
         public string Vin { get; set; }
         public string EngineNo { get; set; }
-        public string YearOfManufacture { get; set; }
+        public long YearOfManufacture { get; set; }
         public string Brand { get; set; }
-        public string Weight { get; set; }
+        public long Weight { get; set; }
         public string StartUsingDate { get; set; }
         public string EmployeeId { get; set; }
-        public string Stock { get; set; }
+        public long Stock { get; set; }
         public string BuyingDate { get; set; }
-        public string MonthlyPayment { get; set; }
+        public long MonthlyPayment { get; set; }
         public string CheckDate { get; set; }
 		public string InsuranceDate { get; set; }
         public bool IsDeleted { get; set; }
@@ -71,9 +71,10 @@ namespace Transportation
             Vin = json.Value<string>("vin");
             EngineNo = json.Value<string>("engineNo");
 
-            YearOfManufacture = json.Value<string>("yearOfManufacture");
+            YearOfManufacture = json.Value<long>("yearOfManufacture");
             Brand = json.Value<string>("brand");
-            Weight = json.Value<string>("weight");
+
+            Weight = json.Value<long>("weight");
 
             if (!String.IsNullOrEmpty(json.Value<string>("startUsingDate")))
             {
@@ -82,13 +83,13 @@ namespace Transportation
             
             EmployeeId = json.Value<string>("employeeId");
 
-            Stock = json.Value<string>("stock");
+            Stock = json.Value<long>("stock");
 
             if (!String.IsNullOrEmpty( json.Value<string>("buyingDate")))
             {
                 BuyingDate = json.Value<string>("buyingDate");
             }
-            MonthlyPayment = json.Value<string>("monthlyPayment");
+            MonthlyPayment = json.Value<long>("monthlyPayment");
 
             if (!String.IsNullOrEmpty( json.Value<string>("checkDate")))
             {

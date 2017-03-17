@@ -16,11 +16,14 @@ namespace Transportation
 		public string FullName { get; set; }
 		[Required]
         public string Area { get; set; }
-        public string EmployeeID { get; set; }
+		[Required]
+		public long PhoneNo { get; set; }
+		public string EmployeeID { get; set; }
         public string TotalOwned { get; set; }
         public string TotalPay { get; set; }
         public string TotalDebt { get; set; }
 		public string Type { get; set; }
+		public string Code { get; set; }
 		public DateTime CreatedDate { get; set; }
 		public Customer() {
         }
@@ -35,8 +38,10 @@ namespace Transportation
             json["totalOwned"] = TotalOwned;
             json["totalPay"] = TotalPay;
             json["totalDebt"] = TotalDebt;
-            json["type"] = Type;
-            return json;
+			json["phoneNo"] = PhoneNo;
+			json["type"] = Type;
+			json["code"] = Code;
+			return json;
         }
 
         public static Customer FromJson(JObject json)
@@ -58,7 +63,9 @@ namespace Transportation
 
             TotalPay = json.Value<string>("totalPay");
             TotalDebt = json.Value<string>("totalDebt");
-            Type = json.Value<string>("type");
+			PhoneNo = json.Value<long>("phoneNo");
+			Type = json.Value<string>("type");
+			Code = json.Value<string>("code");
 		}
     }
 }

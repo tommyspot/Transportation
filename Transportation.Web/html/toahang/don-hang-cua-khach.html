@@ -44,8 +44,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="pointer" data-ng-repeat="customerOrder in viewModel.customerOrderList">
-                  <!--data-ng-click="viewModel.$location.path('/ql-toa-hang/don-hang-cua-khach/' + customerOrder.id)">-->
+              <tr class="pointer" data-ng-repeat="customerOrder in viewModel.customerOrderList" data-ng-click="viewModel.$location.path('/ql-toa-hang/don-hang-cua-khach/' + customerOrder.id)">
                 <td class="align-center" data-ng-click="$event.stopPropagation();">
                   <input id="customerOrder-{{$index}}" type="checkbox" data-ng-model="customerOrder.isChecked" />
                 </td>

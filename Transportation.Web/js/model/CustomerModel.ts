@@ -10,6 +10,8 @@ module Clarity.Model {
 		public totalPay: string;
 		public totalDebt: string;
 		public type: string;
+		public phoneNo: number;
+		public code: string;
 		public isChecked: boolean;
 	}
 

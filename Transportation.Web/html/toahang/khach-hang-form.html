@@ -11,9 +11,12 @@
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="idNumber">Khu vực<span class="required-symbol">*</span></label>
-						<span class="required-field" ng-if="employeeForm.idNumber.$touched && employeeForm.idNumber.$invalid">('Khu vực' phải được nhập)</span>
-						<input id="idNumber" name="idNumber" class="form-control" type="text" ng-model="viewModel.currentCustomer.area" required>
+						<label for="area">Khu vực<span class="required-symbol">*</span></label>
+						<span class="required-field" ng-if="employeeForm.area.$touched && employeeForm.area.$invalid">('Khu vực' phải được chọn)</span>
+						<select id="area" class="form-control" data-ng-model="viewModel.currentCustomer.area">
+							<option value="">--Chọn khu vực--</option>
+							<option ng-repeat="area in viewModel.areas">{{area}}</option>
+						</select>
 					</div>
 				</div>
 			</div>
@@ -21,17 +24,33 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="address">Nhân viên(Đại lý)</label>
+						<label for="phoneNo">Số Điện Thoại<span class="required-symbol">*</span></label>
+						<span class="required-field" ng-if="employeeForm.phoneNo.$touched && employeeForm.phoneNo.$invalid">('Số Điện Thoại' phải được nhập)</span>
+						<input id="phoneNo" name="phoneNo" class="form-control" type="number" ng-model="viewModel.currentCustomer.phoneNo" required>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="address">Nhân viên (Đại lý)</label>
 						<select id="employeeId" class="form-control" data-ng-model="viewModel.currentCustomer.employeeId">
 							<option value="">--Chọn tài xế--</option>
 							<option ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
 						</select>
 					</div>
 				</div>
+			</div>
+
+			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="mobile">Tổng Nợ</label>
-						<input id="mobile" name="mobile" class="form-control" type="text" ng-model="viewModel.currentCustomer.totalOwned">
+						<label for="totalOwned">Số Phát Sinh</label>
+						<input id="totalOwned" name="mobile" class="form-control" type="number" ng-model="viewModel.currentCustomer.totalOwned">
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="totalPay">Tổng trả</label>
+						<input id="totalPay" name="totalPay" class="form-control" type="number" ng-model="viewModel.currentCustomer.totalPay">
 					</div>
 				</div>
 			</div>
@@ -39,23 +58,18 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="driverLicenseRank">Tổng trả</label>
-						<input id="driverLicenseRank" name="driverLicenseRank" class="form-control" type="text" ng-model="viewModel.currentCustomer.totalPay">
+						<label for="totalDebt">Còn nợ lại</label>
+						<input id="totalDebt" name="totalDebt" class="form-control" type="number" ng-model="viewModel.currentCustomer.totalDebt">
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="driverLicenseId">Còn lại</label>
-						<input id="driverLicenseId" name="driverLicenseId" class="form-control" type="text" ng-model="viewModel.currentCustomer.totalDebt">
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="driverLicenseAddress">Xếp loại</label>
-						<input id="driverLicenseAddress" name="driverLicenseAddress" class="form-control" type="text" ng-model="viewModel.currentCustomer.type">
+						<label for="type">Xếp loại</label>
+						<select id="type" class="form-control" data-ng-model="viewModel.currentCustomer.type">
+							<option value="">--Chọn loại khách hàng--</option>
+							<option value="a">A</option>
+							<option value="b">B</option>
+						</select>
 					</div>
 				</div>
 			</div>
@@ -78,6 +92,6 @@
 			</button>
 
 		</form>
-			</div>
+	</div>
 
 </div>

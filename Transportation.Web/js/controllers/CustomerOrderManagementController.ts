@@ -12,14 +12,17 @@ module Clarity.Controller {
   export class CustomerOrderManagementController {
 		public currentCustomerOrder: Model.CustomerOrderModel;
     public customerOrderService: service.CustomerOrderService;
-		//public employeeService: service.EmployeeService;
-		//public employeeList: Array<Model.EmployeeModel>;
+		public employeeService: service.EmployeeService;
+		public customerList: Array<Model.CustomerModel>;
+		public customerService: service.CustomerService;
+		public employeeList: Array<Model.EmployeeModel>;
     public customerOrderList: Array<Model.CustomerOrderModel>;
 		public customerOrderListTmp: Array<Model.CustomerOrderModel>;
     public numOfPages: number;
     public currentPage: number;
     public pageSize: number;
     public isCheckedAll: boolean;
+		public areas: Array<String>;
 
     constructor(private $scope,
       public $rootScope: IRootScope,
@@ -30,7 +33,8 @@ module Clarity.Controller {
 			private $routeParams: any) {
 
 			this.customerOrderService = new service.CustomerOrderService($http);
-			//this.employeeService = new service.EmployeeService($http);
+			this.employeeService = new service.EmployeeService($http);
+			this.customerService = new service.CustomerService($http);
       $scope.viewModel = this;
 			this.pageSize = 5;
       this.initCustomerOrder();
@@ -42,19 +46,42 @@ module Clarity.Controller {
           self.initPagination();
         }
       });
+
+			this.areas = ['An Giang', 'Bà Rịa - Vũng Tàu', 'Bắc Giang', 'Bắc Kạn', 'Bạc Liêu', 'Bắc Ninh', 'Bến Tre', 'Bình Định', 'Bình Dương', 'Bình Phước', 'Bình Thuận',
+				'Cà Mau', 'Cần Thơ', 'Cao Bằng', 'Đà Nẵng', 'Đắk Lắk', 'Đắk Nông', 'Điện Biên', 'Đồng Nai', 'Đồng Tháp', 'Gia Lai', 'Hà Giang', 'Hà Nam', 'Hà Nội', 'Hà Tĩnh',
+				'Hải Dương', 'Hải Phòng', 'Hậu Giang', 'Hòa Bình', 'Hưng Yên', 'Khánh Hòa', 'Kiên Giang', 'Kon Tum', 'Lai Châu', 'Lâm Đồng', 'Lạng Sơn', 'Lào Cai', 'Long An',
+				'Nam Định', 'Nghệ An', 'Ninh Bình', 'Ninh Thuận', 'Phú Thọ', 'Phú Yên', 'Quảng Bình', 'Quảng Nam', 'Quảng Ngãi', 'Quảng Ninh', 'Quảng Trị', 'Sóc Trăng',
+				'Sơn La', 'Tây Ninh', 'Thái Bình', 'Thái Nguyên', 'Thanh Hóa', 'Thừa Thiên Huế', 'Tiền Giang', 'TP HCM', 'Trà Vinh', 'Tuyên Quang', 'Vĩnh Long', 'Vĩnh Phúc',
+				'Yên Bái'];
+    }
+
+		initEmployeeList() {
+      this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
+        this.employeeList = results;
+      }, null);
+    }
+
+    initCustomerList() {
+      this.customerService.getAll((results: Array<Model.CustomerModel>) => {
+        this.customerList = results;
+      }, null);
     }
 
 		initCustomerOrder() {
-      var customerId = this.$routeParams.customer_id;
-      if (customerId) {
-        if (this.$location.path() === '/ql-toa-hang/don-hang-cua-khach/' + customerId) {
-          this.customerOrderService.getById(customerId, (data) => {
+			this.initCustomerList();
+			this.initEmployeeList();
+      var customerOrderId = this.$routeParams.customerOrder_id;
+      if (customerOrderId) {
+        if (this.$location.path() === '/ql-toa-hang/don-hang-cua-khach/' + customerOrderId) {
+          this.customerOrderService.getById(customerOrderId, (data) => {
             this.currentCustomerOrder = data;
+						this.applyCustomer(data.customerId);
           }, null);
-        } else if (this.$location.path() === '/ql-toa-hang/don-hang-cua-khach/sua/' + customerId) {
+        } else if (this.$location.path() === '/ql-toa-hang/don-hang-cua-khach/sua/' + customerOrderId) {
           if (this.currentCustomerOrder == null) {
-            this.customerOrderService.getById(customerId, (data) => {
+            this.customerOrderService.getById(customerOrderId, (data) => {
               this.currentCustomerOrder = data;
+							this.applyCustomer(data.customerId);
             }, null);
           }
         }
@@ -80,10 +107,10 @@ module Clarity.Controller {
     }
 
 		//initEmployeeList() {
-  //    this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
-  //      this.employeeList = results;
-  //    }, null);
-  //  }
+		//    this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
+		//      this.employeeList = results;
+		//    }, null);
+		//  }
 
     initPagination() {
       this.currentPage = 1;
@@ -155,11 +182,31 @@ module Clarity.Controller {
     }
 
     createCustomerOrder(customerOrder: Model.CustomerOrderModel) {
-      this.customerOrderService.create(customerOrder,
-        (data) => {
-          this.$location.path('/ql-toa-hang/don-hang-cua-khach');
-        },
-        () => { });
+
+			if (customerOrder.customerId && customerOrder.customerId != '') {
+				this.customerOrderService.create(customerOrder,
+					(data) => {
+						this.$location.path('/ql-toa-hang/don-hang-cua-khach');
+					},
+					() => { });
+
+			} else {
+
+				var newCustomer = new Model.CustomerModel();
+				newCustomer.fullName = customerOrder.customerName;
+				newCustomer.phoneNo = customerOrder.customerPhone;
+				newCustomer.employeeId = customerOrder.employeeId;
+				newCustomer.area = customerOrder.customerArea;
+
+				this.customerService.create(newCustomer, (data) => {
+					customerOrder.customerId = data.id;
+					this.customerOrderService.create(customerOrder,
+						(data) => {
+							this.$location.path('/ql-toa-hang/don-hang-cua-khach');
+						},
+						() => { });
+				}, null);
+			}
     }
 
 		updateCustomerOrder(customerOrder: Model.CustomerOrderModel) {
@@ -171,6 +218,37 @@ module Clarity.Controller {
     goToCustomerOrderForm() {
       this.$location.path('/ql-toa-hang/don-hang-cua-khach/tao');
     }
+
+		applyCustomer(id) {
+			if (this.currentCustomerOrder && this.currentCustomerOrder.customerId && this.customerList) {
+				for (var i = 0; i < this.customerList.length; i++) {
+					var customerOrderId = this.customerList[i].id;
+					if (customerOrderId == id) {
+						this.currentCustomerOrder.customerName = this.customerList[i].fullName;
+						this.currentCustomerOrder.customerPhone = this.customerList[i].phoneNo;
+						this.currentCustomerOrder.customerArea = this.customerList[i].area;
+						this.currentCustomerOrder.employeeId = this.customerList[i].employeeId;
+						break;
+					}
+				}
+
+			} else {
+				this.currentCustomerOrder.customerName = '';
+				this.currentCustomerOrder.customerPhone = 0;
+				this.currentCustomerOrder.customerArea = '';
+				this.currentCustomerOrder.employeeId = '';
+			}
+		}
+
+		getEmployeeName(id) {
+			for (var i = 0; i < this.employeeList.length; i++) {
+				var employee = this.employeeList[i];
+				if (employee.id == id) {
+					return employee.fullName;
+				}
+			}
+			return '';
+		}
 
 	}
 }

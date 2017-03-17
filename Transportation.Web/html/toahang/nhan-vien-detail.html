@@ -18,7 +18,7 @@
           <p><span class="bold-text">Ngày bắt đầu làm việc:</span> <span>{{viewModel.changeDateFormat(viewModel.currentEmployee.startDate)}}</span></p>
           <p><span class="bold-text">Vi phạm:</span> <span>{{viewModel.currentEmployee.violation}}</span></p>
           <p><span class="bold-text">Ghi chú:</span> <span>{{viewModel.currentEmployee.notes}}</span></p>
-          <p><span class="bold-text">Chức vụ:</span> <span>{{viewModel.currentEmployee.title}}</span></p>
+          <p><span class="bold-text">Chức vụ:</span> <span>{{viewModel.getEmployeeTitle(viewModel.currentEmployee.title)}}</span></p>
 
           <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien')">
             <span class="glyphicon glyphicon-arrow-left"></span>

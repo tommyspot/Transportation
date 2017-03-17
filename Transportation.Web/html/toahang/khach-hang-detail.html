@@ -1,36 +1,37 @@
 ﻿<div id="employeeInfo" class="bootstrap">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-3">
-        <img class="avatar" src="/img/avatar1.jpeg" style="width: 100%"/>
-      </div>
-      <div class="col-sm-9">
-        <div class="list-group-item user-info">
-          <h2 class="text-center title-name">{{viewModel.currentCustomer.fullName}}</h2>
-          <p><span class="bold-text">Khu vực:</span> <span>{{viewModel.currentCustomer.area}}</span></p>
-          <p><span class="bold-text">Nhân viên (Đại lý):</span> <span>{{viewModel.currentCustomer.employeeId}}</span></p>
-          <p><span class="bold-text">Tổng nợ:</span> <span>{{viewModel.currentCustomer.totalOwned}}</span></p>
-          <p><span class="bold-text">Tổng trả:</span> <span>{{viewModel.currentCustomer.totalPay}}</span></p>
-          <p><span class="bold-text">Còn lại:</span> <span>{{viewModel.currentCustomer.totalDebt}}</span></p>
-          <p><span class="bold-text">Xếp loại:</span> <span>{{viewModel.currentCustomer.type}}</span></p>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3">
+				<img class="avatar" src="/img/avatar1.jpeg" style="width: 100%" />
+			</div>
+			<div class="col-sm-9">
+				<div class="list-group-item user-info">
+					<h2 class="text-center title-name">{{viewModel.currentCustomer.fullName}}</h2>
+					<p><span class="bold-text">Khu vực:</span> <span>{{viewModel.currentCustomer.area}}</span></p>
+					<p><span class="bold-text">Nhân viên (Đại lý):</span> <span>{{viewModel.getEmployeeName(viewModel.currentCustomer.employeeId)}}</span></p>
+					<p><span class="bold-text">Số Phát Sinh:</span> <span>{{viewModel.currentCustomer.totalOwned}}</span></p>
+					<p><span class="bold-text">Tổng trả:</span> <span>{{viewModel.currentCustomer.totalPay}}</span></p>
+					<p><span class="bold-text">Còn nợ lại:</span> <span>{{viewModel.currentCustomer.totalDebt}}</span></p>
+					<p><span class="bold-text">Số Điện Thoại:</span> <span>{{viewModel.currentCustomer.phoneNo}}</span></p>
+					<p><span class="bold-text">Xếp loại:</span> <span>{{viewModel.currentCustomer.type}}</span></p>
 
-          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/khach-hang')">
-            <span class="glyphicon glyphicon-arrow-left"></span>
-            <span>Quay lại</span>
-          </button>
+					<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/khach-hang')">
+						<span class="glyphicon glyphicon-arrow-left"></span>
+						<span>Quay lại</span>
+					</button>
 
-          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/khach-hang/sua/' + viewModel.currentCustomer.id)">
-            <span class="glyphicon glyphicon-pencil"></span>
-            <span>Sửa khách hàng</span>
-          </button>
+					<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/khach-hang/sua/' + viewModel.currentCustomer.id)">
+						<span class="glyphicon glyphicon-pencil"></span>
+						<span>Sửa khách hàng</span>
+					</button>
 
-          <button class="btn btn-default negative-btn" data-ng-click="viewModel.removeCustomerInDetail(viewModel.currentCustomer)">
-            <span class="glyphicon glyphicon-trash"></span>
-            <span>Xóa khách hàng</span>
-          </button>
-        </div>
-      </div>
-    </div>
+					<button class="btn btn-default negative-btn" data-ng-click="viewModel.removeCustomerInDetail(viewModel.currentCustomer)">
+						<span class="glyphicon glyphicon-trash"></span>
+						<span>Xóa khách hàng</span>
+					</button>
+				</div>
+			</div>
+		</div>
 
-  </div>
+	</div>
 </div>

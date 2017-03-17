@@ -1,95 +1,95 @@
 ﻿<div id="CustomerList" class="bootstrap view-page">
-  <div class="container">
-    <div class="row action-row">
-      <div class="col-sm-9">
-        <span>
-          <label for="numOfCustomers">Hiển thị</label>
-          <select id="numOfCustomers" class="form-control show-records-per-page" data-ng-model="viewModel.pageSize" data-ng-change="viewModel.initPagination()" convert-to-number>
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="99999">All</option>
-          </select>
-        </span>
-        <button type="button" class="btn btn-default" data-ng-click="viewModel.goToCustomerForm()">
-          <span class="glyphicon glyphicon-plus"></span>
-          <span class="hidden-xs">Tạo khách hàng mới</span>
-        </button>
-        <button type="button" class="btn btn-default" data-ng-click="viewModel.removeCustomers()">
-          <span class="glyphicon glyphicon-trash"></span>
-          <span class="hidden-xs">Xóa khách hàng</span>
-        </button>
-      </div>
-      <div class="col-sm-3">
-        <input class="form-control" type="text" data-ng-model="searchText" placeholder="Search" />
-      </div>
-    </div>
+	<div class="container">
+		<div class="row action-row">
+			<div class="col-sm-9">
+				<span>
+					<label for="numOfCustomers">Hiển thị</label>
+					<select id="numOfCustomers" class="form-control show-records-per-page" data-ng-model="viewModel.pageSize" data-ng-change="viewModel.initPagination()" convert-to-number>
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="99999">All</option>
+					</select>
+				</span>
+				<button type="button" class="btn btn-default" data-ng-click="viewModel.goToCustomerForm()">
+					<span class="glyphicon glyphicon-plus"></span>
+					<span class="hidden-xs">Tạo khách hàng mới</span>
+				</button>
+				<button type="button" class="btn btn-default" data-ng-click="viewModel.removeCustomers()">
+					<span class="glyphicon glyphicon-trash"></span>
+					<span class="hidden-xs">Xóa khách hàng</span>
+				</button>
+			</div>
+			<div class="col-sm-3">
+				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Search" />
+			</div>
+		</div>
 
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="table-responsive">
-          <table class="table table-hover table-bordered">
-            <thead>
-              <tr>
-                <th class="align-center">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="table-responsive">
+					<table class="table table-hover table-bordered">
+						<thead>
+							<tr>
+								<th class="align-center">
 									<input id="checkAllCustomers" type="checkbox" data-ng-model="viewModel.isCheckedAll"
 												 data-ng-change="viewModel.selectAllCustomersOnPage()" />
-                </th>
-                <th class="align-center hidden-xs">Tên</th>
-                <th class="align-center">Khu vực</th>
-                <th class="align-center hidden-xs">Nhân viên (Đại lý)</th>
-                <th class="align-center hidden-xs">Tổng nợ</th>
-                <th class="align-center hidden-xs">Tổng trả</th>
-                <th class="align-center">Còn lại</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="pointer" data-ng-repeat="customer in viewModel.customerList"
-                  data-ng-click="viewModel.$location.path('/ql-toa-hang/khach-hang/' + customer.id)">
-                <td class="align-center" data-ng-click="$event.stopPropagation();">
-                  <input id="customer-{{$index}}" type="checkbox" data-ng-model="customer.isChecked" />
-                </td>
-                <td class="align-center hidden-xs">{{customer.fullName}}</td>
-                <td class="align-center">{{customer.area}}</td>
-                <td class="align-center hidden-xs">{{customer.employeeId}}</td>
-                <td class="align-center hidden-xs">{{customer.totaOwned}}</td>
-                <td class="align-center hidden-xs">{{customer.totalPay}}</td>
-                <td class="align-center">{{customer.totalDebt}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+								</th>
+								<th class="align-center hidden-xs">Mã KH</th>
+								<th class="align-center hidden-xs">Tên KH</th>
+								<th class="align-center">Khu vực</th>
+								<th class="align-center hidden-xs">Số Phát Sinh</th>
+								<th class="align-center hidden-xs">Tổng trả</th>
+								<th class="align-center">Còn nợ lại</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="pointer" data-ng-repeat="customer in viewModel.customerList"
+									data-ng-click="viewModel.$location.path('/ql-toa-hang/khach-hang/' + customer.id)">
+								<td class="align-center" data-ng-click="$event.stopPropagation();">
+									<input id="customer-{{$index}}" type="checkbox" data-ng-model="customer.isChecked" />
+								</td>
+								<td class="align-center hidden-xs">{{customer.id}}</td>
+								<td class="align-center hidden-xs">{{customer.fullName}}</td>
+								<td class="align-center">{{customer.area}}</td>
+								<td class="align-center hidden-xs">{{customer.totaOwned}}</td>
+								<td class="align-center hidden-xs">{{customer.totalPay}}</td>
+								<td class="align-center">{{customer.totalDebt}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 
-    <div class="row">
-      <div class="col-sm-12">
-        <nav aria-label="navigation" data-ng-if="viewModel.numOfPages > 0">
-          <ul class="pagination">
-            <li class="pointer" ng-class="{'disabled': viewModel.currentPage === 1}"
-                data-ng-click="viewModel.goToPreviousPage()">
-              <a aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
+		<div class="row">
+			<div class="col-sm-12">
+				<nav aria-label="navigation" data-ng-if="viewModel.numOfPages > 0">
+					<ul class="pagination">
+						<li class="pointer" ng-class="{'disabled': viewModel.currentPage === 1}"
+								data-ng-click="viewModel.goToPreviousPage()">
+							<a aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
 
-            <li class="pointer" data-ng-repeat="pageIndex in viewModel.getNumberPage() track by $index"
-                data-ng-click="viewModel.goToPage($index + 1)"
-                ng-class="{'active': $index + 1 === viewModel.currentPage}">
-              {{pageIndex}}
-              <span>{{$index + 1}}</span>
-            </li>
+						<li class="pointer" data-ng-repeat="pageIndex in viewModel.getNumberPage() track by $index"
+								data-ng-click="viewModel.goToPage($index + 1)"
+								ng-class="{'active': $index + 1 === viewModel.currentPage}">
+							{{pageIndex}}
+							<span>{{$index + 1}}</span>
+						</li>
 
-            <li class="pointer" ng-class="{'disabled': viewModel.currentPage >= viewModel.numOfPages}"
-                data-ng-click="viewModel.goToNextPage()">
-              <a aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
+						<li class="pointer" ng-class="{'disabled': viewModel.currentPage >= viewModel.numOfPages}"
+								data-ng-click="viewModel.goToNextPage()">
+							<a aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
 
-  </div>
+	</div>
 </div>
