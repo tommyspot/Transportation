@@ -5278,6 +5278,13 @@ div.bootstrap {
       #ng-app #wagonFormSection form .wagonSettlement .background-customer-color {
         background-color: #C0392B;
         color: white; }
+      #ng-app #wagonFormSection form .wagonSettlement .label-dh {
+        margin-top: 7px;
+        color: #C0392B; }
+    #ng-app #wagonFormSection form .dhkh-title {
+      text-align: center;
+      color: #C0392B;
+      margin-bottom: 8px; }
   #ng-app .form-detail {
     border: 1px solid #34495E;
     margin-left: 0px;
