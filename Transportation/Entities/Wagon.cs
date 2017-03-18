@@ -14,8 +14,11 @@ namespace Transportation
     public class Wagon : Entity
     {
         public DateTime CreatedDate { get; set; }
-        [Required]
         public string Code { get; set; }
+        [Required]
+        public DateTime PaymentDate { get; set; }
+        [Required]
+        public string PaymentPlace { get; set; }
         [Required]
         public DateTime DepartDate { get; set; }
         [Required]
@@ -43,6 +46,8 @@ namespace Transportation
         public long PaymentOf10Percent { get; set; }
         public long PaymentOfOthers { get; set; }
 
+        public string Notes { get; set; }
+
         public Wagon() {
             WagonSetlements = new Collection<WagonSettlement>();
         }
@@ -57,6 +62,9 @@ namespace Transportation
             json["returnDate"] = ReturnDate;
             json["truckId"] = TruckID;
             json["employeeId"] = EmployeeID;
+
+            json["paymentDate"] = PaymentDate;
+            json["paymentPlace"] = PaymentPlace;
 
             json["costOfTruck"] = CostOfTruck;
             json["costOfService"] = CostOfService;
@@ -73,6 +81,8 @@ namespace Transportation
             json["paymentOf10Percent"] = PaymentOf10Percent;
             json["paymentOfOthers"] = PaymentOfOthers;
             json["wagonSettlements"] = BuildJsonArray(WagonSetlements);
+
+            json["notes"] = Notes;
 
             return json;
         }
@@ -95,6 +105,9 @@ namespace Transportation
             TruckID = json.Value<long>("truckId");
             EmployeeID = json.Value<long>("employeeId");
 
+            PaymentDate = json.Value<DateTime>("paymentDate");
+            PaymentPlace = json.Value<string>("paymentPlace");
+
             CostOfTruck = json.Value<long>("costOfTruck");
             CostOfService = json.Value<long>("costOfService");
             CostOfTangBoXe = json.Value<long>("costOfTangBoXe");
@@ -109,6 +122,8 @@ namespace Transportation
             PaymentOfHangVe = json.Value<long>("paymentOfHangVe");
             PaymentOf10Percent = json.Value<long>("paymentOf10Percent");
             PaymentOfOthers = json.Value<long>("paymentOfOthers");
+
+            Notes = json.Value<string>("notes");
         }
 
         private JArray BuildJsonArray(Collection<WagonSettlement> wagonSettlements)

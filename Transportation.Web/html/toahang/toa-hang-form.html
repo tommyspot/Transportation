@@ -6,7 +6,7 @@
 
           <ul class="nav nav-tabs" ng-init="tab = 1">
             <li ng-class="{'active': tab === 1}"><a data-toggle="tab" data-ng-click="tab = 1">Thông tin</a></li>
-            <li ng-class="{'active': tab === 2}"><a data-toggle="tab" data-ng-click="tab = 2">Đơn hàng của khách</a></li>
+            <li ng-class="{'active': tab === 2}"><a data-toggle="tab" data-ng-click="tab = 2">Đơn hàng</a></li>
             <li ng-class="{'active': tab === 3}"><a data-toggle="tab" data-ng-click="tab = 3">Chi phí</a></li>
             <li ng-class="{'active': tab === 4}"><a data-toggle="tab" data-ng-click="tab = 4">Thanh toán với công ty</a></li>
           </ul>
@@ -17,9 +17,23 @@
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="code">Mã toa hàng <span class="required-symbol">*</span></label>
-                    <span class="required-field" ng-if="wagonForm.code.$touched && wagonForm.code.$invalid">(Mã toa hàng phải được nhập)</span>
-                    <input id="code" name="code" class="form-control" type="text" ng-model="viewModel.currentWagon.code" required>
+                    <label for="code">Ngày thanh toán <span class="required-symbol">*</span></label>
+                    <span class="required-field" ng-if="wagonForm.paymentDate.$touched && wagonForm.paymentDate.$invalid">(Ngày thanh toán phải được nhập)</span>
+                    <input id="paymentDate" name="paymentDate" class="form-control" type="date" ng-model="viewModel.currentWagon.paymentDate" required>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="code">Nơi thanh toán <span class="required-symbol">*</span></label>
+                    <span class="required-field" ng-if="wagonForm.paymentPlace.$touched && wagonForm.paymentPlace.$invalid">(Nơi thanh toán phải được nhập)</span>
+                    <select id="paymentPlace" name="paymentPlace" class="form-control" data-ng-model="viewModel.currentWagon.paymentPlace" required>
+                      <option value="">--Chọn nơi thanh toán--</option>
+                      <option value="Công ty">Công ty</option>
+                      <option value="Mỹ Tường">Mỹ Tường</option>
+                      <option value="Kiên Giang">Kiên Giang</option>
+                      <option value="Cam Ranh">Cam Ranh</option>
+                      <option value="Cà Ná">Cà Ná</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -59,6 +73,14 @@
                   </div>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="notes">Ghi chú</label>
+                    <input id="notes" name="notes" class="form-control" type="text" ng-model="viewModel.currentWagon.notes" required>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <!--TAB 2-->
@@ -67,11 +89,11 @@
                 <div class="col-sm-3">
                   <button type="button" class="btn btn-default" data-ng-click="viewModel.createWagonSettlement(viewModel.currentWagon)">
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span class="hidden-xs">Tạo đơn hàng của khách</span>
+                    <span class="hidden-xs">Tạo đơn hàng</span>
                   </button>
                 </div>
                 <div class="col-sm-9 remove-section">
-                  <span>Xóa đơn hàng của khách</span>
+                  <span>Xóa đơn hàng</span>
                   <button type="button" class="btn btn-default remove-wagonSettlement" data-ng-repeat="wagonSettlement in viewModel.currentWagon.wagonSettlements"
                            data-ng-click="viewModel.deleteWagonSettlement($index)">
                     <span class="glyphicon glyphicon-remove"></span>

@@ -13,6 +13,7 @@ namespace Transportation
     public class WagonSettlement : Entity
     {
         public DateTime CreatedDate { get; set; }
+        public string Code { get; set; }
         [Required]
         public DateTime Date { get; set; }
         [Required]
@@ -26,6 +27,8 @@ namespace Transportation
         public virtual Employee Employee { get; set; }
 
         public long Payment { get; set; }
+        public string PaymentPlace { get; set; }
+        public long PaymentRemain { get; set; }
 
         public string Unit { get; set; }
         public long Quantity { get; set; }
@@ -42,12 +45,15 @@ namespace Transportation
         {
             JObject json = new JObject();
             json["id"] = ID;
+            json["code"] = Code;
             json["customerId"] = CustomerID;
             json["wagonId"] = WagonID;
             json["date"] = Date;
             json["employeeId"] = EmployeeID;
 
             json["payment"] = Payment;
+            json["paymentPlace"] = PaymentPlace;
+            json["paymentRemain"] = PaymentRemain;
 
             json["unit"] = Unit;
             json["quantity"] = Quantity;
@@ -72,12 +78,16 @@ namespace Transportation
         {
             ID = json.Value<long>("id");
 
+            Code = json.Value<string>("code");
             CustomerID = json.Value<long>("customerId");
             WagonID = json.Value<long>("wagonId");
             Date = json.Value<DateTime>("date");
             EmployeeID = json.Value<long>("employeeId");
 
             Payment = json.Value<long>("payment");
+            PaymentPlace = json.Value<string>("paymentPlace");
+            PaymentRemain = json.Value<long>("paymentRemain");
+
             Unit = json.Value<string>("unit");
             Quantity = json.Value<long>("quantity");
             Departure = json.Value<string>("departure");
