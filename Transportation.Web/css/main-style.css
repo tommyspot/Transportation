@@ -5275,6 +5275,9 @@ div.bootstrap {
       margin-bottom: 10px; }
       #ng-app #wagonFormSection form .wagonSettlement .customer-color {
         color: #C0392B; }
+      #ng-app #wagonFormSection form .wagonSettlement .background-customer-color {
+        background-color: #C0392B;
+        color: white; }
   #ng-app .form-detail {
     border: 1px solid #34495E;
     margin-left: 0px;

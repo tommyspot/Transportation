@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Data;
+using System.Collections.ObjectModel;
 
 namespace Transportation
 {
@@ -14,19 +15,19 @@ namespace Transportation
     {
 		public string CustomerName { get; set; }
 		public string CustomerID { get; set; }
-		public long CustomerPhone { get; set; }
-		public string CustomerArea { get; set; }
-		public string EmployeeID { get; set; }
+        public string CustomerPhone { get; set; }
+        public string CustomerArea { get; set; }
+        public string EmployeeID { get; set; }
 		public string Unit { get; set; }
         public long Quantity { get; set; }
         public string Departure { get; set; }
 		public string Destination { get; set; }
 		public long UnitPrice { get; set; }
-		public string DepartDate { get; set; }
-		public string ReturnDate { get; set; }
+		public DateTime DepartDate { get; set; }
+		public DateTime ReturnDate { get; set; }
 		public string Notes { get; set; }
 		public DateTime CreatedDate { get; set; }
-		public CustomerOrder() {
+        public CustomerOrder() {
         }
 
         public JObject ToJson()
@@ -34,9 +35,9 @@ namespace Transportation
             JObject json = new JObject();
 			json["id"] = ID;
 			json["customerName"] = CustomerName;
-			json["customerId"] = CustomerID;
-			json["customerPhone"] = CustomerPhone;
-			json["customerArea"] = CustomerArea;
+            json["customerPhone"] = CustomerPhone;
+            json["customerArea"] = CustomerArea;
+            json["customerId"] = CustomerID;
 			json["unit"] = Unit;
             json["quantity"] = Quantity;
             json["departure"] = Departure;
@@ -46,7 +47,8 @@ namespace Transportation
 			json["returnDate"] = ReturnDate;
 			json["employeeId"] = EmployeeID;
 			json["notes"] = Notes;
-			return json;
+            json["createdDate"] = CreatedDate;
+            return json;
         }
 
         public static CustomerOrder FromJson(JObject json)
@@ -63,16 +65,14 @@ namespace Transportation
 
 			CustomerName = json.Value<string>("customerName");
 			CustomerID = json.Value<string>("customerId");
-			CustomerPhone = json.Value<long>("customerPhone");
-			CustomerArea = json.Value<string>("customerArea");
 			Unit = json.Value<string>("unit");
 			Quantity = json.Value<long>("quantity");
 
 			Departure = json.Value<string>("departure");
 			Destination = json.Value<string>("destination");
 			UnitPrice = json.Value<long>("unitPrice");
-			DepartDate = json.Value<string>("departDate");
-			ReturnDate = json.Value<string>("returnDate");
+			DepartDate = json.Value<DateTime>("departDate");
+			ReturnDate = json.Value<DateTime>("returnDate");
 			Notes = json.Value<string>("notes");
 			EmployeeID = json.Value<string>("employeeId");
 		}

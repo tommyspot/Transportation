@@ -15,7 +15,8 @@ module Clarity.Service {
         .success((data: Model.WagonModel) => {
           data.departDate = new Date(data.departDate.toString());
           data.returnDate = new Date(data.returnDate.toString());
-          data.wagonSettlements = data.wagonSettlements.map(function (wagonSettlement, index) {
+          data.paymentDate = new Date(data.paymentDate.toString());
+          data.wagonSettlements = data.wagonSettlements.map((wagonSettlement, index) => {
             wagonSettlement.date = new Date(wagonSettlement.date.toString());
             return wagonSettlement;
           });
@@ -31,6 +32,7 @@ module Clarity.Service {
             var wagon = data[i];
             wagon.departDate = new Date(wagon.departDate.toString());
             wagon.returnDate = new Date(wagon.returnDate.toString());
+            wagon.paymentDate = new Date(wagon.paymentDate.toString());
           }
 
           this.doCallback(successCallback, data);

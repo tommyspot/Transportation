@@ -187,7 +187,7 @@ module Clarity.Controller {
 
     createCustomerOrder(customerOrder: Model.CustomerOrderModel) {
 
-			if (customerOrder.customerId && customerOrder.customerId != '') {
+			if (customerOrder.customerId) {
 				this.customerOrderService.create(customerOrder,
 					(data) => {
 						this.$location.path('/ql-toa-hang/don-hang-cua-khach');
@@ -238,9 +238,9 @@ module Clarity.Controller {
 
 			} else {
 				this.currentCustomerOrder.customerName = '';
-				this.currentCustomerOrder.customerPhone = 0;
+				this.currentCustomerOrder.customerPhone = '';
 				this.currentCustomerOrder.customerArea = '';
-				this.currentCustomerOrder.employeeId = '';
+				this.currentCustomerOrder.employeeId = 0;
 			}
 		}
 
