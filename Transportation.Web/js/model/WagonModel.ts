@@ -4,6 +4,10 @@ module Clarity.Model {
 
   export class WagonModel extends Model.BaseModel {
     public code: string;
+
+    public paymentDate: Date;
+    public paymentPlace: string;
+
     public departDate: Date;
     public returnDate: Date;
     public truckId: number;
@@ -24,6 +28,7 @@ module Clarity.Model {
     public paymentOf10Percent: number;
     public paymentOfOthers: number;
     public wagonSettlements: Array<Model.WagonSettlementModel>;
+    public notes: string;
     public isChecked: boolean;
   }
 }
