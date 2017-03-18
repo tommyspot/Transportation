@@ -6,14 +6,14 @@ module Clarity.Model {
         public licensePlate: string; // bien so xe
         public vin: string; //so khung
         public engineNo: string;
-        public yearOfManufacture: string;
+        public yearOfManufacture: number;
         public brand: string;
-        public weight: string;
+        public weight: number;
         public startUsingDate: Date;
         public employeeId: string;
-        public stock: string;
+        public stock: number;
         public buyingDate: Date;
-        public monthlyPayment: string;
+        public monthlyPayment: number;
         public checkDate: Date;
         public insuranceDate: Date;
         public isDeleted: boolean;

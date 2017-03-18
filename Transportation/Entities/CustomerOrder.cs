@@ -13,12 +13,13 @@ namespace Transportation
     public class CustomerOrder : Entity
     {
 		public string CustomerName { get; set; }
-        public string CustomerID { get; set; }
-        public string Unit { get; set; }
-        public string Quantity { get; set; }
+		public string CustomerID { get; set; }
+		public string EmployeeID { get; set; }
+		public string Unit { get; set; }
+        public long Quantity { get; set; }
         public string Departure { get; set; }
 		public string Destination { get; set; }
-		public string UnitPrice { get; set; }
+		public long UnitPrice { get; set; }
 		public string DepartDate { get; set; }
 		public string ReturnDate { get; set; }
 		public string Notes { get; set; }
@@ -39,6 +40,7 @@ namespace Transportation
             json["unitPrice"] = UnitPrice;
 			json["departDate"] = DepartDate;
 			json["returnDate"] = ReturnDate;
+			json["employeeId"] = EmployeeID;
 			json["notes"] = Notes;
 			return json;
         }
@@ -58,14 +60,15 @@ namespace Transportation
 			CustomerName = json.Value<string>("customerName");
 			CustomerID = json.Value<string>("customerId");
 			Unit = json.Value<string>("unit");
-			Quantity = json.Value<string>("quantity");
+			Quantity = json.Value<long>("quantity");
 
 			Departure = json.Value<string>("departure");
 			Destination = json.Value<string>("destination");
-			UnitPrice = json.Value<string>("unitPrice");
+			UnitPrice = json.Value<long>("unitPrice");
 			DepartDate = json.Value<string>("departDate");
 			ReturnDate = json.Value<string>("returnDate");
 			Notes = json.Value<string>("notes");
+			EmployeeID = json.Value<string>("employeeId");
 		}
     }
 }

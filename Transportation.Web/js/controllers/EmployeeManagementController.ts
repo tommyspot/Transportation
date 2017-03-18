@@ -181,5 +181,21 @@ module Clarity.Controller {
         return formatedDate;
     }
 
+		getEmployeeTitle(title) {
+			switch (title) {
+				case '0':
+					return 'Giám Đốc';
+				case '1':
+					return 'Quản Lý';
+				case '2':
+					return 'Đại Lý';
+				case '3':
+					return 'Tài Xế';
+				case '4':
+					return 'Kế Toán';
+				default:
+					return '';
+			}
+		}
 	}
 }

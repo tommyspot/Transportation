@@ -20,6 +20,7 @@ module Clarity.Controller {
     public currentPage: number;
     public pageSize: number;
     public isCheckedAll: boolean;
+		public areas: Array<String>;
 
     constructor(private $scope,
       public $rootScope: IRootScope,
@@ -34,7 +35,12 @@ module Clarity.Controller {
       $scope.viewModel = this;
 			this.pageSize = 5;
       this.initCustomer();
-
+			this.areas = ['An Giang', 'Bà Rịa - Vũng Tàu', 'Bắc Giang', 'Bắc Kạn', 'Bạc Liêu', 'Bắc Ninh', 'Bến Tre', 'Bình Định', 'Bình Dương', 'Bình Phước', 'Bình Thuận',
+				'Cà Mau',	'Cần Thơ', 'Cao Bằng', 'Đà Nẵng', 'Đắk Lắk',	'Đắk Nông',	'Điện Biên',	'Đồng Nai',	'Đồng Tháp',	'Gia Lai',	'Hà Giang',	'Hà Nam',	'Hà Nội',	'Hà Tĩnh',
+				'Hải Dương',	'Hải Phòng',	'Hậu Giang',	'Hòa Bình',	'Hưng Yên',	'Khánh Hòa',	'Kiên Giang',	'Kon Tum',	'Lai Châu',	'Lâm Đồng',	'Lạng Sơn',	'Lào Cai',	'Long An',
+				'Nam Định', 'Nghệ An', 'Ninh Bình', 'Ninh Thuận', 'Phú Thọ', 'Phú Yên', 'Quảng Bình', 'Quảng Nam', 'Quảng Ngãi', 'Quảng Ninh', 'Quảng Trị', 'Sóc Trăng',
+				'Sơn La',	'Tây Ninh',	'Thái Bình', 'Thái Nguyên',	'Thanh Hóa',	'Thừa Thiên Huế',	'Tiền Giang',	'TP HCM',	'Trà Vinh',	'Tuyên Quang',	'Vĩnh Long',	'Vĩnh Phúc',
+				'Yên Bái'];
 			var self = this;
       $scope.$watch('searchText', function (value) {
         if (self.customerListTmp && self.customerListTmp.length > 0) {
@@ -46,6 +52,8 @@ module Clarity.Controller {
 
 		initCustomer() {
       var customerId = this.$routeParams.customer_id;
+			this.initEmployeeList();
+			this.initCustomerList();
       if (customerId) {
         if (this.$location.path() === '/ql-toa-hang/khach-hang/' + customerId) {
           this.customerService.getById(customerId, (data) => {
@@ -61,9 +69,6 @@ module Clarity.Controller {
       } else {
         if (this.$location.path() === '/ql-toa-hang/khach-hang/tao') {
           this.currentCustomer = new Model.CustomerModel();
-					this.initEmployeeList();
-        } else if (this.$location.path() === '/ql-toa-hang/khach-hang') {
-          this.initCustomerList();
         }
       }
     }
@@ -171,6 +176,16 @@ module Clarity.Controller {
     goToCustomerForm() {
       this.$location.path('/ql-toa-hang/khach-hang/tao');
     }
+
+		getEmployeeName(id) {
+			for (var i = 0; i < this.employeeList.length; i++) {
+				var employee = this.employeeList[i];
+				if (employee.id == id) {
+					return employee.fullName;
+				}
+			}
+			return '';
+		}
 
 	}
 }

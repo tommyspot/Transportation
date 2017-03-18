@@ -6,32 +6,30 @@
       </div>
       <div class="col-sm-9">
         <div class="list-group-item user-info">
-          <h2 class="text-center title-name">{{viewModel.currentTruck.code}}</h2>
-          <p><span class="bold-text">Biển Số:</span> <span>{{viewModel.currentTruck.licensePlate}}</span></p>
-          <p><span class="bold-text">Số Khung:</span> <span>{{viewModel.currentTruck.vin}}</span></p>
-          <p><span class="bold-text">Số Máy:</span> <span>{{viewModel.currentTruck.engineNo}}</span></p>
-          <p><span class="bold-text">Năm SX:</span> <span>{{viewModel.currentTruck.yearOfManufacture}}</span></p>
-          <p><span class="bold-text">Nhãn Hiệu:</span> <span>{{viewModel.currentTruck.brand}}</span></p>
-          <p><span class="bold-text">Tải Trọng:</span> <span>{{viewModel.currentTruck.weight}}</span></p>
-          <p><span class="bold-text">Ngày Bắt Đầu Lưu Hành:</span> <span>{{viewModel.changeDateFormat(viewModel.currentTruck.startUsingDate)}}</span></p>
-          <p><span class="bold-text">Tài Xế Chịu Trách Nhiệm:</span> <span>{{viewModel.currentTruck.driverId}}</span></p>
-          <p><span class="bold-text">Cổ Phần?:</span> <span>{{viewModel.currentTruck.stock}}</span></p>
-          <p><span class="bold-text">Ngày Bắt Đầu Mua:</span> <span>{{viewModel.changeDateFormat(viewModel.currentTruck.buyingDate)}}</span></p>
-          <p><span class="bold-text">Tiền Trả Hàng Tháng:</span> <span>{{viewModel.currentTruck.monthlyPayment}}</span></p>
-          <p><span class="bold-text">Ngày Đăng Kiểm Gần Nhất:</span> <span>{{viewModel.changeDateFormat(viewModel.currentTruck.checkDate)}}</span></p>
-					<p><span class="bold-text">Bảo Hiểm Đến:</span> <span>{{viewModel.changeDateFormat(viewModel.currentTruck.insuranceDate)}}</span></p>
+          <h2 class="text-center title-name">{{viewModel.currentCustomerOrder.customerName}}</h2>
+          <p><span class="bold-text">Số Điện Thoại:</span> <span>{{viewModel.currentCustomerOrder.customerPhone}}</span></p>
+          <p><span class="bold-text">Khu vực:</span> <span>{{viewModel.currentCustomerOrder.customerArea}}</span></p>
+          <p><span class="bold-text">Nhân viên (Đại lý):</span> <span>{{viewModel.getEmployeeName(viewModel.currentCustomerOrder.employeeId)}}</span></p>
+          <p><span class="bold-text">Đơn vị tính:</span> <span>{{viewModel.currentCustomerOrder.unit}}</span></p>
+          <p><span class="bold-text">Số Lượng:</span> <span>{{viewModel.currentCustomerOrder.quantity}}</span></p>
+          <p><span class="bold-text">Nơi Đi:</span> <span>{{viewModel.currentCustomerOrder.departure}}</span></p>
+          <p><span class="bold-text">Nơi Đến:</span> <span>{{viewModel.currentCustomerOrder.destination}}</span></p>
+          <p><span class="bold-text">Đơn Giá:</span> <span>{{viewModel.currentCustomerOrder.unitPrice}}</span></p>
+          <p><span class="bold-text">Ngày Đi:</span> <span>{{viewModel.changeDateFormat(viewModel.currentCustomerOrder.departDate)}}</span></p>
+          <p><span class="bold-text">Ngày Đến:</span> <span>{{viewModel.changeDateFormat(viewModel.currentCustomerOrder.returnDate)}}</span></p>
+          <p><span class="bold-text">Ghi Chú:</span> <span>{{viewModel.currentCustomerOrder.notes}}</span></p>
 
-          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/xe')">
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/don-hang-cua-khach')">
             <span class="glyphicon glyphicon-arrow-left"></span>
             <span>Quay lại</span>
           </button>
 
-          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/xe/sua/' + viewModel.currentTruck.id)">
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/don-hang-cua-khach/sua/' + viewModel.currentCustomerOrder.id)">
             <span class="glyphicon glyphicon-pencil"></span>
             <span>Sửa xe</span>
           </button>
 
-          <button class="btn btn-default negative-btn" data-ng-click="viewModel.removeTruckInDetail(viewModel.currentTruck)">
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.removeCustomerOderInDetail(viewModel.currentCustomerOrder)">
             <span class="glyphicon glyphicon-trash"></span>
             <span>Xóa xe</span>
           </button>
