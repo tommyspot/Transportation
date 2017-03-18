@@ -72,17 +72,20 @@ module Clarity.Controller {
 			this.initCustomerList();
 			this.initEmployeeList();
       var customerOrderId = this.$routeParams.customerOrder_id;
+			
       if (customerOrderId) {
         if (this.$location.path() === '/ql-toa-hang/don-hang-cua-khach/' + customerOrderId) {
           this.customerOrderService.getById(customerOrderId, (data) => {
             this.currentCustomerOrder = data;
 						this.applyCustomer(data.customerId);
+						this.unitPriceFormated = data.unitPrice != 0 ? data.unitPrice.toLocaleString() : '';
           }, null);
         } else if (this.$location.path() === '/ql-toa-hang/don-hang-cua-khach/sua/' + customerOrderId) {
           if (this.currentCustomerOrder == null) {
             this.customerOrderService.getById(customerOrderId, (data) => {
               this.currentCustomerOrder = data;
 							this.applyCustomer(data.customerId);
+							this.unitPriceFormated = data.unitPrice != 0 ? data.unitPrice.toLocaleString() : '';
             }, null);
           }
         }
