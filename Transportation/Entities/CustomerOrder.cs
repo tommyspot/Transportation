@@ -14,6 +14,8 @@ namespace Transportation
     {
 		public string CustomerName { get; set; }
 		public string CustomerID { get; set; }
+		public long CustomerPhone { get; set; }
+		public string CustomerArea { get; set; }
 		public string EmployeeID { get; set; }
 		public string Unit { get; set; }
         public long Quantity { get; set; }
@@ -33,6 +35,8 @@ namespace Transportation
 			json["id"] = ID;
 			json["customerName"] = CustomerName;
 			json["customerId"] = CustomerID;
+			json["customerPhone"] = CustomerPhone;
+			json["customerArea"] = CustomerArea;
 			json["unit"] = Unit;
             json["quantity"] = Quantity;
             json["departure"] = Departure;
@@ -59,6 +63,8 @@ namespace Transportation
 
 			CustomerName = json.Value<string>("customerName");
 			CustomerID = json.Value<string>("customerId");
+			CustomerPhone = json.Value<long>("customerPhone");
+			CustomerArea = json.Value<string>("customerArea");
 			Unit = json.Value<string>("unit");
 			Quantity = json.Value<long>("quantity");
 
