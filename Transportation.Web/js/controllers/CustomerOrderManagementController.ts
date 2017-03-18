@@ -23,6 +23,7 @@ module Clarity.Controller {
     public pageSize: number;
     public isCheckedAll: boolean;
 		public areas: Array<String>;
+		public unitPriceFormated: string;
 
     constructor(private $scope,
       public $rootScope: IRootScope,
@@ -248,6 +249,13 @@ module Clarity.Controller {
 				}
 			}
 			return '';
+		}
+
+		changeFormatNumber(changeFormatNumber) {
+			if (changeFormatNumber && changeFormatNumber != '') {
+				this.currentCustomerOrder.unitPrice = parseInt(changeFormatNumber.replace(/,/g, ''));
+				this.unitPriceFormated = this.currentCustomerOrder.unitPrice.toLocaleString();
+			}
 		}
 
 	}
