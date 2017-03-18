@@ -5843,11 +5843,13 @@ div.bootstrap {
   #ng-app #mainPage .manage-box.nv-box, #ng-app #qlToaHangPage .manage-box.nv-box {
     background-color: #3498db; }
   #ng-app #mainPage .manage-box.kh-box, #ng-app #qlToaHangPage .manage-box.kh-box {
-    background-color: #2ecc71; }
+    background-color: #9b59b6; }
   #ng-app #mainPage .manage-box.th-box, #ng-app #qlToaHangPage .manage-box.th-box {
     background-color: #f1c40f; }
   #ng-app #mainPage .manage-box.qt-box, #ng-app #qlToaHangPage .manage-box.qt-box {
     background-color: #e74c3c; }
+  #ng-app #mainPage .manage-box.dhkh-box, #ng-app #qlToaHangPage .manage-box.dhkh-box {
+    background-color: #2ecc71; }
   #ng-app #mainPage .no-margin-right, #ng-app #qlToaHangPage .no-margin-right {
     margin-right: 0px; }
   #ng-app .view-page .show-records-per-page {

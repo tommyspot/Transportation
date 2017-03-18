@@ -6,7 +6,7 @@
 
           <ul class="nav nav-tabs" ng-init="tab = 1">
             <li ng-class="{'active': tab === 1}"><a data-toggle="tab" data-ng-click="tab = 1">Thông tin</a></li>
-            <li ng-class="{'active': tab === 2}"><a data-toggle="tab" data-ng-click="tab = 2">Khách hàng</a></li>
+            <li ng-class="{'active': tab === 2}"><a data-toggle="tab" data-ng-click="tab = 2">Đơn hàng của khách</a></li>
             <li ng-class="{'active': tab === 3}"><a data-toggle="tab" data-ng-click="tab = 3">Chi phí</a></li>
             <li ng-class="{'active': tab === 4}"><a data-toggle="tab" data-ng-click="tab = 4">Thanh toán với công ty</a></li>
           </ul>
@@ -67,11 +67,11 @@
                 <div class="col-sm-3">
                   <button type="button" class="btn btn-default" data-ng-click="viewModel.createWagonSettlement(viewModel.currentWagon)">
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span class="hidden-xs">Tạo khách hàng</span>
+                    <span class="hidden-xs">Tạo đơn hàng của khách</span>
                   </button>
                 </div>
                 <div class="col-sm-9 remove-section">
-                  <span>Xóa khách hàng</span>
+                  <span>Xóa đơn hàng của khách</span>
                   <button type="button" class="btn btn-default remove-wagonSettlement" data-ng-repeat="wagonSettlement in viewModel.currentWagon.wagonSettlements"
                            data-ng-click="viewModel.deleteWagonSettlement($index)">
                     <span class="glyphicon glyphicon-remove"></span>
@@ -84,16 +84,16 @@
                 <div class="row">
                   <div class="col-sm-4">
                     <div class="form-group">
-                      <label class="customer-color" for="wagonSettlementCustomerId-{{$index}}">Khách hàng {{$index + 1}}</label>
+                      <label class="customer-color" for="wagonSettlementCustomerId-{{$index}}">Đơn hàng của khách {{$index + 1}}</label>
                       <select id="wagonSettlementCustomerId-{{$index}}" class="form-control" data-ng-model="wagonSettlement.customerId" convert-to-number>
-                        <option value="">--Chọn khách hàng --</option>
+                        <option value="">--Chọn đơn hàng của khách--</option>
                         <option ng-repeat="customer in viewModel.customerList" value="{{customer.id}}">{{customer.fullName}}</option>
                       </select>
                     </div>
                   </div>
                   <div class="col-sm-4">
                     <div class="form-group">
-                      <label for="wagonSettlementEmployeeId-{{$index}}">Người thu</label>
+                      <label for="wagonSettlementEmployeeId-{{$index}}">Người thực hiện</label>
                       <select id="wagonSettlementEmployeeId-{{$index}}" class="form-control" data-ng-model="wagonSettlement.employeeId" convert-to-number>
                         <option value="">--Chọn nhân viên thu --</option>
                         <option ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
