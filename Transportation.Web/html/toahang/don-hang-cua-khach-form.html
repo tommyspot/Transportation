@@ -104,7 +104,7 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="unitPrice">Đơn Giá</label>
-						<input id="unitPrice" name="unitPrice" class="form-control" type="number" ng-model="viewModel.currentCustomerOrder.unitPrice">
+						<input id="unitPrice" name="unitPrice" class="form-control" type="text" ng-model="viewModel.unitPriceFormated" maxlength="10" data-ng-change="viewModel.changeFormatNumber(viewModel.unitPriceFormated)">
 					</div>
 				</div>
 				<div class="col-sm-6">
