@@ -115,7 +115,7 @@
                         </div>
                       </div>
                       <div class="col-sm-3 col-xs-4">
-                        <button class="btn btn-default" data-ng-if="wagonSettlement.customerId != '' && wagonSettlement.customerId != null"
+                        <button class="btn btn-default" data-ng-if="viewModel.showEditWagonSettlement(wagonSettlement)"
                               data-toggle="modal" data-target="#wagonSettlementModal-{{$index}}">
                           <span class="glyphicon glyphicon-pencil"></span> <span>Sửa</span>
                         </button>
@@ -130,7 +130,8 @@
                         <div class="modal-dialog modal-lg" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-ng-click="viewModel.resetWagonSettlement(wagonSettlement)">
+                              <span aria-hidden="true">&times;</span></button>
                               <h4 class="modal-title" id="myModalLabel">Đơn hàng - {{wagonSettlement.formatedCustomerOrder}}</h4>
                             </div>
                             <div class="modal-body">
@@ -138,7 +139,8 @@
                                 <div class="col-sm-4">
                                   <div class="form-group">
                                     <label for="wagonSettlementQuantity-{{$index}}">Số lượng</label>
-                                    <input id="wagonSettlementQuantity-{{$index}}" class="form-control" type="number" ng-model="wagonSettlement.quantity" required>
+                                    <input id="wagonSettlementQuantity-{{$index}}" class="form-control" type="number" ng-model="wagonSettlement.quantity" 
+                                          min="1" max="{{viewModel.getMaxQualityWagonSettlement(wagonSettlement)}}" data-ng-change="viewModel.onChangeWagonSettlementQuatity(wagonSettlement)" required>
                                   </div>
                                 </div>
                                 <div class="col-sm-4">
@@ -184,8 +186,8 @@
                               </div>
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                              <button type="button" class="btn btn-primary">Cập nhật</button>
+                              <button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="viewModel.resetWagonSettlement(wagonSettlement)">Hủy</button>
+                              <button type="button" class="btn btn-primary" data-dismiss="modal">Cập nhật</button>
                             </div>
                           </div>
                         </div>

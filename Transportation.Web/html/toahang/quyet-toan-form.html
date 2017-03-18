@@ -20,8 +20,8 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="employeeId">Người thu</label>
-						<select id="employeeId" class="form-control" data-ng-model="viewModel.currentWagonSettlement.employeeId">
-							<option value="">--Chọn tài xế--</option>
+						<select id="employeeId" class="form-control" data-ng-model="viewModel.currentWagonSettlement.employeeId" convert-to-number>
+							<option value="">--Chọn người thu--</option>
 							<option ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
 						</select>
 					</div>

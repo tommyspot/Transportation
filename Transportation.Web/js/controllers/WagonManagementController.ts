@@ -251,5 +251,32 @@ module Clarity.Controller {
         }
       });
     }
+
+    showEditWagonSettlement(wagonSettlement: Model.WagonSettlementModel) {
+      if (angular.isNumber(wagonSettlement.customerOrderId) && !isNaN(wagonSettlement.customerOrderId)) {
+        return true;
+      }
+      return false;
+    }
+
+    onChangeWagonSettlementQuatity(wagonSettlement: Model.WagonSettlementModel) {
+      wagonSettlement.totalAmount = wagonSettlement.quantity * wagonSettlement.unitPrice;
+    }
+
+    resetWagonSettlement(wagonSettlement: Model.WagonSettlementModel) {
+      this.customerOrderList.map(customerOrder => {
+        if (customerOrder.id == wagonSettlement.customerOrderId) {
+          wagonSettlement.quantity = customerOrder.quantity;
+          wagonSettlement.notes = customerOrder.notes;
+          wagonSettlement.totalAmount = wagonSettlement.quantity * wagonSettlement.unitPrice;
+        }
+      });
+    }
+
+    getMaxQualityWagonSettlement(wagonSettlement: Model.WagonSettlementModel) {
+      var max = wagonSettlement.quantity;
+      return max;
+    }
+
 	}
 }
