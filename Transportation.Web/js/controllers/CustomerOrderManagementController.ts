@@ -72,24 +72,26 @@ module Clarity.Controller {
 			this.initCustomerList();
 			this.initEmployeeList();
       var customerOrderId = this.$routeParams.customerOrder_id;
+			
       if (customerOrderId) {
         if (this.$location.path() === '/ql-toa-hang/don-hang-cua-khach/' + customerOrderId) {
           this.customerOrderService.getById(customerOrderId, (data) => {
             this.currentCustomerOrder = data;
 						this.applyCustomer(data.customerId);
+						this.unitPriceFormated = data.unitPrice != 0 ? data.unitPrice.toLocaleString() : '';
           }, null);
         } else if (this.$location.path() === '/ql-toa-hang/don-hang-cua-khach/sua/' + customerOrderId) {
           if (this.currentCustomerOrder == null) {
             this.customerOrderService.getById(customerOrderId, (data) => {
               this.currentCustomerOrder = data;
 							this.applyCustomer(data.customerId);
+							this.unitPriceFormated = data.unitPrice != 0 ? data.unitPrice.toLocaleString() : '';
             }, null);
           }
         }
       } else {
         if (this.$location.path() === '/ql-toa-hang/don-hang-cua-khach/tao') {
           this.currentCustomerOrder = new Model.CustomerOrderModel();
-					//this.initEmployeeList();
         } else if (this.$location.path() === '/ql-toa-hang/don-hang-cua-khach') {
           this.initCustomerOrderList();
         }
@@ -106,12 +108,6 @@ module Clarity.Controller {
         this.initPagination();
       }, null);
     }
-
-		//initEmployeeList() {
-		//    this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
-		//      this.employeeList = results;
-		//    }, null);
-		//  }
 
     initPagination() {
       this.currentPage = 1;
@@ -242,10 +238,12 @@ module Clarity.Controller {
 		}
 
 		getEmployeeName(id) {
-			for (var i = 0; i < this.employeeList.length; i++) {
-				var employee = this.employeeList[i];
-				if (employee.id == id) {
-					return employee.fullName;
+			if (this.employeeList){
+				for (var i = 0; i < this.employeeList.length; i++) {
+					var employee = this.employeeList[i];
+					if (employee.id == id) {
+						return employee.fullName;
+					}
 				}
 			}
 			return '';

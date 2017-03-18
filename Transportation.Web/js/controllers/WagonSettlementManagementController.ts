@@ -56,16 +56,25 @@ module Clarity.Controller {
 
     initWagonSettlement() {
       var wagonId = this.$routeParams.wagonSettlement_id;
+			this.initEmployeeList();
       if (wagonId) {
         if (this.$location.path() === '/ql-toa-hang/quyet-toan/' + wagonId) {
           this.wagonSettlementService.getById(wagonId, (data) => {
             this.currentWagonSettlement = data;
           }, null);
-        }
-      } else {
+        } else if (this.$location.path() === '/ql-toa-hang/quyet-toan/sua/' + wagonId) {
+					
+					if (this.currentWagonSettlement == null) {
+            this.wagonSettlementService.getById(wagonId, (data) => {
+              this.currentWagonSettlement = data;
+            }, null);
+          }
+				}
+
+			} else {
         if (this.$location.path() === '/ql-toa-hang/quyet-toan') {
           this.initWagonSettlementList();
-        }
+        } 
       }
     }
 
@@ -77,6 +86,18 @@ module Clarity.Controller {
         });
         this.wagonSettlementListTmp = this.wagonSettlementList;
         this.initPagination();
+      }, null);
+    }
+
+		initEmployeeList() {
+      this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
+        this.employeeList = results;
+      }, null);
+    }
+
+		updateWagonSettlement(customerOrder: Model.WagonSettlementModel) {
+      this.wagonSettlementService.update(customerOrder, (data) => {
+        this.$location.path('/ql-toa-hang/quyet-toan');
       }, null);
     }
 
