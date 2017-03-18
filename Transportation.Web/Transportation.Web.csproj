@@ -120,6 +120,7 @@
     <Content Include="html\login.html" />
     <Content Include="html\pre-loading.html" />
     <Content Include="html\toahang\khach-hang-detail.html" />
+    <Content Include="html\toahang\quyet-toan-form.html" />
     <Content Include="html\toahang\khach-hang.html" />
     <Content Include="html\toahang\quyet-toan.html" />
     <Content Include="html\toahang\quyet-toan-detail.html" />

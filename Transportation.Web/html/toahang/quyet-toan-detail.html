@@ -69,6 +69,16 @@
             <span class="glyphicon glyphicon-arrow-left"></span>
             <span>Quay lại</span>
           </button>
+					
+				<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/quyet-toan/sua/' + viewModel.currentWagonSettlement.id)">
+					<span class="glyphicon glyphicon-pencil"></span>
+					<span>Sửa</span>
+				</button>
+
+				<button class="btn btn-default negative-btn" data-ng-click="viewModel.removeCustomerInDetail(viewModel.currentWagonSettlement)">
+					<span class="glyphicon glyphicon-trash"></span>
+					<span>Xóa</span>
+				</button>
         </div>
     </div>
 

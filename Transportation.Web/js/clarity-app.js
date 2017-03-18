@@ -147,6 +147,11 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
         	controller: 'WagonSettlementManagementController',
         	access: 'authorized'
         })
+				.when('/ql-toa-hang/quyet-toan/sua/:wagonSettlement_id', {
+					templateUrl: '/html/toahang/quyet-toan-form.html' + '?v=' + VERSION_NUMBER,
+					controller: 'WagonSettlementManagementController',
+					access: 'authorized'
+				})
 
     .when('/not_found', {
     	templateUrl: '/html/not-found.html' + '?v=' + VERSION_NUMBER,
@@ -368,6 +373,7 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
 						case '/ql-toa-hang/khach-hang/sua':
 						case '/ql-toa-hang/toa-hang/sua':
 						case '/ql-toa-hang/don-hang-cua-khach/sua':
+						case '/ql-toa-hang/quyet-toan/sua':
 							breadCrumb.name = 'Sửa';
 							break;
 					}
