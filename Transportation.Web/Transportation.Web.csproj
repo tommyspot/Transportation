@@ -140,6 +140,7 @@
     <Content Include="html\toahang\ql-toa-hang.html" />
     <Content Include="html\user.html" />
     <Content Include="img\avatar1.jpeg" />
+    <Content Include="img\favicon.ico" />
     <Content Include="img\hinh1.jpg" />
     <Content Include="img\hinh2.jpg" />
     <Content Include="img\hinh3.jpg" />
