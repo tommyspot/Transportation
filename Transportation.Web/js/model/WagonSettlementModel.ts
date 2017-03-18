@@ -2,6 +2,7 @@
 module Clarity.Model {
   export class WagonSettlementModel extends Model.BaseModel {
     public code: string;
+    public customerOrderId: number;
     public customerId: number;
     public wagonId: number;
     public date: Date;
@@ -18,5 +19,7 @@ module Clarity.Model {
     public unitPrice: number;
     public totalAmount: number; //quantity*unitPrice
     public notes: string;
+
+    public formatedCustomerOrder: string;
   }
 }

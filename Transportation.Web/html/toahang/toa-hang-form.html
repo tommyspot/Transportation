@@ -77,7 +77,7 @@
                 <div class="col-sm-12">
                   <div class="form-group">
                     <label for="notes">Ghi chú</label>
-                    <input id="notes" name="notes" class="form-control" type="text" ng-model="viewModel.currentWagon.notes" required>
+                    <input id="notes" name="notes" class="form-control" type="text" ng-model="viewModel.currentWagon.notes">
                   </div>
                 </div>
               </div>
@@ -85,7 +85,125 @@
 
             <!--TAB 2-->
             <div class="tab-pane fade" ng-class="{'in active': tab === 2}" data-ng-show="tab === 2">
-              <div class="row margin-bottom-15">
+              <div class="row">
+
+                <div class="col-sm-8">
+                  <div class="row margin-bottom-15">
+                    <div class="col-sm-3">
+                      <button type="button" class="btn btn-default" data-ng-click="viewModel.createWagonSettlement(viewModel.currentWagon)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span class="hidden-xs">Tạo đơn hàng</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="wagonSettlement" data-ng-repeat="wagonSettlement in viewModel.currentWagon.wagonSettlements">
+                    <div class="row">
+                      <div class="col-sm-2 col-xs-3">
+                        <div class="form-group">
+                          <label class="customer-color" for="wagonSettlementCustomerId-{{$index}}">Đơn hàng {{$index + 1}}</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-xs-5">
+                        <div class="form-group">
+                          <select id="wagonSettlementCustomerId-{{$index}}" class="form-control" data-ng-model="wagonSettlement.customerOrderId" convert-to-number
+                              data-ng-change="viewModel.bindDataCustomerOrderTowagonSettlement(wagonSettlement, wagonSettlement.customerOrderId)" >
+                            <option value="">--Chọn đơn hàng--</option>
+                            <option ng-repeat="customerOrder in viewModel.customerOrderList" value="{{customerOrder.id}}">
+                            {{customerOrder.quantity}}_{{viewModel.mainHelper.formatDateTimeDDMMYYYY(customerOrder.createdDate)}}_{{customerOrder.customerArea}}_{{customerOrder.customerName}}_{{customerOrder.customerPhone}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-3 col-xs-4" data-ng-if="wagonSettlement.customerId != '' && wagonSettlement.customerId != null">
+                        <button class="btn btn-default" data-toggle="modal" data-target="#wagonSettlementModal-{{$index}}">
+                          <span class="glyphicon glyphicon-pencil"></span> <span>Sửa</span>
+                        </button>
+                        <button class="btn btn-default" data-ng-click="viewModel.deleteWagonSettlement($index)">
+                          <span class="glyphicon glyphicon-trash"></span> <span>Xóa</span>
+                        </button>
+                      </div>
+                    </div>
+                    <!--MODAL-->
+                    <div class="row">
+                      <div class="modal fade" id="wagonSettlementModal-{{$index}}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <h4 class="modal-title" id="myModalLabel">Đơn hàng - {{wagonSettlement.formatedCustomerOrder}}</h4>
+                            </div>
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-sm-4">
+                                  <div class="form-group">
+                                    <label for="wagonSettlementQuantity-{{$index}}">Số lượng</label>
+                                    <input id="wagonSettlementQuantity-{{$index}}" class="form-control" type="number" ng-model="wagonSettlement.quantity" required>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="form-group">
+                                    <label for="wagonSettlementUnitPrice-{{$index}}">Đơn giá</label>
+                                    <input id="wagonSettlementUnitPrice-{{$index}}" class="form-control" type="number" ng-model="wagonSettlement.unitPrice" disabled="disabled">
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="form-group">
+                                    <label for="wagonSettlementTotalAmount-{{$index}}">Thành tiền</label>
+                                    <input id="wagonSettlementTotalAmount-{{$index}}" class="form-control" type="number" ng-model="wagonSettlement.totalAmount" disabled="disabled">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-sm-4">
+                                  <div class="form-group">
+                                    <label for="wagonSettlementUnit-{{$index}}">Đơn vị tính</label>
+                                    <input id="wagonSettlementUnit-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.unit" disabled="disabled">
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="form-group">
+                                    <label for="wagonSettlementDeparture-{{$index}}">Nơi đi</label>
+                                    <input id="wagonSettlementDeparture-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.departure" disabled="disabled">
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="form-group">
+                                    <label for="wagonSettlementDestination-{{$index}}">Nơi đến</label>
+                                    <input id="wagonSettlementDestination-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.destination" disabled="disabled">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-sm-12">
+                                  <div class="form-group">
+                                    <label for="wagonSettlementNotes-{{$index}}">Ghi chú</label>
+                                    <input id="wagonSettlementNotes-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.notes">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                              <button type="button" class="btn btn-primary">Cập nhật</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-4">
+                  <h5>ĐƠN HÀNG CỦA KHÁCH</h5>
+                  <div class="row">
+                    <div class="col-sm-12" data-ng-repeat="customerOrder in viewModel.customerOrderList">
+                      <span>{{customerOrder.quantity}}_{{customerOrder.createdDate}}_{{customerOrder.customerArea}}_{{customerOrder.customerName}}_{{customerOrder.customerPhone}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--<div class="row margin-bottom-15">
                 <div class="col-sm-3">
                   <button type="button" class="btn btn-default" data-ng-click="viewModel.createWagonSettlement(viewModel.currentWagon)">
                     <span class="glyphicon glyphicon-plus"></span>
@@ -177,7 +295,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div>-->
             </div>
 
             <!--TAB 3-->

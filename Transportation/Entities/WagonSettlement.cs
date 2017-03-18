@@ -17,6 +17,9 @@ namespace Transportation
         [Required]
         public DateTime Date { get; set; }
         [Required]
+        public long CustomerOrderID { get; set; }
+        public virtual CustomerOrder CustomerOrder { get; set; }
+        [Required]
         public long CustomerID { get; set; }
         public virtual Customer Customer { get; set; }
         [Required]
@@ -46,6 +49,7 @@ namespace Transportation
             JObject json = new JObject();
             json["id"] = ID;
             json["code"] = Code;
+            json["customerOrderId"] = CustomerOrderID;
             json["customerId"] = CustomerID;
             json["wagonId"] = WagonID;
             json["date"] = Date;
@@ -79,6 +83,7 @@ namespace Transportation
             ID = json.Value<long>("id");
 
             Code = json.Value<string>("code");
+            CustomerOrderID = json.Value<long>("customerOrderId");
             CustomerID = json.Value<long>("customerId");
             WagonID = json.Value<long>("wagonId");
             Date = json.Value<DateTime>("date");

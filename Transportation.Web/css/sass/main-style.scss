@@ -480,6 +480,11 @@ div.bootstrap {
                 .customer-color{
                     color: $transport-color-2;
                 }
+
+                .background-customer-color{
+                    background-color: $transport-color-2;
+                    color: white;
+                }
             }
 
         }

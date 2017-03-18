@@ -196,6 +196,8 @@
     <Content Include="lib\angular\ui-bootstrap.min.js" />
     <Content Include="lib\blanket\blanket.min.js" />
     <Content Include="lib\blanket\jasmine-blanket.js" />
+    <Content Include="lib\bootstrap\bootstrap.js" />
+    <Content Include="lib\bootstrap\bootstrap.min.js" />
     <Content Include="lib\jasmine\jasmine-html.js" />
     <Content Include="lib\jasmine\jasmine.css" />
     <Content Include="lib\jasmine\jasmine.d.ts" />

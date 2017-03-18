@@ -11,22 +11,26 @@ module Clarity.Controller {
 
   export class WagonManagementController {
     public currentWagon: Model.WagonModel;
+
     public wagonService: service.WagonService;
+    public customerOrderService: service.CustomerOrderService;
+    public employeeService: service.EmployeeService;
+    public customerService: service.CustomerService;
+    public exportService: service.ExportService;
+    public truckService: service.TruckService;
 
     public truckList: Array<Model.TruckModel>
     public employeeList: Array<Model.EmployeeModel>
     public customerList: Array<Model.CustomerModel>
-    public truckService: service.TruckService;
-    public employeeService: service.EmployeeService;
-    public customerService: service.CustomerService;
-    public exportService: service.ExportService;
-
+    public customerOrderList: Array<Model.CustomerOrderModel>
     public wagonList: Array<Model.WagonModel>;
     public wagonListTmp: Array<Model.WagonModel>;
+
     public numOfPages: number;
     public currentPage: number;
     public pageSize: number;
     public isCheckedAll: boolean;
+    public mainHelper: helper.MainHelper;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -37,10 +41,12 @@ module Clarity.Controller {
       private $routeParams: any) {
 
       this.wagonService = new service.WagonService($http);
+      this.customerOrderService = new service.CustomerOrderService($http);
       this.truckService = new service.TruckService($http);
       this.employeeService = new service.EmployeeService($http);
       this.customerService = new service.CustomerService($http);
       this.exportService = new service.ExportService($http);
+      this.mainHelper = new helper.MainHelper();
       $scope.viewModel = this;
 
       this.pageSize = 5;
@@ -66,6 +72,7 @@ module Clarity.Controller {
           this.initTruckList();
           this.initEmployeeList();
           this.initCustomerList();
+          this.initCustomerOrderList();
 
           if (this.currentWagon == null) {
             this.wagonService.getById(wagonId, (data) => {
@@ -78,6 +85,7 @@ module Clarity.Controller {
           this.initTruckList();
           this.initEmployeeList();
           this.initCustomerList();
+          this.initCustomerOrderList();
           this.currentWagon = new Model.WagonModel();
         } else if (this.$location.path() === '/ql-toa-hang/toa-hang') {
           this.initWagonList();
@@ -111,6 +119,12 @@ module Clarity.Controller {
     initCustomerList() {
       this.customerService.getAll((results: Array<Model.CustomerModel>) => {
         this.customerList = results;
+      }, null);
+    }
+
+    initCustomerOrderList() {
+      this.customerOrderService.getAll((results: Array<Model.CustomerOrderModel>) => {
+        this.customerOrderList = results;
       }, null);
     }
 
@@ -218,5 +232,24 @@ module Clarity.Controller {
       this.$location.path('/ql-toa-hang/toa-hang/tao');
     }
 
+    bindDataCustomerOrderTowagonSettlement(wagonSettlement: Model.WagonSettlementModel, customerOrderId: number) {
+      this.customerOrderList.map(customerOrder => {
+        if (customerOrder.id == customerOrderId) {
+          wagonSettlement.formatedCustomerOrder = customerOrder.quantity + '_' + this.mainHelper.formatDateTimeDDMMYYYY(customerOrder.createdDate) +
+            '_' + customerOrder.customerArea + '_' + customerOrder.customerName + '_' + customerOrder.customerPhone;
+          wagonSettlement.customerOrderId = customerOrder.id;
+          wagonSettlement.customerId = customerOrder.customerId;
+          wagonSettlement.date = customerOrder.createdDate;
+          wagonSettlement.departure = customerOrder.departure;
+          wagonSettlement.destination = customerOrder.destination;
+          wagonSettlement.employeeId = customerOrder.employeeId;
+          wagonSettlement.notes = customerOrder.notes;
+          wagonSettlement.quantity = customerOrder.quantity;
+          wagonSettlement.unit = customerOrder.unit;
+          wagonSettlement.unitPrice = customerOrder.unitPrice;
+          wagonSettlement.totalAmount = wagonSettlement.quantity * wagonSettlement.unitPrice;
+        }
+      });
+    }
 	}
 }
