@@ -1,128 +1,130 @@
 ﻿<div id="employeeFormSection" class="bootstrap form">
-    <div class="container">
-        <form name="truckForm">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="licensePlate">Biển Số <span class="required-symbol">*</span></label>
-                        <span class="required-field" ng-if="truckForm.licensePlate.$touched && truckForm.licensePlate.$invalid">('Biển số' phải được nhập)</span>
-                        <input id="licensePlate" name="licensePlate" class="form-control" type="text" ng-model="viewModel.currentTruck.licensePlate" required>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="address">Số Khung</label>
-                        <input id="address" name="address" class="form-control" type="text" ng-model="viewModel.currentTruck.vin">
-                    </div>
-                </div>
-            </div>
+	<div class="container">
+		<form name="truckForm">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="licensePlate">Biển Số <span class="required-symbol">*</span></label>
+						<span class="required-field" ng-if="truckForm.licensePlate.$touched && truckForm.licensePlate.$invalid">('Biển số' phải được nhập)</span>
+						<input id="licensePlate" name="licensePlate" class="form-control" type="text" ng-model="viewModel.currentTruck.licensePlate" required>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="yearOfManufacture">Năm Sản Xuất</label>
+						<span class="required-field" ng-if="truckForm.yearOfManufacture.$touched && truckForm.yearOfManufacture.$invalid">('Năm Sản Xuất' phải có 4 ký tự)</span>
+						<input id="yearOfManufacture" name="yearOfManufacture" class="form-control" type="number" pattern="[0-9]{4}" ng-model="viewModel.currentTruck.yearOfManufacture">
+					</div>
+				</div>
+			</div>
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="mobile">Số Máy</label>
-                        <input id="mobile" name="mobile" class="form-control" type="text" ng-model="viewModel.currentTruck.engineNo">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="yearOfManufacture">Năm Sản Xuất</label>
-											<span class="required-field" ng-if="truckForm.yearOfManufacture.$touched && truckForm.yearOfManufacture.$invalid">('Năm Sản Xuất' phải có 4 ký tự)</span>
-                        <input id="yearOfManufacture" name="yearOfManufacture" class="form-control" type="number" pattern="[0-9]{4}" ng-model="viewModel.currentTruck.yearOfManufacture">
-                    </div>
-                </div>
-            </div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="address">Số Khung</label>
+						<input id="address" name="address" class="form-control" type="text" ng-model="viewModel.currentTruck.vin">
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="mobile">Số Máy</label>
+						<input id="mobile" name="mobile" class="form-control" type="text" ng-model="viewModel.currentTruck.engineNo">
+					</div>
+				</div>
+			</div>
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="driverLicenseId">Nhãn Hiệu</label>
-                        <input id="driverLicenseId" name="driverLicenseId" class="form-control" type="text" ng-model="viewModel.currentTruck.brand">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="weight">Tải Trọng (tấn)</label>
-                        <input id="weight" name="weight" class="form-control" type="number" ng-model="viewModel.currentTruck.weight">
-                    </div>
-                </div>
-            </div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="driverLicenseId">Nhãn Hiệu</label>
+						<input id="driverLicenseId" name="driverLicenseId" class="form-control" type="text" ng-model="viewModel.currentTruck.brand">
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="weight">Tải Trọng (tấn)</label>
+						<input id="weight" name="weight" class="form-control" type="number" ng-model="viewModel.currentTruck.weight">
+					</div>
+				</div>
+			</div>
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="startUsingDate">Ngày Bắt Đầu Lưu Hành</label>
-                        <input id="startUsingDate" name="startUsingDate" class="form-control" type="date" ng-model="viewModel.currentTruck.startUsingDate">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="driverLicenseExpirationDate">Tài Xế Chịu Trách Nhiệm</label>
-                        <select id="employeeId" class="form-control" data-ng-model="viewModel.currentTruck.employeeId">
-                            <option value="">--Chọn tài xế--</option>
-                            <option ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="violation">Ngày Mua</label>
+						<input id="violation" name="violation" class="form-control" type="date" ng-model="viewModel.currentTruck.buyingDate">
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="startUsingDate">Ngày Lưu Hành</label>
+						<input id="startUsingDate" name="startUsingDate" class="form-control" type="date" ng-model="viewModel.currentTruck.startUsingDate">
+					</div>
+				</div>
+			</div>
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="stock">Cổ Phần (%)</label>
-                        <input id="stock" name="stock" class="form-control" type="number" ng-model="viewModel.currentTruck.stock">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="violation">Ngày Bắt Đầu Mua</label>
-                        <input id="violation" name="violation" class="form-control" type="date" ng-model="viewModel.currentTruck.buyingDate">
-                    </div>
-                </div>
-            </div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="monthlyPaymentFormated">Tiền Thanh Toán Hàng Tháng</label>
+						<input id="monthlyPaymentFormated" name="monthlyPaymentFormated" class="form-control" type="text" maxlength="15" ng-model="viewModel.monthlyPaymentFormated" data-ng-change="viewModel.setCurrencyFormat(viewModel.monthlyPaymentFormated)">
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="stock">Cổ Phần (%)</label>
+						<input id="stock" name="stock" class="form-control" type="number" ng-model="viewModel.currentTruck.stock">
+					</div>
+				</div>
+			</div>
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="monthlyPayment">Tiền Trả Hàng Tháng</label>
-                        <input id="monthlyPayment" name="monthlyPayment" class="form-control" type="number" ng-model="viewModel.currentTruck.monthlyPayment">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="title">Ngày Đăng Kiểm Gần Nhất</label>
-                        <input id="title" name="title" class="form-control" type="date" ng-model="viewModel.currentTruck.checkDate">
-                    </div>
-                </div>
-            </div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="title">Ngày Đăng Kiểm Gần Nhất</label>
+						<input id="title" name="title" class="form-control" type="date" value="2013-09-02" ng-model="viewModel.currentTruck.checkDate">
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="title">Bảo Hiểm Đến</label>
+						<input id="title" name="title" class="form-control" type="date" ng-model="viewModel.currentTruck.insuranceDate">
+					</div>
+				</div>
+			</div>
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="title">Bảo Hiểm Đến</label>
-                        <input id="title" name="title" class="form-control" type="date" ng-model="viewModel.currentTruck.insuranceDate">
-                    </div>
-                </div>
-            </div>
 
-            <button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/xe/tao'"
-                    data-ng-click="viewModel.createTruck(viewModel.currentTruck)" data-ng-disabled="truckForm.$invalid">
-                <span class="glyphicon glyphicon-ok"></span>
-                <span>Lưu</span>
-            </button>
 
-            <button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/xe/sua/' + viewModel.currentTruck.id"
-                    data-ng-click="viewModel.updateTruck(viewModel.currentTruck)" data-ng-disabled="truckForm.$invalid">
-                <span class="glyphicon glyphicon-ok"></span>
-                <span>Cập nhật</span>
-            </button>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="driverLicenseExpirationDate">Tài Xế Chịu Trách Nhiệm</label>
+						<select id="employeeId" class="form-control" data-ng-model="viewModel.currentTruck.employeeId">
+							<option value="">--Chọn tài xế--</option>
+							<option ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
 
-            <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/xe')">
-                <span class="glyphicon glyphicon-remove"></span>
-                <span>Hủy</span>
-            </button>
+			<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/xe/tao'"
+							data-ng-click="viewModel.createTruck(viewModel.currentTruck)" data-ng-disabled="truckForm.$invalid">
+				<span class="glyphicon glyphicon-ok"></span>
+				<span>Lưu</span>
+			</button>
 
-        </form>
-    </div>
+			<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/xe/sua/' + viewModel.currentTruck.id"
+							data-ng-click="viewModel.updateTruck(viewModel.currentTruck)" data-ng-disabled="truckForm.$invalid">
+				<span class="glyphicon glyphicon-ok"></span>
+				<span>Cập nhật</span>
+			</button>
+
+			<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/xe')">
+				<span class="glyphicon glyphicon-remove"></span>
+				<span>Hủy</span>
+			</button>
+
+		</form>
+	</div>
 
 </div>

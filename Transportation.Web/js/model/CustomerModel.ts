@@ -6,9 +6,9 @@ module Clarity.Model {
 		public fullName: string;
     public area: string;
     public employeeId: number;
-		public totalOwned: string;
-		public totalPay: string;
-		public totalDebt: string;
+		public totalOwned: number;
+		public totalPay: number;
+		public totalDebt: number;
 		public type: string;
 		public phoneNo: string;
 		public code: string;

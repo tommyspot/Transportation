@@ -242,7 +242,6 @@ module Clarity.Controller {
           wagonSettlement.date = customerOrder.createdDate;
           wagonSettlement.departure = customerOrder.departure;
           wagonSettlement.destination = customerOrder.destination;
-          wagonSettlement.employeeId = customerOrder.employeeId;
           wagonSettlement.notes = customerOrder.notes;
           wagonSettlement.quantity = customerOrder.quantity;
           wagonSettlement.unit = customerOrder.unit;

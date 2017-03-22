@@ -126,9 +126,17 @@ module Clarity.Helper {
       var month = monthNumber < 10 ? '0' + monthNumber.toString() : monthNumber.toString();
       var day = d.getDate() < 10 ? '0' + d.getDate().toString() : d.getDate().toString();
 
-      var date = day + month + year;
+      var date = day + '/' + month + '/' + year;
       return date;
     }
+
+		public formatCurrency(num) {
+			//if (changeFormatNumber && changeFormatNumber != '') {
+			//	this.currentCustomerOrder.unitPrice = parseInt(changeFormatNumber.replace(/,/g, ''));
+			//	this.unitPriceFormated = this.currentCustomerOrder.unitPrice.toLocaleString();
+			//}
+			return num.toLocaleString();
+		}
 
   }
 }

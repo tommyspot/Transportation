@@ -183,6 +183,7 @@
     <TypeScriptCompile Include="js\services\EmployeeService.ts" />
     <TypeScriptCompile Include="lib\angular\angular-cookies.d.ts" />
     <TypeScriptCompile Include="js\services\UserService.ts" />
+    <Content Include="js\directives\date-picker.js" />
     <Content Include="js\services\IService.ts" />
     <Content Include="lib\angular-spec\angular-mocks.d.ts" />
     <Content Include="lib\angular-spec\angular-mocks.js" />
@@ -238,9 +239,7 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="js\directives\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

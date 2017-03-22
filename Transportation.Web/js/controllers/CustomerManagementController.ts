@@ -21,6 +21,9 @@ module Clarity.Controller {
     public pageSize: number;
     public isCheckedAll: boolean;
 		public areas: Array<String>;
+		public totalOwnedFormated: string;
+		public totalPayFormated: string;
+		public totalDebtFormated: string;
 
     constructor(private $scope,
       public $rootScope: IRootScope,
@@ -58,11 +61,17 @@ module Clarity.Controller {
         if (this.$location.path() === '/ql-toa-hang/khach-hang/' + customerId) {
           this.customerService.getById(customerId, (data) => {
             this.currentCustomer = data;
+						this.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
+						this.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
+						this.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
           }, null);
         } else if (this.$location.path() === '/ql-toa-hang/khach-hang/sua/' + customerId) {
           if (this.currentCustomer == null) {
             this.customerService.getById(customerId, (data) => {
               this.currentCustomer = data;
+							this.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
+							this.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
+							this.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
             }, null);
           }
         }
@@ -185,6 +194,26 @@ module Clarity.Controller {
 				}
 			}
 			return '';
+		}
+
+		setCurrencyFormat(changeFormatNumber, type) {
+			if (changeFormatNumber && changeFormatNumber != '') {
+				switch (type) {
+					case '0':
+						this.currentCustomer.totalOwned = parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
+						break;
+					case '1':
+						this.currentCustomer.totalPay = parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
+						break;
+					case '2':
+						this.currentCustomer.totalDebt = parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
+						break;
+				}
+				
+			}
 		}
 
 	}

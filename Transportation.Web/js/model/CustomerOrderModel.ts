@@ -7,15 +7,20 @@ module Clarity.Model {
 		public customerId: number;
 		public customerPhone: string;
 		public customerArea: string;
-		public employeeId: number;
+		public customerCode: string;
 		public unit: string;
 		public quantity: number;
 		public departure: string;
 		public destination: string;
 		public unitPrice: number;
+		public totalPay: number;
+		public totalPayFormated: string;
 		public departDate: Date;
+		public departDateFormated: string;
 		public returnDate: Date;
+		public returnDateFormated: string;
     public notes: string;
+		public createdUserId: number;
     public createdDate: Date;
 		public isChecked: boolean;
 	}

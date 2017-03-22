@@ -24,6 +24,7 @@ module Clarity.Controller {
     public isCheckedAll: boolean;
 		public areas: Array<String>;
 		public unitPriceFormated: string;
+		public mainHelper: helper.MainHelper;
 
     constructor(private $scope,
       public $rootScope: IRootScope,
@@ -47,7 +48,7 @@ module Clarity.Controller {
           self.initPagination();
         }
       });
-
+			this.mainHelper = new helper.MainHelper();
 			this.areas = ['An Giang', 'Bà Rịa - Vũng Tàu', 'Bắc Giang', 'Bắc Kạn', 'Bạc Liêu', 'Bắc Ninh', 'Bến Tre', 'Bình Định', 'Bình Dương', 'Bình Phước', 'Bình Thuận',
 				'Cà Mau', 'Cần Thơ', 'Cao Bằng', 'Đà Nẵng', 'Đắk Lắk', 'Đắk Nông', 'Điện Biên', 'Đồng Nai', 'Đồng Tháp', 'Gia Lai', 'Hà Giang', 'Hà Nam', 'Hà Nội', 'Hà Tĩnh',
 				'Hải Dương', 'Hải Phòng', 'Hậu Giang', 'Hòa Bình', 'Hưng Yên', 'Khánh Hòa', 'Kiên Giang', 'Kon Tum', 'Lai Châu', 'Lâm Đồng', 'Lạng Sơn', 'Lào Cai', 'Long An',
@@ -70,7 +71,7 @@ module Clarity.Controller {
 
 		initCustomerOrder() {
 			this.initCustomerList();
-			this.initEmployeeList();
+			//this.initEmployeeList();
       var customerOrderId = this.$routeParams.customerOrder_id;
 			
       if (customerOrderId) {
@@ -79,6 +80,8 @@ module Clarity.Controller {
             this.currentCustomerOrder = data;
 						this.applyCustomer(data.customerId);
 						this.unitPriceFormated = data.unitPrice != 0 ? data.unitPrice.toLocaleString() : '';
+						this.currentCustomerOrder.departDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentCustomerOrder.departDate);
+						this.currentCustomerOrder.returnDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentCustomerOrder.returnDate);
           }, null);
         } else if (this.$location.path() === '/ql-toa-hang/don-hang-cua-khach/sua/' + customerOrderId) {
           if (this.currentCustomerOrder == null) {
@@ -86,6 +89,7 @@ module Clarity.Controller {
               this.currentCustomerOrder = data;
 							this.applyCustomer(data.customerId);
 							this.unitPriceFormated = data.unitPrice != 0 ? data.unitPrice.toLocaleString() : '';
+							this.currentCustomerOrder.totalPayFormated = data.totalPay != 0 ? data.totalPay.toLocaleString() : '';
             }, null);
           }
         }
@@ -156,7 +160,7 @@ module Clarity.Controller {
     }
 
     removeCustomerOrders() {
-      var confirmDialog = this.$window.confirm('Do you want to delete the Customer Order?');
+      var confirmDialog = this.$window.confirm('Bạn có muốn xóa đơn hàng của khách hàng này?');
       if (confirmDialog) {
         for (let i = 0; i < this.customerOrderList.length; i++) {
           var customerOrder = this.customerOrderList[i];
@@ -170,7 +174,7 @@ module Clarity.Controller {
     }
 
     removeCustomerOrderInDetail(customerOrder: Model.CustomerOrderModel) {
-      var confirmDialog = this.$window.confirm('Do you want to delete the Customer Order?');
+      var confirmDialog = this.$window.confirm('Bạn có muốn xóa đơn hàng của khách hàng này?');
       if (confirmDialog) {
         this.customerOrderService.deleteEntity(customerOrder, (data) => {
           this.$location.path('/ql-toa-hang/don-hang-cua-khach');
@@ -192,11 +196,11 @@ module Clarity.Controller {
 				var newCustomer = new Model.CustomerModel();
 				newCustomer.fullName = customerOrder.customerName;
 				newCustomer.phoneNo = customerOrder.customerPhone;
-				newCustomer.employeeId = customerOrder.employeeId;
 				newCustomer.area = customerOrder.customerArea;
 
 				this.customerService.create(newCustomer, (data) => {
 					customerOrder.customerId = data.id;
+					customerOrder.customerCode = data.code;
 					this.customerOrderService.create(customerOrder,
 						(data) => {
 							this.$location.path('/ql-toa-hang/don-hang-cua-khach');
@@ -224,7 +228,7 @@ module Clarity.Controller {
 						this.currentCustomerOrder.customerName = this.customerList[i].fullName;
 						this.currentCustomerOrder.customerPhone = this.customerList[i].phoneNo;
 						this.currentCustomerOrder.customerArea = this.customerList[i].area;
-						this.currentCustomerOrder.employeeId = this.customerList[i].employeeId;
+						this.currentCustomerOrder.customerCode = this.customerList[i].code;
 						break;
 					}
 				}
@@ -233,7 +237,7 @@ module Clarity.Controller {
 				this.currentCustomerOrder.customerName = '';
 				this.currentCustomerOrder.customerPhone = '';
 				this.currentCustomerOrder.customerArea = '';
-				this.currentCustomerOrder.employeeId = 0;
+				this.currentCustomerOrder.customerCode = '';
 			}
 		}
 
@@ -252,7 +256,27 @@ module Clarity.Controller {
 		changeFormatNumber(changeFormatNumber) {
 			if (changeFormatNumber && changeFormatNumber != '') {
 				this.currentCustomerOrder.unitPrice = parseInt(changeFormatNumber.replace(/,/g, ''));
+				this.calculateTotalPay();
 				this.unitPriceFormated = this.currentCustomerOrder.unitPrice.toLocaleString();
+			}
+		}
+
+		getCustomCode(id) {
+			if (this.customerList) {
+				for (var i = 0; i < this.customerList.length; i++) {
+					var customer = this.customerList[i];
+					if (customer.id == id) {
+						return customer.code;
+					}
+				}
+			}
+			return '';
+		}
+
+		calculateTotalPay() {
+			if (this.currentCustomerOrder.unitPrice && this.currentCustomerOrder.quantity){
+				this.currentCustomerOrder.totalPay = this.currentCustomerOrder.unitPrice * this.currentCustomerOrder.quantity;
+				this.currentCustomerOrder.totalPayFormated = this.currentCustomerOrder.totalPay.toLocaleString();
 			}
 		}
 

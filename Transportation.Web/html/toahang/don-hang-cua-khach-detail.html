@@ -9,14 +9,13 @@
           <h2 class="text-center title-name">{{viewModel.currentCustomerOrder.customerName}}</h2>
           <p><span class="bold-text">Số Điện Thoại:</span> <span>{{viewModel.currentCustomerOrder.customerPhone}}</span></p>
           <p><span class="bold-text">Khu vực:</span> <span>{{viewModel.currentCustomerOrder.customerArea}}</span></p>
-          <p><span class="bold-text">Nhân viên (Đại lý):</span> <span>{{viewModel.getEmployeeName(viewModel.currentCustomerOrder.employeeId)}}</span></p>
           <p><span class="bold-text">Đơn vị tính:</span> <span>{{viewModel.currentCustomerOrder.unit}}</span></p>
           <p><span class="bold-text">Số Lượng:</span> <span>{{viewModel.currentCustomerOrder.quantity}}</span></p>
           <p><span class="bold-text">Nơi Đi:</span> <span>{{viewModel.currentCustomerOrder.departure}}</span></p>
           <p><span class="bold-text">Nơi Đến:</span> <span>{{viewModel.currentCustomerOrder.destination}}</span></p>
           <p><span class="bold-text">Đơn Giá:</span> <span>{{viewModel.currentCustomerOrder.unitPrice}}</span></p>
-          <p><span class="bold-text">Ngày Đi:</span> <span>{{viewModel.changeDateFormat(viewModel.currentCustomerOrder.departDate)}}</span></p>
-          <p><span class="bold-text">Ngày Đến:</span> <span>{{viewModel.changeDateFormat(viewModel.currentCustomerOrder.returnDate)}}</span></p>
+          <p><span class="bold-text">Ngày Đi:</span> <span>{{viewModel.currentCustomerOrder.departDateFormated}}</span></p>
+          <p><span class="bold-text">Ngày Đến:</span> <span>{{viewModel.currentCustomerOrder.returnDateFormated}}</span></p>
           <p><span class="bold-text">Ghi Chú:</span> <span>{{viewModel.currentCustomerOrder.notes}}</span></p>
 
           <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/don-hang-cua-khach')">

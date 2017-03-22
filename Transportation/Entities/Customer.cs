@@ -17,11 +17,11 @@ namespace Transportation
 		[Required]
         public string Area { get; set; }
 		[Required]
-		public long PhoneNo { get; set; }
+		public string PhoneNo { get; set; }
 		public string EmployeeID { get; set; }
-        public string TotalOwned { get; set; }
-        public string TotalPay { get; set; }
-        public string TotalDebt { get; set; }
+        public long TotalOwned { get; set; }
+        public long TotalPay { get; set; }
+        public long TotalDebt { get; set; }
 		public string Type { get; set; }
 		public string Code { get; set; }
 		public DateTime CreatedDate { get; set; }
@@ -59,11 +59,11 @@ namespace Transportation
             FullName = json.Value<string>("fullName");
             Area = json.Value<string>("area");
             EmployeeID = json.Value<string>("employeeId");
-            TotalOwned = json.Value<string>("totalOwned");
+            TotalOwned = json.Value<long>("totalOwned");
 
-            TotalPay = json.Value<string>("totalPay");
-            TotalDebt = json.Value<string>("totalDebt");
-			PhoneNo = json.Value<long>("phoneNo");
+            TotalPay = json.Value<long>("totalPay");
+            TotalDebt = json.Value<long>("totalDebt");
+			PhoneNo = json.Value<string>("phoneNo");
 			Type = json.Value<string>("type");
 			Code = json.Value<string>("code");
 		}

@@ -20,6 +20,8 @@ module Clarity.Controller {
 		public currentPage: number;
 		public pageSize: number;
 		public isCheckedAll: boolean;
+		public mainHelper: helper.MainHelper;
+		public monthlyPaymentFormated: string;
 
 		constructor(private $scope,
 			public $rootScope: IRootScope,
@@ -34,6 +36,7 @@ module Clarity.Controller {
 			$scope.viewModel = this;
 			this.pageSize = 5;
 			this.initTruck();
+			this.mainHelper = new helper.MainHelper();
 
 			var self = this;
 			$scope.$watch('searchText', function (value) {
@@ -51,6 +54,7 @@ module Clarity.Controller {
 				if (this.$location.path() === '/ql-toa-hang/xe/' + truckId) {
 					this.truckService.getById(truckId, (data) => {
 						this.currentTruck = data;
+						this.monthlyPaymentFormated = data.monthlyPayment.toLocaleString();
 					}, null);
 				} else if (this.$location.path() === '/ql-toa-hang/xe/sua/' + truckId) {
 					if (this.currentTruck == null) {
@@ -60,6 +64,7 @@ module Clarity.Controller {
 							this.currentTruck.buyingDate = (data.buyingDate != null && data.buyingDate != null) ? new Date(data.buyingDate) : null;
 							this.currentTruck.checkDate = (data.checkDate != null && data.checkDate != null) ? new Date(data.checkDate) : null;
 							this.currentTruck.insuranceDate = (data.insuranceDate != null && data.insuranceDate != null) ? new Date(data.insuranceDate) : null;
+							this.monthlyPaymentFormated = data.monthlyPayment.toLocaleString();
 						}, null);
 					}
 				}
@@ -137,7 +142,7 @@ module Clarity.Controller {
 		}
 
 		removeTrucks() {
-			var confirmDialog = this.$window.confirm('?');
+			var confirmDialog = this.$window.confirm('Bạn có muốn xóa xe?');
 			if (confirmDialog) {
 				for (let i = 0; i < this.truckList.length; i++) {
 					var truck = this.truckList[i];
@@ -196,13 +201,22 @@ module Clarity.Controller {
 		}
 
 		getEmployeeName(id) {
-			for (var i = 0; i < this.employeeList.length; i++) {
-				var employee = this.employeeList[i];
-				if (employee.id == id) {
-					return employee.fullName;
+			if (this.employeeList){
+				for (var i = 0; i < this.employeeList.length; i++) {
+					var employee = this.employeeList[i];
+					if (employee.id == id) {
+						return employee.fullName;
+					}
 				}
 			}
 			return '';
+		}
+
+		setCurrencyFormat(changeFormatNumber) {
+			if (changeFormatNumber && changeFormatNumber != '') {
+				this.currentTruck.monthlyPayment = parseInt(changeFormatNumber.replace(/,/g, ''));
+				this.monthlyPaymentFormated = this.currentTruck.monthlyPayment.toLocaleString();
+			}
 		}
 
 	}

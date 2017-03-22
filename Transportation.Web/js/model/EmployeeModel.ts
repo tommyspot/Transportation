@@ -17,5 +17,6 @@ module Clarity.Model {
         public notes: string;
         public title: string;
         public isChecked: boolean;
+				public isDeleted: boolean;
     }
 }

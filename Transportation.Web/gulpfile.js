@@ -70,6 +70,7 @@ var config = {
     // controllers, services written with TypeScript must be placed before clarity-app.js
     , 'js/clarity-app.js'
     // controllers, services, directives written without TypeScript must be placed after clarity-app.js
+		, 'js/directives/date-picker.js'
     ]
 };
 
