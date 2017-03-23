@@ -23,23 +23,25 @@
           <table class="table table-hover table-bordered">
             <thead>
               <tr>
-                <th class="align-center hidden-xs">Khách hàng</th>
-                <th class="align-center">Ngày</th>
-                <th class="align-center">Người thu</th>
-                <th class="align-center hidden-xs">Toa hàng</th>
-                <th class="align-center hidden-xs">Số tiền phải thanh toán</th>
-                <th class="align-center hidden-xs">Số tiền trả</th>
+                <th class="align-center">Ngày Phát Sinh</th>
+								<th class="align-center hidden-xs">Toa hàng</th>
+								<th class="align-center hidden-xs">Khách hàng</th>
+                <th class="align-center hidden-xs">Tổng Phí</th>
+                <th class="align-center hidden-xs">Đã Thanh Toán</th>
+								<th class="align-center hidden-xs">Còn Lại</th>
+								<th class="align-center hidden-xs">Nợ?</th>
               </tr>
             </thead>
             <tbody>
               <tr class="pointer" data-ng-repeat="wagonSettlement in viewModel.getWagonSettlementListOnPage()"
                   data-ng-click="viewModel.$location.path('/ql-toa-hang/quyet-toan/' + wagonSettlement.id)">
-                <td class="align-center hidden-xs">{{wagonSettlement.customerId}}</td>
-                <td class="align-center">{{wagonSettlement.date.toDateString()}}</td>
-                <td class="align-center">{{wagonSettlement.employeeId}}</td>
-                <td class="align-center hidden-xs">{{wagonSettlement.wagonId}}</td>
-                <td class="align-center hidden-xs">{{wagonSettlement.payment}}</td>
+								<td class="align-center">{{wagonSettlement.date.toDateString()}}</td>
+								<td class="align-center hidden-xs">{{wagonSettlement.wagonId}}</td>
+								<td class="align-center hidden-xs">{{wagonSettlement.customerId}}</td>
                 <td class="align-center hidden-xs">{{wagonSettlement.quantity * wagonSettlement.unitPrice}}</td>
+								<td class="align-center hidden-xs">{{wagonSettlement.payment}}</td>
+								<td class="align-center hidden-xs">Còn Lại</td>
+								<td class="align-center hidden-xs">Nợ</td>
               </tr>
             </tbody>
           </table>
