@@ -23,6 +23,7 @@ module Clarity.Controller {
     public employeeList: Array<Model.EmployeeModel>
     public customerList: Array<Model.CustomerModel>
     public customerOrderList: Array<Model.CustomerOrderModel>
+		public customerOrderListTmp: Array<Model.CustomerOrderModel>
     public wagonList: Array<Model.WagonModel>;
     public wagonListTmp: Array<Model.WagonModel>;
 
@@ -31,6 +32,9 @@ module Clarity.Controller {
     public pageSize: number;
     public isCheckedAll: boolean;
     public mainHelper: helper.MainHelper;
+		public truckListInCustomerOrder: Array<Model.TruckModel>;
+		public searchDate: Date;
+		public truckSearch: string;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -59,6 +63,7 @@ module Clarity.Controller {
           self.initPagination();
         }
       });
+			
     }
 
     initWagon() {
@@ -77,6 +82,7 @@ module Clarity.Controller {
           if (this.currentWagon == null) {
             this.wagonService.getById(wagonId, (data) => {
               this.currentWagon = data;
+							this.formatedCurencyForWagon();
             }, null);
           }
         }
@@ -125,6 +131,8 @@ module Clarity.Controller {
     initCustomerOrderList() {
       this.customerOrderService.getAll((results: Array<Model.CustomerOrderModel>) => {
         this.customerOrderList = results;
+				this.customerOrderListTmp = this.customerOrderList;
+				this.getTruckListInCustomerOrder();
       }, null);
     }
 
@@ -235,8 +243,7 @@ module Clarity.Controller {
     bindDataCustomerOrderTowagonSettlement(wagonSettlement: Model.WagonSettlementModel, customerOrderId: number) {
       this.customerOrderList.map(customerOrder => {
         if (customerOrder.id == customerOrderId) {
-          wagonSettlement.formatedCustomerOrder = customerOrder.quantity + '_' + this.mainHelper.formatDateTimeDDMMYYYY(customerOrder.createdDate) +
-            '_' + customerOrder.customerArea + '_' + customerOrder.customerName + '_' + customerOrder.customerPhone;
+          wagonSettlement.formatedCustomerOrder = customerOrder.customerName + '_' + customerOrder.customerPhone + '_' + customerOrder.quantity;
           wagonSettlement.customerOrderId = customerOrder.id;
           wagonSettlement.customerId = customerOrder.customerId;
           wagonSettlement.date = customerOrder.createdDate;
@@ -277,5 +284,129 @@ module Clarity.Controller {
       return max;
     }
 
+		getTruckListInCustomerOrder() {
+			
+			if (this.customerOrderList && this.truckList) {
+				this.truckListInCustomerOrder = angular.copy(this.truckList);
+				for (let i = this.truckListInCustomerOrder.length - 1; i >= 0; i--) {
+					var truck = this.truckListInCustomerOrder[i];
+					var foundTruck = false;
+					for (let j = 0; j < this.customerOrderList.length; j++) {
+						var customerOrder = this.customerOrderList[j];
+						if (customerOrder.truckId == truck.id) {
+							foundTruck = true;
+							break;
+						}
+					}
+
+					if (!foundTruck) {
+						this.truckListInCustomerOrder.splice(i, 1);
+					}
+				}
+				
+			}
+		}
+
+
+		getCustomerOrderListOnPage() {
+      if (this.customerOrderList && this.customerOrderList.length > 0) {
+        this.customerOrderListTmp = [];
+				if (this.searchDate) {
+					for (var i = 0; i < this.customerOrderList.length; i++){
+						var customerOrder = this.customerOrderList[i];
+						if (customerOrder.departDate.getTime() === this.searchDate.getTime()) {
+							this.customerOrderListTmp.push(customerOrder);
+						}
+					}
+				}
+				if (this.truckSearch) {
+					for (var i = 0; i < this.customerOrderList.length; i++) {
+						var customerOrder = this.customerOrderList[i];
+						if (customerOrder.truckLicensePlate === this.truckSearch) {
+							this.customerOrderListTmp.push(customerOrder);
+						}
+					}
+				}
+
+				if (!this.searchDate && !this.truckSearch) {
+					return this.customerOrderList;
+				}
+
+				return this.customerOrderListTmp;
+      }
+    }
+
+		formatedCurencyForWagon() {
+			if (this.currentWagon) {
+				this.currentWagon.costOfTruckFormated = this.currentWagon.costOfTruck.toLocaleString();
+				this.currentWagon.costOfServiceFormated = this.currentWagon.costOfService.toLocaleString();
+				this.currentWagon.costOfTangBoXeFormated = this.currentWagon.costOfTangBoXe.toLocaleString();
+				this.currentWagon.costOfPenaltyFormated = this.currentWagon.costOfPenalty.toLocaleString();
+				this.currentWagon.costOfExtraFormated = this.currentWagon.costOfExtra.toLocaleString();
+				this.currentWagon.paymentOfTruckFormated = this.currentWagon.paymentOfTruck.toLocaleString();
+				this.currentWagon.paymentOfRepairingFormated = this.currentWagon.paymentOfRepairing.toLocaleString();
+				this.currentWagon.paymentOfOilFormated = this.currentWagon.paymentOfOil.toLocaleString();
+				this.currentWagon.paymentOfLuongFormated = this.currentWagon.paymentOfLuong.toLocaleString(); 
+				this.currentWagon.paymentOfServiceFormated = this.currentWagon.paymentOfService.toLocaleString();
+				this.currentWagon.paymentOfHangVeFormated = this.currentWagon.paymentOfHangVe.toLocaleString();
+				this.currentWagon.paymentOfOthersFormated = this.currentWagon.paymentOfOthers.toLocaleString();
+			}
+		}
+
+		setFormatedCurencyForWagon(changeFormatNumber, type) {
+			if (changeFormatNumber && changeFormatNumber != '') {
+				switch (type) {
+					case '0':
+						this.currentWagon.costOfTruck = parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.currentWagon.costOfTruckFormated = this.currentWagon.costOfTruck.toLocaleString();
+						break;
+					case '1':
+						this.currentWagon.costOfService = parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.currentWagon.costOfServiceFormated = this.currentWagon.costOfService.toLocaleString();
+						break;
+					case '2':
+						this.currentWagon.costOfTangBoXe = parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.currentWagon.costOfTangBoXeFormated = this.currentWagon.costOfTangBoXe.toLocaleString();
+						break;
+					case '3':
+						this.currentWagon.costOfPenalty= parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.currentWagon.costOfPenaltyFormated = this.currentWagon.costOfPenalty.toLocaleString();
+						break;
+					case '4':
+						this.currentWagon.costOfExtra = parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.currentWagon.costOfExtraFormated = this.currentWagon.costOfExtra.toLocaleString();
+						break;
+					case '5':
+						this.currentWagon.paymentOfTruck = parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.currentWagon.paymentOfTruckFormated = this.currentWagon.paymentOfTruck.toLocaleString();
+						break;
+					case '6':
+						this.currentWagon.paymentOfRepairing = parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.currentWagon.paymentOfRepairingFormated = this.currentWagon.paymentOfRepairing.toLocaleString();
+						break;
+					case '7':
+						this.currentWagon.paymentOfOil = parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.currentWagon.paymentOfOilFormated = this.currentWagon.paymentOfOil.toLocaleString();
+						break;
+					case '8':
+						this.currentWagon.paymentOfLuong = parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.currentWagon.paymentOfLuongFormated = this.currentWagon.paymentOfLuong.toLocaleString(); 
+						break;
+					case '9':
+						this.currentWagon.paymentOfService = parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.currentWagon.paymentOfServiceFormated = this.currentWagon.paymentOfService.toLocaleString();
+						break;
+					case '10':
+						this.currentWagon.paymentOfHangVe = parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.currentWagon.paymentOfHangVeFormated = this.currentWagon.paymentOfHangVe.toLocaleString();
+						break;
+					case '11':
+						this.currentWagon.paymentOfOthers = parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.currentWagon.paymentOfOthersFormated = this.currentWagon.paymentOfOthers.toLocaleString();
+						break;
+				}
+
+			}
+		}
 	}
 }

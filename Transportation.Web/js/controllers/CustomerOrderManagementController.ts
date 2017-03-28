@@ -13,7 +13,9 @@ module Clarity.Controller {
 		public currentCustomerOrder: Model.CustomerOrderModel;
     public customerOrderService: service.CustomerOrderService;
 		public employeeService: service.EmployeeService;
+		public truckService: service.TruckService;
 		public customerList: Array<Model.CustomerModel>;
+		public truckList: Array<Model.TruckModel>;
 		public customerService: service.CustomerService;
 		public employeeList: Array<Model.EmployeeModel>;
     public customerOrderList: Array<Model.CustomerOrderModel>;
@@ -37,6 +39,7 @@ module Clarity.Controller {
 			this.customerOrderService = new service.CustomerOrderService($http);
 			this.employeeService = new service.EmployeeService($http);
 			this.customerService = new service.CustomerService($http);
+			this.truckService = new service.TruckService($http);
       $scope.viewModel = this;
 			this.pageSize = 5;
       this.initCustomerOrder();
@@ -69,9 +72,15 @@ module Clarity.Controller {
       }, null);
     }
 
+		initTruckList() {
+      this.truckService.getAll((results: Array<Model.TruckModel>) => {
+        this.truckList = results;
+      }, null);
+    }
+
 		initCustomerOrder() {
 			this.initCustomerList();
-			//this.initEmployeeList();
+			this.initTruckList();
       var customerOrderId = this.$routeParams.customerOrder_id;
 			
       if (customerOrderId) {
@@ -278,6 +287,25 @@ module Clarity.Controller {
 				this.currentCustomerOrder.totalPay = this.currentCustomerOrder.unitPrice * this.currentCustomerOrder.quantity;
 				this.currentCustomerOrder.totalPayFormated = this.currentCustomerOrder.totalPay.toLocaleString();
 			}
+		}
+
+		getCustomerOrderCode() {
+			if (this.currentCustomerOrder.departDate && this.currentCustomerOrder.truckId) {
+				this.currentCustomerOrder.truckLicensePlate = this.getTruckLicensePlate(this.currentCustomerOrder.truckId);
+				this.currentCustomerOrder.code = this.mainHelper.formatDateTimeDDMMYYYYNumber(this.currentCustomerOrder.departDate) + '_' + this.currentCustomerOrder.truckLicensePlate;
+			}
+		}
+
+		getTruckLicensePlate(id) {
+			if (this.truckList){
+				for (var i = 0; i < this.truckList.length; i++) {
+					var truck = this.truckList[i];
+					if (truck.id == id) {
+						return truck.licensePlate;
+					}
+				}
+			}
+			return '';
 		}
 
 	}

@@ -17,6 +17,7 @@ module Clarity.Model {
     public departure: string;
     public destination: string;
     public unitPrice: number;
+		public discount: number;
     public totalAmount: number; //quantity*unitPrice
     public notes: string;
 

@@ -130,6 +130,20 @@ module Clarity.Helper {
       return date;
     }
 
+		public formatDateTimeDDMMYYYYNumber(d: any) {
+      if (!(d instanceof Date)) {
+        d = new Date(date);
+      }
+
+      var year = d.getFullYear().toString();
+      var monthNumber = d.getMonth() + 1;
+      var month = monthNumber < 10 ? '0' + monthNumber.toString() : monthNumber.toString();
+      var day = d.getDate() < 10 ? '0' + d.getDate().toString() : d.getDate().toString();
+
+      var date = day + month + year;
+      return date;
+    }
+
 		public formatCurrency(num) {
 			//if (changeFormatNumber && changeFormatNumber != '') {
 			//	this.currentCustomerOrder.unitPrice = parseInt(changeFormatNumber.replace(/,/g, ''));

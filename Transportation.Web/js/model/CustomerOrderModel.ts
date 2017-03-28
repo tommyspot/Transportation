@@ -20,6 +20,9 @@ module Clarity.Model {
 		public returnDate: Date;
 		public returnDateFormated: string;
     public notes: string;
+		public code: string;
+		public truckId: number;
+		public truckLicensePlate: string;
 		public createdUserId: number;
     public createdDate: Date;
 		public isChecked: boolean;

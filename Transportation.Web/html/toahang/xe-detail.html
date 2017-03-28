@@ -17,7 +17,7 @@
           <p><span class="bold-text">Tài Xế Chịu Trách Nhiệm:</span> <span>{{viewModel.getEmployeeName(viewModel.currentTruck.driverId)}}</span></p>
           <p><span class="bold-text">Cổ Phần?:</span> <span>{{viewModel.currentTruck.stock}}</span></p>
           <p><span class="bold-text">Ngày Bắt Đầu Mua:</span> <span>{{viewModel.changeDateFormat(viewModel.currentTruck.buyingDate)}}</span></p>
-          <p><span class="bold-text">Tiền Trả Hàng Tháng:</span> <span>{{viewModel.currentTruck.monthlyPayment}}</span></p>
+          <p><span class="bold-text">Tiền Trả Hàng Tháng:</span> <span>{{viewModel.monthlyPaymentFormated}}</span></p>
           <p><span class="bold-text">Ngày Đăng Kiểm Gần Nhất:</span> <span>{{viewModel.changeDateFormat(viewModel.currentTruck.checkDate)}}</span></p>
 					<p><span class="bold-text">Bảo Hiểm Đến:</span> <span>{{viewModel.changeDateFormat(viewModel.currentTruck.insuranceDate)}}</span></p>
 

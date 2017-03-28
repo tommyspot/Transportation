@@ -97,11 +97,11 @@ namespace Transportation.Api
             {
                 foreach (JObject wagonSettlementJson in wagonSettlementJsons)
                 {
-                    WagonSettlement wagonSettlement = WagonSettlement.FromJson(wagonSettlementJson);
-                    wagonSettlement.CreatedDate = DateTime.Now;
-                    wagonSettlement.WagonID = wagonID;
-                    wagon.WagonSetlements.Add(wagonSettlement);
-                }
+					WagonSettlement wagonSettlement = WagonSettlement.FromJson(wagonSettlementJson);
+					wagonSettlement.CreatedDate = DateTime.Now;
+					wagonSettlement.WagonID = wagonID;
+					wagon.WagonSetlements.Add(wagonSettlement);
+				}
                 ClarityDB.Instance.SaveChanges();
             }
         }

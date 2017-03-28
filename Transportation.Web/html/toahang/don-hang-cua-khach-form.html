@@ -64,13 +64,13 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="driverLicenseExpirationDate">Ngày Đi</label>
+						<label for="driverLicenseExpirationDate">Ngày Đi <span class="required-symbol">*</span></label>
 						<input id="startUsingDate" name="startUsingDate" class="form-control" type="date" ng-model="viewModel.currentCustomerOrder.departDate">
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="startDate">Ngày Đến</label>
+						<label for="startDate">Ngày Đến <span class="required-symbol">*</span></label>
 						<input id="startDate" name="startDate" class="form-control" type="date" ng-model="viewModel.currentCustomerOrder.returnDate">
 					</div>
 				</div>
@@ -117,33 +117,51 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
+						<label for="totalPay">Số xe <span class="required-symbol">*</span></label>
+						<select id="unit" class="form-control" data-ng-model="viewModel.currentCustomerOrder.truckId" data-ng-change="viewModel.getCustomerOrderCode()">
+							<option value="">--Chọn xe--</option>
+							<option ng-repeat="truck in viewModel.truckList" value="{{truck.id}}">{{truck.licensePlate}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="code">Mã Đơn Hàng</label>
+						<input id="code" name="code" class="form-control" type="text" ng-model="viewModel.currentCustomerOrder.code" disabled>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
 						<label for="notes">Ghi Chú</label>
 						<textarea id="notes" name="notes" class="form-control" type="text" ng-model="viewModel.currentCustomerOrder.notes"></textarea>
 					</div>
 				</div>
-					<div class="col-sm-6">
-						<div class="form-group">
-
-						</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						
 					</div>
 				</div>
+			</div>
 
-				<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/don-hang-cua-khach/tao'"
-								data-ng-click="viewModel.createCustomerOrder(viewModel.currentCustomerOrder)" data-ng-disabled="truckForm.$invalid">
-					<span class="glyphicon glyphicon-ok"></span>
-					<span>Lưu</span>
-				</button>
+			<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/don-hang-cua-khach/tao'"
+							data-ng-click="viewModel.createCustomerOrder(viewModel.currentCustomerOrder)" data-ng-disabled="truckForm.$invalid">
+				<span class="glyphicon glyphicon-ok"></span>
+				<span>Lưu</span>
+			</button>
 
-				<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/don-hang-cua-khach/sua/' + viewModel.currentCustomerOrder.id"
-								data-ng-click="viewModel.updateCustomerOrder(viewModel.currentCustomerOrder)" data-ng-disabled="truckForm.$invalid">
-					<span class="glyphicon glyphicon-ok"></span>
-					<span>Cập nhật</span>
-				</button>
+			<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/don-hang-cua-khach/sua/' + viewModel.currentCustomerOrder.id"
+							data-ng-click="viewModel.updateCustomerOrder(viewModel.currentCustomerOrder)" data-ng-disabled="truckForm.$invalid">
+				<span class="glyphicon glyphicon-ok"></span>
+				<span>Cập nhật</span>
+			</button>
 
-				<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/don-hang-cua-khach')">
-					<span class="glyphicon glyphicon-remove"></span>
-					<span>Hủy</span>
-				</button>
+			<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/don-hang-cua-khach')">
+				<span class="glyphicon glyphicon-remove"></span>
+				<span>Hủy</span>
+			</button>
 
 		</form>
 	</div>

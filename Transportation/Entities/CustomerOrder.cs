@@ -15,7 +15,9 @@ namespace Transportation
     {
 		public string CustomerName { get; set; }
 		public string CustomerID { get; set; }
-        public string CustomerPhone { get; set; }
+		public string TruckID { get; set; }
+		public string Code { get; set; }
+		public string CustomerPhone { get; set; }
         public string CustomerArea { get; set; }
 		public string CustomerCode { get; set; }
 		public long CreatedUserID { get; set; }
@@ -23,6 +25,7 @@ namespace Transportation
         public long Quantity { get; set; }
         public string Departure { get; set; }
 		public string Destination { get; set; }
+		public string TruckLicensePlate { get; set; }
 		public long UnitPrice { get; set; }
 		public long TotalPay { get; set; }
 		public DateTime DepartDate { get; set; }
@@ -52,6 +55,9 @@ namespace Transportation
             json["createdDate"] = CreatedDate;
 			json["totalPay"] = TotalPay;
 			json["customerCode"] = CustomerCode;
+			json["truckId"] = TruckID;
+			json["code"] = Code;
+			json["truckLicensePlate"] = TruckLicensePlate;
 			return json;
         }
 
@@ -68,6 +74,8 @@ namespace Transportation
 			ID = json.Value<long>("id");
 			CustomerName = json.Value<string>("customerName");
 			CustomerID = json.Value<string>("customerId");
+			TruckID = json.Value<string>("truckId");
+			Code = json.Value<string>("code");
 			CustomerCode = json.Value<string>("customerCode");
 			CustomerPhone = json.Value<string>("customerPhone");
 			CustomerArea = json.Value<string>("customerArea");
@@ -80,7 +88,7 @@ namespace Transportation
 			DepartDate = json.Value<DateTime>("departDate");
 			ReturnDate = json.Value<DateTime>("returnDate");
 			Notes = json.Value<string>("notes");
-			
+			TruckLicensePlate = json.Value<string>("truckLicensePlate");
 		}
     }
 }
