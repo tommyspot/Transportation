@@ -86,12 +86,16 @@ module Clarity.Controller {
         if (this.$location.path() === '/ql-toa-hang/toa-hang/' + wagonId) {
           this.wagonService.getById(wagonId, (data) => {
             this.currentWagon = data;
+						this.currentWagon.departDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagon.departDate);
+						this.currentWagon.returnDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagon.returnDate);
           }, null);
         } else if (this.$location.path() === '/ql-toa-hang/toa-hang/sua/' + wagonId) {
 					
           if (this.currentWagon == null) {
             this.wagonService.getById(wagonId, (data) => {
               this.currentWagon = data;
+							this.currentWagon.departDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagon.departDate);
+							this.currentWagon.returnDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagon.returnDate);
 							this.formatedCurencyForWagon();
             }, null);
           }
@@ -112,7 +116,15 @@ module Clarity.Controller {
         this.wagonList.sort(function (a: any, b: any) {
           return a.id - b.id;
         });
+
+				for (var i = 0; i < this.wagonList.length; i++) {
+					var currentWagon = this.wagonList[i];
+					currentWagon.departDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(currentWagon.departDate);
+					currentWagon.returnDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(currentWagon.returnDate);
+				}
+
         this.wagonListTmp = this.wagonList;
+				
         this.initPagination();
       }, null);
     }
@@ -195,7 +207,7 @@ module Clarity.Controller {
     }
 
     removeWagons() {
-      var confirmDialog = this.$window.confirm('Do you want to delete the wagon?');
+      var confirmDialog = this.$window.confirm('Bạn có muốn xóa toa hàng?');
       if (confirmDialog) {
         for (let i = 0; i < this.wagonList.length; i++) {
           var wagon = this.wagonList[i];
@@ -209,7 +221,7 @@ module Clarity.Controller {
     }
 
     removeWagonInDetail(wagon: Model.WagonModel) {
-      var confirmDialog = this.$window.confirm('Do you want to delete the wagon?');
+      var confirmDialog = this.$window.confirm('Bạn có muốn xóa toa hàng?');
       if (confirmDialog) {
         this.wagonService.deleteEntity(wagon, (data) => {
           this.$location.path('/ql-toa-hang/toa-hang');
@@ -265,12 +277,11 @@ module Clarity.Controller {
           wagonSettlement.quantity = customerOrder.quantity;
           wagonSettlement.unit = customerOrder.unit;
           wagonSettlement.unitPrice = customerOrder.unitPrice;
-					wagonSettlement.discount = 500000;
-					wagonSettlement.payment = 100000;
           wagonSettlement.totalAmount = wagonSettlement.quantity * wagonSettlement.unitPrice - wagonSettlement.discount;
 					wagonSettlement.paymentRemain = wagonSettlement.totalAmount - wagonSettlement.payment;
 					wagonSettlement.paymentStatus = wagonSettlement.paymentRemain == 0 ? 'Không Nợ' : 'Nợ';
 					wagonSettlement.paymentPlace = this.currentWagon.paymentPlace;
+					wagonSettlement.wagonCode = this.currentWagon.code;
         }
       });
     }
@@ -395,6 +406,36 @@ module Clarity.Controller {
 				}
 
 			}
+		}
+
+		getWagonCode() {
+			if (this.currentWagon.departDate && this.currentWagon.truckId) {
+				this.currentWagon.code = this.mainHelper.formatDateTimeDDMMYYYYNumber(this.currentWagon.departDate) + '_' + this.getTruckLicensePlate(this.currentWagon.truckId);
+			}
+		}
+
+		getTruckLicensePlate(id) {
+			if (this.truckList) {
+				for (var i = 0; i < this.truckList.length; i++) {
+					var truck = this.truckList[i];
+					if (truck.id == id) {
+						return truck.licensePlate;
+					}
+				}
+			}
+			return '';
+		}
+
+		getEmployeeName(id) {
+			if (this.employeeList) {
+				for (var i = 0; i < this.employeeList.length; i++) {
+					var employee = this.employeeList[i];
+					if (employee.id == id) {
+						return employee.fullName;
+					}
+				}
+			}
+			return '';
 		}
 	}
 }

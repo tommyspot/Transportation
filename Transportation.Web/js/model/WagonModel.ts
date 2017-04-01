@@ -9,6 +9,8 @@ module Clarity.Model {
     public paymentPlace: string;
     public departDate: Date;
     public returnDate: Date;
+		public departDateFormated: string;
+    public returnDateFormated: string;
     public truckId: number;
     public employeeId: number;
 

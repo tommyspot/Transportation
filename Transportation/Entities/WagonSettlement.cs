@@ -42,7 +42,8 @@ namespace Transportation
 		public long Discount { get; set; }
 		public long TotalAmount { get; set; }
         public string Notes { get; set; }
-		
+		public string WagonCode { get; set; }
+
 		public WagonSettlement() {
         }
 
@@ -71,7 +72,8 @@ namespace Transportation
 			json["unitPrice"] = UnitPrice;
             json["totalAmount"] = TotalAmount;
             json["notes"] = Notes;
-            return json;
+			json["wagonCode"] = WagonCode;
+			return json;
         }
 
         public static WagonSettlement FromJson(JObject json)
@@ -109,6 +111,7 @@ namespace Transportation
             TotalAmount = json.Value<long>("totalAmount");
             Notes = json.Value<string>("notes");
 			PaymentStatus = json.Value<string>("paymentStatus");
+			WagonCode = json.Value<string>("wagonCode");
 		}
     }
 }

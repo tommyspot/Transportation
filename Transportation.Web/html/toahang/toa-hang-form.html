@@ -57,7 +57,7 @@
 								<div class="col-sm-6">
 									<div class="form-group">
 										<label for="truckId">Số xe <span class="required-symbol">*</span></label>
-										<select ui-select2 id="truckId" class="form-control" data-ng-model="viewModel.currentWagon.truckId" style="border: none; padding: 0; height: 34px" convert-to-number>
+										<select ui-select2 id="truckId" class="form-control" data-ng-model="viewModel.currentWagon.truckId" data-ng-change="viewModel.getWagonCode()" style="border: none; padding: 0; height: 34px" convert-to-number>
 											<option value="">--Chọn số xe --</option>
 											<option ng-repeat="truck in viewModel.truckList" value="{{truck.id}}">{{truck.licensePlate}}</option>
 										</select>
@@ -168,13 +168,13 @@
 																<div class="col-sm-4">
 																	<div class="form-group">
 																		<label for="wagonSettlementDeparture-{{$index}}">Thanh toán</label>
-																		<input id="wagonSettlementDeparture-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.pay" disabled="disabled">
+																		<input id="wagonSettlementDeparture-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.payment">
 																	</div>
 																</div>
 																<div class="col-sm-4">
 																	<div class="form-group">
 																		<label for="wagonSettlementDestination-{{$index}}">Chiết Khấu</label>
-																		<input id="wagonSettlementDestination-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.discount" disabled="disabled">
+																		<input id="wagonSettlementDestination-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.discount">
 																	</div>
 																</div>
 															</div>

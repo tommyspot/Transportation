@@ -24,8 +24,8 @@
             <thead>
               <tr>
                 <th class="align-center">Ngày Phát Sinh</th>
-								<th class="align-center hidden-xs">Toa hàng</th>
-								<th class="align-center hidden-xs">Khách hàng</th>
+								<th class="align-center hidden-xs">Mã Toa hàng</th>
+								<th class="align-center hidden-xs">Mã Khách hàng</th>
                 <th class="align-center hidden-xs">Tổng Phí</th>
                 <th class="align-center hidden-xs">Đã Thanh Toán</th>
 								<th class="align-center hidden-xs">Còn Lại</th>
@@ -36,8 +36,8 @@
               <tr class="pointer" data-ng-repeat="wagonSettlement in viewModel.getWagonSettlementListOnPage()"
                   data-ng-click="viewModel.$location.path('/ql-toa-hang/quyet-toan/' + wagonSettlement.id)">
 								<td class="align-center">{{wagonSettlement.dateFormated}}</td>
-								<td class="align-center hidden-xs">{{wagonSettlement.wagonId}}</td>
-								<td class="align-center hidden-xs">{{wagonSettlement.customerId}}</td>
+								<td class="align-center hidden-xs">{{wagonSettlement.wagonCode}}</td>
+								<td class="align-center hidden-xs">{{viewModel.getCustomerCode(wagonSettlement.customerId)}}</td>
                 <td class="align-center hidden-xs">{{wagonSettlement.totalAmount.toLocaleString()}}</td>
 								<td class="align-center hidden-xs">{{wagonSettlement.payment.toLocaleString()}}</td>
 								<td class="align-center hidden-xs">{{wagonSettlement.paymentRemain.toLocaleString()}}</td>

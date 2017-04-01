@@ -59,6 +59,7 @@ module Clarity.Controller {
     initWagonSettlement() {
       var wagonId = this.$routeParams.wagonSettlement_id;
 			this.initEmployeeList();
+			this.initCustomerList();
       if (wagonId) {
         if (this.$location.path() === '/ql-toa-hang/quyet-toan/' + wagonId) {
           this.wagonSettlementService.getById(wagonId, (data) => {
@@ -72,6 +73,7 @@ module Clarity.Controller {
 					if (this.currentWagonSettlement == null) {
             this.wagonSettlementService.getById(wagonId, (data) => {
               this.currentWagonSettlement = data;
+							this.currentWagonSettlement.paymentDate = (data.paymentDate != null && data.paymentDate != '') ? new Date(data.paymentDate) : null;
 							this.currentWagonSettlement.dateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagonSettlement.date);
 							this.currentWagonSettlement.paymentDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagonSettlement.paymentDate);
             }, null);
@@ -102,6 +104,13 @@ module Clarity.Controller {
         this.employeeList = results;
       }, null);
     }
+
+		initCustomerList() {
+      this.customerService.getAll((results: Array<Model.CustomerModel>) => {
+        this.customerList = results;
+      }, null);
+    }
+
 
 		updateWagonSettlement(customerOrder: Model.WagonSettlementModel) {
       this.wagonSettlementService.update(customerOrder, (data) => {
@@ -156,5 +165,18 @@ module Clarity.Controller {
 				}
 			}
 		}
+
+		getCustomerCode(id) {
+			if (this.customerList) {
+				for (var i = 0; i < this.customerList.length; i++){
+					var customer = this.customerList[i];
+					if (customer.id === id) {
+						return customer.code;
+					}
+				}
+			}
+			return '';
+		}
+
 	}
 }
