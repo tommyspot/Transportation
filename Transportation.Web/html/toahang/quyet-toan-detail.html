@@ -13,7 +13,7 @@
     </div>
     <div class="row">
       <div class="col-sm-12">
-        <p><span class="bold-text">Ngày:</span> <span>{{viewModel.currentWagonSettlement.date.toDateString()}}</span></p>
+        <p><span class="bold-text">Ngày phát sinh:</span> <span>{{viewModel.currentWagonSettlement.dateFormated}}</span></p>
       </div>
     </div>
     <div class="row">
@@ -54,12 +54,12 @@
 
     <div class="row">
       <div class="col-sm-12">
-        <p><span class="bold-text">Số tiền phải thanh toán:</span> <span>{{viewModel.currentWagonSettlement.quantity * viewModel.currentWagonSettlement.unitPrice}}</span></p>
+        <p><span class="bold-text">Tổng Phí:</span> <span>{{viewModel.currentWagonSettlement.totalAmount.toLocaleString()}}</span></p>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-12">
-        <p><span class="bold-text">Số tiền trả:</span> <span>{{viewModel.currentWagonSettlement.payment}}</span></p>
+        <p><span class="bold-text">Đã thanh toán:</span> <span>{{viewModel.currentWagonSettlement.payment.toLocaleString()}}</span></p>
       </div>
     </div>
 

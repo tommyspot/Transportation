@@ -35,13 +35,13 @@
             <tbody>
               <tr class="pointer" data-ng-repeat="wagonSettlement in viewModel.getWagonSettlementListOnPage()"
                   data-ng-click="viewModel.$location.path('/ql-toa-hang/quyet-toan/' + wagonSettlement.id)">
-								<td class="align-center">{{wagonSettlement.date.toDateString()}}</td>
+								<td class="align-center">{{wagonSettlement.dateFormated}}</td>
 								<td class="align-center hidden-xs">{{wagonSettlement.wagonId}}</td>
 								<td class="align-center hidden-xs">{{wagonSettlement.customerId}}</td>
-                <td class="align-center hidden-xs">{{wagonSettlement.quantity * wagonSettlement.unitPrice}}</td>
-								<td class="align-center hidden-xs">{{wagonSettlement.payment}}</td>
-								<td class="align-center hidden-xs">Còn Lại</td>
-								<td class="align-center hidden-xs">Nợ</td>
+                <td class="align-center hidden-xs">{{wagonSettlement.totalAmount.toLocaleString()}}</td>
+								<td class="align-center hidden-xs">{{wagonSettlement.payment.toLocaleString()}}</td>
+								<td class="align-center hidden-xs">{{wagonSettlement.paymentRemain.toLocaleString()}}</td>
+								<td class="align-center hidden-xs">{{wagonSettlement.paymentStatus}}</td>
               </tr>
             </tbody>
           </table>

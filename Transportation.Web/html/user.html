@@ -1,118 +1,95 @@
-﻿<form name="userGroupForm" data-ng-show="viewModel.userGroupFormVisible">
-  <div class="wrapper clearfix">
-    <div class="tpl-form frm-manage-user-group clearfix">
-      <!-- form heading -->
-      <div class="tpl-heading">
-        <h2>Manage User Groups</h2>
-      </div>
-      <h3 class="lbl-name">{{ viewModel.user.username }}</h3>
-      <div class="tpl-list-user-wrapper clearfix">
-        <ul class="list-user">
-          <li class="eachRow-user" data-ng-repeat="group in viewModel.groups">
-            <div class="list-user-name">{{ group.name }}</div>
-            <div class="list-user-setting clearfix">
-              <button name="addGroup" class="se-icon-plus-sign btnAddUser" data-ng-click="viewModel.addGroup(group)" data-ng-show="!group.isAdded"></button>
-              <button name="removeGroup" class="se-icon-remove btnRemoveUser" data-ng-click="viewModel.removeGroup(group)" data-ng-show="group.isAdded"></button>
-            </div>
-            <div class="clr"></div>
-          </li>
-        </ul>
-      </div>
+﻿<div id="truckList" class="bootstrap view-page">
+	<div class="container">
+		<div class="row action-row">
+			<div class="col-sm-9">
+				<span>
+					<label for="numOfTrucks">Hiển thị</label>
+					<select id="numOfTrucks" class="form-control show-records-per-page" data-ng-model="viewModel.pageSize" data-ng-change="viewModel.initPagination()" convert-to-number>
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="99999">All</option>
+					</select>
+				</span>
+				<button type="button" class="btn btn-default" data-ng-click="viewModel.goToTruckForm()">
+					<span class="glyphicon glyphicon-plus"></span>
+					<span class="hidden-xs">Tạo xe mới</span>
+				</button>
+				<button type="button" class="btn btn-default" data-ng-click="viewModel.removeTrucks()">
+					<span class="glyphicon glyphicon-trash"></span>
+					<span class="hidden-xs">Xóa xe</span>
+				</button>
+			</div>
+			<div class="col-sm-3">
+				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Search" />
+			</div>
+		</div>
 
-      <!-- form submit -->
-      <div class="tpl-submit clearfix">
-        <button type="button" data-ng-click="viewModel.hideUserGroupForm()" class="b-f-submit">Close</button>
-      </div>
-    </div>
-  </div>
-</form>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="table-responsive">
+					<table class="table table-hover table-bordered">
+						<thead>
+							<tr>
+								<th class="align-center">
+									<input id="checkAllTrucks" type="checkbox" data-ng-model="viewModel.isCheckedAll"
+												 data-ng-change="viewModel.selectAllTrucksOnPage()" />
+								</th>
+								<th class="align-center hidden-xs">Mã Xe</th>
+								<th class="align-center">Biển Số </th>
+								<th class="align-center hidden-xs">Số Khung</th>
+								<th class="align-center hidden-xs">Số Máy</th>
+								<th class="align-center hidden-xs">Năm SX</th>
+								<th class="align-center">Còn Lưu Hành</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="pointer" data-ng-repeat="truck in viewModel.truckList"
+									data-ng-click="viewModel.$location.path('/ql-toa-hang/xe/' + truck.id)">
+								<td class="align-center" data-ng-click="$event.stopPropagation();">
+									<input id="truck-{{$index}}" type="checkbox" data-ng-model="truck.isChecked" />
+								</td>
+								<td class="align-center hidden-xs">{{truck.id}}</td>
+								<td class="align-center">{{truck.licensePlate}}</td>
+								<td class="align-center hidden-xs">{{truck.vin}}</td>
+								<td class="align-center hidden-xs">{{truck.engineNo}}</td>
+								<td class="align-center hidden-xs">{{truck.yearOfManufacture}}</td>
+								<td class="align-center">{{viewModel.checkStatusTruck(truck)}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 
-<div class="bg-white">
-    <div data-ng-include data-src=" 'html/user-form.html?v=' + VERSION_NUMBER " class=" wrapper" data-ng-show="viewModel.userFormVisible"></div>
-</div>
-<div data-ng-include data-src="'/html/admin-header.html?v=' + VERSION_NUMBER" data-ng-show="!viewModel.userFormVisible"></div>
+		<div class="row">
+			<div class="col-sm-12">
+				<nav aria-label="navigation" data-ng-if="viewModel.numOfPages > 0">
+					<ul class="pagination">
+						<li class="pointer" ng-class="{'disabled': viewModel.currentPage === 1}"
+								data-ng-click="viewModel.goToPreviousPage()">
+							<a aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
 
-  <spinner data-turn-on="viewModel.isDeleteLoading"></spinner>
+						<li class="pointer" data-ng-repeat="pageIndex in viewModel.getNumberPage() track by $index"
+								data-ng-click="viewModel.goToPage($index + 1)"
+								ng-class="{'active': $index + 1 === viewModel.currentPage}">
+							{{pageIndex}}
+							<span>{{$index + 1}}</span>
+						</li>
 
-<div class="wrapper clearfix" data-ng-show="!viewModel.userFormVisible">
+						<li class="pointer" ng-class="{'disabled': viewModel.currentPage >= viewModel.numOfPages}"
+								data-ng-click="viewModel.goToNextPage()">
+							<a aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
 
-  <div class="breabcum-wrapper clearfix">
-    <ul id="lstBC" class="clearfix">
-      <li>
-        <a href="#">
-          <em>Main Menu</em>
-          <span class="se-icon-arrow-right"></span>
-        </a>
-      </li>
-      <li>
-        <a href="#/user">
-          <em>User</em>
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div class="tpl-button clearfix">
-    <button name="createUser" data-ng-click="viewModel.createUser()" class="btnStyle-1">
-      <span class="se-icon-plus"></span>
-      Create User
-    </button>
-
-    <button name="createUser" data-ng-click="viewModel.importUser()" class="btnStyle-1">
-      <span class="fa fa-file-excel-o"></span>
-      Import User
-    </button>
-
-  </div>
-  <section class="lstDataset user-dataset-section clearfix">
-
-    <pagination total-items="viewModel.filterUsers.length" items-per-page="viewModel.itemsPerPage" page="viewModel.currentPage" boundary-links="true"
-      max-size="viewModel.maxPageSize" rotate="false"></pagination>
-
-    <div class="each-row-heading">
-      <div class="col col-1">
-        <input type="checkbox" data-ng-model="viewModel.includeAllUsers" data-ng-click="viewModel.checkAllUsers()"/>
-      </div>
-      <div class="col col-2">
-        <input type="text" style="width: 200px" data-ng-model="viewModel.filterUser" placeholder="Username"/>
-      </div>
-      <div class="col col-3">
-        <strong>Show 
-          <select ui-select2 class="select" data-ng-model="viewModel.itemsPerPage" data-ng-change="viewModel.itemsPerPageChanged()">
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-            <option value="{{viewModel.users.length}}">All</option>
-          </select>
-          users / page
-        </strong>
-      </div>
-      <div class="col col-4">
-        <div class="e-d-setting user-option">
-          <button name="deleteUser" data-ng-click="viewModel.deleteSelectedUsers()" class="se-icon-remove btnDelDataset"></button>
-        </div>
-      </div>
-    </div>
-
-    <div class="each-row" data-ng-repeat="user in viewModel.users | filterName: viewModel.filterUser | start: (viewModel.currentPage - 1) * viewModel.itemsPerPage | limitTo: viewModel.itemsPerPage">
-      <div class="col col-1">
-        <input type="checkbox" id="{{user.username}}" data-ng-model="user.included" />
-      </div>
-      <div class="col col-2">
-        <label for="{{user.username}}">{{ user.username }}</label>
-      </div>
-      <div class="col col-3">
-        <div class="e-d-setting user-option">
-          <button name="deleteUser" data-ng-click="viewModel.deleteUser(user)" class="se-icon-remove btnDelDataset"></button>
-          <button name="editUserGroup" data-ng-click="viewModel.editUserGroup(user)" class="se-icon-user_close_edit btnEditUser"></button>
-          <button name="editUser" data-ng-click="viewModel.editUser(user)" class="se-icon-edit btnEditDataset"></button>
-        </div>
-      </div>    
-      <div class="clr"></div>
-
-    </div>
-
-    <pagination total-items="viewModel.filterUsers.length" items-per-page="viewModel.itemsPerPage" page="viewModel.currentPage" boundary-links="true"
-      max-size="viewModel.maxPageSize" rotate="false"></pagination>
-
-  </section>
+	</div>
 </div>

@@ -99,7 +99,7 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="driverLicenseExpirationDate">Tài Xế Chịu Trách Nhiệm</label>
-						<select ui-select2 id="employeeId" class="form-control" data-ng-model="viewModel.currentTruck.employeeId" style="border: none; padding: 0; height: 34px">
+						<select id="employeeId" class="form-control" data-ng-model="viewModel.currentTruck.employeeId">
 							<option value="">--Chọn tài xế--</option>
 							<option ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
 						</select>

@@ -7,7 +7,6 @@ module Clarity.Model {
 
     public paymentDate: Date;
     public paymentPlace: string;
-
     public departDate: Date;
     public returnDate: Date;
     public truckId: number;

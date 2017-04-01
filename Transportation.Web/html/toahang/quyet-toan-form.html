@@ -10,8 +10,23 @@
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="date">Ngày</label>
+						<label for="date">Ngày Phát Sinh</label>
 						<input id="date" name="date" class="form-control" type="date" ng-model="viewModel.currentWagonSettlement.date" disabled>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="paymentPlace">Nơi thanh toán</label>
+						<input id="paymentPlace" name="paymentPlace" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.paymentPlace" disabled>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="date">Ngày giao dịch</label>
+						<input id="paymentDate" name="paymentDate" class="form-control" type="date" ng-model="viewModel.currentWagonSettlement.paymentDate">
 					</div>
 				</div>
 			</div>
@@ -30,6 +45,21 @@
 					<div class="form-group">
 						<!--<label for="unit">Đơn vị tính</label>
 						<input id="unit" name="unit" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.unit" disabled>-->
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="totalDebt">Nơi đi</label>
+						<input id="departure" name="departure" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.departure" disabled>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="type">Nơi đến</label>
+						<input id="unit" name="unit" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.destination" disabled>
 					</div>
 				</div>
 			</div>
@@ -64,17 +94,19 @@
 				</div>
 			</div>
 
+
+
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="totalDebt">Nơi đi</label>
-						<input id="departure" name="departure" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.departure" disabled>
+						<label for="totalDebt">Tổng Phí</label>
+						<input id="departure" name="departure" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.totalAmount" disabled>
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="type">Nơi đến</label>
-						<input id="unit" name="unit" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.destination" disabled>
+						<label for="payment">Đã thanh toán</label>
+						<input id="payment" name="payment" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.payment" disabled>
 					</div>
 				</div>
 			</div>
@@ -82,14 +114,14 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="totalDebt">Số tiền phải thanh toán</label>
-						<input id="departure" name="departure" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.quantity" disabled>
+						<label for="totalDebt">Chiết Khấu</label>
+						<input id="discount" name="discount" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.discount" disabled>
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="payment">Số tiền trả</label>
-						<input id="payment" name="payment" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.payment" disabled>
+						<label for="paymentRemain">Còn Lại</label>
+						<input id="paymentRemain" name="paymentRemain" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.paymentRemain" disabled>
 					</div>
 				</div>
 			</div>

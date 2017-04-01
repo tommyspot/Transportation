@@ -35,9 +35,11 @@ module Clarity.Controller {
 		public truckListInCustomerOrder: Array<Model.TruckModel>;
 		public searchDate: Date;
 		public truckSearch: string;
+		public paymentPlaceList: any;
+		public search: any;
 
     constructor(private $scope,
-      private $rootScope: IRootScope,
+      public $rootScope: IRootScope,
       private $http: ng.IHttpService,
       private $location: ng.ILocationService,
       private $window: ng.IWindowService,
@@ -51,6 +53,7 @@ module Clarity.Controller {
       this.customerService = new service.CustomerService($http);
       this.exportService = new service.ExportService($http);
       this.mainHelper = new helper.MainHelper();
+			this.search = { truckLicensePlate: '' };
       $scope.viewModel = this;
 
       this.pageSize = 5;
@@ -63,22 +66,29 @@ module Clarity.Controller {
           self.initPagination();
         }
       });
-			
+
+			this.$scope.$watch('viewModel.searchDate', function (newVal, oldVal) {
+        if ((oldVal == newVal) || oldVal == undefined || newVal == undefined)
+          return;
+
+				self.customerOrderListTmp = self.$filter('filter')(self.customerOrderList, { 'date': newVal });
+      }, true);
     }
 
     initWagon() {
       var wagonId = this.$routeParams.wagon_id;
+			this.initTruckList();
+			this.initEmployeeList();
+			this.initCustomerList();
+			this.initCustomerOrderList();
+
       if (wagonId) {
         if (this.$location.path() === '/ql-toa-hang/toa-hang/' + wagonId) {
           this.wagonService.getById(wagonId, (data) => {
             this.currentWagon = data;
           }, null);
         } else if (this.$location.path() === '/ql-toa-hang/toa-hang/sua/' + wagonId) {
-          this.initTruckList();
-          this.initEmployeeList();
-          this.initCustomerList();
-          this.initCustomerOrderList();
-
+					
           if (this.currentWagon == null) {
             this.wagonService.getById(wagonId, (data) => {
               this.currentWagon = data;
@@ -88,10 +98,7 @@ module Clarity.Controller {
         }
       } else {
         if (this.$location.path() === '/ql-toa-hang/toa-hang/tao') {
-          this.initTruckList();
-          this.initEmployeeList();
-          this.initCustomerList();
-          this.initCustomerOrderList();
+          
           this.currentWagon = new Model.WagonModel();
         } else if (this.$location.path() === '/ql-toa-hang/toa-hang') {
           this.initWagonList();
@@ -111,9 +118,14 @@ module Clarity.Controller {
     }
 
     initTruckList() {
-      this.truckService.getAll((results: Array<Model.TruckModel>) => {
-        this.truckList = results;
-      }, null);
+			//if (this.$rootScope && this.$rootScope.truckList && this.$rootScope.truckList.length > 0) {
+			//	this.truckList = this.$rootScope.truckList;
+			//} else {
+				this.truckService.getAll((results: Array<Model.TruckModel>) => {
+					this.$rootScope.truckList = results;
+					this.truckList = this.$rootScope.truckList;
+				}, null);
+			//}
     }
 
     initEmployeeList() {
@@ -131,7 +143,7 @@ module Clarity.Controller {
     initCustomerOrderList() {
       this.customerOrderService.getAll((results: Array<Model.CustomerOrderModel>) => {
         this.customerOrderList = results;
-				this.customerOrderListTmp = this.customerOrderList;
+				this.customerOrderListTmp = angular.copy(this.customerOrderList);
 				this.getTruckListInCustomerOrder();
       }, null);
     }
@@ -253,7 +265,12 @@ module Clarity.Controller {
           wagonSettlement.quantity = customerOrder.quantity;
           wagonSettlement.unit = customerOrder.unit;
           wagonSettlement.unitPrice = customerOrder.unitPrice;
-          wagonSettlement.totalAmount = wagonSettlement.quantity * wagonSettlement.unitPrice;
+					wagonSettlement.discount = 500000;
+					wagonSettlement.payment = 100000;
+          wagonSettlement.totalAmount = wagonSettlement.quantity * wagonSettlement.unitPrice - wagonSettlement.discount;
+					wagonSettlement.paymentRemain = wagonSettlement.totalAmount - wagonSettlement.payment;
+					wagonSettlement.paymentStatus = wagonSettlement.paymentRemain == 0 ? 'Không Nợ' : 'Nợ';
+					wagonSettlement.paymentPlace = this.currentWagon.paymentPlace;
         }
       });
     }
@@ -306,35 +323,6 @@ module Clarity.Controller {
 				
 			}
 		}
-
-
-		getCustomerOrderListOnPage() {
-      if (this.customerOrderList && this.customerOrderList.length > 0) {
-        this.customerOrderListTmp = [];
-				if (this.searchDate) {
-					for (var i = 0; i < this.customerOrderList.length; i++){
-						var customerOrder = this.customerOrderList[i];
-						if (customerOrder.departDate.getTime() === this.searchDate.getTime()) {
-							this.customerOrderListTmp.push(customerOrder);
-						}
-					}
-				}
-				if (this.truckSearch) {
-					for (var i = 0; i < this.customerOrderList.length; i++) {
-						var customerOrder = this.customerOrderList[i];
-						if (customerOrder.truckLicensePlate === this.truckSearch) {
-							this.customerOrderListTmp.push(customerOrder);
-						}
-					}
-				}
-
-				if (!this.searchDate && !this.truckSearch) {
-					return this.customerOrderList;
-				}
-
-				return this.customerOrderListTmp;
-      }
-    }
 
 		formatedCurencyForWagon() {
 			if (this.currentWagon) {

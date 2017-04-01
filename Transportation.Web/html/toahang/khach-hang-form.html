@@ -32,7 +32,7 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="address">Nhân viên chịu trách nhiệm</label>
-						<select id="employeeId" class="form-control" data-ng-model="viewModel.currentCustomer.employeeId">
+						<select ui-select2 id="employeeId" class="form-control" data-ng-model="viewModel.currentCustomer.employeeId" style="border: none; padding: 0; height: 34px">
 							<option value="">--Chọn tài xế--</option>
 							<option ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
 						</select>

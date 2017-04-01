@@ -139,6 +139,8 @@
     <Content Include="html\toahang\xe.html" />
     <Content Include="html\toahang\ql-toa-hang.html" />
     <Content Include="html\user.html" />
+    <Content Include="html\user-detail.html" />
+    <Content Include="html\user-form.html" />
     <Content Include="img\avatar1.jpeg" />
     <Content Include="img\favicon.ico" />
     <Content Include="img\hinh1.jpg" />
@@ -154,6 +156,7 @@
     <Content Include="js\clarity-app.js" />
     <TypeScriptCompile Include="js\controllers\CustomerOrderManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\CustomerManagementController.ts" />
+    <TypeScriptCompile Include="js\controllers\UserController.ts" />
     <TypeScriptCompile Include="js\controllers\WagonSettlementManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\WagonManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\TruckManagementController.ts" />
