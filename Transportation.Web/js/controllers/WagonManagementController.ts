@@ -90,7 +90,7 @@ module Clarity.Controller {
 						this.currentWagon.returnDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagon.returnDate);
           }, null);
         } else if (this.$location.path() === '/ql-toa-hang/toa-hang/sua/' + wagonId) {
-					
+
           if (this.currentWagon == null) {
             this.wagonService.getById(wagonId, (data) => {
               this.currentWagon = data;
@@ -102,7 +102,7 @@ module Clarity.Controller {
         }
       } else {
         if (this.$location.path() === '/ql-toa-hang/toa-hang/tao') {
-          
+
           this.currentWagon = new Model.WagonModel();
         } else if (this.$location.path() === '/ql-toa-hang/toa-hang') {
           this.initWagonList();
@@ -124,7 +124,7 @@ module Clarity.Controller {
 				}
 
         this.wagonListTmp = this.wagonList;
-				
+
         this.initPagination();
       }, null);
     }
@@ -133,10 +133,10 @@ module Clarity.Controller {
 			//if (this.$rootScope && this.$rootScope.truckList && this.$rootScope.truckList.length > 0) {
 			//	this.truckList = this.$rootScope.truckList;
 			//} else {
-				this.truckService.getAll((results: Array<Model.TruckModel>) => {
-					this.$rootScope.truckList = results;
-					this.truckList = this.$rootScope.truckList;
-				}, null);
+			this.truckService.getAll((results: Array<Model.TruckModel>) => {
+				this.$rootScope.truckList = results;
+				this.truckList = this.$rootScope.truckList;
+			}, null);
 			//}
     }
 
@@ -277,14 +277,23 @@ module Clarity.Controller {
           wagonSettlement.quantity = customerOrder.quantity;
           wagonSettlement.unit = customerOrder.unit;
           wagonSettlement.unitPrice = customerOrder.unitPrice;
-          wagonSettlement.totalAmount = wagonSettlement.quantity * wagonSettlement.unitPrice - wagonSettlement.discount;
-					wagonSettlement.paymentRemain = wagonSettlement.totalAmount - wagonSettlement.payment;
+          wagonSettlement.totalAmount = wagonSettlement.discount >= 0 ? customerOrder.totalPay - wagonSettlement.discount : customerOrder.totalPay;
+					wagonSettlement.paymentRemain = wagonSettlement.payment >= 0 ? wagonSettlement.totalAmount - wagonSettlement.payment : wagonSettlement.totalAmount;
 					wagonSettlement.paymentStatus = wagonSettlement.paymentRemain == 0 ? 'Không Nợ' : 'Nợ';
 					wagonSettlement.paymentPlace = this.currentWagon.paymentPlace;
 					wagonSettlement.wagonCode = this.currentWagon.code;
         }
       });
     }
+
+		updateTotalAmount(wagonSettlement) {
+			wagonSettlement.totalAmount = wagonSettlement.discount >= 0 ? wagonSettlement.quantity * wagonSettlement.unitPrice - wagonSettlement.discount : wagonSettlement.totalAmount;
+		}
+
+		updatePaymentRemain(wagonSettlement) {
+			wagonSettlement.paymentRemain = wagonSettlement.payment >= 0 ? wagonSettlement.totalAmount - wagonSettlement.payment : wagonSettlement.totalAmount;
+			wagonSettlement.paymentStatus = wagonSettlement.paymentRemain == 0 ? 'Không Nợ' : 'Nợ';
+		}
 
     showEditWagonSettlement(wagonSettlement: Model.WagonSettlementModel) {
       if (angular.isNumber(wagonSettlement.customerOrderId) && !isNaN(wagonSettlement.customerOrderId)) {
@@ -313,7 +322,7 @@ module Clarity.Controller {
     }
 
 		getTruckListInCustomerOrder() {
-			
+
 			if (this.customerOrderList && this.truckList) {
 				this.truckListInCustomerOrder = angular.copy(this.truckList);
 				for (let i = this.truckListInCustomerOrder.length - 1; i >= 0; i--) {
@@ -331,7 +340,7 @@ module Clarity.Controller {
 						this.truckListInCustomerOrder.splice(i, 1);
 					}
 				}
-				
+
 			}
 		}
 
@@ -345,7 +354,7 @@ module Clarity.Controller {
 				this.currentWagon.paymentOfTruckFormated = this.currentWagon.paymentOfTruck.toLocaleString();
 				this.currentWagon.paymentOfRepairingFormated = this.currentWagon.paymentOfRepairing.toLocaleString();
 				this.currentWagon.paymentOfOilFormated = this.currentWagon.paymentOfOil.toLocaleString();
-				this.currentWagon.paymentOfLuongFormated = this.currentWagon.paymentOfLuong.toLocaleString(); 
+				this.currentWagon.paymentOfLuongFormated = this.currentWagon.paymentOfLuong.toLocaleString();
 				this.currentWagon.paymentOfServiceFormated = this.currentWagon.paymentOfService.toLocaleString();
 				this.currentWagon.paymentOfHangVeFormated = this.currentWagon.paymentOfHangVe.toLocaleString();
 				this.currentWagon.paymentOfOthersFormated = this.currentWagon.paymentOfOthers.toLocaleString();
@@ -368,7 +377,7 @@ module Clarity.Controller {
 						this.currentWagon.costOfTangBoXeFormated = this.currentWagon.costOfTangBoXe.toLocaleString();
 						break;
 					case '3':
-						this.currentWagon.costOfPenalty= parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.currentWagon.costOfPenalty = parseInt(changeFormatNumber.replace(/,/g, ''));
 						this.currentWagon.costOfPenaltyFormated = this.currentWagon.costOfPenalty.toLocaleString();
 						break;
 					case '4':
@@ -389,7 +398,7 @@ module Clarity.Controller {
 						break;
 					case '8':
 						this.currentWagon.paymentOfLuong = parseInt(changeFormatNumber.replace(/,/g, ''));
-						this.currentWagon.paymentOfLuongFormated = this.currentWagon.paymentOfLuong.toLocaleString(); 
+						this.currentWagon.paymentOfLuongFormated = this.currentWagon.paymentOfLuong.toLocaleString();
 						break;
 					case '9':
 						this.currentWagon.paymentOfService = parseInt(changeFormatNumber.replace(/,/g, ''));

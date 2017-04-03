@@ -101,6 +101,8 @@ namespace Transportation.Api
 					wagonSettlement.CreatedDate = DateTime.Now;
 					wagonSettlement.WagonID = wagonID;
 					wagon.WagonSetlements.Add(wagonSettlement);
+					Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == wagonSettlement.CustomerID);
+					customer.TotalOwned = customer.TotalOwned + wagonSettlement.TotalAmount;
 				}
                 ClarityDB.Instance.SaveChanges();
             }

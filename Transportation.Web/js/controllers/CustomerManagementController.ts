@@ -61,17 +61,17 @@ module Clarity.Controller {
         if (this.$location.path() === '/ql-toa-hang/khach-hang/' + customerId) {
           this.customerService.getById(customerId, (data) => {
             this.currentCustomer = data;
-						this.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
-						this.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
-						this.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
+						this.currentCustomer.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
+						this.currentCustomer.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
+						this.currentCustomer.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
           }, null);
         } else if (this.$location.path() === '/ql-toa-hang/khach-hang/sua/' + customerId) {
           if (this.currentCustomer == null) {
             this.customerService.getById(customerId, (data) => {
               this.currentCustomer = data;
-							this.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
-							this.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
-							this.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
+							this.currentCustomer.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
+							this.currentCustomer.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
+							this.currentCustomer.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
             }, null);
           }
         }
@@ -187,10 +187,12 @@ module Clarity.Controller {
     }
 
 		getEmployeeName(id) {
-			for (var i = 0; i < this.employeeList.length; i++) {
-				var employee = this.employeeList[i];
-				if (employee.id == id) {
-					return employee.fullName;
+			if (this.employeeList){
+				for (var i = 0; i < this.employeeList.length; i++) {
+					var employee = this.employeeList[i];
+					if (employee.id == id) {
+						return employee.fullName;
+					}
 				}
 			}
 			return '';
@@ -201,19 +203,35 @@ module Clarity.Controller {
 				switch (type) {
 					case '0':
 						this.currentCustomer.totalOwned = parseInt(changeFormatNumber.replace(/,/g, ''));
-						this.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
+						this.currentCustomer.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
 						break;
 					case '1':
 						this.currentCustomer.totalPay = parseInt(changeFormatNumber.replace(/,/g, ''));
-						this.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
+						this.currentCustomer.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
 						break;
 					case '2':
 						this.currentCustomer.totalDebt = parseInt(changeFormatNumber.replace(/,/g, ''));
-						this.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
+						this.currentCustomer.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
 						break;
 				}
-				
+
+			} else if (changeFormatNumber == ''){
+				switch (type) {
+					case '0':
+						this.currentCustomer.totalOwned = 0;
+						this.currentCustomer.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
+						break;
+					case '1':
+						this.currentCustomer.totalPay = 0;
+						this.currentCustomer.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
+						break;
+					case '2':
+						this.currentCustomer.totalDebt = 0;
+						this.currentCustomer.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
+						break;
+				}
 			}
+
 		}
 
 	}

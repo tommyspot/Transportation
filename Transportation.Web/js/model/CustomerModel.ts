@@ -9,6 +9,11 @@ module Clarity.Model {
 		public totalOwned: number;
 		public totalPay: number;
 		public totalDebt: number;
+
+		public totalOwnedFormated: string;
+		public totalPayFormated: string;
+		public totalDebtFormated: string;
+
 		public type: string;
 		public phoneNo: string;
 		public code: string;

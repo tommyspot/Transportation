@@ -142,7 +142,7 @@
 																	<div class="form-group">
 																		<label for="wagonSettlementQuantity-{{$index}}">Số lượng</label>
 																		<input id="wagonSettlementQuantity-{{$index}}" class="form-control" type="number" ng-model="wagonSettlement.quantity"
-																					 min="1" max="{{viewModel.getMaxQualityWagonSettlement(wagonSettlement)}}" data-ng-change="viewModel.onChangeWagonSettlementQuatity(wagonSettlement)" disabled="disabled"  required>
+																					 min="1" max="{{viewModel.getMaxQualityWagonSettlement(wagonSettlement)}}" data-ng-change="viewModel.onChangeWagonSettlementQuatity(wagonSettlement)" disabled="disabled" required>
 																	</div>
 																</div>
 																<div class="col-sm-4">
@@ -168,13 +168,13 @@
 																<div class="col-sm-4">
 																	<div class="form-group">
 																		<label for="wagonSettlementDeparture-{{$index}}">Thanh toán</label>
-																		<input id="wagonSettlementDeparture-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.payment">
+																		<input id="wagonSettlementDeparture-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.payment" data-ng-change="viewModel.updatePaymentRemain(wagonSettlement)">
 																	</div>
 																</div>
 																<div class="col-sm-4">
 																	<div class="form-group">
 																		<label for="wagonSettlementDestination-{{$index}}">Chiết Khấu</label>
-																		<input id="wagonSettlementDestination-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.discount">
+																		<input id="wagonSettlementDestination-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.discount" data-ng-change="viewModel.updateTotalAmount(wagonSettlement)">
 																	</div>
 																</div>
 															</div>
@@ -278,7 +278,7 @@
 									<div class="form-group">
 										<label for="costOfPenalty">Nguyên nhân phát sinh</label>
 										<select id="paymentPlace" name="paymentPlace" class="form-control" data-ng-model="viewModel.currentWagon.reasonForPhiPhatXinh">
-											<option value="" >--Chọn nguyên nhân phát sinh--</option>
+											<option value="">--Chọn nguyên nhân phát sinh--</option>
 											<option value="Tăng bo">Tăng bo</option>
 											<option value="Kiểm Dịch">Kiểm Dịch</option>
 											<option value="Phà">Phà</option>

@@ -44,13 +44,13 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="totalOwned">Số Phát Sinh</label>
-						<input id="totalOwned" name="mobile" class="form-control" type="text" maxlength="15" ng-model="viewModel.totalOwnedFormated" data-ng-change="viewModel.setCurrencyFormat(viewModel.totalOwnedFormated,'0')">
+						<input id="totalOwned" name="mobile" class="form-control" type="text" maxlength="15" ng-model="viewModel.currentCustomer.totalOwnedFormated" data-ng-change="viewModel.setCurrencyFormat(viewModel.currentCustomer.totalOwnedFormated,'0')">
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="totalPay">Tổng trả</label>
-						<input id="totalPay" name="totalPay" class="form-control" type="text" maxlength="15" ng-model="viewModel.totalPayFormated" data-ng-change="viewModel.setCurrencyFormat(viewModel.totalPayFormated,'1')">
+						<input id="totalPay" name="totalPay" class="form-control" type="text" maxlength="15" ng-model="viewModel.currentCustomer.totalPayFormated" data-ng-change="viewModel.setCurrencyFormat(viewModel.currentCustomer.totalPayFormated,'1')">
 					</div>
 				</div>
 			</div>
@@ -59,7 +59,7 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="totalDebt">Còn nợ lại</label>
-						<input id="totalDebt" name="totalDebt" class="form-control" type="text" maxlength="15" ng-model="viewModel.totalDebtFormated" data-ng-change="viewModel.setCurrencyFormat(viewModel.totalDebtFormated,'2')">
+						<input id="totalDebt" name="totalDebt" class="form-control" type="text" maxlength="15" ng-model="viewModel.currentCustomer.totalDebtFormated" data-ng-change="viewModel.setCurrencyFormat(viewModel.currentCustomer.totalDebtFormated,'2')">
 					</div>
 				</div>
 				<div class="col-sm-6">
