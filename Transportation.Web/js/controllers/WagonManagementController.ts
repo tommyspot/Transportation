@@ -280,3 +280,5 @@ module Clarity.Controller {
 
 	}
 }
+
+//thaotest
