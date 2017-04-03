@@ -45,8 +45,8 @@ namespace Transportation
         public long PaymentOfHangVe { get; set; }
         public long PaymentOf10Percent { get; set; }
         public long PaymentOfOthers { get; set; }
-
-        public string Notes { get; set; }
+		public string ReasonForPhiPhatXinh { get; set; }
+		public string Notes { get; set; }
 
         public Wagon() {
             WagonSetlements = new Collection<WagonSettlement>();
@@ -81,8 +81,8 @@ namespace Transportation
             json["paymentOf10Percent"] = PaymentOf10Percent;
             json["paymentOfOthers"] = PaymentOfOthers;
             json["wagonSettlements"] = BuildJsonArray(WagonSetlements);
-
-            json["notes"] = Notes;
+			json["reasonForPhiPhatXinh"] = ReasonForPhiPhatXinh;
+			json["notes"] = Notes;
 
             return json;
         }
@@ -123,7 +123,8 @@ namespace Transportation
             PaymentOf10Percent = json.Value<long>("paymentOf10Percent");
             PaymentOfOthers = json.Value<long>("paymentOfOthers");
 
-            Notes = json.Value<string>("notes");
+			ReasonForPhiPhatXinh = json.Value<string>("reasonForPhiPhatXinh");
+			Notes = json.Value<string>("notes");
         }
 
         private JArray BuildJsonArray(Collection<WagonSettlement> wagonSettlements)

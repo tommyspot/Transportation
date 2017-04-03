@@ -49,12 +49,12 @@
 								<td class="align-center" data-ng-click="$event.stopPropagation();">
 									<input id="customer-{{$index}}" type="checkbox" data-ng-model="customer.isChecked" />
 								</td>
-								<td class="align-center hidden-xs">{{customer.id}}</td>
+								<td class="align-center hidden-xs">{{customer.code}}</td>
 								<td class="align-center hidden-xs">{{customer.fullName}}</td>
 								<td class="align-center">{{customer.area}}</td>
-								<td class="align-center hidden-xs">{{customer.totaOwned}}</td>
-								<td class="align-center hidden-xs">{{customer.totalPay}}</td>
-								<td class="align-center">{{customer.totalDebt}}</td>
+								<td class="align-center hidden-xs">{{customer.totalOwned.toLocaleString()}}</td>
+								<td class="align-center hidden-xs">{{customer.totalPay.toLocaleString()}}</td>
+								<td class="align-center">{{customer.totalDebt.toLocaleString()}}</td>
 							</tr>
 						</tbody>
 					</table>

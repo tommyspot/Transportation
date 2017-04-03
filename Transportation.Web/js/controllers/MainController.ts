@@ -52,5 +52,9 @@ module Clarity.Controller {
       this.$location.path('/ql-toa-hang/quyet-toan');
     }
 
+		goToUserManagement() {
+      this.$location.path('/ql-dang-nhap');
+    }
+
 	}
 }

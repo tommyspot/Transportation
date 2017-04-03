@@ -21,6 +21,9 @@ module Clarity.Controller {
     public pageSize: number;
     public isCheckedAll: boolean;
 		public areas: Array<String>;
+		public totalOwnedFormated: string;
+		public totalPayFormated: string;
+		public totalDebtFormated: string;
 
     constructor(private $scope,
       public $rootScope: IRootScope,
@@ -58,11 +61,17 @@ module Clarity.Controller {
         if (this.$location.path() === '/ql-toa-hang/khach-hang/' + customerId) {
           this.customerService.getById(customerId, (data) => {
             this.currentCustomer = data;
+						this.currentCustomer.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
+						this.currentCustomer.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
+						this.currentCustomer.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
           }, null);
         } else if (this.$location.path() === '/ql-toa-hang/khach-hang/sua/' + customerId) {
           if (this.currentCustomer == null) {
             this.customerService.getById(customerId, (data) => {
               this.currentCustomer = data;
+							this.currentCustomer.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
+							this.currentCustomer.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
+							this.currentCustomer.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
             }, null);
           }
         }
@@ -178,13 +187,51 @@ module Clarity.Controller {
     }
 
 		getEmployeeName(id) {
-			for (var i = 0; i < this.employeeList.length; i++) {
-				var employee = this.employeeList[i];
-				if (employee.id == id) {
-					return employee.fullName;
+			if (this.employeeList){
+				for (var i = 0; i < this.employeeList.length; i++) {
+					var employee = this.employeeList[i];
+					if (employee.id == id) {
+						return employee.fullName;
+					}
 				}
 			}
 			return '';
+		}
+
+		setCurrencyFormat(changeFormatNumber, type) {
+			if (changeFormatNumber && changeFormatNumber != '') {
+				switch (type) {
+					case '0':
+						this.currentCustomer.totalOwned = parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.currentCustomer.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
+						break;
+					case '1':
+						this.currentCustomer.totalPay = parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.currentCustomer.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
+						break;
+					case '2':
+						this.currentCustomer.totalDebt = parseInt(changeFormatNumber.replace(/,/g, ''));
+						this.currentCustomer.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
+						break;
+				}
+
+			} else if (changeFormatNumber == ''){
+				switch (type) {
+					case '0':
+						this.currentCustomer.totalOwned = 0;
+						this.currentCustomer.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
+						break;
+					case '1':
+						this.currentCustomer.totalPay = 0;
+						this.currentCustomer.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
+						break;
+					case '2':
+						this.currentCustomer.totalDebt = 0;
+						this.currentCustomer.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
+						break;
+				}
+			}
+
 		}
 
 	}

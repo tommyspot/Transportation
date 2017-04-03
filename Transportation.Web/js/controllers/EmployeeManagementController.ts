@@ -19,6 +19,7 @@ module Clarity.Controller {
     public currentPage: number;
     public pageSize: number;
     public isCheckedAll: boolean;
+		public titles: Array<String>;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -41,7 +42,7 @@ module Clarity.Controller {
           self.initPagination();
         }
       });
-
+			this.titles = ['Giám Đốc', 'Trưởng Phòng', 'Phó Phòng', 'Trưởng Chi Nhánh', 'Phó Chi Nhánh', 'Tài Xế', 'Kế Toán'];
     }
 
     initEmployee() {
@@ -54,10 +55,10 @@ module Clarity.Controller {
         } else if (this.$location.path() === '/ql-toa-hang/nhan-vien/sua/' + employeeId) {
           if (this.currentEmployee == null) {
             this.employeeService.getById(employeeId, (data) => {
-                this.currentEmployee = data;
-                this.currentEmployee.driverLicenseDate = (data.driverLicenseDate != null && data.driverLicenseDate != null) ? new Date(data.driverLicenseDate) : null;
-                this.currentEmployee.driverLicenseExpirationDate = (data.driverLicenseExpirationDate != null && data.driverLicenseExpirationDate != null) ? new Date(data.driverLicenseExpirationDate) : null;
-                this.currentEmployee.startDate = (data.startDate != null && data.startDate != null) ? new Date(data.startDate) : null;
+							this.currentEmployee = data;
+							this.currentEmployee.driverLicenseDate = (data.driverLicenseDate != null && data.driverLicenseDate != null) ? new Date(data.driverLicenseDate) : null;
+							this.currentEmployee.driverLicenseExpirationDate = (data.driverLicenseExpirationDate != null && data.driverLicenseExpirationDate != null) ? new Date(data.driverLicenseExpirationDate) : null;
+							this.currentEmployee.startDate = (data.startDate != null && data.startDate != null) ? new Date(data.startDate) : null;
             }, null);
           }
         }
@@ -128,7 +129,7 @@ module Clarity.Controller {
     }
 
     removeEmployees() {
-      var confirmDialog = this.$window.confirm('Do you want to delete the employee?');
+      var confirmDialog = this.$window.confirm('Bạn có muốn xóa nhân viên?');
       if (confirmDialog) {
         for (let i = 0; i < this.employeeList.length; i++) {
           var employee = this.employeeList[i];
@@ -142,7 +143,7 @@ module Clarity.Controller {
     }
 
     removeEmployeeInDetail(employee: Model.EmployeeModel) {
-      var confirmDialog = this.$window.confirm('Do you want to delete the employee?');
+      var confirmDialog = this.$window.confirm('Bạn có muốn xóa nhân viên?');
       if (confirmDialog) {
         this.employeeService.deleteEntity(employee, (data) => {
           this.$location.path('/ql-toa-hang/nhan-vien');
@@ -168,34 +169,22 @@ module Clarity.Controller {
     }
 
     changeDateFormat(date) {
-        var formatedDate = '';
-        if (date) {
-            var newDate = new Date(date);
-            var dateNo = newDate.getDate().toString();
-            dateNo = dateNo.toString().length == 2 ? dateNo : '0' + dateNo;
-            var monthNo = (newDate.getMonth() + 1).toString();
-            monthNo = monthNo.toString().length == 2 ? monthNo : '0' + monthNo;
-            var yearNo = newDate.getFullYear();
-            formatedDate = dateNo + '/' + monthNo + '/' + yearNo;
-        }
-        return formatedDate;
+			var formatedDate = '';
+			if (date) {
+				var newDate = new Date(date);
+				var dateNo = newDate.getDate().toString();
+				dateNo = dateNo.toString().length == 2 ? dateNo : '0' + dateNo;
+				var monthNo = (newDate.getMonth() + 1).toString();
+				monthNo = monthNo.toString().length == 2 ? monthNo : '0' + monthNo;
+				var yearNo = newDate.getFullYear();
+				formatedDate = dateNo + '/' + monthNo + '/' + yearNo;
+			}
+			return formatedDate;
     }
 
-		getEmployeeTitle(title) {
-			switch (title) {
-				case '0':
-					return 'Giám Đốc';
-				case '1':
-					return 'Quản Lý';
-				case '2':
-					return 'Đại Lý';
-				case '3':
-					return 'Tài Xế';
-				case '4':
-					return 'Kế Toán';
-				default:
-					return '';
-			}
+		checkStatusEmployee(employee) {
+			return employee.isDeleted ? 'Không còn làm việc' : 'Còn làm việc';
 		}
+
 	}
 }

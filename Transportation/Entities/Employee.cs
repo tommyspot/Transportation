@@ -14,10 +14,11 @@ namespace Transportation
     {
         [Required]
         public string FullName { get; set; }
-        [Required]
+        
         public string CardID { get; set; }
         public string Address { get; set; }
-        public string Mobile { get; set; }
+		[Required]
+		public string Mobile { get; set; }
         public string DriverLicenseRank { get; set; }
         public string DriverLicenseID { get; set; }
         public string DriverLicenseAddress { get; set; }
@@ -27,7 +28,8 @@ namespace Transportation
         public string Violation { get; set; }
         public string Notes { get; set; }
         public string Title { get; set; }
-        public DateTime CreatedDate { get; set; }
+		public bool IsDeleted { get; set; }
+		public DateTime CreatedDate { get; set; }
 
         public Employee() {
         }
@@ -51,8 +53,8 @@ namespace Transportation
             json["violation"] = Violation;
             json["notes"] = Notes;
             json["title"] = Title;
-
-            return json;
+			json["isDeleted"] = IsDeleted;
+			return json;
         }
 
         public static Employee FromJson(JObject json)

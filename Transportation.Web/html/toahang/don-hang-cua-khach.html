@@ -37,10 +37,10 @@
                 </th>
                 <th class="align-center hidden-xs">Mã ĐH</th>
                 <th class="align-center">Mã KH </th>
-                <th class="align-center hidden-xs">Tên KH</th>
                 <th class="align-center hidden-xs">Đơn Vị Tính</th>
                 <th class="align-center hidden-xs">Số Lượng</th>
                 <th class="align-center">Nơi Đi</th>
+								<th class="align-center">Nơi Đến</th>
               </tr>
             </thead>
             <tbody>
@@ -49,11 +49,11 @@
                   <input id="customerOrder-{{$index}}" type="checkbox" data-ng-model="customerOrder.isChecked" />
                 </td>
                 <td class="align-center hidden-xs">{{customerOrder.id}}</td>
-                <td class="align-center">{{customerOrder.customerId}}</td>
-                <td class="align-center hidden-xs">{{customerOrder.customerName}}</td>
+                <td class="align-center">{{customerOrder.customerCode}}</td>
                 <td class="align-center hidden-xs">{{customerOrder.unit}}</td>
                 <td class="align-center hidden-xs">{{customerOrder.quantity}}</td>
                 <td class="align-center">{{customerOrder.departure}}</td>
+								<td class="align-center">{{customerOrder.destination}}</td>
               </tr>
             </tbody>
           </table>

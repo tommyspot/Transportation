@@ -25,23 +25,26 @@ namespace Transportation
         [Required]
         public long WagonID { get; set; }
         public virtual Wagon Wagon { get; set; }
-        [Required]
-        public long EmployeeID { get; set; }
-        public virtual Employee Employee { get; set; }
+        //[Required]
+        //public long EmployeeID { get; set; }
+        //public virtual Employee Employee { get; set; }
 
         public long Payment { get; set; }
         public string PaymentPlace { get; set; }
         public long PaymentRemain { get; set; }
-
-        public string Unit { get; set; }
+		public string PaymentDate { get; set; }
+		public string PaymentStatus { get; set; }
+		public string Unit { get; set; }
         public long Quantity { get; set; }
         public string Departure { get; set; }
         public string Destination { get; set; }
         public long UnitPrice { get; set; }
-        public long TotalAmount { get; set; }
+		public long Discount { get; set; }
+		public long TotalAmount { get; set; }
         public string Notes { get; set; }
+		public string WagonCode { get; set; }
 
-        public WagonSettlement() {
+		public WagonSettlement() {
         }
 
         public JObject ToJson()
@@ -53,21 +56,24 @@ namespace Transportation
             json["customerId"] = CustomerID;
             json["wagonId"] = WagonID;
             json["date"] = Date;
-            json["employeeId"] = EmployeeID;
+            //json["employeeId"] = EmployeeID;
 
             json["payment"] = Payment;
             json["paymentPlace"] = PaymentPlace;
-            json["paymentRemain"] = PaymentRemain;
+			json["paymentDate"] = PaymentDate;
+			json["paymentRemain"] = PaymentRemain;
+			json["paymentStatus"] = PaymentStatus;
 
-            json["unit"] = Unit;
+			json["unit"] = Unit;
             json["quantity"] = Quantity;
             json["departure"] = Departure;
             json["destination"] = Destination;
-
-            json["unitPrice"] = UnitPrice;
+			json["discount"] = Discount;
+			json["unitPrice"] = UnitPrice;
             json["totalAmount"] = TotalAmount;
             json["notes"] = Notes;
-            return json;
+			json["wagonCode"] = WagonCode;
+			return json;
         }
 
         public static WagonSettlement FromJson(JObject json)
@@ -87,20 +93,25 @@ namespace Transportation
             CustomerID = json.Value<long>("customerId");
             WagonID = json.Value<long>("wagonId");
             Date = json.Value<DateTime>("date");
-            EmployeeID = json.Value<long>("employeeId");
+			
+			//EmployeeID = json.Value<long>("employeeId");
 
-            Payment = json.Value<long>("payment");
+			Payment = json.Value<long>("payment");
             PaymentPlace = json.Value<string>("paymentPlace");
             PaymentRemain = json.Value<long>("paymentRemain");
+			PaymentDate = json.Value<string>("paymentDate");
 
-            Unit = json.Value<string>("unit");
+			Unit = json.Value<string>("unit");
             Quantity = json.Value<long>("quantity");
             Departure = json.Value<string>("departure");
             Destination = json.Value<string>("destination");
 
-            UnitPrice = json.Value<long>("unitPrice");
+			Discount = json.Value<long>("discount");
+			UnitPrice = json.Value<long>("unitPrice");
             TotalAmount = json.Value<long>("totalAmount");
             Notes = json.Value<string>("notes");
-        }
+			PaymentStatus = json.Value<string>("paymentStatus");
+			WagonCode = json.Value<string>("wagonCode");
+		}
     }
 }

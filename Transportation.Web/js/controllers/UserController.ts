@@ -9,7 +9,7 @@ module Clarity.Controller {
 	import service = Clarity.Service;
 	import helper = Clarity.Helper;
 
-	export class TruckManagementController {
+	export class UserController {
 		public currentTruck: Model.TruckModel;
 		public truckService: service.TruckService;
 		public employeeService: service.EmployeeService;
@@ -60,10 +60,10 @@ module Clarity.Controller {
 					if (this.currentTruck == null) {
 						this.truckService.getById(truckId, (data) => {
 							this.currentTruck = data;
-							this.currentTruck.startUsingDate = (data.startUsingDate != null && data.startUsingDate != '') ? new Date(data.startUsingDate) : null;
-							this.currentTruck.buyingDate = (data.buyingDate != null && data.buyingDate != '') ? new Date(data.buyingDate) : null;
-							this.currentTruck.checkDate = (data.checkDate != null && data.checkDate != '') ? new Date(data.checkDate) : null;
-							this.currentTruck.insuranceDate = (data.insuranceDate != null && data.insuranceDate != '') ? new Date(data.insuranceDate) : null;
+							this.currentTruck.startUsingDate = (data.startUsingDate != null && data.startUsingDate != null) ? new Date(data.startUsingDate) : null;
+							this.currentTruck.buyingDate = (data.buyingDate != null && data.buyingDate != null) ? new Date(data.buyingDate) : null;
+							this.currentTruck.checkDate = (data.checkDate != null && data.checkDate != null) ? new Date(data.checkDate) : null;
+							this.currentTruck.insuranceDate = (data.insuranceDate != null && data.insuranceDate != null) ? new Date(data.insuranceDate) : null;
 							this.monthlyPaymentFormated = data.monthlyPayment.toLocaleString();
 						}, null);
 					}

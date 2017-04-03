@@ -3,6 +3,7 @@
 module Clarity.Controller {
   export interface IRootScope extends ng.IRootScopeService {
     user: Model.UserModel;
+		truckList: Array<Model.TruckModel>;
 
     error: string;
     onError(error?): any;

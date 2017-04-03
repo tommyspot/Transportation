@@ -9,9 +9,9 @@
 					<h2 class="text-center title-name">{{viewModel.currentCustomer.fullName}}</h2>
 					<p><span class="bold-text">Khu vực:</span> <span>{{viewModel.currentCustomer.area}}</span></p>
 					<p><span class="bold-text">Nhân viên (Đại lý):</span> <span>{{viewModel.getEmployeeName(viewModel.currentCustomer.employeeId)}}</span></p>
-					<p><span class="bold-text">Số Phát Sinh:</span> <span>{{viewModel.currentCustomer.totalOwned}}</span></p>
-					<p><span class="bold-text">Tổng trả:</span> <span>{{viewModel.currentCustomer.totalPay}}</span></p>
-					<p><span class="bold-text">Còn nợ lại:</span> <span>{{viewModel.currentCustomer.totalDebt}}</span></p>
+					<p><span class="bold-text">Số Phát Sinh:</span> <span>{{viewModel.currentCustomer.totalOwned.toLocaleString()}}</span></p>
+					<p><span class="bold-text">Tổng trả:</span> <span>{{viewModel.currentCustomer.totalPay.toLocaleString()}}</span></p>
+					<p><span class="bold-text">Còn nợ lại:</span> <span>{{viewModel.currentCustomer.totalDebt.toLocaleString()}}</span></p>
 					<p><span class="bold-text">Số Điện Thoại:</span> <span>{{viewModel.currentCustomer.phoneNo}}</span></p>
 					<p><span class="bold-text">Xếp loại:</span> <span>{{viewModel.currentCustomer.type}}</span></p>
 

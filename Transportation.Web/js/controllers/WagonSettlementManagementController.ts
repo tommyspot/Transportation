@@ -20,6 +20,7 @@ module Clarity.Controller {
     public employeeService: service.EmployeeService;
     public customerService: service.CustomerService;
     public exportService: service.ExportService;
+		public mainHelper: helper.MainHelper;
 
     public wagonSettlementList: Array<Model.WagonSettlementModel>;
     public wagonSettlementListTmp: Array<Model.WagonSettlementModel>;
@@ -40,6 +41,7 @@ module Clarity.Controller {
       this.employeeService = new service.EmployeeService($http);
       this.customerService = new service.CustomerService($http);
       this.exportService = new service.ExportService($http);
+			this.mainHelper = new helper.MainHelper();
       $scope.viewModel = this;
 
       this.pageSize = 5;
@@ -57,16 +59,23 @@ module Clarity.Controller {
     initWagonSettlement() {
       var wagonId = this.$routeParams.wagonSettlement_id;
 			this.initEmployeeList();
+			this.initCustomerList();
       if (wagonId) {
         if (this.$location.path() === '/ql-toa-hang/quyet-toan/' + wagonId) {
           this.wagonSettlementService.getById(wagonId, (data) => {
             this.currentWagonSettlement = data;
+						this.currentWagonSettlement.paymentDate = (data.paymentDate != null && data.paymentDate != '') ? new Date(data.paymentDate) : null;
+						this.currentWagonSettlement.dateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagonSettlement.date);
+						this.currentWagonSettlement.paymentDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagonSettlement.paymentDate);
           }, null);
         } else if (this.$location.path() === '/ql-toa-hang/quyet-toan/sua/' + wagonId) {
 					
 					if (this.currentWagonSettlement == null) {
             this.wagonSettlementService.getById(wagonId, (data) => {
               this.currentWagonSettlement = data;
+							this.currentWagonSettlement.paymentDate = (data.paymentDate != null && data.paymentDate != '') ? new Date(data.paymentDate) : null;
+							this.currentWagonSettlement.dateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagonSettlement.date);
+							this.currentWagonSettlement.paymentDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagonSettlement.paymentDate);
             }, null);
           }
 				}
@@ -84,6 +93,7 @@ module Clarity.Controller {
         this.wagonSettlementList.sort(function (a: any, b: any) {
           return a.id - b.id;
         });
+				this.formateWagonSettlementDate();
         this.wagonSettlementListTmp = this.wagonSettlementList;
         this.initPagination();
       }, null);
@@ -94,6 +104,13 @@ module Clarity.Controller {
         this.employeeList = results;
       }, null);
     }
+
+		initCustomerList() {
+      this.customerService.getAll((results: Array<Model.CustomerModel>) => {
+        this.customerList = results;
+      }, null);
+    }
+
 
 		updateWagonSettlement(customerOrder: Model.WagonSettlementModel) {
       this.wagonSettlementService.update(customerOrder, (data) => {
@@ -138,6 +155,28 @@ module Clarity.Controller {
         this.goToPage(this.currentPage);
       }
     }
+
+		formateWagonSettlementDate() {
+			if (this.wagonSettlementList) {
+				for (var i = 0; i < this.wagonSettlementList.length; i++){
+					var wagonSettlement = this.wagonSettlementList[i];
+					wagonSettlement.dateFormated = this.mainHelper.formatDateTimeDDMMYYYY(wagonSettlement.date);
+					wagonSettlement.paymentDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(wagonSettlement.paymentDate);
+				}
+			}
+		}
+
+		getCustomerCode(id) {
+			if (this.customerList) {
+				for (var i = 0; i < this.customerList.length; i++){
+					var customer = this.customerList[i];
+					if (customer.id === id) {
+						return customer.code;
+					}
+				}
+			}
+			return '';
+		}
 
 	}
 }

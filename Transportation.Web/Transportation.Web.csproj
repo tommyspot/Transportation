@@ -139,6 +139,8 @@
     <Content Include="html\toahang\xe.html" />
     <Content Include="html\toahang\ql-toa-hang.html" />
     <Content Include="html\user.html" />
+    <Content Include="html\user-detail.html" />
+    <Content Include="html\user-form.html" />
     <Content Include="img\avatar1.jpeg" />
     <Content Include="img\favicon.ico" />
     <Content Include="img\hinh1.jpg" />
@@ -154,6 +156,7 @@
     <Content Include="js\clarity-app.js" />
     <TypeScriptCompile Include="js\controllers\CustomerOrderManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\CustomerManagementController.ts" />
+    <TypeScriptCompile Include="js\controllers\UserController.ts" />
     <TypeScriptCompile Include="js\controllers\WagonSettlementManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\WagonManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\TruckManagementController.ts" />
@@ -183,6 +186,7 @@
     <TypeScriptCompile Include="js\services\EmployeeService.ts" />
     <TypeScriptCompile Include="lib\angular\angular-cookies.d.ts" />
     <TypeScriptCompile Include="js\services\UserService.ts" />
+    <Content Include="js\directives\date-picker.js" />
     <Content Include="js\services\IService.ts" />
     <Content Include="lib\angular-spec\angular-mocks.d.ts" />
     <Content Include="lib\angular-spec\angular-mocks.js" />
@@ -238,9 +242,7 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="js\directives\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

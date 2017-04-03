@@ -20,10 +20,10 @@
           <div class="col-sm-12">
             <div class="row">
               <div class="col-sm-4">
-                <p><span class="bold-text">Ngày đi:</span> <span>{{viewModel.currentWagon.departDate.toDateString()}}</span></p>
+                <p><span class="bold-text">Ngày đi:</span> <span>{{viewModel.currentWagon.departDateFormated}}</span></p>
               </div>
               <div class="col-sm-4">
-                <p><span class="bold-text">Ngày về:</span> <span>{{viewModel.currentWagon.returnDate.toDateString()}}</span></p>
+                <p><span class="bold-text">Ngày về:</span> <span>{{viewModel.currentWagon.returnDateFormated}}</span></p>
               </div>
               <div class="col-sm-4">
               </div>
@@ -33,10 +33,10 @@
                 <p><span class="bold-text">Mã xe:</span> <span>{{viewModel.currentWagon.truckId}}</span></p>
               </div>
               <div class="col-sm-4">
-                <p><span class="bold-text">Số xe:</span> <span>{{viewModel.currentWagon.truckId}}</span></p>
+                <p><span class="bold-text">Số xe:</span> <span>{{viewModel.getTruckLicensePlate(viewModel.currentWagon.truckId)}}</span></p>
               </div>
               <div class="col-sm-4">
-                <p><span class="bold-text">Lái xe:</span> <span>{{viewModel.currentWagon.employeeId}}</span></p>
+                <p><span class="bold-text">Lái xe:</span> <span>{{viewModel.getEmployeeName(viewModel.currentWagon.employeeId)}}</span></p>
               </div>
             </div>
           </div>
@@ -76,10 +76,10 @@
                 <p><span class="bold-text">Số lượng:</span> <span>{{wagonSettlement.quantity}}</span></p>
               </div>
               <div class="col-sm-4">
-                <p><span class="bold-text">Đơn giá:</span> <span>{{wagonSettlement.unitPrice}}</span></p>
+                <p><span class="bold-text">Đơn giá:</span> <span>{{wagonSettlement.unitPrice.toLocaleString()}}</span></p>
               </div>
               <div class="col-sm-4">
-                <p><span class="bold-text">Thành tiền:</span> <span>{{wagonSettlement.quantity * wagonSettlement.unitPrice}}</span></p>
+                <p><span class="bold-text">Thành tiền:</span> <span>{{wagonSettlement.totalAmount.toLocaleString()}}</span></p>
               </div>
             </div>
             <div class="row">
@@ -105,21 +105,21 @@
           <div class="col-sm-12">
             <div class="row">
               <div class="col-sm-4">
-                <p><span class="bold-text">Phí xe:</span> <span>{{viewModel.currentWagon.costOfTruck}}</span></p>
+                <p><span class="bold-text">Phí xe:</span> <span>{{viewModel.currentWagon.costOfTruck.toLocaleString()}}</span></p>
               </div>
               <div class="col-sm-4">
-                <p><span class="bold-text">Điện thoai + Dịch vụ:</span> <span>{{viewModel.currentWagon.costOfService}}</span></p>
+                <p><span class="bold-text">Điện thoai + Dịch vụ:</span> <span>{{viewModel.currentWagon.costOfService.toLocaleString()}}</span></p>
               </div>
               <div class="col-sm-4">
-                <p><span class="bold-text">Tăng bo xe:</span> <span>{{viewModel.currentWagon.costOfTangBoXe}}</span></p>
+                <p><span class="bold-text">Tăng bo xe:</span> <span>{{viewModel.currentWagon.costOfTangBoXe.toLocaleString()}}</span></p>
               </div>
             </div>
             <div class="row">
               <div class="col-sm-4">
-                <p><span class="bold-text">Biên bản phạt:</span> <span>{{viewModel.currentWagon.costOfPenalty}}</span></p>
+                <p><span class="bold-text">Biên bản phạt:</span> <span>{{viewModel.currentWagon.costOfPenalty.toLocaleString()}}</span></p>
               </div>
               <div class="col-sm-4">
-                <p><span class="bold-text">Diễn giải phụ:</span> <span>{{viewModel.currentWagon.costOfExtra}}</span></p>
+                <p><span class="bold-text">Diễn giải phụ:</span> <span>{{viewModel.currentWagon.costOfExtra.toLocaleString()}}</span></p>
               </div>
               <div class="col-sm-4">
                 <p><span class="bold-text">CỘNG CHI:</span> <span>Tính toán ...</span></p>
@@ -138,24 +138,24 @@
           <div class="col-sm-12">
             <div class="row">
               <div class="col-sm-4">
-                <p><span class="bold-text">Tiền xe:</span> <span>{{viewModel.currentWagon.paymentOfTruck}}</span></p>
+                <p><span class="bold-text">Tiền xe:</span> <span>{{viewModel.currentWagon.paymentOfTruck.toLocaleString()}}</span></p>
               </div>
               <div class="col-sm-4">
-                <p><span class="bold-text">Sửa xe:</span> <span>{{viewModel.currentWagon.paymentOfRepairing}}</span></p>
+                <p><span class="bold-text">Sửa xe:</span> <span>{{viewModel.currentWagon.paymentOfRepairing.toLocaleString()}}</span></p>
               </div>
               <div class="col-sm-4">
-                <p><span class="bold-text">Tiền dầu:</span> <span>{{viewModel.currentWagon.paymentOfOil}}</span></p>
+                <p><span class="bold-text">Tiền dầu:</span> <span>{{viewModel.currentWagon.paymentOfOil.toLocaleString()}}</span></p>
               </div>
             </div>
             <div class="row">
               <div class="col-sm-4">
-                <p><span class="bold-text">Lượng:</span> <span>{{viewModel.currentWagon.paymentOfLuong}}</span></p>
+                <p><span class="bold-text">Lượng:</span> <span>{{viewModel.currentWagon.paymentOfLuong.toLocaleString()}}</span></p>
               </div>
               <div class="col-sm-4">
-                <p><span class="bold-text">Dịch vụ:</span> <span>{{viewModel.currentWagon.paymentOfService}}</span></p>
+                <p><span class="bold-text">Dịch vụ:</span> <span>{{viewModel.currentWagon.paymentOfService.toLocaleString()}}</span></p>
               </div>
               <div class="col-sm-4">
-                <p><span class="bold-text">Hàng về:</span> <span>{{viewModel.currentWagon.paymentOfHangVe}}</span></p>
+                <p><span class="bold-text">Hàng về:</span> <span>{{viewModel.currentWagon.paymentOfHangVe.toLocaleString()}}</span></p>
               </div>
             </div>
             <div class="row">
@@ -163,7 +163,7 @@
                 <p><span class="bold-text">Trích 10%:</span> <span>{{viewModel.currentWagon.paymentOf10Percent}}</span></p>
               </div>
               <div class="col-sm-4">
-                <p><span class="bold-text">Khác:</span> <span>{{viewModel.currentWagon.paymentOfOthers}}</span></p>
+                <p><span class="bold-text">Khác:</span> <span>{{viewModel.currentWagon.paymentOfOthers.toLocaleString()}}</span></p>
               </div>
               <div class="col-sm-4">
                 <p><span class="bold-text">CỘNG:</span> <span>Tính toán ...</span></p>

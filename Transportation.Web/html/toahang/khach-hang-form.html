@@ -4,8 +4,8 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="fullName">Họ và tên<span class="required-symbol">*</span></label>
-						<span class="required-field" ng-if="employeeForm.fullName.$touched && employeeForm.fullName.$invalid">('Họ và tên' phải được nhập)</span>
+						<label for="fullName">Họ tên<span class="required-symbol">*</span></label>
+						<span class="required-field" ng-if="employeeForm.fullName.$touched && employeeForm.fullName.$invalid">('Họ tên' phải được nhập)</span>
 						<input id="fullName" name="fullName" class="form-control" type="text" ng-model="viewModel.currentCustomer.fullName" required>
 					</div>
 				</div>
@@ -26,13 +26,13 @@
 					<div class="form-group">
 						<label for="phoneNo">Số Điện Thoại<span class="required-symbol">*</span></label>
 						<span class="required-field" ng-if="employeeForm.phoneNo.$touched && employeeForm.phoneNo.$invalid">('Số Điện Thoại' phải được nhập)</span>
-						<input id="phoneNo" name="phoneNo" class="form-control" type="number" ng-model="viewModel.currentCustomer.phoneNo" required>
+						<input id="phoneNo" name="phoneNo" class="form-control" pattern="[0-9]+" type="text" ng-model="viewModel.currentCustomer.phoneNo" required>
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="address">Nhân viên (Đại lý)</label>
-						<select id="employeeId" class="form-control" data-ng-model="viewModel.currentCustomer.employeeId">
+						<label for="address">Nhân viên chịu trách nhiệm</label>
+						<select ui-select2 id="employeeId" class="form-control" data-ng-model="viewModel.currentCustomer.employeeId" style="border: none; padding: 0; height: 34px">
 							<option value="">--Chọn tài xế--</option>
 							<option ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
 						</select>
@@ -44,13 +44,13 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="totalOwned">Số Phát Sinh</label>
-						<input id="totalOwned" name="mobile" class="form-control" type="number" ng-model="viewModel.currentCustomer.totalOwned">
+						<input id="totalOwned" name="mobile" class="form-control" type="text" maxlength="15" ng-model="viewModel.currentCustomer.totalOwnedFormated" data-ng-change="viewModel.setCurrencyFormat(viewModel.currentCustomer.totalOwnedFormated,'0')">
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="totalPay">Tổng trả</label>
-						<input id="totalPay" name="totalPay" class="form-control" type="number" ng-model="viewModel.currentCustomer.totalPay">
+						<input id="totalPay" name="totalPay" class="form-control" type="text" maxlength="15" ng-model="viewModel.currentCustomer.totalPayFormated" data-ng-change="viewModel.setCurrencyFormat(viewModel.currentCustomer.totalPayFormated,'1')">
 					</div>
 				</div>
 			</div>
@@ -59,7 +59,7 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="totalDebt">Còn nợ lại</label>
-						<input id="totalDebt" name="totalDebt" class="form-control" type="number" ng-model="viewModel.currentCustomer.totalDebt">
+						<input id="totalDebt" name="totalDebt" class="form-control" type="text" maxlength="15" ng-model="viewModel.currentCustomer.totalDebtFormated" data-ng-change="viewModel.setCurrencyFormat(viewModel.currentCustomer.totalDebtFormated,'2')">
 					</div>
 				</div>
 				<div class="col-sm-6">

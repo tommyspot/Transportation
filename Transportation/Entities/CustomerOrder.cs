@@ -15,14 +15,19 @@ namespace Transportation
     {
 		public string CustomerName { get; set; }
 		public string CustomerID { get; set; }
-        public string CustomerPhone { get; set; }
+		public string TruckID { get; set; }
+		public string Code { get; set; }
+		public string CustomerPhone { get; set; }
         public string CustomerArea { get; set; }
-        public string EmployeeID { get; set; }
+		public string CustomerCode { get; set; }
+		public long CreatedUserID { get; set; }
 		public string Unit { get; set; }
         public long Quantity { get; set; }
         public string Departure { get; set; }
 		public string Destination { get; set; }
+		public string TruckLicensePlate { get; set; }
 		public long UnitPrice { get; set; }
+		public long TotalPay { get; set; }
 		public DateTime DepartDate { get; set; }
 		public DateTime ReturnDate { get; set; }
 		public string Notes { get; set; }
@@ -45,10 +50,15 @@ namespace Transportation
             json["unitPrice"] = UnitPrice;
 			json["departDate"] = DepartDate;
 			json["returnDate"] = ReturnDate;
-			json["employeeId"] = EmployeeID;
+			json["createdUserId"] = CreatedUserID;
 			json["notes"] = Notes;
             json["createdDate"] = CreatedDate;
-            return json;
+			json["totalPay"] = TotalPay;
+			json["customerCode"] = CustomerCode;
+			json["truckId"] = TruckID;
+			json["code"] = Code;
+			json["truckLicensePlate"] = TruckLicensePlate;
+			return json;
         }
 
         public static CustomerOrder FromJson(JObject json)
@@ -59,22 +69,26 @@ namespace Transportation
             return customerOrder;
         }
 
-        public void ApplyJson(JObject json)
-        {
-            ID = json.Value<long>("id");
-
+		public void ApplyJson(JObject json)
+		{
+			ID = json.Value<long>("id");
 			CustomerName = json.Value<string>("customerName");
 			CustomerID = json.Value<string>("customerId");
+			TruckID = json.Value<string>("truckId");
+			Code = json.Value<string>("code");
+			CustomerCode = json.Value<string>("customerCode");
+			CustomerPhone = json.Value<string>("customerPhone");
+			CustomerArea = json.Value<string>("customerArea");
 			Unit = json.Value<string>("unit");
 			Quantity = json.Value<long>("quantity");
-
 			Departure = json.Value<string>("departure");
 			Destination = json.Value<string>("destination");
 			UnitPrice = json.Value<long>("unitPrice");
+			TotalPay = json.Value<long>("totalPay");
 			DepartDate = json.Value<DateTime>("departDate");
 			ReturnDate = json.Value<DateTime>("returnDate");
 			Notes = json.Value<string>("notes");
-			EmployeeID = json.Value<string>("employeeId");
+			TruckLicensePlate = json.Value<string>("truckLicensePlate");
 		}
     }
 }

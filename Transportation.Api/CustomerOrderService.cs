@@ -34,6 +34,8 @@ namespace Transportation.Api
             }
 
             CustomerOrder customerOrder = CustomerOrder.FromJson(json);
+			var currentUser = Authentication.GetCurrentUser();
+			customerOrder.CreatedUserID = currentUser.ID;
 			customerOrder.CreatedDate = DateTime.Now;
 
 			ClarityDB.Instance.CustomerOrders.Add(customerOrder);

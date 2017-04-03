@@ -12,7 +12,7 @@ if (jQuery) {
 	}
 }
 
-var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.bootstrap', 'ui.select2', 'ui.sortable'], function ($routeProvider, $httpProvider) {
+var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.bootstrap', 'ui.select2', 'ui.sortable', 'datepicker'], function ($routeProvider, $httpProvider) {
 	// --- Routes ---
 	$routeProvider
     .when('/', {
@@ -26,6 +26,27 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
     	controller: 'LoginController',
     	access: 'public'
     })
+
+		.when('/ql-dang-nhap', {
+			templateUrl: '/html/user.html' + '?v=' + VERSION_NUMBER,
+			controller: 'UserController',
+			access: 'authorized'
+		})
+				.when('/ql-dang-nhap/tao', {
+					templateUrl: '/html/user.html' + '?v=' + VERSION_NUMBER,
+					controller: 'UserController',
+					access: 'authorized'
+				})
+				.when('/ql-dang-nhap/:user_id', {
+					templateUrl: '/html/user-detail.html' + '?v=' + VERSION_NUMBER,
+					controller: 'UserController',
+					access: 'authorized'
+				})
+				.when('/ql-dang-nhap/sua/:user_id', {
+					templateUrl: '/html/user-form.html' + '?v=' + VERSION_NUMBER,
+					controller: 'UserController',
+					access: 'authorized'
+				})
 
     .when('/ql-toa-hang', {
     	templateUrl: '/html/toahang/ql-toa-hang.html' + '?v=' + VERSION_NUMBER,
@@ -339,6 +360,9 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
 						case '/ql-toa-hang':
 							breadCrumb.name = 'Quản lý toa hàng';
 							break;
+						case '/ql-dang-nhap':
+							breadCrumb.name = 'Quản lý Đăng Nhập';
+							break;
 						case '/ql-toa-hang/nhan-vien':
 							breadCrumb.name = 'Nhân viên';
 							break;
@@ -366,6 +390,7 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
 						case '/ql-toa-hang/khach-hang/tao':
 						case '/ql-toa-hang/toa-hang/tao':
 						case '/ql-toa-hang/don-hang-cua-khach/tao':
+						case '/ql-dang-nhap/tao':
 							breadCrumb.name = 'Tạo mới';
 							break;
 						case '/ql-toa-hang/nhan-vien/sua':
@@ -374,6 +399,7 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
 						case '/ql-toa-hang/toa-hang/sua':
 						case '/ql-toa-hang/don-hang-cua-khach/sua':
 						case '/ql-toa-hang/quyet-toan/sua':
+						case '/ql-dang-nhap/sua':
 							breadCrumb.name = 'Sửa';
 							break;
 					}
@@ -421,3 +447,33 @@ clarityApp.controller('CustomerManagementController', Clarity.Controller.Custome
 clarityApp.controller('CustomerOrderManagementController', Clarity.Controller.CustomerOrderManagementController);
 clarityApp.controller('WagonManagementController', Clarity.Controller.WagonManagementController);
 clarityApp.controller('WagonSettlementManagementController', Clarity.Controller.WagonSettlementManagementController);
+clarityApp.controller('UserController', Clarity.Controller.UserController);
+
+clarityApp.filter('filterDate', function () {
+	return function (input, filterDate) {
+		if (input == null || input.length == 0) { return; }
+
+		if (!filterDate) {
+			return input;
+		}
+
+		var result = [];
+		for (var i = 0; i < input.length; i++) {
+			var customerOrder = input[i];
+
+			if (customerOrder.departDate.getTime() === filterDate.getTime()) {
+				result.push(customerOrder);
+			}
+
+			//if ((filterDate.id == null || filterDate.id == '' || filterDate.id == user.id)
+      //  && (filterDate.username == null || filterDate.username == '' || user.username.toLowerCase().indexOf(filterDate.username.toLowerCase()) > -1)
+      //  && filterDate.isInvited == user.isInvited) {
+			//	result.push(user);
+			//} else if (user.name && user.name.toLowerCase().indexOf(name.toLowerCase()) > -1) {
+			//	result.push(user);
+			//}
+		}
+
+		return result;
+	};
+});
