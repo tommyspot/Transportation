@@ -56,9 +56,6 @@ module Clarity.Controller {
           if (this.currentEmployee == null) {
             this.employeeService.getById(employeeId, (data) => {
 							this.currentEmployee = data;
-							this.currentEmployee.driverLicenseDate = (data.driverLicenseDate != null && data.driverLicenseDate != null) ? new Date(data.driverLicenseDate) : null;
-							this.currentEmployee.driverLicenseExpirationDate = (data.driverLicenseExpirationDate != null && data.driverLicenseExpirationDate != null) ? new Date(data.driverLicenseExpirationDate) : null;
-							this.currentEmployee.startDate = (data.startDate != null && data.startDate != null) ? new Date(data.startDate) : null;
             }, null);
           }
         }

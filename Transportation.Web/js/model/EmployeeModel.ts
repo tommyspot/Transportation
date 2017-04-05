@@ -10,9 +10,9 @@ module Clarity.Model {
         public driverLicenseRank: string;
         public driverLicenseId: string;
         public driverLicenseAddress: string;
-        public driverLicenseDate: Date;
-        public driverLicenseExpirationDate: Date;
-        public startDate: Date;
+        public driverLicenseDate: string;
+        public driverLicenseExpirationDate: string;
+        public startDate: string;
         public violation: string;
         public notes: string;
         public title: string;

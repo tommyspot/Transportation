@@ -11,7 +11,7 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="date">Ngày Phát Sinh</label>
-						<input id="date" name="date" class="form-control" type="date" ng-model="viewModel.currentWagonSettlement.date" disabled>
+						<input id="date" name="date" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.date" disabled>
 					</div>
 				</div>
 			</div>
@@ -25,8 +25,10 @@
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="date">Ngày giao dịch</label>
-						<input id="paymentDate" name="paymentDate" class="form-control" type="date" ng-model="viewModel.currentWagonSettlement.paymentDate">
+						<label for="paymentDate">Ngày giao dịch</label>
+            <datepicker class="date-picker" date-format="dd/MM/yyyy">
+              <input id="paymentDate" class="form-control" name="paymentDate" type="text" ng-model="viewModel.currentWagonSettlement.paymentDate">
+            </datepicker>
 					</div>
 				</div>
 			</div>

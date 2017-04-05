@@ -16,13 +16,13 @@ namespace Transportation
         public DateTime CreatedDate { get; set; }
         public string Code { get; set; }
         [Required]
-        public DateTime PaymentDate { get; set; }
+        public string PaymentDate { get; set; }
         [Required]
         public string PaymentPlace { get; set; }
         [Required]
-        public DateTime DepartDate { get; set; }
+        public string DepartDate { get; set; }
         [Required]
-        public DateTime ReturnDate { get; set; }
+        public string ReturnDate { get; set; }
         [Required]
         public long TruckID { get; set; }
         public virtual Truck Truck { get; set; }
@@ -100,12 +100,12 @@ namespace Transportation
             ID = json.Value<long>("id");
 
             Code = json.Value<string>("code");
-            DepartDate = json.Value<DateTime>("departDate");
-            ReturnDate = json.Value<DateTime>("returnDate");
+            DepartDate = json.Value<string>("departDate");
+            ReturnDate = json.Value<string>("returnDate");
             TruckID = json.Value<long>("truckId");
             EmployeeID = json.Value<long>("employeeId");
 
-            PaymentDate = json.Value<DateTime>("paymentDate");
+            PaymentDate = json.Value<string>("paymentDate");
             PaymentPlace = json.Value<string>("paymentPlace");
 
             CostOfTruck = json.Value<long>("costOfTruck");

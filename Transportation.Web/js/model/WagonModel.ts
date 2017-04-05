@@ -5,12 +5,10 @@ module Clarity.Model {
   export class WagonModel extends Model.BaseModel {
     public code: string;
 
-    public paymentDate: Date;
+    public paymentDate: string;
     public paymentPlace: string;
-    public departDate: Date;
-    public returnDate: Date;
-		public departDateFormated: string;
-    public returnDateFormated: string;
+    public departDate: string;
+    public returnDate: string;
     public truckId: number;
     public employeeId: number;
 

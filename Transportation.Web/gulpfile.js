@@ -24,6 +24,7 @@ var config = {
     , 'lib/angular/ui-bootstrap.min.js'
     , 'lib/angular/angular-inview.js'
     , 'lib/bootstrap/bootstrap.min.js'
+    , 'lib/datepicker/angular-datepicker.min.js'
 
     , 'lib/angular-material/angular-aria.js'
     , 'lib/angular-material/angular-animate.js'
@@ -66,12 +67,11 @@ var config = {
 	, 'js/controllers/CustomerOrderManagementController.js'
     , 'js/controllers/WagonManagementController.js'
     , 'js/controllers/WagonSettlementManagementController.js'
-		, 'js/controllers/UserController.js'
+	, 'js/controllers/UserController.js'
 
     // controllers, services written with TypeScript must be placed before clarity-app.js
     , 'js/clarity-app.js'
     // controllers, services, directives written without TypeScript must be placed after clarity-app.js
-		, 'js/directives/date-picker.js'
     ]
 };
 

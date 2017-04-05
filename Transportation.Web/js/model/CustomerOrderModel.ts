@@ -15,10 +15,8 @@ module Clarity.Model {
 		public unitPrice: number;
 		public totalPay: number;
 		public totalPayFormated: string;
-		public departDate: Date;
-		public departDateFormated: string;
-		public returnDate: Date;
-		public returnDateFormated: string;
+		public departDate: string;
+		public returnDate: string;
     public notes: string;
 		public code: string;
 		public truckId: number;

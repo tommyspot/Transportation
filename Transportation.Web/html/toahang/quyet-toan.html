@@ -35,7 +35,7 @@
             <tbody>
               <tr class="pointer" data-ng-repeat="wagonSettlement in viewModel.getWagonSettlementListOnPage()"
                   data-ng-click="viewModel.$location.path('/ql-toa-hang/quyet-toan/' + wagonSettlement.id)">
-								<td class="align-center">{{wagonSettlement.dateFormated}}</td>
+								<td class="align-center">{{wagonSettlement.date}}</td>
 								<td class="align-center hidden-xs">{{wagonSettlement.wagonCode}}</td>
 								<td class="align-center hidden-xs">{{viewModel.getCustomerCode(wagonSettlement.customerId)}}</td>
                 <td class="align-center hidden-xs">{{wagonSettlement.totalAmount.toLocaleString()}}</td>

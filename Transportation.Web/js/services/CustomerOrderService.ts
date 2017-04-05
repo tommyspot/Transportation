@@ -14,8 +14,6 @@ module Clarity.Service {
       this.http({ method: 'GET', url: this.url + '/' + id })
         .success((data: Model.CustomerOrderModel) => {
           data.createdDate = new Date(data.createdDate.toString());
-          data.returnDate = new Date(data.returnDate.toString());
-          data.departDate = new Date(data.departDate.toString());
           this.doCallback(successCallback, data);
         })
         .error((data, status) => { this.doCallback(errorCallback, data, status); });
@@ -26,8 +24,6 @@ module Clarity.Service {
         .success((data: Array<Model.CustomerOrderModel>) => {
           for (let i = 0; i < data.length; i++) {
             var customerOrder = data[i];
-            customerOrder.departDate = new Date(customerOrder.departDate.toString());
-            customerOrder.returnDate = new Date(customerOrder.returnDate.toString());
             customerOrder.createdDate = new Date(customerOrder.createdDate.toString());
           }
 

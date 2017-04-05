@@ -13,11 +13,7 @@ module Clarity.Service {
     getById(id: number, successCallback: Function, errorCallback: Function) {
       this.http({ method: 'GET', url: this.url + '/' + id })
         .success((data: Model.WagonModel) => {
-          data.departDate = new Date(data.departDate.toString());
-          data.returnDate = new Date(data.returnDate.toString());
-          data.paymentDate = new Date(data.paymentDate.toString());
           data.wagonSettlements = data.wagonSettlements.map((wagonSettlement, index) => {
-            wagonSettlement.date = new Date(wagonSettlement.date.toString());
             return wagonSettlement;
           });
           this.doCallback(successCallback, data);
@@ -30,9 +26,6 @@ module Clarity.Service {
         .success((data: Array<Model.WagonModel>) => {
           for (let i = 0; i < data.length; i++) {
             var wagon = data[i];
-            wagon.departDate = new Date(wagon.departDate.toString());
-            wagon.returnDate = new Date(wagon.returnDate.toString());
-            wagon.paymentDate = new Date(wagon.paymentDate.toString());
           }
 
           this.doCallback(successCallback, data);

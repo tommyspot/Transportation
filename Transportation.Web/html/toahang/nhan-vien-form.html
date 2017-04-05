@@ -49,8 +49,6 @@
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-
-
 						<label for="driverLicenseRank">Hạng (GPLX)</label>
 						<input id="driverLicenseRank" name="driverLicenseRank" class="form-control" type="text" ng-model="viewModel.currentEmployee.driverLicenseRank">
 					</div>
@@ -76,33 +74,37 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="driverLicenseDate">Ngày cấp (GPLX)</label>
-						<input id="driverLicenseDate" name="driverLicenseDate" class="form-control" type="date" ng-model="viewModel.currentEmployee.driverLicenseDate">
+            <datepicker class="date-picker" date-format="dd/MM/yyyy">
+              <input id="driverLicenseDate" class="form-control" name="driverLicenseDate" type="text" ng-model="viewModel.currentEmployee.driverLicenseDate">
+            </datepicker>
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="driverLicenseExpirationDate">Ngày hết hạn (GPLX)</label>
-						<input id="driverLicenseExpirationDate" name="driverLicenseExpirationDate" class="form-control" type="date" ng-model="viewModel.currentEmployee.driverLicenseExpirationDate">
+            <datepicker class="date-picker" date-format="dd/MM/yyyy">
+              <input id="driverLicenseExpirationDate" class="form-control" name="driverLicenseExpirationDate" type="text" ng-model="viewModel.currentEmployee.driverLicenseExpirationDate">
+            </datepicker>
 					</div>
 				</div>
 			</div>
-
 
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="startDate">Ngày bắt đầu làm việc</label>
-						<input id="startDate" name="startDate" class="form-control" type="date" ng-model="viewModel.currentEmployee.startDate">
+            <datepicker class="date-picker" date-format="dd/MM/yyyy">
+              <input id="startDate" class="form-control" name="startDate" type="text" ng-model="viewModel.currentEmployee.startDate">
+            </datepicker>
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="violation">Vi phạm</label>
-						<textarea id="violation" name="violation" class="form-control" type="text" ng-model="viewModel.currentEmployee.violation"></textarea>
+						<input id="violation" name="violation" class="form-control" type="text" ng-model="viewModel.currentEmployee.violation"/>
 					</div>
 				</div>
 			</div>
-
 
 			<div class="row">
 				<div class="col-sm-6">

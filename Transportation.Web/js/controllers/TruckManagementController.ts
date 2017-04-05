@@ -36,7 +36,7 @@ module Clarity.Controller {
 			$scope.viewModel = this;
 			this.pageSize = 5;
 			this.initTruck();
-			this.mainHelper = new helper.MainHelper();
+      this.mainHelper = new helper.MainHelper();
 
 			var self = this;
 			$scope.$watch('searchText', function (value) {
@@ -48,7 +48,6 @@ module Clarity.Controller {
 		}
 
 		initTruck() {
-			this.initEmployeeList();
 			var truckId = this.$routeParams.employee_id;
 			if (truckId) {
 				if (this.$location.path() === '/ql-toa-hang/xe/' + truckId) {
@@ -60,17 +59,16 @@ module Clarity.Controller {
 					if (this.currentTruck == null) {
 						this.truckService.getById(truckId, (data) => {
 							this.currentTruck = data;
-							this.currentTruck.startUsingDate = (data.startUsingDate != null && data.startUsingDate != '') ? new Date(data.startUsingDate) : null;
-							this.currentTruck.buyingDate = (data.buyingDate != null && data.buyingDate != '') ? new Date(data.buyingDate) : null;
-							this.currentTruck.checkDate = (data.checkDate != null && data.checkDate != '') ? new Date(data.checkDate) : null;
-							this.currentTruck.insuranceDate = (data.insuranceDate != null && data.insuranceDate != '') ? new Date(data.insuranceDate) : null;
-							this.monthlyPaymentFormated = data.monthlyPayment.toLocaleString();
+              this.monthlyPaymentFormated = data.monthlyPayment.toLocaleString();
+
+              this.initEmployeeList();
 						}, null);
 					}
 				}
 			} else {
 				if (this.$location.path() === '/ql-toa-hang/xe/tao') {
-					this.currentTruck = new Model.TruckModel();
+          this.currentTruck = new Model.TruckModel();
+          this.initEmployeeList();
 
 				} else if (this.$location.path() === '/ql-toa-hang/xe') {
 					this.initTruckList();
@@ -91,7 +89,7 @@ module Clarity.Controller {
 
 		initEmployeeList() {
 			this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
-				this.employeeList = results;
+        this.employeeList = results;
 			}, null);
 		}
 

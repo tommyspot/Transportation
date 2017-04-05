@@ -15,7 +15,7 @@ namespace Transportation
         public DateTime CreatedDate { get; set; }
         public string Code { get; set; }
         [Required]
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
         [Required]
         public long CustomerOrderID { get; set; }
         public virtual CustomerOrder CustomerOrder { get; set; }
@@ -92,7 +92,7 @@ namespace Transportation
             CustomerOrderID = json.Value<long>("customerOrderId");
             CustomerID = json.Value<long>("customerId");
             WagonID = json.Value<long>("wagonId");
-            Date = json.Value<DateTime>("date");
+            Date = json.Value<string>("date");
 			
 			//EmployeeID = json.Value<long>("employeeId");
 

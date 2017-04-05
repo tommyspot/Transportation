@@ -64,14 +64,18 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="driverLicenseExpirationDate">Ngày Đi <span class="required-symbol">*</span></label>
-						<input id="startUsingDate" name="startUsingDate" class="form-control" type="date" ng-model="viewModel.currentCustomerOrder.departDate">
+						<label for="departDate">Ngày Đi <span class="required-symbol">*</span></label>
+            <datepicker class="date-picker" date-format="dd/MM/yyyy">
+              <input id="departDate" class="form-control" name="departDate" type="text" ng-model="viewModel.currentCustomerOrder.departDate">
+            </datepicker>
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="startDate">Ngày Đến <span class="required-symbol">*</span></label>
-						<input id="startDate" name="startDate" class="form-control" type="date" ng-model="viewModel.currentCustomerOrder.returnDate">
+						<label for="returnDate">Ngày Đến <span class="required-symbol">*</span></label>
+            <datepicker class="date-picker" date-format="dd/MM/yyyy">
+              <input id="returnDate" class="form-control" name="returnDate" type="text" ng-model="viewModel.currentCustomerOrder.returnDate">
+            </datepicker>
 					</div>
 				</div>
 			</div>
@@ -96,8 +100,6 @@
 					</div>
 				</div>
 			</div>
-
-
 
 			<div class="row">
 				<div class="col-sm-6">

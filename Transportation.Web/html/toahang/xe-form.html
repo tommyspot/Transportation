@@ -52,14 +52,18 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="violation">Ngày Mua</label>
-						<input id="violation" name="violation" class="form-control" type="date" ng-model="viewModel.currentTruck.buyingDate">
+            <datepicker class="date-picker" date-format="dd/MM/yyyy">
+              <input id="violation" class="form-control" name="violation" type="text" ng-model="viewModel.currentTruck.buyingDate">
+            </datepicker>
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="startUsingDate">Ngày Lưu Hành</label>
-						<input id="startUsingDate" name="startUsingDate" class="form-control" type="date" ng-model="viewModel.currentTruck.startUsingDate">
-					</div>
+            <datepicker class="date-picker" date-format="dd/MM/yyyy">
+              <input id="startUsingDate" class="form-control" name="startUsingDate" type="text" ng-model="viewModel.currentTruck.startUsingDate">
+            </datepicker>
+          </div>
 				</div>
 			</div>
 
@@ -82,24 +86,26 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="title">Ngày Đăng Kiểm Gần Nhất</label>
-						<input id="title" name="title" class="form-control" type="date" value="2013-09-02" ng-model="viewModel.currentTruck.checkDate">
+            <datepicker class="date-picker" date-format="dd/MM/yyyy">
+              <input id="checkDate" class="form-control" name="checkDate" type="text" ng-model="viewModel.currentTruck.checkDate">
+            </datepicker>
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="title">Bảo Hiểm Đến</label>
-						<input id="title" name="title" class="form-control" type="date" ng-model="viewModel.currentTruck.insuranceDate">
+            <datepicker class="date-picker" date-format="dd/MM/yyyy">
+              <input id="insuranceDate" class="form-control" name="insuranceDate" type="text" ng-model="viewModel.currentTruck.insuranceDate">
+            </datepicker>
 					</div>
 				</div>
 			</div>
-
-
 
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="driverLicenseExpirationDate">Tài Xế Chịu Trách Nhiệm</label>
-						<select ui-select2 id="employeeId" class="form-control" data-ng-model="viewModel.currentTruck.employeeId" style="border: none; padding: 0; height: 34px">
+						<select ui-select2 id="employeeId" class="form-control ui-select-2" data-ng-model="viewModel.currentTruck.employeeId">
 							<option value="">--Chọn tài xế--</option>
 							<option ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
 						</select>

@@ -87,16 +87,12 @@ module Clarity.Controller {
         if (this.$location.path() === '/ql-toa-hang/don-hang-cua-khach/' + customerOrderId) {
           this.customerOrderService.getById(customerOrderId, (data) => {
             this.currentCustomerOrder = data;
-						this.applyCustomer(data.customerId);
 						this.unitPriceFormated = data.unitPrice != 0 ? data.unitPrice.toLocaleString() : '';
-						this.currentCustomerOrder.departDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentCustomerOrder.departDate);
-						this.currentCustomerOrder.returnDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentCustomerOrder.returnDate);
           }, null);
         } else if (this.$location.path() === '/ql-toa-hang/don-hang-cua-khach/sua/' + customerOrderId) {
           if (this.currentCustomerOrder == null) {
             this.customerOrderService.getById(customerOrderId, (data) => {
               this.currentCustomerOrder = data;
-							this.applyCustomer(data.customerId);
 							this.unitPriceFormated = data.unitPrice != 0 ? data.unitPrice.toLocaleString() : '';
 							this.currentCustomerOrder.totalPayFormated = data.totalPay != 0 ? data.totalPay.toLocaleString() : '';
             }, null);
@@ -242,7 +238,8 @@ module Clarity.Controller {
 					}
 				}
 
-			} else {
+      }
+      else {
 				this.currentCustomerOrder.customerName = '';
 				this.currentCustomerOrder.customerPhone = '';
 				this.currentCustomerOrder.customerArea = '';
@@ -291,8 +288,8 @@ module Clarity.Controller {
 
 		getCustomerOrderCode() {
 			if (this.currentCustomerOrder.departDate && this.currentCustomerOrder.truckId) {
-				this.currentCustomerOrder.truckLicensePlate = this.getTruckLicensePlate(this.currentCustomerOrder.truckId);
-				this.currentCustomerOrder.code = this.mainHelper.formatDateTimeDDMMYYYYNumber(this.currentCustomerOrder.departDate) + '_' + this.currentCustomerOrder.truckLicensePlate;
+        this.currentCustomerOrder.truckLicensePlate = this.getTruckLicensePlate(this.currentCustomerOrder.truckId);
+        this.currentCustomerOrder.code = this.currentCustomerOrder.departDate.replace(/\//g, '') + '_' + this.currentCustomerOrder.truckLicensePlate;
 			}
 		}
 

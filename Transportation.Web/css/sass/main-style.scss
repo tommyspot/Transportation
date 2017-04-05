@@ -283,6 +283,71 @@ div.bootstrap {
         }
     }
 
+    //CUSTOM DATEPICKER
+    .date-picker{
+        a{
+            color: #FFFFFF;
+
+            &:hover, &:focus{
+                color: #FFFFFF;
+                text-decoration: none;
+            }
+        }
+
+        ._720kb-datepicker-calendar{
+            margin-top: 2px;
+            margin-left: 0px;
+            width: 80%;
+        }
+
+        ._720kb-datepicker-calendar-header:nth-child(odd) {
+            background: $transport-color-1;
+        }
+
+        ._720kb-datepicker-calendar-header:nth-child(even){
+            background-color: #808d8e;
+        }
+
+        ._720kb-datepicker-calendar-month{
+            color: #FFFFFF;
+            font-weight: bold;
+
+            span{
+                color: #FFFFFF;
+            }
+        }
+
+        ._720kb-datepicker-calendar-header a:hover{
+            background-color: $transport-color-1;
+        }
+
+        ._720kb-datepicker-calendar-body{
+          a{
+            color: $transport-color-1;
+          }
+        }
+
+        ._720kb-datepicker-calendar-day._720kb-datepicker-disabled{
+            color: rgba(0,0,0,0.2);
+            background: rgba(25,2,0,0.02);
+            &:hover{
+              background-color: #FFFFFF;
+              color: rgba(0,0,0,0.2);
+            }
+        }
+
+        ._720kb-datepicker-calendar-day:hover,
+        ._720kb-datepicker-calendar-day._720kb-datepicker-active{
+            background-color: $transport-color-1;
+            color: #FFFFFF;
+        }
+        ._720kb-datepicker-calendar-years-pagination a._720kb-datepicker-active{
+            background-color: $transport-color-1;
+            color: #FFFFFF;
+        }
+
+    }
+
     .company-image-section{
         margin-top: 4px;
         .company-image-wrapper{
@@ -301,10 +366,14 @@ div.bootstrap {
             padding-right: 15px;
         }
     }
-    
 
-
-
+    .form-group{
+      &:after{
+        display: block;
+        content: '';
+        clear: both;
+      }
+    }
 
     #mainPage, #qlToaHangPage {
 
@@ -411,6 +480,10 @@ div.bootstrap {
             background-color: #2ecc71;
         }
 
+        .manage-box.qldn-box {
+            background-color: #FF9800;
+        }
+
         .no-margin-right {
             margin-right: 0px;
         }
@@ -507,6 +580,17 @@ div.bootstrap {
         margin-bottom: 10px;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
+    }
+
+    .ui-select-2{
+      border: none;
+      padding: 0;
+      height: 34px;
+
+      .select2-choice{
+          color: #555555;
+          text-decoration: none;
+      }
     }
 
     button{

@@ -64,18 +64,12 @@ module Clarity.Controller {
         if (this.$location.path() === '/ql-toa-hang/quyet-toan/' + wagonId) {
           this.wagonSettlementService.getById(wagonId, (data) => {
             this.currentWagonSettlement = data;
-						this.currentWagonSettlement.paymentDate = (data.paymentDate != null && data.paymentDate != '') ? new Date(data.paymentDate) : null;
-						this.currentWagonSettlement.dateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagonSettlement.date);
-						this.currentWagonSettlement.paymentDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagonSettlement.paymentDate);
           }, null);
         } else if (this.$location.path() === '/ql-toa-hang/quyet-toan/sua/' + wagonId) {
 					
 					if (this.currentWagonSettlement == null) {
             this.wagonSettlementService.getById(wagonId, (data) => {
               this.currentWagonSettlement = data;
-							this.currentWagonSettlement.paymentDate = (data.paymentDate != null && data.paymentDate != '') ? new Date(data.paymentDate) : null;
-							this.currentWagonSettlement.dateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagonSettlement.date);
-							this.currentWagonSettlement.paymentDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagonSettlement.paymentDate);
             }, null);
           }
 				}
@@ -93,7 +87,6 @@ module Clarity.Controller {
         this.wagonSettlementList.sort(function (a: any, b: any) {
           return a.id - b.id;
         });
-				this.formateWagonSettlementDate();
         this.wagonSettlementListTmp = this.wagonSettlementList;
         this.initPagination();
       }, null);
@@ -155,16 +148,6 @@ module Clarity.Controller {
         this.goToPage(this.currentPage);
       }
     }
-
-		formateWagonSettlementDate() {
-			if (this.wagonSettlementList) {
-				for (var i = 0; i < this.wagonSettlementList.length; i++){
-					var wagonSettlement = this.wagonSettlementList[i];
-					wagonSettlement.dateFormated = this.mainHelper.formatDateTimeDDMMYYYY(wagonSettlement.date);
-					wagonSettlement.paymentDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(wagonSettlement.paymentDate);
-				}
-			}
-		}
 
 		getCustomerCode(id) {
 			if (this.customerList) {

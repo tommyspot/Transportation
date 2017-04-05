@@ -77,31 +77,32 @@ module Clarity.Controller {
 
     initWagon() {
       var wagonId = this.$routeParams.wagon_id;
-			this.initTruckList();
-			this.initEmployeeList();
-			this.initCustomerList();
-			this.initCustomerOrderList();
 
       if (wagonId) {
         if (this.$location.path() === '/ql-toa-hang/toa-hang/' + wagonId) {
           this.wagonService.getById(wagonId, (data) => {
             this.currentWagon = data;
-						this.currentWagon.departDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagon.departDate);
-						this.currentWagon.returnDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagon.returnDate);
           }, null);
         } else if (this.$location.path() === '/ql-toa-hang/toa-hang/sua/' + wagonId) {
 
           if (this.currentWagon == null) {
             this.wagonService.getById(wagonId, (data) => {
               this.currentWagon = data;
-							this.currentWagon.departDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagon.departDate);
-							this.currentWagon.returnDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagon.returnDate);
-							this.formatedCurencyForWagon();
+              this.formatedCurencyForWagon();
+
+              this.initTruckList();
+              this.initEmployeeList();
+              this.initCustomerList();
+              this.initCustomerOrderList();
             }, null);
           }
         }
       } else {
         if (this.$location.path() === '/ql-toa-hang/toa-hang/tao') {
+          this.initTruckList();
+          this.initEmployeeList();
+          this.initCustomerList();
+          this.initCustomerOrderList();
 
           this.currentWagon = new Model.WagonModel();
         } else if (this.$location.path() === '/ql-toa-hang/toa-hang') {
@@ -119,8 +120,6 @@ module Clarity.Controller {
 
 				for (var i = 0; i < this.wagonList.length; i++) {
 					var currentWagon = this.wagonList[i];
-					currentWagon.departDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(currentWagon.departDate);
-					currentWagon.returnDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(currentWagon.returnDate);
 				}
 
         this.wagonListTmp = this.wagonList;
@@ -135,7 +134,9 @@ module Clarity.Controller {
 			//} else {
 			this.truckService.getAll((results: Array<Model.TruckModel>) => {
 				this.$rootScope.truckList = results;
-				this.truckList = this.$rootScope.truckList;
+        this.truckList = this.$rootScope.truckList;
+
+        this.initCustomerOrderList();
 			}, null);
 			//}
     }
@@ -268,9 +269,8 @@ module Clarity.Controller {
       this.customerOrderList.map(customerOrder => {
         if (customerOrder.id == customerOrderId) {
           wagonSettlement.formatedCustomerOrder = customerOrder.customerName + '_' + customerOrder.customerPhone + '_' + customerOrder.quantity;
-          wagonSettlement.customerOrderId = customerOrder.id;
           wagonSettlement.customerId = customerOrder.customerId;
-          wagonSettlement.date = customerOrder.createdDate;
+          wagonSettlement.date = this.mainHelper.formatDateTimeDDMMYYYY(customerOrder.createdDate);
           wagonSettlement.departure = customerOrder.departure;
           wagonSettlement.destination = customerOrder.destination;
           wagonSettlement.notes = customerOrder.notes;
@@ -296,7 +296,8 @@ module Clarity.Controller {
 		}
 
     showEditWagonSettlement(wagonSettlement: Model.WagonSettlementModel) {
-      if (angular.isNumber(wagonSettlement.customerOrderId) && !isNaN(wagonSettlement.customerOrderId)) {
+      let customerOrderId = parseInt(wagonSettlement.customerOrderId.toString());
+      if (angular.isNumber(customerOrderId) && !isNaN(customerOrderId)) {
         return true;
       }
       return false;
@@ -419,7 +420,7 @@ module Clarity.Controller {
 
 		getWagonCode() {
 			if (this.currentWagon.departDate && this.currentWagon.truckId) {
-				this.currentWagon.code = this.mainHelper.formatDateTimeDDMMYYYYNumber(this.currentWagon.departDate) + '_' + this.getTruckLicensePlate(this.currentWagon.truckId);
+				this.currentWagon.code = this.currentWagon.departDate.replace(/\//g, '') + '_' + this.getTruckLicensePlate(this.currentWagon.truckId);
 			}
 		}
 
@@ -448,5 +449,3 @@ module Clarity.Controller {
 		}
 	}
 }
-
-//thaotest

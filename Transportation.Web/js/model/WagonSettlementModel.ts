@@ -1,11 +1,9 @@
 /// <reference path="BaseModel.ts" />
 module Clarity.Model {
   export class WagonSettlementModel extends Model.BaseModel {
-    
-    public date: Date;
-		
-		public paymentDate: Date; 
 
+    public date: string;
+    public paymentDate: string; 
 		public customerOrderId: number;
     public customerId: number;
     public wagonId: number;
@@ -32,7 +30,6 @@ module Clarity.Model {
     public destination: string;
     public notes: string;
     public formatedCustomerOrder: string;
-		public dateFormated: string;
 		public paymentDateFormated: string;
   }
 }

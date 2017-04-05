@@ -5159,6 +5159,41 @@ div.bootstrap {
         background: #677374; }
       #ng-app .breadcrumb-trail li a:hover:after {
         border-left-color: #677374 !important; }
+  #ng-app .date-picker a {
+    color: #FFFFFF; }
+    #ng-app .date-picker a:hover, #ng-app .date-picker a:focus {
+      color: #FFFFFF;
+      text-decoration: none; }
+  #ng-app .date-picker ._720kb-datepicker-calendar {
+    margin-top: 2px;
+    margin-left: 0px;
+    width: 80%; }
+  #ng-app .date-picker ._720kb-datepicker-calendar-header:nth-child(odd) {
+    background: #34495E; }
+  #ng-app .date-picker ._720kb-datepicker-calendar-header:nth-child(even) {
+    background-color: #808d8e; }
+  #ng-app .date-picker ._720kb-datepicker-calendar-month {
+    color: #FFFFFF;
+    font-weight: bold; }
+    #ng-app .date-picker ._720kb-datepicker-calendar-month span {
+      color: #FFFFFF; }
+  #ng-app .date-picker ._720kb-datepicker-calendar-header a:hover {
+    background-color: #34495E; }
+  #ng-app .date-picker ._720kb-datepicker-calendar-body a {
+    color: #34495E; }
+  #ng-app .date-picker ._720kb-datepicker-calendar-day._720kb-datepicker-disabled {
+    color: rgba(0, 0, 0, 0.2);
+    background: rgba(25, 2, 0, 0.02); }
+    #ng-app .date-picker ._720kb-datepicker-calendar-day._720kb-datepicker-disabled:hover {
+      background-color: #FFFFFF;
+      color: rgba(0, 0, 0, 0.2); }
+  #ng-app .date-picker ._720kb-datepicker-calendar-day:hover,
+  #ng-app .date-picker ._720kb-datepicker-calendar-day._720kb-datepicker-active {
+    background-color: #34495E;
+    color: #FFFFFF; }
+  #ng-app .date-picker ._720kb-datepicker-calendar-years-pagination a._720kb-datepicker-active {
+    background-color: #34495E;
+    color: #FFFFFF; }
   #ng-app .company-image-section {
     margin-top: 4px; }
     #ng-app .company-image-section .company-image-wrapper {
@@ -5171,6 +5206,10 @@ div.bootstrap {
       padding-left: 15px; }
     #ng-app .company-image-section .last-image {
       padding-right: 15px; }
+  #ng-app .form-group:after {
+    display: block;
+    content: '';
+    clear: both; }
   #ng-app #mainPage .manage-box, #ng-app #qlToaHangPage .manage-box {
     height: 212px;
     width: 212px;
@@ -5234,6 +5273,8 @@ div.bootstrap {
     background-color: #e74c3c; }
   #ng-app #mainPage .manage-box.dhkh-box, #ng-app #qlToaHangPage .manage-box.dhkh-box {
     background-color: #2ecc71; }
+  #ng-app #mainPage .manage-box.qldn-box, #ng-app #qlToaHangPage .manage-box.qldn-box {
+    background-color: #FF9800; }
   #ng-app #mainPage .no-margin-right, #ng-app #qlToaHangPage .no-margin-right {
     margin-right: 0px; }
   #ng-app .view-page .show-records-per-page {
@@ -5292,6 +5333,13 @@ div.bootstrap {
     margin-bottom: 10px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px; }
+  #ng-app .ui-select-2 {
+    border: none;
+    padding: 0;
+    height: 34px; }
+    #ng-app .ui-select-2 .select2-choice {
+      color: #555555;
+      text-decoration: none; }
   #ng-app button {
     outline: none; }
   #ng-app .bold-text {

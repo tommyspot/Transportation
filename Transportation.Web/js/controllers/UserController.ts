@@ -60,10 +60,6 @@ module Clarity.Controller {
 					if (this.currentTruck == null) {
 						this.truckService.getById(truckId, (data) => {
 							this.currentTruck = data;
-							this.currentTruck.startUsingDate = (data.startUsingDate != null && data.startUsingDate != null) ? new Date(data.startUsingDate) : null;
-							this.currentTruck.buyingDate = (data.buyingDate != null && data.buyingDate != null) ? new Date(data.buyingDate) : null;
-							this.currentTruck.checkDate = (data.checkDate != null && data.checkDate != null) ? new Date(data.checkDate) : null;
-							this.currentTruck.insuranceDate = (data.insuranceDate != null && data.insuranceDate != null) ? new Date(data.insuranceDate) : null;
 							this.monthlyPaymentFormated = data.monthlyPayment.toLocaleString();
 						}, null);
 					}

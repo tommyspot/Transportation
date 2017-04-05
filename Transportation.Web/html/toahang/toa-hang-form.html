@@ -17,14 +17,16 @@
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group">
-										<label for="code">Ngày thanh toán <span class="required-symbol">*</span></label>
+										<label for="paymentDate">Ngày thanh toán <span class="required-symbol">*</span></label>
 										<span class="required-field" ng-if="wagonForm.paymentDate.$touched && wagonForm.paymentDate.$invalid">(Ngày thanh toán phải được nhập)</span>
-										<input id="paymentDate" name="paymentDate" class="form-control" type="date" ng-model="viewModel.currentWagon.paymentDate" required>
+                    <datepicker class="date-picker" date-format="dd/MM/yyyy">
+                      <input id="paymentDate" class="form-control" name="paymentDate" type="text" ng-model="viewModel.currentWagon.paymentDate" required>
+                    </datepicker>
 									</div>
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
-										<label for="code">Nơi thanh toán <span class="required-symbol">*</span></label>
+										<label for="paymentPlace">Nơi thanh toán <span class="required-symbol">*</span></label>
 										<span class="required-field" ng-if="wagonForm.paymentPlace.$touched && wagonForm.paymentPlace.$invalid">(Nơi thanh toán phải được nhập)</span>
 										<select id="paymentPlace" name="paymentPlace" class="form-control" ng-model="viewModel.currentWagon.paymentPlace" required>
 											<option value="" data-placeholder="true">--Chọn nơi thanh toán--</option>
@@ -42,14 +44,18 @@
 									<div class="form-group">
 										<label for="departDate">Ngày đi <span class="required-symbol">*</span></label>
 										<span class="required-field" ng-if="wagonForm.departDate.$touched && wagonForm.departDate.$invalid">(Ngày đi phải được nhập)</span>
-										<input id="departDate" name="departDate" class="form-control" type="date" ng-model="viewModel.currentWagon.departDate" required>
+                    <datepicker class="date-picker" date-format="dd/MM/yyyy">
+                      <input id="departDate" class="form-control" name="departDate" type="text" ng-model="viewModel.currentWagon.departDate" required>
+                    </datepicker>
 									</div>
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
 										<label for="returnDate">Ngày đến <span class="required-symbol">*</span></label>
 										<span class="required-field" ng-if="wagonForm.returnDate.$touched && wagonForm.returnDate.$invalid">(Ngày đến phải được nhập)</span>
-										<input id="returnDate" name="returnDate" class="form-control" type="date" ng-model="viewModel.currentWagon.returnDate" required>
+                    <datepicker class="date-picker" date-format="dd/MM/yyyy">
+                      <input id="returnDate" class="form-control" name="returnDate" type="text" ng-model="viewModel.currentWagon.returnDate" required>
+                    </datepicker>
 									</div>
 								</div>
 							</div>
@@ -57,7 +63,7 @@
 								<div class="col-sm-6">
 									<div class="form-group">
 										<label for="truckId">Số xe <span class="required-symbol">*</span></label>
-										<select ui-select2 id="truckId" class="form-control" data-ng-model="viewModel.currentWagon.truckId" data-ng-change="viewModel.getWagonCode()" style="border: none; padding: 0; height: 34px" convert-to-number>
+										<select ui-select2 id="truckId" class="form-control ui-select-2" data-ng-model="viewModel.currentWagon.truckId" data-ng-change="viewModel.getWagonCode()">
 											<option value="">--Chọn số xe --</option>
 											<option ng-repeat="truck in viewModel.truckList" value="{{truck.id}}">{{truck.licensePlate}}</option>
 										</select>
@@ -66,7 +72,7 @@
 								<div class="col-sm-6">
 									<div class="form-group">
 										<label for="employeeId">Tài xế <span class="required-symbol">*</span></label>
-										<select ui-select2 id="employeeId" class="form-control" data-ng-model="viewModel.currentWagon.employeeId" style="border: none; padding: 0; height: 34px" convert-to-number>
+										<select ui-select2 id="employeeId" class="form-control ui-select-2" data-ng-model="viewModel.currentWagon.employeeId">
 											<option value="">--Chọn tài xế--</option>
 											<option ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
 										</select>
@@ -106,8 +112,8 @@
 											</div>
 											<div class="col-sm-6 col-xs-5">
 												<div class="form-group">
-													<select ui-select2 id="wagonSettlementCustomerId-{{$index}}" class="form-control" data-ng-model="wagonSettlement.customerOrderId" convert-to-number
-																	data-ng-change="viewModel.bindDataCustomerOrderTowagonSettlement(wagonSettlement, wagonSettlement.customerOrderId)" style="border: none; padding: 0; height: 34px">
+													<select ui-select2 id="wagonSettlementCustomerId-{{$index}}" class="form-control ui-select-2" data-ng-model="wagonSettlement.customerOrderId"
+																	data-ng-change="viewModel.bindDataCustomerOrderTowagonSettlement(wagonSettlement, wagonSettlement.customerOrderId)">
 														<option value="">--Chọn đơn hàng--</option>
 														<option ng-repeat="customerOrder in viewModel.customerOrderListTmp | filter: viewModel.search | filterDate: viewModel.searchDate" value="{{customerOrder.id}}">
 															{{customerOrder.customerName}}_{{customerOrder.customerPhone}}_{{customerOrder.quantity}}
@@ -222,7 +228,9 @@
 									<div class="row">
 										<div class="col-sm-12">
 											<div class="form-group">
-												<input id="searchDate" class="form-control" type="date" ng-model="viewModel.searchDate">
+                        <datepicker class="date-picker" date-format="dd/MM/yyyy">
+                          <input id="searchDate" class="form-control" name="searchDate" type="text" ng-model="viewModel.searchDate">
+                        </datepicker>
 											</div>
 										</div>
 									</div>
@@ -230,8 +238,7 @@
 									<div class="row">
 										<div class="col-sm-12">
 											<div class="form-group">
-												<select ui-select2 id="truckSearch" name="truckSearch" class="form-control" data-ng-model="viewModel.search.truckLicensePlate"
-																style="border: none; padding: 0; height: 34px" placeholder="--Chọn số xe --">
+												<select ui-select2 id="truckSearch" name="truckSearch" class="form-control ui-select-2" data-ng-model="viewModel.search.truckLicensePlate">
 													<option value="" selected="selected">--Chọn số xe --</option>
 													<option data-ng-repeat="truck in viewModel.truckListInCustomerOrder" value="{{truck.licensePlate}}">{{truck.licensePlate}}</option>
 												</select>

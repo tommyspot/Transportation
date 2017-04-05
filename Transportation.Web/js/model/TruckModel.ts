@@ -9,13 +9,13 @@ module Clarity.Model {
         public yearOfManufacture: number;
         public brand: string;
         public weight: number;
-        public startUsingDate: Date;
+        public startUsingDate: string;
         public employeeId: string;
         public stock: number;
-        public buyingDate: Date;
+        public buyingDate: string;
         public monthlyPayment: number;
-        public checkDate: Date;
-        public insuranceDate: Date;
+        public checkDate: string;
+        public insuranceDate: string;
         public isDeleted: boolean;
         public isChecked: boolean;
     }

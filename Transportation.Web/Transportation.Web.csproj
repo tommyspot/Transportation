@@ -98,6 +98,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\angular-datepicker.css" />
     <Content Include="css\main-style.css" />
     <Content Include="css\jquery-ui.css" />
     <Content Include="css\jquery-ui.min.css" />
@@ -186,7 +187,6 @@
     <TypeScriptCompile Include="js\services\EmployeeService.ts" />
     <TypeScriptCompile Include="lib\angular\angular-cookies.d.ts" />
     <TypeScriptCompile Include="js\services\UserService.ts" />
-    <Content Include="js\directives\date-picker.js" />
     <Content Include="js\services\IService.ts" />
     <Content Include="lib\angular-spec\angular-mocks.d.ts" />
     <Content Include="lib\angular-spec\angular-mocks.js" />
@@ -204,6 +204,7 @@
     <Content Include="lib\blanket\jasmine-blanket.js" />
     <Content Include="lib\bootstrap\bootstrap.js" />
     <Content Include="lib\bootstrap\bootstrap.min.js" />
+    <Content Include="lib\datepicker\angular-datepicker.min.js" />
     <Content Include="lib\jasmine\jasmine-html.js" />
     <Content Include="lib\jasmine\jasmine.css" />
     <Content Include="lib\jasmine\jasmine.d.ts" />
