@@ -94,6 +94,7 @@
     <Compile Include="CustomerOrderService.cs" />
     <Compile Include="ExportService.cs" />
     <Compile Include="CustomerService.cs" />
+    <Compile Include="PaymentService.cs" />
     <Compile Include="WagonSettlementService.cs" />
     <Compile Include="WagonService.cs" />
     <Compile Include="TruckService.cs" />

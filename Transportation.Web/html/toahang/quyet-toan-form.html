@@ -5,7 +5,7 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="customerId">Khách Hàng</label>
-						<input id="customerId" name="customerId" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.customerId" disabled>
+						<input id="customerId" name="customerId" class="form-control" type="text" data-ng-model="viewModel.currentWagonSettlement.customerCode" disabled>
 					</div>
 				</div>
 				<div class="col-sm-6">
@@ -52,7 +52,7 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="wagonId">Quyết toán toa hàng</label>
-						<input id="wagonId" name="wagonId" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.wagonId" disabled>
+						<input id="wagonId" name="wagonId" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.wagonCode" disabled>
 					</div>
 				</div>
 				<div class="col-sm-6">
@@ -106,6 +106,21 @@
 					<div class="form-group">
 						<label for="paymentRemain">Còn Lại</label>
 						<input id="paymentRemain" name="paymentRemain" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.paymentRemain" disabled>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="totalDebt">Thanh toán mới</label>
+						<input id="newPayment" name="newPayment" class="form-control" type="text" maxlength="15" ng-model="viewModel.currentWagonSettlement.newPaymentFormated" data-ng-change="viewModel.updateNewPayment(viewModel.currentWagonSettlement.newPaymentFormated)">
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<!--<label for="paymentRemain">Còn Lại</label>
+						<input id="paymentRemain" name="paymentRemain" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.paymentRemain" disabled>-->
 					</div>
 				</div>
 			</div>

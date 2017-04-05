@@ -286,11 +286,8 @@ module Clarity.Controller {
       });
     }
 
-		updateTotalAmount(wagonSettlement) {
+		updateWagonSettlementPayment(wagonSettlement) {
 			wagonSettlement.totalAmount = wagonSettlement.discount >= 0 ? wagonSettlement.quantity * wagonSettlement.unitPrice - wagonSettlement.discount : wagonSettlement.totalAmount;
-		}
-
-		updatePaymentRemain(wagonSettlement) {
 			wagonSettlement.paymentRemain = wagonSettlement.payment >= 0 ? wagonSettlement.totalAmount - wagonSettlement.payment : wagonSettlement.totalAmount;
 			wagonSettlement.paymentStatus = wagonSettlement.paymentRemain == 0 ? 'Không Nợ' : 'Nợ';
 		}

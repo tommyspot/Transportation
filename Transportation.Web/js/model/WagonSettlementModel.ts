@@ -15,6 +15,7 @@ module Clarity.Model {
     public unitPrice: number;
 		public discount: number;
     public totalAmount: number; //quantity*unitPrice-discount
+		public newPayment: number;
 
 		public paymentFormated: string;
 		public paymentRemainFormated: string;  //totalAmount - payment
@@ -31,5 +32,7 @@ module Clarity.Model {
     public notes: string;
     public formatedCustomerOrder: string;
 		public paymentDateFormated: string;
+		public newPaymentFormated: string;
+		public customerCode: string;
   }
 }

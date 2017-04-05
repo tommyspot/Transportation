@@ -174,13 +174,13 @@
 																<div class="col-sm-4">
 																	<div class="form-group">
 																		<label for="wagonSettlementDeparture-{{$index}}">Thanh toán</label>
-																		<input id="wagonSettlementDeparture-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.payment" data-ng-change="viewModel.updatePaymentRemain(wagonSettlement)">
+																		<input id="wagonSettlementDeparture-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.payment" data-ng-change="viewModel.updateWagonSettlementPayment(wagonSettlement)">
 																	</div>
 																</div>
 																<div class="col-sm-4">
 																	<div class="form-group">
 																		<label for="wagonSettlementDestination-{{$index}}">Chiết Khấu</label>
-																		<input id="wagonSettlementDestination-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.discount" data-ng-change="viewModel.updateTotalAmount(wagonSettlement)">
+																		<input id="wagonSettlementDestination-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.discount" data-ng-change="viewModel.updateWagonSettlementPayment(wagonSettlement)">
 																	</div>
 																</div>
 															</div>

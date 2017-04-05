@@ -437,6 +437,7 @@ clarityApp.service('userService', Clarity.Service.UserService);
 clarityApp.service('employeeService', Clarity.Service.EmployeeService);
 clarityApp.service('truckService', Clarity.Service.TruckService);
 clarityApp.service('customerService', Clarity.Service.CusmtomerService);
+clarityApp.service('paymentService', Clarity.Service.PaymentService);
 
 clarityApp.controller('LoginController', Clarity.Controller.LoginController);
 clarityApp.controller('LogoutController', Clarity.Controller.LogoutController);
