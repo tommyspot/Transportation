@@ -19,7 +19,8 @@ namespace Transportation.UnitTests
 		public virtual IDbSet<CustomerOrder> CustomerOrders { get; set; }
 		public virtual IDbSet<Wagon> Wagons { get; set; }
         public virtual IDbSet<WagonSettlement> WagonSettlements { get; set; }
-        public Database Database
+		public virtual IDbSet<Payment> Payments { get; set; }
+		public Database Database
         {
             get { return null; }
         }

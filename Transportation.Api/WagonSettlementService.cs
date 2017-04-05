@@ -80,7 +80,26 @@ namespace Transportation.Api
             }
 
             wagonSettlement.ApplyJson(json);
-            ClarityDB.Instance.SaveChanges();
+			if (wagonSettlement.PaymentRemain == 0) {
+				wagonSettlement.PaymentStatus = "Không Nợ";
+			}
+
+			var newPayment  = json.Value<long>("newPayment");
+			if (newPayment > 0 && !String.IsNullOrEmpty(wagonSettlement.PaymentDate))
+			{
+				wagonSettlement.Payment += newPayment;
+				wagonSettlement.PaymentRemain -= newPayment;
+
+				Payment payment = new Payment();
+				payment.PaymentDate = wagonSettlement.PaymentDate;
+				payment.PaymentAmount = newPayment;
+				payment.WagonSettlementCode = wagonSettlement.Code;
+				payment.CreatedDate = DateTime.Now;
+				ClarityDB.Instance.Payments.Add(payment);
+
+			}
+
+			ClarityDB.Instance.SaveChanges();
 
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json};
         }

@@ -16,9 +16,11 @@ module Clarity.Controller {
     public truckList: Array<Model.TruckModel>
     public employeeList: Array<Model.EmployeeModel>
     public customerList: Array<Model.CustomerModel>
+		public paymentList: Array<Model.PaymentModel>
     public truckService: service.TruckService;
     public employeeService: service.EmployeeService;
     public customerService: service.CustomerService;
+		public paymentService: service.PaymentService;
     public exportService: service.ExportService;
 		public mainHelper: helper.MainHelper;
 
@@ -41,6 +43,7 @@ module Clarity.Controller {
       this.employeeService = new service.EmployeeService($http);
       this.customerService = new service.CustomerService($http);
       this.exportService = new service.ExportService($http);
+			this.paymentService = new service.PaymentService($http);
 			this.mainHelper = new helper.MainHelper();
       $scope.viewModel = this;
 
@@ -61,13 +64,15 @@ module Clarity.Controller {
 			this.initEmployeeList();
 			this.initCustomerList();
       if (wagonId) {
+				
         if (this.$location.path() === '/ql-toa-hang/quyet-toan/' + wagonId) {
           this.wagonSettlementService.getById(wagonId, (data) => {
             this.currentWagonSettlement = data;
 						this.currentWagonSettlement.paymentDate = (data.paymentDate != null && data.paymentDate != '') ? new Date(data.paymentDate) : null;
 						this.currentWagonSettlement.dateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagonSettlement.date);
 						this.currentWagonSettlement.paymentDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagonSettlement.paymentDate);
-          }, null);
+						this.initPaymentList(this.currentWagonSettlement.code);
+					}, null);
         } else if (this.$location.path() === '/ql-toa-hang/quyet-toan/sua/' + wagonId) {
 					
 					if (this.currentWagonSettlement == null) {
@@ -76,7 +81,8 @@ module Clarity.Controller {
 							this.currentWagonSettlement.paymentDate = (data.paymentDate != null && data.paymentDate != '') ? new Date(data.paymentDate) : null;
 							this.currentWagonSettlement.dateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagonSettlement.date);
 							this.currentWagonSettlement.paymentDateFormated = this.mainHelper.formatDateTimeDDMMYYYY(this.currentWagonSettlement.paymentDate);
-            }, null);
+							this.currentWagonSettlement.customerCode = this.getCustomerCode(this.currentWagonSettlement.customerId)
+						}, null);
           }
 				}
 
@@ -111,6 +117,15 @@ module Clarity.Controller {
       }, null);
     }
 
+		initPaymentList(code: string) {
+			this.paymentService.getByWagonSettlementCode(code, (data) => {
+				this.paymentList = data;
+				for (var i = 0; i < this.paymentList.length; i++){
+					var payment = this.paymentList[i];
+					payment.paymentDate = this.mainHelper.formatDateTimeDDMMYYYY(new Date(payment.paymentDate));
+				}
+			}, null);
+		}
 
 		updateWagonSettlement(customerOrder: Model.WagonSettlementModel) {
       this.wagonSettlementService.update(customerOrder, (data) => {
@@ -178,5 +193,11 @@ module Clarity.Controller {
 			return '';
 		}
 
+		updateNewPayment(newPayment) {
+			if (newPayment && newPayment != '') {
+				this.currentWagonSettlement.newPayment = parseInt(newPayment.replace(/,/g, ''));
+				this.currentWagonSettlement.newPaymentFormated = this.currentWagonSettlement.newPayment.toLocaleString();
+			}
+		}
 	}
 }

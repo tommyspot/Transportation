@@ -48,8 +48,9 @@ namespace Transportation
 		public virtual IDbSet<CustomerOrder> CustomerOrders { get; set; }
 		public virtual IDbSet<Wagon> Wagons { get; set; }
         public virtual IDbSet<WagonSettlement> WagonSettlements { get; set; }
+		public virtual IDbSet<Payment> Payments { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+		protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();

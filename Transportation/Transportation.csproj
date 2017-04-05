@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="Entities\CustomerOrder.cs" />
     <Compile Include="Entities\Customer.cs" />
+    <Compile Include="Entities\Payment.cs" />
     <Compile Include="Entities\Truck.cs" />
     <Compile Include="Entities\WagonSettlement.cs" />
     <Compile Include="Entities\Wagon.cs" />

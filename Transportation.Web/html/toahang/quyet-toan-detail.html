@@ -3,12 +3,12 @@
     
     <div class="row">
       <div class="col-sm-12">
-        <h2 class="text-center">QUYẾT TOÁN TOA HÀNG - {{viewModel.currentWagonSettlement.id}}</h2>
+        <h2 class="text-center">QUYẾT TOÁN TOA HÀNG - {{viewModel.currentWagonSettlement.wagonCode}}</h2>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-12">
-        <p><span class="bold-text">Khách hàng:</span> <span>{{viewModel.currentWagonSettlement.customerId}}</span></p>
+        <p><span class="bold-text">Khách hàng:</span> <span>{{viewModel.getCustomerCode(viewModel.currentWagonSettlement.customerId)}}</span></p>
       </div>
     </div>
     <div class="row">
@@ -16,11 +16,11 @@
         <p><span class="bold-text">Ngày phát sinh:</span> <span>{{viewModel.currentWagonSettlement.dateFormated}}</span></p>
       </div>
     </div>
-    <div class="row">
+    <!--<div class="row">
       <div class="col-sm-12">
         <p><span class="bold-text">Người thu:</span> <span>{{viewModel.currentWagonSettlement.employeeId}}</span></p>
       </div>
-    </div>
+    </div>-->
     <div class="row">
       <div class="col-sm-12">
         <p><span class="bold-text">Quyết toán toa hàng:</span> <span>{{viewModel.currentWagonSettlement.wagonId}}</span></p>
@@ -33,12 +33,12 @@
     </div>
     <div class="row">
       <div class="col-sm-12">
-        <p><span class="bold-text">Số lượng:</span> <span>{{viewModel.currentWagonSettlement.quantity}}</span></p>
+        <p><span class="bold-text">Số lượng:</span> <span>{{viewModel.currentWagonSettlement.quantity.toLocaleString()}}</span></p>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-12">
-        <p><span class="bold-text">Đơn giá:</span> <span>{{viewModel.currentWagonSettlement.unitPrice}}</span></p>
+        <p><span class="bold-text">Đơn giá:</span> <span>{{viewModel.currentWagonSettlement.unitPrice.toLocaleString()}}</span></p>
       </div>
     </div>
     <div class="row">
@@ -62,6 +62,15 @@
         <p><span class="bold-text">Đã thanh toán:</span> <span>{{viewModel.currentWagonSettlement.payment.toLocaleString()}}</span></p>
       </div>
     </div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<p><span class="bold-text">Thanh toán mới:</span></p>
+				<p data-ng-repeat="payment in viewModel.paymentList">{{payment.paymentDate}} _ {{payment.paymentAmount.toLocaleString()}}</p>
+			</div>
+		</div>
+
+
 
     <div class="row margin-bottom-20">
       <div class="col-sm-12">

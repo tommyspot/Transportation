@@ -101,6 +101,9 @@
     <Content Include="css\main-style.css" />
     <Content Include="css\jquery-ui.css" />
     <Content Include="css\jquery-ui.min.css" />
+    <Content Include="css\style-ver1.css" />
+    <Content Include="css\style.css" />
+    <Content Include="css\style.min.css" />
     <Content Include="css\transportation-style.css" />
     <Content Include="default-editable.html" />
     <Content Include="font\bootstrap\glyphicons-halflings-regular.svg" />
@@ -167,6 +170,7 @@
     <Content Include="font\roboto\Roboto-Regular.ttf" />
     <TypeScriptCompile Include="js\controllers\IController.ts" />
     <TypeScriptCompile Include="js\helpers\MainHelper.ts" />
+    <TypeScriptCompile Include="js\model\PaymentModel.ts" />
     <TypeScriptCompile Include="js\model\CustomerOrderModel.ts" />
     <TypeScriptCompile Include="js\model\CustomerModel.ts" />
     <TypeScriptCompile Include="js\model\TruckModel.ts" />
@@ -180,6 +184,7 @@
     <TypeScriptCompile Include="js\services\CustomerOrderService.ts" />
     <TypeScriptCompile Include="js\services\ExportService.ts" />
     <TypeScriptCompile Include="js\services\CustomerService.ts" />
+    <TypeScriptCompile Include="js\services\PaymentService.ts" />
     <TypeScriptCompile Include="js\services\WagonSettlementService.ts" />
     <TypeScriptCompile Include="js\services\WagonService.ts" />
     <TypeScriptCompile Include="js\services\TruckService.ts" />
