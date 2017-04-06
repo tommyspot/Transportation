@@ -45,7 +45,6 @@
 *.cache
 *.user
 *.force
-*.js
 !markerwithlabel.js
 !gulpfile.js
 !GoogleMap.js
@@ -69,3 +68,5 @@ bld/
 .vs/
 /Transportation.Web/node_modules
 /Transportation.Web/output
+/Transportation.Web/js/**/*.js
+/Transportation.Web/spec/**/*.js
