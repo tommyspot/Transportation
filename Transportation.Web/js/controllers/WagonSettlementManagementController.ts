@@ -113,10 +113,6 @@ module Clarity.Controller {
 		initPaymentList(code: string) {
 			this.paymentService.getByWagonSettlementCode(code, (data) => {
 				this.paymentList = data;
-				for (var i = 0; i < this.paymentList.length; i++){
-					var payment = this.paymentList[i];
-					payment.paymentDate = this.mainHelper.formatDateTimeDDMMYYYY(new Date(payment.paymentDate));
-				}
 			}, null);
 		}
 

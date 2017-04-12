@@ -12,6 +12,9 @@ namespace Transportation
         AccountOwner,
         SystemAdmin,
         Super,
-        PartnerAccount
-    }
+        PartnerAccount,
+		Wagon,
+		WagonSettlement,
+		CustomerOrder
+	}
 }

@@ -154,13 +154,13 @@
 																<div class="col-sm-4">
 																	<div class="form-group">
 																		<label for="wagonSettlementUnitPrice-{{$index}}">Đơn giá</label>
-																		<input id="wagonSettlementUnitPrice-{{$index}}" class="form-control" type="number" ng-model="wagonSettlement.unitPrice" disabled="disabled">
+																		<input id="wagonSettlementUnitPrice-{{$index}}" class="form-control" type="text" value="{{wagonSettlement.unitPrice.toLocaleString()}}" disabled="disabled">
 																	</div>
 																</div>
 																<div class="col-sm-4">
 																	<div class="form-group">
 																		<label for="wagonSettlementTotalAmount-{{$index}}">Thành tiền</label>
-																		<input id="wagonSettlementTotalAmount-{{$index}}" class="form-control" type="number" ng-model="wagonSettlement.totalAmount" disabled="disabled">
+																		<input id="wagonSettlementTotalAmount-{{$index}}" class="form-control" type="text" value="{{wagonSettlement.totalAmount.toLocaleString()}}" disabled="disabled">
 																	</div>
 																</div>
 															</div>
@@ -174,13 +174,13 @@
 																<div class="col-sm-4">
 																	<div class="form-group">
 																		<label for="wagonSettlementDeparture-{{$index}}">Thanh toán</label>
-																		<input id="wagonSettlementDeparture-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.payment" data-ng-change="viewModel.updateWagonSettlementPayment(wagonSettlement)">
+																		<input id="wagonSettlementDeparture-{{$index}}" class="form-control" type="text" maxlength="15" ng-model="wagonSettlement.paymentFormated" data-ng-change="viewModel.updateWagonSettlementPayment(wagonSettlement, wagonSettlement.paymentFormated, '')">
 																	</div>
 																</div>
 																<div class="col-sm-4">
 																	<div class="form-group">
 																		<label for="wagonSettlementDestination-{{$index}}">Chiết Khấu</label>
-																		<input id="wagonSettlementDestination-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.discount" data-ng-change="viewModel.updateWagonSettlementPayment(wagonSettlement)">
+																		<input id="wagonSettlementDestination-{{$index}}" class="form-control" type="text" maxlength="15" ng-model="wagonSettlement.discountFormated" data-ng-change="viewModel.updateWagonSettlementPayment(wagonSettlement, '', wagonSettlement.discountFormated)">
 																	</div>
 																</div>
 															</div>

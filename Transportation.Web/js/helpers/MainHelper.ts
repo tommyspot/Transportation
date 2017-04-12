@@ -151,6 +151,6 @@ module Clarity.Helper {
 			//}
 			return num.toLocaleString();
 		}
-
   }
+
 }

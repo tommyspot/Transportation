@@ -7,6 +7,7 @@ module Clarity.Model {
     public lastName: string;
     public username: string;
     public password: string;
+		public repeatPassword: string;
     public terminalId: number;
     public locationId: number;
     public numberOfCounter: number;
@@ -14,9 +15,12 @@ module Clarity.Model {
     public userLogId: number;
     public loginTime: string;
     public role: string;
+		public isChecked: boolean;
+		public isEdited: boolean;
   }
 
-  export class AssigneeModel extends Model.BaseModel {
-    public username: string;
+  export class RoleModel extends Model.BaseModel {
+    public name: string;
+		public Ename: string;
   }
 }

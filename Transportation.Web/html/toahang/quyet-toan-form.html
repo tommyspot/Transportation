@@ -73,7 +73,7 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="unitPrice">Đơn giá</label>
-						<input id="unitPrice" name="unitPrice" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.unitPrice" disabled>
+						<input id="unitPrice" name="unitPrice" class="form-control" type="text" value="{{viewModel.currentWagonSettlement.unitPrice.toLocaleString()}}" disabled>
 					</div>
 				</div>
 			</div>
@@ -84,13 +84,13 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="totalDebt">Tổng Phí</label>
-						<input id="departure" name="departure" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.totalAmount" disabled>
+						<input id="departure" name="departure" class="form-control" type="text" value="{{viewModel.currentWagonSettlement.totalAmount.toLocaleString()}}" disabled>
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="payment">Đã thanh toán</label>
-						<input id="payment" name="payment" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.payment" disabled>
+						<input id="payment" name="payment" class="form-control" type="text" value="{{viewModel.currentWagonSettlement.payment.toLocaleString()}}" disabled>
 					</div>
 				</div>
 			</div>
@@ -99,13 +99,13 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="totalDebt">Chiết Khấu</label>
-						<input id="discount" name="discount" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.discount" disabled>
+						<input id="discount" name="discount" class="form-control" type="text" value="{{viewModel.currentWagonSettlement.discount.toLocaleString()}}" disabled>
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="paymentRemain">Còn Lại</label>
-						<input id="paymentRemain" name="paymentRemain" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.paymentRemain" disabled>
+						<input id="paymentRemain" name="paymentRemain" class="form-control" type="text" value="{{viewModel.currentWagonSettlement.paymentRemain.toLocaleString()}}" disabled>
 					</div>
 				</div>
 			</div>
