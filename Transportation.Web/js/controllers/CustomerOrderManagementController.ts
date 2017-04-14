@@ -34,7 +34,7 @@ module Clarity.Controller {
       public $location: ng.ILocationService,
       public $window: ng.IWindowService,
       public $filter: ng.IFilterService,
-			private $routeParams: any) {
+			private $routeParams: any, private $cookieStore: ng.ICookieStoreService) {
 
 			this.customerOrderService = new service.CustomerOrderService($http);
 			this.employeeService = new service.EmployeeService($http);
@@ -51,7 +51,7 @@ module Clarity.Controller {
           self.initPagination();
         }
       });
-			this.mainHelper = new helper.MainHelper();
+			this.mainHelper = new helper.MainHelper($http, $cookieStore);
 			this.areas = ['An Giang', 'Bà Rịa - Vũng Tàu', 'Bắc Giang', 'Bắc Kạn', 'Bạc Liêu', 'Bắc Ninh', 'Bến Tre', 'Bình Định', 'Bình Dương', 'Bình Phước', 'Bình Thuận',
 				'Cà Mau', 'Cần Thơ', 'Cao Bằng', 'Đà Nẵng', 'Đắk Lắk', 'Đắk Nông', 'Điện Biên', 'Đồng Nai', 'Đồng Tháp', 'Gia Lai', 'Hà Giang', 'Hà Nam', 'Hà Nội', 'Hà Tĩnh',
 				'Hải Dương', 'Hải Phòng', 'Hậu Giang', 'Hòa Bình', 'Hưng Yên', 'Khánh Hòa', 'Kiên Giang', 'Kon Tum', 'Lai Châu', 'Lâm Đồng', 'Lạng Sơn', 'Lào Cai', 'Long An',

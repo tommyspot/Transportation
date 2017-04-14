@@ -29,7 +29,8 @@ module Clarity.Controller {
 			public $location: ng.ILocationService,
 			public $window: ng.IWindowService,
 			public $filter: ng.IFilterService,
-			private $routeParams: any) {
+			private $routeParams: any,
+			private $cookieStore: ng.ICookieStoreService) {
 
 			this.userService = new service.UserService($http);
 			$scope.viewModel = this;
@@ -38,7 +39,7 @@ module Clarity.Controller {
 			this.Eroles = ['Super', 'WagonSettlement', 'Wagon', 'CustomerOrder'];
 			this.roleList = this.getRoleList();
 			this.initUser();
-			this.mainHelper = new helper.MainHelper();
+			this.mainHelper = new helper.MainHelper($http, $cookieStore);
 
 			var self = this;
 			$scope.$watch('searchText', function (value) {

@@ -44,7 +44,7 @@ module Clarity.Controller {
       private $location: ng.ILocationService,
       private $window: ng.IWindowService,
       private $filter: ng.IFilterService,
-      private $routeParams: any) {
+      private $routeParams: any, private $cookieStore: ng.ICookieStoreService) {
 
       this.wagonService = new service.WagonService($http);
       this.customerOrderService = new service.CustomerOrderService($http);
@@ -52,7 +52,7 @@ module Clarity.Controller {
       this.employeeService = new service.EmployeeService($http);
       this.customerService = new service.CustomerService($http);
       this.exportService = new service.ExportService($http);
-      this.mainHelper = new helper.MainHelper();
+      this.mainHelper = new helper.MainHelper($http, $cookieStore);
 			this.search = { truckLicensePlate: '' };
       $scope.viewModel = this;
 
