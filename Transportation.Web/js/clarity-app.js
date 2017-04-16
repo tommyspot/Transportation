@@ -33,7 +33,7 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
 			access: 'authorized'
 		})
 				.when('/ql-dang-nhap/tao', {
-					templateUrl: '/html/user.html' + '?v=' + VERSION_NUMBER,
+					templateUrl: '/html/user-form.html' + '?v=' + VERSION_NUMBER,
 					controller: 'UserController',
 					access: 'authorized'
 				})

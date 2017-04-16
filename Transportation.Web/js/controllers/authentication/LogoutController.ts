@@ -22,12 +22,16 @@ module Clarity.Controller {
       private $cookieStore: ng.ICookieStoreService) {
       $scope.viewModel = this;
       this.authenticationService = new service.AuthenticationService($http, $cookieStore);
-      this.mainHelper = new Helper.MainHelper();   
+      this.mainHelper = new Helper.MainHelper($http, $cookieStore);   
     }
 
     public submit() {
       this.$rootScope.showSpinner();
       this.authenticationService.logout(() => { this.onSubmitSuccess(); }, () => { this.$rootScope.onError(); });
+    }
+
+		public getCurrentUserName() {
+      return this.authenticationService.getUserName();
     }
 
     public onSubmitSuccess() {

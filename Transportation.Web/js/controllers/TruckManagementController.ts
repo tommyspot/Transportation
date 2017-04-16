@@ -29,14 +29,14 @@ module Clarity.Controller {
 			public $location: ng.ILocationService,
 			public $window: ng.IWindowService,
 			public $filter: ng.IFilterService,
-			private $routeParams: any) {
+			private $routeParams: any, private $cookieStore: ng.ICookieStoreService) {
 
 			this.truckService = new service.TruckService($http);
 			this.employeeService = new service.EmployeeService($http);
 			$scope.viewModel = this;
 			this.pageSize = 5;
 			this.initTruck();
-      this.mainHelper = new helper.MainHelper();
+      this.mainHelper = new helper.MainHelper($http, $cookieStore);
 
 			var self = this;
 			$scope.$watch('searchText', function (value) {

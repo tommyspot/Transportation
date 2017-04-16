@@ -10,15 +10,17 @@ module Clarity.Controller {
 	import helper = Clarity.Helper;
 
 	export class MainController {
-
+		public mainHelper: helper.MainHelper;
 		constructor(private $scope,
 			public $rootScope: IRootScope,
 			private $http: ng.IHttpService,
 			public $location: ng.ILocationService,
 			public $window: ng.IWindowService,
-			public $filter: ng.IFilterService) {
+			public $filter: ng.IFilterService,
+			private $cookieStore: ng.ICookieStoreService) {
 
       $scope.viewModel = this;
+			this.mainHelper = new helper.MainHelper($http, $cookieStore);
     }
 
     goToWagonsManagement() {

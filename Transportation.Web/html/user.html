@@ -1,4 +1,4 @@
-﻿<div id="truckList" class="bootstrap view-page">
+﻿<div id="userList" class="bootstrap view-page">
 	<div class="container">
 		<div class="row action-row">
 			<div class="col-sm-9">
@@ -11,17 +11,17 @@
 						<option value="99999">All</option>
 					</select>
 				</span>
-				<button type="button" class="btn btn-default" data-ng-click="viewModel.goToTruckForm()">
+				<button type="button" class="btn btn-default" data-ng-click="viewModel.goToUserForm()">
 					<span class="glyphicon glyphicon-plus"></span>
-					<span class="hidden-xs">Tạo xe mới</span>
+					<span class="hidden-xs">Tạo tài khoản đăng nhập mới</span>
 				</button>
-				<button type="button" class="btn btn-default" data-ng-click="viewModel.removeTrucks()">
+				<button type="button" class="btn btn-default" data-ng-click="viewModel.removeUsers()">
 					<span class="glyphicon glyphicon-trash"></span>
-					<span class="hidden-xs">Xóa xe</span>
+					<span class="hidden-xs">Xóa tài khoản</span>
 				</button>
 			</div>
 			<div class="col-sm-3">
-				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Search" />
+				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Tìm Kiếm" />
 			</div>
 		</div>
 
@@ -33,28 +33,22 @@
 							<tr>
 								<th class="align-center">
 									<input id="checkAllTrucks" type="checkbox" data-ng-model="viewModel.isCheckedAll"
-												 data-ng-change="viewModel.selectAllTrucksOnPage()" />
+												 data-ng-change="viewModel.selectAllUsersOnPage()" />
 								</th>
-								<th class="align-center hidden-xs">Mã Xe</th>
-								<th class="align-center">Biển Số </th>
-								<th class="align-center hidden-xs">Số Khung</th>
-								<th class="align-center hidden-xs">Số Máy</th>
-								<th class="align-center hidden-xs">Năm SX</th>
-								<th class="align-center">Còn Lưu Hành</th>
+								<th class="align-center hidden-xs">Mã Tài Khoản</th>
+								<th class="align-center">Tên Tài Khoản</th>
+								<th class="align-center hidden-xs">Chức vụ</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="pointer" data-ng-repeat="truck in viewModel.truckList"
-									data-ng-click="viewModel.$location.path('/ql-toa-hang/xe/' + truck.id)">
+							<tr class="pointer" data-ng-repeat="user in viewModel.userList"
+									data-ng-click="viewModel.$location.path('/ql-dang-nhap/' + user.id)">
 								<td class="align-center" data-ng-click="$event.stopPropagation();">
-									<input id="truck-{{$index}}" type="checkbox" data-ng-model="truck.isChecked" />
+									<input id="user-{{$index}}" type="checkbox" data-ng-model="user.isChecked" />
 								</td>
-								<td class="align-center hidden-xs">{{truck.id}}</td>
-								<td class="align-center">{{truck.licensePlate}}</td>
-								<td class="align-center hidden-xs">{{truck.vin}}</td>
-								<td class="align-center hidden-xs">{{truck.engineNo}}</td>
-								<td class="align-center hidden-xs">{{truck.yearOfManufacture}}</td>
-								<td class="align-center">{{viewModel.checkStatusTruck(truck)}}</td>
+								<td class="align-center hidden-xs">{{user.id}}</td>
+								<td class="align-center">{{user.username}}</td>
+								<td class="align-center hidden-xs">{{viewModel.getVNRoleName(user.role)}}</td>
 							</tr>
 						</tbody>
 					</table>

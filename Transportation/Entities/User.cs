@@ -35,24 +35,24 @@ namespace Transportation
             JObject json = new JObject();
             json["id"] = ID;
             json["username"] = UserName;
+			json["password"] = Password;
 
-            json["lastName"] = LastName;
+			json["lastName"] = LastName;
             json["firstName"] = FirstName;
 
             json["role"] = Role.ToString();
-
-            return json;
+			return json;
         }
 
         public static User FromJson(JObject json)
         {
             User user = new User();
-            user.ApplyJson(json, false);
+            user.ApplyJson(json);
 
             return user;
         }
 
-        public void ApplyJson(JObject json, bool includeGroups)
+        public void ApplyJson(JObject json)
         {
             ID = json.Value<long>("id");
 

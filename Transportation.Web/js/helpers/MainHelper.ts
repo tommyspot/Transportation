@@ -2,7 +2,13 @@
 module Clarity.Helper {
 
   export class MainHelper {
-    constructor() { };
+		public authenticationService: Clarity.Service.AuthenticationService;
+    constructor(private $http: ng.IHttpService,
+      private $cookieStore: ng.ICookieStoreService) {
+			this.authenticationService = new Clarity.Service.AuthenticationService($http, $cookieStore);
+		};
+
+
 
     public getCurrentDateTimeString() {
       var d = new Date();
@@ -152,5 +158,23 @@ module Clarity.Helper {
 			return num.toLocaleString();
 		}
 
+		isUserHasGreaterOrEqualPermission(checkUserRole) {
+      var userRole = this.authenticationService.getUserRole();
+			if (userRole == checkUserRole) {
+				return true;
+			}
+      //if (userRole == checkUserRole) {
+      //  return true;
+      //} else if (userRole === this.userRolesModel.Super && (checkUserRole === this.userRolesModel.Normal)) {
+      //  return true;
+      //} else if (userRole == this.userRolesModel.AccountOwner && (checkUserRole != this.userRolesModel.PartnerAccount)) {
+      //  return true;
+      //} else if (userRole == this.userRolesModel.PartnerAccount) {
+      //  return true;
+      //}
+      return false;
+    }
+
   }
+
 }

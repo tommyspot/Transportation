@@ -28,8 +28,8 @@ namespace Transportation
 		public string TruckLicensePlate { get; set; }
 		public long UnitPrice { get; set; }
 		public long TotalPay { get; set; }
-		public DateTime DepartDate { get; set; }
-		public DateTime ReturnDate { get; set; }
+		public string DepartDate { get; set; }
+		public string ReturnDate { get; set; }
 		public string Notes { get; set; }
 		public DateTime CreatedDate { get; set; }
         public CustomerOrder() {
@@ -85,8 +85,8 @@ namespace Transportation
 			Destination = json.Value<string>("destination");
 			UnitPrice = json.Value<long>("unitPrice");
 			TotalPay = json.Value<long>("totalPay");
-			DepartDate = json.Value<DateTime>("departDate");
-			ReturnDate = json.Value<DateTime>("returnDate");
+			DepartDate = json.Value<string>("departDate");
+			ReturnDate = json.Value<string>("returnDate");
 			Notes = json.Value<string>("notes");
 			TruckLicensePlate = json.Value<string>("truckLicensePlate");
 		}

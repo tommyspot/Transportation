@@ -12,7 +12,7 @@
           <h4>QUẢN LÝ GARAGE</h4>
         </div>
 
-        <div class="manage-box long-box qldn-box no-margin-right" data-ng-click="viewModel.goToUserManagement()">
+        <div class="manage-box long-box qldn-box no-margin-right" data-ng-click="viewModel.goToUserManagement()" data-ng-if="viewModel.mainHelper.isUserHasGreaterOrEqualPermission('Super')">
           <span class="glyphicon glyphicon-user icon" aria-hidden="true"></span>
           <h4>QUẢN LÝ ĐĂNG NHẬP</h4>
         </div>

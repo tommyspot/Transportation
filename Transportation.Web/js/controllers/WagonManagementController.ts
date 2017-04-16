@@ -44,7 +44,7 @@ module Clarity.Controller {
       private $location: ng.ILocationService,
       private $window: ng.IWindowService,
       private $filter: ng.IFilterService,
-      private $routeParams: any) {
+      private $routeParams: any, private $cookieStore: ng.ICookieStoreService) {
 
       this.wagonService = new service.WagonService($http);
       this.customerOrderService = new service.CustomerOrderService($http);
@@ -52,7 +52,7 @@ module Clarity.Controller {
       this.employeeService = new service.EmployeeService($http);
       this.customerService = new service.CustomerService($http);
       this.exportService = new service.ExportService($http);
-      this.mainHelper = new helper.MainHelper();
+      this.mainHelper = new helper.MainHelper($http, $cookieStore);
 			this.search = { truckLicensePlate: '' };
       $scope.viewModel = this;
 
@@ -282,11 +282,21 @@ module Clarity.Controller {
 					wagonSettlement.paymentStatus = wagonSettlement.paymentRemain == 0 ? 'Không Nợ' : 'Nợ';
 					wagonSettlement.paymentPlace = this.currentWagon.paymentPlace;
 					wagonSettlement.wagonCode = this.currentWagon.code;
+					wagonSettlement.paymentFormated = wagonSettlement.payment > 0 ? wagonSettlement.payment.toLocaleString() : '0';
+					wagonSettlement.discountFormated = wagonSettlement.discount > 0 ? wagonSettlement.discount.toLocaleString() : '0';
         }
       });
     }
 
-		updateWagonSettlementPayment(wagonSettlement) {
+		updateWagonSettlementPayment(wagonSettlement, paymentFormated, discountFormated) {
+			if (paymentFormated && paymentFormated != ''){
+				wagonSettlement.payment = parseInt(paymentFormated.replace(/,/g, ''));
+				wagonSettlement.paymentFormated = wagonSettlement.payment.toLocaleString();
+			}
+			if (discountFormated && discountFormated != '') {
+				wagonSettlement.discount = parseInt(discountFormated.replace(/,/g, ''));
+				wagonSettlement.discountFormated = wagonSettlement.discount.toLocaleString();
+			}
 			wagonSettlement.totalAmount = wagonSettlement.discount >= 0 ? wagonSettlement.quantity * wagonSettlement.unitPrice - wagonSettlement.discount : wagonSettlement.totalAmount;
 			wagonSettlement.paymentRemain = wagonSettlement.payment >= 0 ? wagonSettlement.totalAmount - wagonSettlement.payment : wagonSettlement.totalAmount;
 			wagonSettlement.paymentStatus = wagonSettlement.paymentRemain == 0 ? 'Không Nợ' : 'Nợ';

@@ -6,7 +6,7 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="address">Mã Khách Hàng</label>
-						<select id="customerId" class="form-control" data-ng-model="viewModel.currentCustomerOrder.customerId" data-ng-change="viewModel.applyCustomer(viewModel.currentCustomerOrder.customerId)">
+						<select ui-select2 id="customerId" class="form-control ui-select-2" data-ng-model="viewModel.currentCustomerOrder.customerId" data-ng-change="viewModel.applyCustomer(viewModel.currentCustomerOrder.customerId)">
 							<option value="">--Khách hàng mới--</option>
 							<option ng-repeat="customer in viewModel.customerList" value="{{customer.id}}">{{customer.code}}</option>
 						</select>
@@ -120,7 +120,7 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="totalPay">Số xe <span class="required-symbol">*</span></label>
-						<select id="unit" class="form-control" data-ng-model="viewModel.currentCustomerOrder.truckId" data-ng-change="viewModel.getCustomerOrderCode()">
+						<select ui-select-2 id="unit" class="form-control ui-select-2" data-ng-model="viewModel.currentCustomerOrder.truckId" data-ng-change="viewModel.getCustomerOrderCode()">
 							<option value="">--Chọn xe--</option>
 							<option ng-repeat="truck in viewModel.truckList" value="{{truck.id}}">{{truck.licensePlate}}</option>
 						</select>

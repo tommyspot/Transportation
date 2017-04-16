@@ -36,7 +36,7 @@ module Clarity.Controller {
       private $location: ng.ILocationService,
       private $window: ng.IWindowService,
       private $filter: ng.IFilterService,
-      private $routeParams: any) {
+      private $routeParams: any, private $cookieStore: ng.ICookieStoreService) {
 
       this.wagonSettlementService = new service.WagonSettlementService($http);
       this.truckService = new service.TruckService($http);
@@ -44,7 +44,7 @@ module Clarity.Controller {
       this.customerService = new service.CustomerService($http);
       this.exportService = new service.ExportService($http);
 			this.paymentService = new service.PaymentService($http);
-			this.mainHelper = new helper.MainHelper();
+			this.mainHelper = new helper.MainHelper($http, $cookieStore);
       $scope.viewModel = this;
 
       this.pageSize = 5;
@@ -113,10 +113,6 @@ module Clarity.Controller {
 		initPaymentList(code: string) {
 			this.paymentService.getByWagonSettlementCode(code, (data) => {
 				this.paymentList = data;
-				for (var i = 0; i < this.paymentList.length; i++){
-					var payment = this.paymentList[i];
-					payment.paymentDate = this.mainHelper.formatDateTimeDDMMYYYY(new Date(payment.paymentDate));
-				}
 			}, null);
 		}
 

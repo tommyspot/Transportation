@@ -34,7 +34,7 @@ module Clarity.Controller {
       private $cookieStore: ng.ICookieStoreService) {
       $scope.viewModel = this;
       this.authenticationService = new service.AuthenticationService($http, $cookieStore);
-      this.mainHelper = new helper.MainHelper();
+      this.mainHelper = new helper.MainHelper($http, $cookieStore);
       this.errorMessage = '';
     }
 
