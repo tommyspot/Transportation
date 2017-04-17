@@ -5275,6 +5275,8 @@ div.bootstrap {
     background-color: #2ecc71; }
   #ng-app #mainPage .manage-box.qldn-box, #ng-app #qlToaHangPage .manage-box.qldn-box {
     background-color: #FF9800; }
+  #ng-app #mainPage .qlbc-box.qlbc-box, #ng-app #qlToaHangPage .qlbc-box.qlbc-box {
+    background-color: #27ae60; }
   #ng-app #mainPage .no-margin-right, #ng-app #qlToaHangPage .no-margin-right {
     margin-right: 0px; }
   #ng-app .view-page .show-records-per-page {
@@ -5365,3 +5367,35 @@ div.bootstrap {
   #ng-app .required-field {
     color: #C0392B;
     font-size: 12px; }
+  #ng-app #reportSection form {
+    color: #34495E;
+    border: 1px solid #34495E;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px; }
+    #ng-app #reportSection form .nav-tabs {
+      border-bottom: 1px solid #34495E; }
+    #ng-app #reportSection form .tab-content {
+      height: 360px;
+      overflow-y: auto;
+      padding-top: 20px; }
+      #ng-app #reportSection form .tab-content .row {
+        margin-left: 0px;
+        margin-right: 0px; }
+    #ng-app #reportSection form .nav-tabs > li > a {
+      color: #34495E;
+      border-radius: 0px; }
+      #ng-app #reportSection form .nav-tabs > li > a:hover {
+        cursor: default; }
+    #ng-app #reportSection form .nav-tabs > li:first-child > a {
+      border-top-left-radius: 10px; }
+    #ng-app #reportSection form .nav-tabs > li.active > a {
+      color: #FFFFFF;
+      background-color: #C0392B;
+      border: 1px solid #C0392B;
+      border-bottom-color: transparent; }
+  #ng-app #reportSection .download-btn {
+    border: none;
+    background-color: #34495E;
+    height: 39px;
+    width: 90px;
+    color: white; }

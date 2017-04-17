@@ -1,0 +1,68 @@
+﻿<div id="reportSection" class="bootstrap">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+        <form>
+          <ul class="nav nav-tabs" ng-init="tab = 1">
+            <li ng-class="{'active': tab === 1}"><a data-toggle="tab" data-ng-click="tab = 1">Xe</a></li>
+            <li ng-class="{'active': tab === 2}"><a data-toggle="tab" data-ng-click="tab = 2">Nhân viên</a></li>
+            <li ng-class="{'active': tab === 3}"><a data-toggle="tab" data-ng-click="tab = 3">Khách hàng</a></li>
+            <li ng-class="{'active': tab === 4}"><a data-toggle="tab" data-ng-click="tab = 4">Đơn hàng của khách</a></li>
+            <li ng-class="{'active': tab === 5}"><a data-toggle="tab" data-ng-click="tab = 5">Toa hàng</a></li>
+            <li ng-class="{'active': tab === 6}"><a data-toggle="tab" data-ng-click="tab = 6">Quyết toán (Công nợ)</a></li>
+          </ul>
+
+          <div class="tab-content">
+            <!--TAB 1-->
+            <div class="tab-pane fade" ng-class="{'in active': tab === 1}" data-ng-show="tab === 1">
+              <div class="row">
+                <div class="col-sm-12">
+                  <button class="btn btn-default download-btn" data-ng-click="viewModel.exportTruck()">Tải về
+                    &nbsp;<i data-ng-if="viewModel.isExportLoading" class="fa fa-spinner fa-pulse"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!--TAB 2-->
+            <div class="tab-pane fade" ng-class="{'in active': tab === 2}" data-ng-show="tab === 2">
+              <div class="row">
+                <div class="col-sm-12">
+                  <button class="btn btn-default download-btn" data-ng-click="viewModel.exportEmployee()">
+                    Tải về
+                    &nbsp;<i data-ng-if="viewModel.isExportLoading" class="fa fa-spinner fa-pulse"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!--TAB 3-->
+            <div class="tab-pane fade" ng-class="{'in active': tab === 3}" data-ng-show="tab === 3">
+              <div class="row">
+                <div class="col-sm-12">
+                  <button class="btn btn-default download-btn" data-ng-click="viewModel.exportCustomer()">
+                    Tải về
+                    &nbsp;<i data-ng-if="viewModel.isExportLoading" class="fa fa-spinner fa-pulse"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!--TAB 4-->
+            <div class="tab-pane fade in" ng-class="{'active': tab === 4}" data-ng-show="tab === 4">
+            </div>
+
+            <!--TAB 5-->
+            <div class="tab-pane fade in" ng-class="{'active': tab === 5}" data-ng-show="tab === 5">
+            </div>
+
+            <!--TAB 6-->
+            <div class="tab-pane fade in" ng-class="{'active': tab === 6}" data-ng-show="tab === 6">
+            </div>
+          </div>
+        </form>
+			</div>
+		</div>
+
+	</div>
+</div>

@@ -112,6 +112,7 @@
     <Content Include="font\font-awesome\css\font-awesome.min.css" />
     <Content Include="font\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="gulpfile.js" />
+    <Content Include="html\baocao\bao-cao.html" />
     <Content Include="html\index.html" />
     <Content Include="html\not-authorized.html" />
     <Content Include="default.html" />
@@ -161,6 +162,7 @@
     <TypeScriptCompile Include="js\controllers\CustomerOrderManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\CustomerManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\UserController.ts" />
+    <TypeScriptCompile Include="js\controllers\ReportManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\WagonSettlementManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\WagonManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\TruckManagementController.ts" />
@@ -175,6 +177,7 @@
     <TypeScriptCompile Include="js\model\CustomerOrderModel.ts" />
     <TypeScriptCompile Include="js\model\CustomerModel.ts" />
     <TypeScriptCompile Include="js\model\TruckModel.ts" />
+    <TypeScriptCompile Include="js\model\ExportTypeModel.ts" />
     <TypeScriptCompile Include="js\model\WagonSettlementModel.ts" />
     <TypeScriptCompile Include="js\model\WagonModel.ts" />
     <TypeScriptCompile Include="js\model\EmployeeModel.ts" />

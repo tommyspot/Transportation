@@ -24,6 +24,22 @@ module Clarity.Service {
         .error((data, status) => { this.doCallback(errorCallback, data, status) });
     }
 
+    exportToExcel(exportObject: any, successCallback: Function, errorCallback: Function) {
+      this.url = '/api/exportToExcel';
+      this.http.post(this.url, exportObject)
+        .success((data, status) => { this.doCallback(successCallback, data, status) })
+        .error((data, status) => { this.doCallback(errorCallback, data, status) });
+    }
+
+    deleteExcelFile(folderName: string, successCallback: Function, errorCallback: Function) {
+      this.url = '/api/deleteExcelFile';
+
+      this.http({ method: 'DELETE', url: this.url + '/' + folderName })
+        .success((data, status) => { this.doCallback(successCallback, data, status) })
+        .error((data, status) => { this.doCallback(errorCallback, data, status) });
+
+    }
+
 
   }
 }

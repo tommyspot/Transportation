@@ -28,7 +28,7 @@ namespace Transportation.Api.Framework
         {
             if (context.Route.Url.Contains("{id}") || context.Route.Url.Contains("{path}") || context.Route.Url.Contains("{email}")
                  || context.Route.Url.Contains("{username}") || context.Route.Url.Contains("{code}") || context.Route.Url.Contains("{domainName}")
-                || context.Route.Url.Contains("{secret}"))
+                || context.Route.Url.Contains("{secret}") || context.Route.Url.Contains("{folderName}"))
             {
                 List<string> requestSegments = RouteResolver.GetSignificantSegments(context.Uri.Segments);
 
@@ -78,6 +78,11 @@ namespace Transportation.Api.Framework
                     {
                         string path = requestSegments[i];
                         dictionary.Add("secret", path);
+                    }
+                    else if (routeSegments[i] == "{folderName}")
+                    {
+                        string path = requestSegments[i];
+                        dictionary.Add("folderName", path);
                     }
                 }
             }

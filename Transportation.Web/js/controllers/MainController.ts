@@ -58,5 +58,9 @@ module Clarity.Controller {
       this.$location.path('/ql-dang-nhap');
     }
 
+    goToReportManagement() {
+      this.$location.path('/ql-bao-cao');
+    }
+
 	}
 }
