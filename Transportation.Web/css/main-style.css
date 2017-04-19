@@ -5396,6 +5396,18 @@ div.bootstrap {
   #ng-app #reportSection .download-btn {
     border: none;
     background-color: #34495E;
-    height: 39px;
+    height: 34px;
     width: 90px;
     color: white; }
+    #ng-app #reportSection .download-btn:hover {
+      opacity: 0.8; }
+  #ng-app #reportSection .download-btn.from-to-date {
+    margin-top: 23px;
+    margin-right: 10px; }
+  #ng-app #reportSection .table-row-loading {
+    height: 200px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 30px; }
+  #ng-app #reportSection .no-data {
+    text-align: center; }

@@ -709,9 +709,28 @@ div.bootstrap {
     .download-btn{
       border: none;
       background-color: $transport-color-1;
-      height: 39px;
+      height: 34px;
       width: 90px;
       color: white;
+
+      &:hover{
+        opacity: 0.8;
+      }
+    }
+    .download-btn.from-to-date{
+      margin-top: 23px;
+      margin-right: 10px;
+    }
+
+    .table-row-loading{
+      height: 200px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 30px;
+    }
+
+    .no-data{
+      text-align: center;
     }
   }
 }

@@ -13,6 +13,7 @@ namespace Transportation.Api
     public class ExportService
     {
         public HelperService helperService;
+        const string formatDate = "dd-MM-yyyy";
 
         public ExportService()
         {
@@ -34,17 +35,24 @@ namespace Transportation.Api
                 if (json.Value<int>("type") == (int)ExportType.Truck)
                 {
                     BindDataTruckToWorkSheet(workSheet);
-                    fileName = "Baocao_Xe_" + DateTime.Now.ToString("dd/MM/yyyy");
+                    fileName = "Baocao_Xe_" + DateTime.Now.ToString(formatDate);
                 }
                 else if (json.Value<int>("type") == (int)ExportType.Employee)
                 {
                     BindDataEmployeeToWorkSheet(workSheet);
-                    fileName = "Baocao_NhanVien_" + DateTime.Now.ToString("dd/MM/yyyy");
+                    fileName = "Baocao_NhanVien_" + DateTime.Now.ToString(formatDate);
                 }
                 else if (json.Value<int>("type") == (int)ExportType.Customer)
                 {
                     BindDataCustomerToWorkSheet(workSheet);
-                    fileName = "Baocao_KhachHang_" + DateTime.Now.ToString("dd/MM/yyyy");
+                    fileName = "Baocao_KhachHang_" + DateTime.Now.ToString(formatDate);
+                }
+                else if (json.Value<int>("type") == (int)ExportType.OrderCustomer)
+                {
+                    var fromDate = Convert.ToDateTime(json.Value<string>("fromDate"));
+                    var toDate = Convert.ToDateTime(json.Value<string>("toDate"));
+                    BindDataOrderCustomerToWorkSheet(workSheet, fromDate, toDate);
+                    fileName = "Baocao_DonHang_" + DateTime.Now.ToString(formatDate);
                 }
 
 
@@ -58,7 +66,7 @@ namespace Transportation.Api
         }
 
         private void BindDataTruckToWorkSheet(_Worksheet workSheet) {
-            workSheet.Name = "Xe_DuyenHai_" + DateTime.Now.ToString("dd/MM/yyyy");
+            workSheet.Name = "Xe_DuyenHai_" + DateTime.Now.ToString(formatDate);
 
             List<Truck> trucks = ClarityDB.Instance.Trucks.ToList();
             const int numOfColumn = 14;
@@ -101,7 +109,7 @@ namespace Transportation.Api
 
         private void BindDataEmployeeToWorkSheet(_Worksheet workSheet)
         {
-            workSheet.Name = "NhanVien_DuyenHai_" + DateTime.Now.ToString("dd/MM/yyyy");
+            workSheet.Name = "NhanVien_DuyenHai_" + DateTime.Now.ToString(formatDate);
 
             List<Employee> employees = ClarityDB.Instance.Employees.ToList();
             const int numOfColumn = 14;
@@ -144,7 +152,7 @@ namespace Transportation.Api
 
         private void BindDataCustomerToWorkSheet(_Worksheet workSheet)
         {
-            workSheet.Name = "KhachHang_DuyenHai_" + DateTime.Now.ToString("dd/MM/yyyy");
+            workSheet.Name = "KhachHang_DuyenHai_" + DateTime.Now.ToString(formatDate);
 
             List<Customer> customers = ClarityDB.Instance.Customers.ToList();
             const int numOfColumn = 10;
@@ -174,6 +182,60 @@ namespace Transportation.Api
                 workSheet.Cells[rowIndex, 8] = customer.TotalPay;
                 workSheet.Cells[rowIndex, 9] = customer.TotalDebt;
                 workSheet.Cells[rowIndex, 10] = customer.Type;
+            }
+
+            //AutoFit columns
+            AutoFixColumnWidth(workSheet, numOfColumn);
+        }
+
+        private void BindDataOrderCustomerToWorkSheet(_Worksheet workSheet, DateTime fromDate, DateTime toDate)
+        {
+            workSheet.Name = "DonHang_DuyenHai_" + DateTime.Now.ToString(formatDate);
+
+            List<CustomerOrder> customerOrders = ClarityDB.Instance.CustomerOrders.ToList();
+            List<CustomerOrder> filteredCustomerOrders = new List<CustomerOrder>();
+
+            foreach (CustomerOrder customerOrder in customerOrders)
+            {
+                if (DateTime.Compare(Convert.ToDateTime(customerOrder.DepartDate), fromDate) >= 0 &&
+                    DateTime.Compare(Convert.ToDateTime(customerOrder.DepartDate), toDate) <= 0)
+                {
+                    filteredCustomerOrders.Add(customerOrder);
+                }
+            }
+
+            const int numOfColumn = 15;
+            //Add table headers going cell by cell.
+            string[] headers = new string[numOfColumn] {
+                    "STT", "Mã đơn hàng", "Tên khách hàng", "Số điện thoại", "Khu vực", "Nơi đi",
+                    "Nơi đến", "Ngày đi", "Ngày đến", "Đơn vị tính", "Số lượng", "Đơn giá", "Thành tiền",
+                    "Số xe", "Ghi chú" };
+            ApplyHeaderForWorkSheet(workSheet, headers, numOfColumn);
+
+            //Format text columns
+            int[] textColumns = new int[] { 2, 3, 4, 5, 6, 7, 8, 9, 11, 14, 15 };
+            FormatTextForEntireColumn(workSheet, textColumns);
+
+            //Binding data
+            for (int i = 0; i < filteredCustomerOrders.Count; i++)
+            {
+                var customerOrder = filteredCustomerOrders[i];
+                int rowIndex = i + 2;
+                workSheet.Cells[rowIndex, 1] = i + 1;
+                workSheet.Cells[rowIndex, 2] = customerOrder.Code;
+                workSheet.Cells[rowIndex, 3] = customerOrder.CustomerName;
+                workSheet.Cells[rowIndex, 4] = customerOrder.CustomerPhone;
+                workSheet.Cells[rowIndex, 5] = customerOrder.CustomerArea;
+                workSheet.Cells[rowIndex, 6] = customerOrder.Departure;
+                workSheet.Cells[rowIndex, 7] = customerOrder.Destination;
+                workSheet.Cells[rowIndex, 8] = customerOrder.DepartDate;
+                workSheet.Cells[rowIndex, 9] = customerOrder.ReturnDate;
+                workSheet.Cells[rowIndex, 10] = customerOrder.Unit;
+                workSheet.Cells[rowIndex, 11] = customerOrder.Quantity;
+                workSheet.Cells[rowIndex, 12] = customerOrder.UnitPrice;
+                workSheet.Cells[rowIndex, 13] = customerOrder.TotalPay;
+                workSheet.Cells[rowIndex, 14] = this.helperService.GetLicensePlate(Convert.ToInt32(customerOrder.TruckID));
+                workSheet.Cells[rowIndex, 15] = customerOrder.Notes;
             }
 
             //AutoFit columns

@@ -13,7 +13,13 @@ module Clarity.Controller {
 
   export class ReportManagementController {
     public exportService: service.ExportService;
+    public orderCustomerService: service.CustomerOrderService;
+
     public isExportLoading: boolean;
+    public isViewLoading: boolean;
+    public fromDate: string;
+    public toDate: string;
+    public filteredCustomerOrders: Array<model.CustomerOrderModel>;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -24,6 +30,7 @@ module Clarity.Controller {
       private $routeParams: any, private $cookieStore: ng.ICookieStoreService) {
 
       this.exportService = new service.ExportService($http);
+      this.orderCustomerService = new service.CustomerOrderService($http);
       $scope.viewModel = this;
     }
 
@@ -51,6 +58,30 @@ module Clarity.Controller {
     exportCustomer() {
       this.isExportLoading = true;
       this.exportService.exportToExcel({ type: model.ExportType.Customer }, (data) => {
+        this.isExportLoading = false;
+        window.location.href = '/output/' + data['fileName'];
+      }, () => {
+        this.isExportLoading = false;
+      });
+    }
+
+    viewCustomerOrder() {
+      this.isViewLoading = true;
+      this.orderCustomerService.getCustomerOrdersByDate({ fromDate: this.fromDate, toDate: this.toDate }, (data) => {
+        this.isViewLoading = false;
+        this.filteredCustomerOrders = data;
+      }, null);
+    }
+
+    exportCustomerOrder() {
+      this.isExportLoading = true;
+      let jsonObject = {
+        type: model.ExportType.OrderCustomer,
+        fromDate: this.fromDate,
+        toDate: this.toDate
+      }
+
+      this.exportService.exportToExcel(jsonObject, (data) => {
         this.isExportLoading = false;
         window.location.href = '/output/' + data['fileName'];
       }, () => {

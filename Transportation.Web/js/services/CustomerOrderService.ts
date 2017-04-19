@@ -32,5 +32,15 @@ module Clarity.Service {
         .error((data, status) => { this.doCallback(errorCallback, data, status); });
     }
 
+    getCustomerOrdersByDate(dateObject: any, successCallback: Function, errorCallback: Function) {
+      this.http.get('/api/customerOrdersByDate', { params: { date: JSON.stringify(dateObject) } })
+        .success((data: Array<Model.CustomerOrderModel>) => {
+          this.doCallback(successCallback, data);
+        })
+        .error((data, status) => {
+          this.doCallback(errorCallback, data, status);
+        });
+    }
+
   }
 }

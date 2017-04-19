@@ -17,5 +17,17 @@ namespace Transportation.Api
             }
             return null;
         }
+
+        public string GetLicensePlate(int truckID)
+        {
+            var truck = ClarityDB.Instance.Trucks
+                .Where(t => t.ID == truckID).FirstOrDefault();
+
+            if (truck != null)
+            {
+                return truck.LicensePlate;
+            }
+            return null;
+        }
     }
 }
