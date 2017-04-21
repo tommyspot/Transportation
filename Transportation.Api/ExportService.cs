@@ -34,18 +34,21 @@ namespace Transportation.Api
                 if (json.Value<int>("type") == (int)ExportType.Truck)
                 {
                     BindDataTruckToWorkSheet(workSheet);
-                    fileName = "Baocao_Xe_" + DateTime.Now.ToString("dd/MM/yyyy");
-                }
+                    //fileName = "Baocao_Xe_" + DateTime.Now.ToString("dd/MM/yyyy");
+					fileName = "Baocao_Xe";
+				}
                 else if (json.Value<int>("type") == (int)ExportType.Employee)
                 {
                     BindDataEmployeeToWorkSheet(workSheet);
-                    fileName = "Baocao_NhanVien_" + DateTime.Now.ToString("dd/MM/yyyy");
-                }
+                    //fileName = "Baocao_NhanVien_" + DateTime.Now.ToString("dd/MM/yyyy");
+					fileName = "Baocao_NhanVien";
+				}
                 else if (json.Value<int>("type") == (int)ExportType.Customer)
                 {
                     BindDataCustomerToWorkSheet(workSheet);
-                    fileName = "Baocao_KhachHang_" + DateTime.Now.ToString("dd/MM/yyyy");
-                }
+                    //fileName = "Baocao_KhachHang_" + DateTime.Now.ToString("dd/MM/yyyy");
+					fileName = "Baocao_KhachHang";
+				}
 
 
                 string fileNamePath = createExcelFile(workBook, fileName);
@@ -58,9 +61,9 @@ namespace Transportation.Api
         }
 
         private void BindDataTruckToWorkSheet(_Worksheet workSheet) {
-            workSheet.Name = "Xe_DuyenHai_" + DateTime.Now.ToString("dd/MM/yyyy");
-
-            List<Truck> trucks = ClarityDB.Instance.Trucks.ToList();
+            //workSheet.Name = "Xe_DuyenHai_" + DateTime.Now.ToString("dd/MM/yyyy");
+			workSheet.Name = "Xe_DuyenHai";
+			List<Truck> trucks = ClarityDB.Instance.Trucks.ToList();
             const int numOfColumn = 14;
             //Add table headers going cell by cell.
             string[] headers = new string[numOfColumn] {
@@ -92,7 +95,7 @@ namespace Transportation.Api
                 workSheet.Cells[rowIndex, 11] = truck.Stock;
                 workSheet.Cells[rowIndex, 12] = truck.CheckDate;
                 workSheet.Cells[rowIndex, 13] = truck.InsuranceDate;
-                workSheet.Cells[rowIndex, 14] = this.helperService.GetEmployeeName(Convert.ToInt32(truck.EmployeeId));
+                workSheet.Cells[rowIndex, 14] = (truck.EmployeeId != null && truck.EmployeeId != "") ? this.helperService.GetEmployeeName(Convert.ToInt32(truck.EmployeeId)) : "";
             }
 
             //AutoFit columns
@@ -101,9 +104,10 @@ namespace Transportation.Api
 
         private void BindDataEmployeeToWorkSheet(_Worksheet workSheet)
         {
-            workSheet.Name = "NhanVien_DuyenHai_" + DateTime.Now.ToString("dd/MM/yyyy");
+            //workSheet.Name = "NhanVien_DuyenHai_" + DateTime.Now.ToString("dd/MM/yyyy");
+			workSheet.Name = "NhanVien_DuyenHai";
 
-            List<Employee> employees = ClarityDB.Instance.Employees.ToList();
+			List<Employee> employees = ClarityDB.Instance.Employees.ToList();
             const int numOfColumn = 14;
             //Add table headers going cell by cell.
             string[] headers = new string[numOfColumn] {
@@ -144,9 +148,10 @@ namespace Transportation.Api
 
         private void BindDataCustomerToWorkSheet(_Worksheet workSheet)
         {
-            workSheet.Name = "KhachHang_DuyenHai_" + DateTime.Now.ToString("dd/MM/yyyy");
+            //workSheet.Name = "KhachHang_DuyenHai_" + DateTime.Now.ToString("dd/MM/yyyy");
+			workSheet.Name = "KhachHang_DuyenHai";
 
-            List<Customer> customers = ClarityDB.Instance.Customers.ToList();
+			List<Customer> customers = ClarityDB.Instance.Customers.ToList();
             const int numOfColumn = 10;
             //Add table headers going cell by cell.
             string[] headers = new string[numOfColumn] {

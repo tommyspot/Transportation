@@ -96,6 +96,21 @@ namespace Transportation.Api
 
             foreach (Customer customer in customers)
             {
+				if (customer.NeedUpdatePayment)
+				{
+					customer.TotalOwned = 0;
+					customer.TotalPay = 0;
+					customer.TotalDebt = 0;
+
+					var wagonSettlements = ClarityDB.Instance.WagonSettlements.Where(x => x.CustomerID == customer.ID);
+					foreach (WagonSettlement wagonSettlementItem in wagonSettlements)
+					{
+						customer.TotalOwned += wagonSettlementItem.TotalAmount;
+						customer.TotalPay += wagonSettlementItem.Payment;
+						customer.TotalDebt += wagonSettlementItem.PaymentRemain;
+					}
+					customer.NeedUpdatePayment = false;
+				}
                 array.Add(customer.ToJson());
             }
 
