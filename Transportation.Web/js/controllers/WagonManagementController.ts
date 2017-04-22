@@ -77,9 +77,9 @@ module Clarity.Controller {
 
     initWagon() {
       var wagonId = this.$routeParams.wagon_id;
-
       if (wagonId) {
         if (this.$location.path() === '/ql-toa-hang/toa-hang/' + wagonId) {
+					
           this.wagonService.getById(wagonId, (data) => {
             this.currentWagon = data;
           }, null);
@@ -152,6 +152,29 @@ module Clarity.Controller {
         this.customerList = results;
       }, null);
     }
+
+		getCustomerCode(id) {
+			if (this.customerList) {
+				for (var i = 0; i < this.customerList.length; i++) {
+					var customer = this.customerList[i];
+					if (customer.id === id) {
+						return customer.code;
+					}
+				}
+			} else {
+				this.customerService.getAll((results: Array<Model.CustomerModel>) => {
+					this.customerList = results;
+					for (var i = 0; i < this.customerList.length; i++) {
+						var customer = this.customerList[i];
+						if (customer.id === id) {
+							return customer.code;
+						}
+					}
+				}, null);
+			}
+
+			return '';
+		}
 
     initCustomerOrderList() {
       this.customerOrderService.getAll((results: Array<Model.CustomerOrderModel>) => {
@@ -439,6 +462,19 @@ module Clarity.Controller {
 						return truck.licensePlate;
 					}
 				}
+			} else {
+				//aa
+				this.truckService.getAll((results: Array<Model.TruckModel>) => {
+					this.$rootScope.truckList = results;
+					this.truckList = this.$rootScope.truckList;
+					for (var i = 0; i < this.truckList.length; i++) {
+						var truck = this.truckList[i];
+						if (truck.id == id) {
+							return truck.licensePlate;
+						}
+					}
+					
+				}, null);
 			}
 			return '';
 		}
@@ -451,6 +487,17 @@ module Clarity.Controller {
 						return employee.fullName;
 					}
 				}
+			} else {
+				this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
+					this.employeeList = results;
+					for (var i = 0; i < this.employeeList.length; i++) {
+						var employee = this.employeeList[i];
+						if (employee.id == id) {
+							return employee.fullName;
+						}
+					}
+
+				}, null);
 			}
 			return '';
 		}

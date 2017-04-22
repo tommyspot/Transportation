@@ -24,6 +24,7 @@ namespace Transportation
         public long TotalDebt { get; set; }
 		public string Type { get; set; }
 		public string Code { get; set; }
+		public bool NeedUpdatePayment { get; set; }
 		public DateTime CreatedDate { get; set; }
 		public Customer() {
         }

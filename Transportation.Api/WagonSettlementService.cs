@@ -97,6 +97,9 @@ namespace Transportation.Api
 				payment.CreatedDate = DateTime.Now;
 				ClarityDB.Instance.Payments.Add(payment);
 
+				Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == wagonSettlement.CustomerID);
+				customer.NeedUpdatePayment = true;
+
 			}
 
 			ClarityDB.Instance.SaveChanges();

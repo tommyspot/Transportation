@@ -52,7 +52,7 @@
           <div class="col-sm-12" data-ng-repeat="wagonSettlement in viewModel.currentWagon.wagonSettlements">
             <div class="row">
               <div class="col-sm-4">
-                <p><span class="bold-text">Mã khách hàng:</span> <span>{{wagonSettlement.id}}</span></p>
+                <p><span class="bold-text">Mã khách hàng:</span> <span>{{viewModel.getCustomerCode(wagonSettlement.customerId)}}</span></p>
               </div>
               <div class="col-sm-4">
                 <p><span class="bold-text">Đơn vị tính:</span> <span>{{wagonSettlement.unit}}</span></p>

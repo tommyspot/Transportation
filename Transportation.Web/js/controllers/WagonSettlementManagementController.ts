@@ -162,13 +162,24 @@ module Clarity.Controller {
 
 		getCustomerCode(id) {
 			if (this.customerList) {
-				for (var i = 0; i < this.customerList.length; i++){
+				for (var i = 0; i < this.customerList.length; i++) {
 					var customer = this.customerList[i];
 					if (customer.id === id) {
 						return customer.code;
 					}
 				}
+			} else {
+				this.customerService.getAll((results: Array<Model.CustomerModel>) => {
+					this.customerList = results;
+					for (var i = 0; i < this.customerList.length; i++) {
+						var customer = this.customerList[i];
+						if (customer.id === id) {
+							return customer.code;
+						}
+					}
+				}, null);
 			}
+
 			return '';
 		}
 
