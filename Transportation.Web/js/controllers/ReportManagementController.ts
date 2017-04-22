@@ -14,12 +14,14 @@ module Clarity.Controller {
   export class ReportManagementController {
     public exportService: service.ExportService;
     public orderCustomerService: service.CustomerOrderService;
+    public wagonService: service.WagonService;
 
     public isExportLoading: boolean;
     public isViewLoading: boolean;
     public fromDate: string;
     public toDate: string;
     public filteredCustomerOrders: Array<model.CustomerOrderModel>;
+    public wagonReport: model.WagonReportModel;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -31,6 +33,9 @@ module Clarity.Controller {
 
       this.exportService = new service.ExportService($http);
       this.orderCustomerService = new service.CustomerOrderService($http);
+      this.wagonService = new service.WagonService($http);
+
+      this.wagonReport = new model.WagonReportModel();
       $scope.viewModel = this;
     }
 
@@ -88,6 +93,32 @@ module Clarity.Controller {
         this.isExportLoading = false;
       });
     }
+
+    viewWagon() {
+      this.isViewLoading = true;
+      this.wagonService.getWagonReportByDate({ fromDate: this.wagonReport.fromDate, toDate: this.wagonReport.toDate }, (data) => {
+        this.isViewLoading = false;
+        this.wagonReport.data = data;
+      }, null);
+    }
+
+    exportWagon() {
+      this.isExportLoading = true;
+      let jsonObject = {
+        type: model.ExportType.Wagon,
+        fromDate: this.wagonReport.fromDate,
+        toDate: this.wagonReport.toDate
+      }
+
+      this.exportService.exportToExcel(jsonObject, (data) => {
+        this.isExportLoading = false;
+        window.location.href = '/output/' + data['fileName'];
+      }, () => {
+        this.isExportLoading = false;
+      });
+    }
+
+
     
 	}
 }

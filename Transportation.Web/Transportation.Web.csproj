@@ -178,6 +178,7 @@
     <TypeScriptCompile Include="js\model\CustomerModel.ts" />
     <TypeScriptCompile Include="js\model\TruckModel.ts" />
     <TypeScriptCompile Include="js\model\ExportTypeModel.ts" />
+    <TypeScriptCompile Include="js\model\WagonReportModel.ts" />
     <TypeScriptCompile Include="js\model\WagonSettlementModel.ts" />
     <TypeScriptCompile Include="js\model\WagonModel.ts" />
     <TypeScriptCompile Include="js\model\EmployeeModel.ts" />
@@ -189,8 +190,8 @@
     <TypeScriptCompile Include="js\services\ExportService.ts" />
     <TypeScriptCompile Include="js\services\CustomerService.ts" />
     <TypeScriptCompile Include="js\services\PaymentService.ts" />
-    <TypeScriptCompile Include="js\services\WagonSettlementService.ts" />
     <TypeScriptCompile Include="js\services\WagonService.ts" />
+    <TypeScriptCompile Include="js\services\WagonSettlementService.ts" />
     <TypeScriptCompile Include="js\services\TruckService.ts" />
     <TypeScriptCompile Include="js\services\EmployeeService.ts" />
     <TypeScriptCompile Include="lib\angular\angular-cookies.d.ts" />
@@ -354,6 +355,7 @@
     <Content Include="font\font-awesome\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\Changi_eTRS.pubxml" />
     <None Include="Properties\PublishProfiles\Clarity.pubxml" />
+    <None Include="Properties\PublishProfiles\DuyenHai.pubxml" />
     <None Include="Properties\PublishProfiles\Forecourt.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <Content Include="template\ToaHang_Report_Template.xlsx" />

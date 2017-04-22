@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Data;
 using System.Data.Entity.Validation;
+using Newtonsoft.Json;
 
 namespace Transportation.Api
 {
@@ -89,6 +90,36 @@ namespace Transportation.Api
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json};
         }
 
+        [Route(HttpVerb.Get, "/wagonReportByDate")]
+        public RestApiResult GetWagonReportByDate(string date)
+        {
+            var dateJSON = JsonConvert.DeserializeObject<JObject>(date);
+            DateTime fromDate = Convert.ToDateTime(dateJSON.Value<string>("fromDate"));
+            DateTime toDate = Convert.ToDateTime(dateJSON.Value<string>("toDate"));
+
+            List<Wagon> wagons = ClarityDB.Instance.Wagons.ToList();
+            List<Wagon> filteredWagons = new List<Wagon>();
+
+            foreach (Wagon wagon in wagons)
+            {
+                if (DateTime.Compare(Convert.ToDateTime(wagon.PaymentDate), fromDate) >= 0 &&
+                    DateTime.Compare(Convert.ToDateTime(wagon.PaymentDate), toDate) <= 0)
+                {
+                    filteredWagons.Add(wagon);
+                }
+            }
+
+            var wagonReportDataList = filteredWagons.Select(w => new WagonReportData
+            {
+                Code = w.Code,
+                TotalAmount = w.WagonSetlements.Sum(x => x.Quantity * x.UnitPrice),
+                TotalPayment = 100, //waiting confirm
+                Profit = 80         //TotalAmount - TotalPayment
+            }).ToList();
+
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonReportDataArray(wagonReportDataList) };
+        }
+
         private void AddWagonSettlementsFromJson(long wagonID, JObject json) {
             Wagon wagon = ClarityDB.Instance.Wagons.FirstOrDefault(x => x.ID == wagonID);
 
@@ -135,5 +166,16 @@ namespace Transportation.Api
             return array;
         }
 
+        private JArray BuildJsonReportDataArray(List<WagonReportData> wagonReportDataList)
+        {
+            JArray array = new JArray();
+
+            foreach (WagonReportData wagonReport in wagonReportDataList)
+            {
+                array.Add(wagonReport.ToJson());
+            }
+
+            return array;
+        }
     }
 }

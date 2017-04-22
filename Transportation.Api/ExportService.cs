@@ -54,18 +54,25 @@ namespace Transportation.Api
                     BindDataOrderCustomerToWorkSheet(workSheet, fromDate, toDate);
                     fileName = "Baocao_DonHang_" + DateTime.Now.ToString(formatDate);
                 }
-
+                else if (json.Value<int>("type") == (int)ExportType.Wagon)
+                {
+                    var fromDate = Convert.ToDateTime(json.Value<string>("fromDate"));
+                    var toDate = Convert.ToDateTime(json.Value<string>("toDate"));
+                    BindDataWagonToWorkSheet(workSheet, fromDate, toDate);
+                    fileName = "Baocao_ToaHang_" + DateTime.Now.ToString(formatDate);
+                }
 
                 string fileNamePath = createExcelFile(workBook, fileName);
                 return new RestApiResult { Json = JObject.Parse(string.Format("{{ fileName: '{0}'}}", fileNamePath)) };
             }
             catch (Exception ex)
             {
-                return new RestApiResult { StatusCode = HttpStatusCode.InternalServerError };
+                return new RestApiResult { StatusCode = HttpStatusCode.InternalServerError, Json = ex.ToString() };
             }
         }
 
-        private void BindDataTruckToWorkSheet(_Worksheet workSheet) {
+        private void BindDataTruckToWorkSheet(_Worksheet workSheet)
+        {
             workSheet.Name = "Xe_DuyenHai_" + DateTime.Now.ToString(formatDate);
 
             List<Truck> trucks = ClarityDB.Instance.Trucks.ToList();
@@ -242,20 +249,83 @@ namespace Transportation.Api
             AutoFixColumnWidth(workSheet, numOfColumn);
         }
 
+        private void BindDataWagonToWorkSheet(_Worksheet workSheet, DateTime fromDate, DateTime toDate)
+        {
+            workSheet.Name = "ToaHang_DuyenHai_" + DateTime.Now.ToString(formatDate);
+
+            List<Wagon> wagons = ClarityDB.Instance.Wagons.ToList();
+            List<Wagon> filteredWagons = new List<Wagon>();
+
+            foreach (Wagon wagon in wagons)
+            {
+                if (DateTime.Compare(Convert.ToDateTime(wagon.PaymentDate), fromDate) >= 0 &&
+                    DateTime.Compare(Convert.ToDateTime(wagon.PaymentDate), toDate) <= 0)
+                {
+                    filteredWagons.Add(wagon);
+                }
+            }
+
+            const int numOfColumn = 23;
+            //Add table headers going cell by cell.
+            string[] headers = new string[numOfColumn] {
+                    "STT", "Mã toa hàng", "Ngày thanh toán", "Nơi thanh toán", "Ngày đi", "Ngày đến","Số xe", "Tài xế",
+                "Ghi chú", "Phí xe", "Điện thoại + Dịch vụ", "Phí phát sinh", "Nguyên nhân phát sinh","Biên bản phạt",
+                "Diễn giải phụ", "Tiền xe", "Sửa xe", "Tiền dâu", "Lượng", "Dịch vụ", "Hàng về", "Trích 10%", "Khác" };
+            ApplyHeaderForWorkSheet(workSheet, headers, numOfColumn);
+
+            //Format text columns
+            int[] textColumns = new int[] { 2, 3, 4, 5, 6, 7, 8, 9, 13, 14, 15 };
+            FormatTextForEntireColumn(workSheet, textColumns);
+
+            //Binding data
+            for (int i = 0; i < filteredWagons.Count; i++)
+            {
+                var customerOrder = filteredWagons[i];
+                int rowIndex = i + 2;
+                workSheet.Cells[rowIndex, 1] = i + 1;
+                workSheet.Cells[rowIndex, 2] = customerOrder.Code;
+                workSheet.Cells[rowIndex, 3] = customerOrder.PaymentDate;
+                workSheet.Cells[rowIndex, 4] = customerOrder.PaymentPlace;
+                workSheet.Cells[rowIndex, 5] = customerOrder.DepartDate;
+                workSheet.Cells[rowIndex, 6] = customerOrder.ReturnDate;
+                workSheet.Cells[rowIndex, 7] = customerOrder.Truck.LicensePlate;
+                workSheet.Cells[rowIndex, 8] = customerOrder.Employee.FullName;
+                workSheet.Cells[rowIndex, 9] = customerOrder.Notes;
+                workSheet.Cells[rowIndex, 10] = customerOrder.CostOfTruck;
+                workSheet.Cells[rowIndex, 11] = customerOrder.CostOfService;
+                workSheet.Cells[rowIndex, 12] = customerOrder.CostOfTangBoXe;
+                workSheet.Cells[rowIndex, 13] = customerOrder.ReasonForPhiPhatXinh;
+                workSheet.Cells[rowIndex, 14] = customerOrder.CostOfPenalty;
+                workSheet.Cells[rowIndex, 15] = customerOrder.CostOfExtra;
+                workSheet.Cells[rowIndex, 16] = customerOrder.PaymentOfTruck;
+                workSheet.Cells[rowIndex, 17] = customerOrder.PaymentOfRepairing;
+                workSheet.Cells[rowIndex, 18] = customerOrder.PaymentOfOil;
+                workSheet.Cells[rowIndex, 19] = customerOrder.PaymentOfLuong;
+                workSheet.Cells[rowIndex, 20] = customerOrder.PaymentOfService;
+                workSheet.Cells[rowIndex, 21] = customerOrder.PaymentOfHangVe;
+                workSheet.Cells[rowIndex, 22] = customerOrder.PaymentOf10Percent;
+                workSheet.Cells[rowIndex, 23] = customerOrder.PaymentOfOthers;
+            }
+
+            //AutoFit columns
+            AutoFixColumnWidth(workSheet, numOfColumn);
+        }
+
         [Route(HttpVerb.Delete, "/deleteExcelFile/{folderName}")]
         public RestApiResult DeleteExcelFile(string folderName)
         {
             string appPath = HttpContext.Current.Request.ApplicationPath;
             string physicalPath = HttpContext.Current.Request.MapPath(appPath).TrimEnd('\\');
             string outputFolder = string.Format("{0}\\output\\{1}", physicalPath, folderName);
-            
+
             if (Directory.Exists(outputFolder))
                 Directory.Delete(outputFolder, true);
 
             return new RestApiResult { StatusCode = HttpStatusCode.OK };
         }
 
-        private void ApplyHeaderForWorkSheet(_Worksheet workSheet, string[] headers, int numOfColumn) {
+        private void ApplyHeaderForWorkSheet(_Worksheet workSheet, string[] headers, int numOfColumn)
+        {
             for (int columnIndex = 0; columnIndex < headers.Count(); columnIndex++)
             {
                 workSheet.Cells[1, columnIndex + 1] = headers[columnIndex];
@@ -266,24 +336,30 @@ namespace Transportation.Api
             workSheet.Range[workSheet.Cells[1, 1], workSheet.Cells[1, numOfColumn]].HorizontalAlignment = XlHAlign.xlHAlignCenter;
         }
 
-        private void FormatTextForEntireColumn(_Worksheet workSheet, int[] columns) {
-            foreach (int columnIndex in columns) {
+        private void FormatTextForEntireColumn(_Worksheet workSheet, int[] columns)
+        {
+            foreach (int columnIndex in columns)
+            {
                 workSheet.Cells[1, columnIndex].EntireColumn.NumberFormat = "@";
             }
         }
 
-        private void AutoFixColumnWidth(_Worksheet workSheet, int numOfColumn) {
+        private void AutoFixColumnWidth(_Worksheet workSheet, int numOfColumn)
+        {
             Range oRng = workSheet.Range[workSheet.Cells[1, 1], workSheet.Cells[1, numOfColumn]];
             oRng.EntireColumn.AutoFit();
         }
 
-        private string createExcelFile(_Workbook workBook, string fileName) {
+        private string createExcelFile(_Workbook workBook, string fileName)
+        {
             string appPath = HttpContext.Current.Request.ApplicationPath;
             string physicalPath = HttpContext.Current.Request.MapPath(appPath).TrimEnd('\\');
             string folderName = string.Format("{0}", Guid.NewGuid());
             string outputFolder = string.Format("{0}\\output\\{1}", physicalPath, folderName);
             if (!Directory.Exists(outputFolder))
+            {
                 Directory.CreateDirectory(outputFolder);
+            }
             string fileNamePath = string.Format("{0}\\{1}.xlsx", outputFolder, fileName);
 
             workBook.SaveAs(fileNamePath, XlFileFormat.xlWorkbookDefault, Type.Missing, Type.Missing, false, false,
@@ -291,6 +367,7 @@ namespace Transportation.Api
             workBook.Close();
 
             return string.Format("{0}/{1}.xlsx", folderName, fileName);
+
         }
     }
 }
