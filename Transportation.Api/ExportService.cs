@@ -8,13 +8,16 @@ using System.Web;
 using System.IO;
 using System.Data;
 using ExportToExcel;
+using System.Globalization;
 
 namespace Transportation.Api
 {
     public class ExportService
     {
         public HelperService helperService;
-        const string formatDate = "dd-MM-yyyy";
+        const string formatDate = "dd/MM/yyyy";
+        const string formatStringDate = "dd-MM-yyyy";
+
 
         public ExportService()
         {
@@ -31,38 +34,38 @@ namespace Transportation.Api
                 if (json.Value<int>("type") == (int)ExportType.Truck)
                 {
                     dt = BuildDataTableForTruck();
-                    fileName = "Baocao_Xe_" + DateTime.Now.ToString(formatDate);
+                    fileName = "Baocao_Xe_" + DateTime.Now.ToString(formatStringDate);
                 }
                 else if (json.Value<int>("type") == (int)ExportType.Employee)
                 {
                     dt = BuildDataTableForEmployee();
-                    fileName = "Baocao_NhanVien_" + DateTime.Now.ToString(formatDate);
+                    fileName = "Baocao_NhanVien_" + DateTime.Now.ToString(formatStringDate);
                 }
                 else if (json.Value<int>("type") == (int)ExportType.Customer)
                 {
                     dt = BuildDataTableForCustomer();
-                    fileName = "Baocao_KhachHang_" + DateTime.Now.ToString(formatDate);
+                    fileName = "Baocao_KhachHang_" + DateTime.Now.ToString(formatStringDate);
                 }
                 else if (json.Value<int>("type") == (int)ExportType.OrderCustomer)
                 {
-                    var fromDate = Convert.ToDateTime(json.Value<string>("fromDate"));
-                    var toDate = Convert.ToDateTime(json.Value<string>("toDate"));
+                    DateTime fromDate = DateTime.ParseExact(json.Value<string>("fromDate"), formatDate, CultureInfo.InvariantCulture);
+                    DateTime toDate = DateTime.ParseExact(json.Value<string>("toDate"), formatDate, CultureInfo.InvariantCulture);
                     dt = BuildDataTableForOrderCustomer(fromDate, toDate);
-                    fileName = "Baocao_DonHang_" + DateTime.Now.ToString(formatDate);
+                    fileName = "Baocao_DonHang_" + DateTime.Now.ToString(formatStringDate);
                 }
                 else if (json.Value<int>("type") == (int)ExportType.Wagon)
                 {
-                    var fromDate = Convert.ToDateTime(json.Value<string>("fromDate"));
-                    var toDate = Convert.ToDateTime(json.Value<string>("toDate"));
+                    DateTime fromDate = DateTime.ParseExact(json.Value<string>("fromDate"), formatDate, CultureInfo.InvariantCulture);
+                    DateTime toDate = DateTime.ParseExact(json.Value<string>("toDate"), formatDate, CultureInfo.InvariantCulture);
                     dt = BuildDataTableForWagon(fromDate, toDate);
-                    fileName = "Baocao_ToaHang_" + DateTime.Now.ToString(formatDate);
+                    fileName = "Baocao_ToaHang_" + DateTime.Now.ToString(formatStringDate);
                 }
                 else if (json.Value<int>("type") == (int)ExportType.WagonSettlement)
                 {
-                    var fromDate = Convert.ToDateTime(json.Value<string>("fromDate"));
-                    var toDate = Convert.ToDateTime(json.Value<string>("toDate"));
+                    DateTime fromDate = DateTime.ParseExact(json.Value<string>("fromDate"), formatDate, CultureInfo.InvariantCulture);
+                    DateTime toDate = DateTime.ParseExact(json.Value<string>("toDate"), formatDate, CultureInfo.InvariantCulture);
                     dt = BuildDataTableForWagonSettlement(fromDate, toDate);
-                    fileName = "Baocao_QuyetToan_" + DateTime.Now.ToString(formatDate);
+                    fileName = "Baocao_QuyetToan_" + DateTime.Now.ToString(formatStringDate);
                 }
 
                 string fileNamePath = saveExcelFile(dt, fileName);
@@ -77,7 +80,7 @@ namespace Transportation.Api
         private DataTable BuildDataTableForTruck()
         {
             DataTable dt = new DataTable();
-            dt.TableName = "Xe_" + DateTime.Now.ToString(formatDate);
+            dt.TableName = "Xe_" + DateTime.Now.ToString(formatStringDate);
             //Add table headers going cell by cell.
             dt.Columns.Add("STT", typeof(int));
             dt.Columns.Add("Biển số", typeof(string));
@@ -111,7 +114,7 @@ namespace Transportation.Api
         private DataTable BuildDataTableForEmployee()
         {
             DataTable dt = new DataTable();
-            dt.TableName = "NhanVien_" + DateTime.Now.ToString(formatDate);
+            dt.TableName = "NhanVien_" + DateTime.Now.ToString(formatStringDate);
 
             //Add table headers going cell by cell.
             dt.Columns.Add("STT", typeof(int));
@@ -145,7 +148,7 @@ namespace Transportation.Api
         private DataTable BuildDataTableForCustomer()
         {
             DataTable dt = new DataTable();
-            dt.TableName = "KhachHang_" + DateTime.Now.ToString(formatDate);
+            dt.TableName = "KhachHang_" + DateTime.Now.ToString(formatStringDate);
 
             //Add table headers going cell by cell.
             dt.Columns.Add("STT", typeof(int));
@@ -175,7 +178,7 @@ namespace Transportation.Api
         private DataTable BuildDataTableForOrderCustomer(DateTime fromDate, DateTime toDate)
         {
             DataTable dt = new DataTable();
-            dt.TableName = "DonHang_" + DateTime.Now.ToString(formatDate);
+            dt.TableName = "DonHang_" + DateTime.Now.ToString(formatStringDate);
 
             //Add table headers going cell by cell.
             dt.Columns.Add("STT", typeof(int));
@@ -199,8 +202,8 @@ namespace Transportation.Api
             List<CustomerOrder> filteredCustomerOrders = new List<CustomerOrder>();
             foreach (CustomerOrder customerOrder in customerOrders)
             {
-                if (DateTime.Compare(Convert.ToDateTime(customerOrder.DepartDate), fromDate) >= 0 &&
-                    DateTime.Compare(Convert.ToDateTime(customerOrder.DepartDate), toDate) <= 0)
+                DateTime departDate = DateTime.ParseExact(customerOrder.DepartDate, formatDate, CultureInfo.InvariantCulture);
+                if (DateTime.Compare(departDate, fromDate) >= 0 && DateTime.Compare(departDate, toDate) <= 0)
                 {
                     filteredCustomerOrders.Add(customerOrder);
                 }
@@ -221,7 +224,7 @@ namespace Transportation.Api
         private DataTable BuildDataTableForWagon(DateTime fromDate, DateTime toDate)
         {
             DataTable dt = new DataTable();
-            dt.TableName = "ToaHang_" + DateTime.Now.ToString(formatDate);
+            dt.TableName = "ToaHang_" + DateTime.Now.ToString(formatStringDate);
 
             //Add table headers going cell by cell.
             dt.Columns.Add("STT", typeof(int));
@@ -253,8 +256,8 @@ namespace Transportation.Api
             List<Wagon> filteredWagons = new List<Wagon>();
             foreach (Wagon wagon in wagons)
             {
-                if (DateTime.Compare(Convert.ToDateTime(wagon.PaymentDate), fromDate) >= 0 &&
-                    DateTime.Compare(Convert.ToDateTime(wagon.PaymentDate), toDate) <= 0)
+                DateTime paymentDate = DateTime.ParseExact(wagon.PaymentDate, formatDate, CultureInfo.InvariantCulture);
+                if (DateTime.Compare(paymentDate, fromDate) >= 0 && DateTime.Compare(paymentDate, toDate) <= 0)
                 {
                     filteredWagons.Add(wagon);
                 }
@@ -278,7 +281,7 @@ namespace Transportation.Api
         private DataTable BuildDataTableForWagonSettlement(DateTime fromDate, DateTime toDate)
         {
             DataTable dt = new DataTable();
-            dt.TableName = "QuyetToan_" + DateTime.Now.ToString(formatDate);
+            dt.TableName = "QuyetToan_" + DateTime.Now.ToString(formatStringDate);
 
             //Add table headers going cell by cell.
             dt.Columns.Add("STT", typeof(int));
@@ -294,9 +297,9 @@ namespace Transportation.Api
             dt.Columns.Add("Số lượng", typeof(double));
             dt.Columns.Add("Đơn giá", typeof(double));
             dt.Columns.Add("Tổng phí", typeof(double));
-            dt.Columns.Add("Đã thanh toán", typeof(string));
-            dt.Columns.Add("Chiết khấu", typeof(string));
-            dt.Columns.Add("Còn lại", typeof(string));
+            dt.Columns.Add("Đã thanh toán", typeof(double));
+            dt.Columns.Add("Chiết khấu", typeof(double));
+            dt.Columns.Add("Còn lại", typeof(double));
 
             //Filter data by from/to date
             List<WagonSettlement> wagonSettlements = ClarityDB.Instance.WagonSettlements.ToList();
@@ -304,8 +307,8 @@ namespace Transportation.Api
             foreach (WagonSettlement wagonSettlement in wagonSettlements)
             {
                 if (wagonSettlement.PaymentDate != null) {
-                    if (DateTime.Compare(Convert.ToDateTime(wagonSettlement.PaymentDate), fromDate) >= 0 &&
-                    DateTime.Compare(Convert.ToDateTime(wagonSettlement.PaymentDate), toDate) <= 0)
+                    DateTime paymentDate = DateTime.ParseExact(wagonSettlement.PaymentDate, formatDate, CultureInfo.InvariantCulture);
+                    if (DateTime.Compare(paymentDate, fromDate) >= 0 && DateTime.Compare(paymentDate, toDate) <= 0)
                     {
                         filteredWagonSettlements.Add(wagonSettlement);
                     }
