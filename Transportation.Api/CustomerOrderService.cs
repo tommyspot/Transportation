@@ -15,6 +15,7 @@ namespace Transportation.Api
 {
     public class CustomerOrderService
     {
+        const string formatDate = "dd/MM/yyyy";
 
         public CustomerOrderService() { }
 
@@ -62,15 +63,15 @@ namespace Transportation.Api
         public RestApiResult GetCustomerOrderByDate(string date)
         {
             var dateJSON = JsonConvert.DeserializeObject<JObject>(date);
-            DateTime fromDate = Convert.ToDateTime(dateJSON.Value<string>("fromDate"));
-            DateTime toDate = Convert.ToDateTime(dateJSON.Value<string>("toDate"));
+            DateTime fromDate = DateTime.ParseExact(dateJSON.Value<string>("fromDate"), formatDate, CultureInfo.InvariantCulture);
+            DateTime toDate = DateTime.ParseExact(dateJSON.Value<string>("toDate"), formatDate, CultureInfo.InvariantCulture);
 
             List<CustomerOrder> customerOrders = ClarityDB.Instance.CustomerOrders.ToList();
             List<CustomerOrder> filteredCustomerOrders = new List<CustomerOrder>();
 
             foreach (CustomerOrder customerOrder in customerOrders) {
-                if (DateTime.Compare(Convert.ToDateTime(customerOrder.DepartDate), fromDate) >= 0 &&
-                    DateTime.Compare(Convert.ToDateTime(customerOrder.DepartDate), toDate) <= 0) {
+                DateTime departDate = DateTime.ParseExact(customerOrder.DepartDate, formatDate, CultureInfo.InvariantCulture);
+                if (DateTime.Compare(departDate, fromDate) >= 0 && DateTime.Compare(departDate, toDate) <= 0) {
                     filteredCustomerOrders.Add(customerOrder);
                 }
             }

@@ -178,6 +178,7 @@
     <TypeScriptCompile Include="js\model\CustomerModel.ts" />
     <TypeScriptCompile Include="js\model\TruckModel.ts" />
     <TypeScriptCompile Include="js\model\ExportTypeModel.ts" />
+    <TypeScriptCompile Include="js\model\WagonSettlementReportModel.ts" />
     <TypeScriptCompile Include="js\model\WagonReportModel.ts" />
     <TypeScriptCompile Include="js\model\WagonSettlementModel.ts" />
     <TypeScriptCompile Include="js\model\WagonModel.ts" />
@@ -355,6 +356,8 @@
     <Content Include="font\font-awesome\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\Changi_eTRS.pubxml" />
     <None Include="Properties\PublishProfiles\Clarity.pubxml" />
+    <None Include="Properties\PublishProfiles\duyenhai - FTP %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\duyenhai - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\DuyenHai.pubxml" />
     <None Include="Properties\PublishProfiles\Forecourt.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />

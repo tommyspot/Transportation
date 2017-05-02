@@ -6,7 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.IO;
-using Microsoft.Office.Interop.Excel;
+using System.Data;
+using ExportToExcel;
 
 namespace Transportation.Api
 {
@@ -25,44 +26,46 @@ namespace Transportation.Api
         {
             try
             {
-                //Start Excel and get Application object.
-                Application excelApp = new Application();
-                //Get a new workbook.
-                _Workbook workBook = excelApp.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
-                _Worksheet workSheet = workBook.ActiveSheet;
-
                 string fileName = "";
+                DataTable dt = null;
                 if (json.Value<int>("type") == (int)ExportType.Truck)
                 {
-                    BindDataTruckToWorkSheet(workSheet);
+                    dt = BuildDataTableForTruck();
                     fileName = "Baocao_Xe_" + DateTime.Now.ToString(formatDate);
                 }
                 else if (json.Value<int>("type") == (int)ExportType.Employee)
                 {
-                    BindDataEmployeeToWorkSheet(workSheet);
+                    dt = BuildDataTableForEmployee();
                     fileName = "Baocao_NhanVien_" + DateTime.Now.ToString(formatDate);
                 }
                 else if (json.Value<int>("type") == (int)ExportType.Customer)
                 {
-                    BindDataCustomerToWorkSheet(workSheet);
+                    dt = BuildDataTableForCustomer();
                     fileName = "Baocao_KhachHang_" + DateTime.Now.ToString(formatDate);
                 }
                 else if (json.Value<int>("type") == (int)ExportType.OrderCustomer)
                 {
                     var fromDate = Convert.ToDateTime(json.Value<string>("fromDate"));
                     var toDate = Convert.ToDateTime(json.Value<string>("toDate"));
-                    BindDataOrderCustomerToWorkSheet(workSheet, fromDate, toDate);
+                    dt = BuildDataTableForOrderCustomer(fromDate, toDate);
                     fileName = "Baocao_DonHang_" + DateTime.Now.ToString(formatDate);
                 }
                 else if (json.Value<int>("type") == (int)ExportType.Wagon)
                 {
                     var fromDate = Convert.ToDateTime(json.Value<string>("fromDate"));
                     var toDate = Convert.ToDateTime(json.Value<string>("toDate"));
-                    BindDataWagonToWorkSheet(workSheet, fromDate, toDate);
+                    dt = BuildDataTableForWagon(fromDate, toDate);
                     fileName = "Baocao_ToaHang_" + DateTime.Now.ToString(formatDate);
                 }
+                else if (json.Value<int>("type") == (int)ExportType.WagonSettlement)
+                {
+                    var fromDate = Convert.ToDateTime(json.Value<string>("fromDate"));
+                    var toDate = Convert.ToDateTime(json.Value<string>("toDate"));
+                    dt = BuildDataTableForWagonSettlement(fromDate, toDate);
+                    fileName = "Baocao_QuyetToan_" + DateTime.Now.ToString(formatDate);
+                }
 
-                string fileNamePath = createExcelFile(workBook, fileName);
+                string fileNamePath = saveExcelFile(dt, fileName);
                 return new RestApiResult { Json = JObject.Parse(string.Format("{{ fileName: '{0}'}}", fileNamePath)) };
             }
             catch (Exception ex)
@@ -71,137 +74,129 @@ namespace Transportation.Api
             }
         }
 
-        private void BindDataTruckToWorkSheet(_Worksheet workSheet)
+        private DataTable BuildDataTableForTruck()
         {
-            workSheet.Name = "Xe_DuyenHai_" + DateTime.Now.ToString(formatDate);
-
-            List<Truck> trucks = ClarityDB.Instance.Trucks.ToList();
-            const int numOfColumn = 14;
+            DataTable dt = new DataTable();
+            dt.TableName = "Xe_" + DateTime.Now.ToString(formatDate);
             //Add table headers going cell by cell.
-            string[] headers = new string[numOfColumn] {
-                    "STT", "Biển số", "Năm sản xuất", "Số khung",
-                    "Số máy", "Nhãn hiệu", "Tải trọng (tấn)", "Ngày mua",
-                    "Ngày lưu hành", "Tiền thanh toán hàng tháng", "Cổ phần (%)",
-                    "Ngày đăng kiểm gần nhất", "Bảo Hiểm Đến", "Tài xế chịu trách nhiệm" };
-            ApplyHeaderForWorkSheet(workSheet, headers, numOfColumn);
-
-            //Format text columns
-            int[] textColumns = new int[] { 2, 4, 5, 6, 8, 9, 12, 13 };
-            FormatTextForEntireColumn(workSheet, textColumns);
+            dt.Columns.Add("STT", typeof(int));
+            dt.Columns.Add("Biển số", typeof(string));
+            dt.Columns.Add("Năm sản xuất", typeof(int));
+            dt.Columns.Add("Số khung", typeof(string));
+            dt.Columns.Add("Số máy", typeof(string));
+            dt.Columns.Add("Nhãn hiệu", typeof(string));
+            dt.Columns.Add("Tải trọng (tấn)", typeof(int));
+            dt.Columns.Add("Ngày mua", typeof(string));
+            dt.Columns.Add("Ngày lưu hành", typeof(string));
+            dt.Columns.Add("Tiền thanh toán hàng tháng", typeof(int));
+            dt.Columns.Add("Cổ phần (%)", typeof(int));
+            dt.Columns.Add("Ngày đăng kiểm gần nhất", typeof(string));
+            dt.Columns.Add("Bảo Hiểm Đến", typeof(string));
+            dt.Columns.Add("Tài xế chịu trách nhiệm", typeof(string));
 
             //Binding data
+            List<Truck> trucks = ClarityDB.Instance.Trucks.ToList();
             for (int i = 0; i < trucks.Count; i++)
             {
                 var truck = trucks[i];
-                int rowIndex = i + 2;
-                workSheet.Cells[rowIndex, 1] = i + 1;
-                workSheet.Cells[rowIndex, 2] = truck.LicensePlate;
-                workSheet.Cells[rowIndex, 3] = truck.YearOfManufacture;
-                workSheet.Cells[rowIndex, 4] = truck.Vin;
-                workSheet.Cells[rowIndex, 5] = truck.EngineNo;
-                workSheet.Cells[rowIndex, 6] = truck.Brand;
-                workSheet.Cells[rowIndex, 7] = truck.Weight;
-                workSheet.Cells[rowIndex, 8] = truck.BuyingDate;
-                workSheet.Cells[rowIndex, 9] = truck.StartUsingDate;
-                workSheet.Cells[rowIndex, 10] = truck.MonthlyPayment;
-                workSheet.Cells[rowIndex, 11] = truck.Stock;
-                workSheet.Cells[rowIndex, 12] = truck.CheckDate;
-                workSheet.Cells[rowIndex, 13] = truck.InsuranceDate;
-                workSheet.Cells[rowIndex, 14] = this.helperService.GetEmployeeName(Convert.ToInt32(truck.EmployeeId));
+                dt.Rows.Add(new object[] { i + 1 , truck.LicensePlate, truck.YearOfManufacture , truck.Vin, truck.EngineNo,
+                                           truck.Brand, truck.Weight, truck.BuyingDate, truck.StartUsingDate,
+                                           truck.MonthlyPayment, truck.Stock, truck.CheckDate, truck.InsuranceDate,
+                                           this.helperService.GetEmployeeName(Convert.ToInt32(truck.EmployeeId))});
             }
 
-            //AutoFit columns
-            AutoFixColumnWidth(workSheet, numOfColumn);
+            return dt;
         }
 
-        private void BindDataEmployeeToWorkSheet(_Worksheet workSheet)
+        private DataTable BuildDataTableForEmployee()
         {
-            workSheet.Name = "NhanVien_DuyenHai_" + DateTime.Now.ToString(formatDate);
+            DataTable dt = new DataTable();
+            dt.TableName = "NhanVien_" + DateTime.Now.ToString(formatDate);
 
-            List<Employee> employees = ClarityDB.Instance.Employees.ToList();
-            const int numOfColumn = 14;
             //Add table headers going cell by cell.
-            string[] headers = new string[numOfColumn] {
-                    "STT", "Họ tên", "Số điện thoại", "CMND",
-                    "Địa chỉ", "Chức vụ", "Hạng GPLX", "Nơi cấp GPLX",
-                    "Số GPLX", "Ngày câp GPLX", "Ngày hết hạn GPLX",
-                    "Ngày bắt đầu làm việc", "Vi phạm", "Ghi chú" };
-            ApplyHeaderForWorkSheet(workSheet, headers, numOfColumn);
-
-            //Format text columns
-            int[] textColumns = new int[] { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
-            FormatTextForEntireColumn(workSheet, textColumns);
+            dt.Columns.Add("STT", typeof(int));
+            dt.Columns.Add("Họ tên", typeof(string));
+            dt.Columns.Add("Số điện thoại", typeof(string));
+            dt.Columns.Add("CMND", typeof(string));
+            dt.Columns.Add("Địa chỉ", typeof(string));
+            dt.Columns.Add("Chức vụ", typeof(string));
+            dt.Columns.Add("Hạng GPLX", typeof(string));
+            dt.Columns.Add("Nơi cấp GPLX", typeof(string));
+            dt.Columns.Add("Số GPLX", typeof(string));
+            dt.Columns.Add("Ngày câp GPLX", typeof(string));
+            dt.Columns.Add("Ngày hết hạn GPLX", typeof(string));
+            dt.Columns.Add("Ngày bắt đầu làm việc", typeof(string));
+            dt.Columns.Add("Vi phạm", typeof(string));
+            dt.Columns.Add("Ghi chú", typeof(string));
 
             //Binding data
+            List<Employee> employees = ClarityDB.Instance.Employees.ToList();
             for (int i = 0; i < employees.Count; i++)
             {
                 var employee = employees[i];
-                int rowIndex = i + 2;
-                workSheet.Cells[rowIndex, 1] = i + 1;
-                workSheet.Cells[rowIndex, 2] = employee.FullName;
-                workSheet.Cells[rowIndex, 3] = employee.Mobile;
-                workSheet.Cells[rowIndex, 4] = employee.CardID;
-                workSheet.Cells[rowIndex, 5] = employee.Address;
-                workSheet.Cells[rowIndex, 6] = employee.Title;
-                workSheet.Cells[rowIndex, 7] = employee.DriverLicenseRank;
-                workSheet.Cells[rowIndex, 8] = employee.DriverLicenseAddress;
-                workSheet.Cells[rowIndex, 9] = employee.DriverLicenseID;
-                workSheet.Cells[rowIndex, 10] = employee.DriverLicenseDate;
-                workSheet.Cells[rowIndex, 11] = employee.DriverLicenseExpirationDate;
-                workSheet.Cells[rowIndex, 12] = employee.StartDate;
-                workSheet.Cells[rowIndex, 13] = employee.Violation;
-                workSheet.Cells[rowIndex, 14] = employee.Notes;
+                dt.Rows.Add(new object[] { i + 1 , employee.FullName, employee.Mobile , employee.CardID, employee.Address, employee.Title,
+                                           employee.DriverLicenseRank, employee.DriverLicenseAddress, employee.DriverLicenseID, employee.DriverLicenseDate,
+                                           employee.DriverLicenseExpirationDate, employee.StartDate, employee.Violation, employee.Notes });
             }
 
-            //AutoFit columns
-            AutoFixColumnWidth(workSheet, numOfColumn);
+            return dt;
         }
 
-        private void BindDataCustomerToWorkSheet(_Worksheet workSheet)
+        private DataTable BuildDataTableForCustomer()
         {
-            workSheet.Name = "KhachHang_DuyenHai_" + DateTime.Now.ToString(formatDate);
+            DataTable dt = new DataTable();
+            dt.TableName = "KhachHang_" + DateTime.Now.ToString(formatDate);
 
-            List<Customer> customers = ClarityDB.Instance.Customers.ToList();
-            const int numOfColumn = 10;
             //Add table headers going cell by cell.
-            string[] headers = new string[numOfColumn] {
-                    "STT","Mã khách hàng", "Họ tên", "Khu vực", "Số điện thoại",
-                    "Nhân viên chịu trách nhiệm", "Số phát sinh", "Tổng trả",
-                    "Còn nợ lại", "Xếp loại" };
-            ApplyHeaderForWorkSheet(workSheet, headers, numOfColumn);
-
-            //Format text columns
-            int[] textColumns = new int[] { 2, 3, 4, 5, 6, 10 };
-            FormatTextForEntireColumn(workSheet, textColumns);
+            dt.Columns.Add("STT", typeof(int));
+            dt.Columns.Add("Mã khách hàng", typeof(string));
+            dt.Columns.Add("Họ tên", typeof(string));
+            dt.Columns.Add("Khu vực", typeof(string));
+            dt.Columns.Add("Số điện thoại", typeof(string));
+            dt.Columns.Add("Nhân viên chịu trách nhiệm", typeof(string));
+            dt.Columns.Add("Số phát sinh", typeof(double));
+            dt.Columns.Add("Tổng trả", typeof(double));
+            dt.Columns.Add("Còn nợ lại", typeof(double));
+            dt.Columns.Add("Xếp loại", typeof(string));
 
             //Binding data
+            List<Customer> customers = ClarityDB.Instance.Customers.ToList();
             for (int i = 0; i < customers.Count; i++)
             {
                 var customer = customers[i];
-                int rowIndex = i + 2;
-                workSheet.Cells[rowIndex, 1] = i + 1;
-                workSheet.Cells[rowIndex, 2] = customer.Code;
-                workSheet.Cells[rowIndex, 3] = customer.FullName;
-                workSheet.Cells[rowIndex, 4] = customer.Area;
-                workSheet.Cells[rowIndex, 5] = customer.PhoneNo;
-                workSheet.Cells[rowIndex, 6] = this.helperService.GetEmployeeName(Convert.ToInt32(customer.EmployeeID));
-                workSheet.Cells[rowIndex, 7] = customer.TotalOwned;
-                workSheet.Cells[rowIndex, 8] = customer.TotalPay;
-                workSheet.Cells[rowIndex, 9] = customer.TotalDebt;
-                workSheet.Cells[rowIndex, 10] = customer.Type;
+                dt.Rows.Add(new object[] { i + 1 , customer.Code, customer.FullName , customer.Area, customer.PhoneNo,
+                                           this.helperService.GetEmployeeName(Convert.ToInt32(customer.EmployeeID)),
+                                           customer.TotalOwned, customer.TotalPay, customer.TotalDebt, customer.Type });
             }
 
-            //AutoFit columns
-            AutoFixColumnWidth(workSheet, numOfColumn);
+            return dt;
         }
 
-        private void BindDataOrderCustomerToWorkSheet(_Worksheet workSheet, DateTime fromDate, DateTime toDate)
+        private DataTable BuildDataTableForOrderCustomer(DateTime fromDate, DateTime toDate)
         {
-            workSheet.Name = "DonHang_DuyenHai_" + DateTime.Now.ToString(formatDate);
+            DataTable dt = new DataTable();
+            dt.TableName = "DonHang_" + DateTime.Now.ToString(formatDate);
 
+            //Add table headers going cell by cell.
+            dt.Columns.Add("STT", typeof(int));
+            dt.Columns.Add("Mã đơn hàng", typeof(string));
+            dt.Columns.Add("Tên khách hàng", typeof(string));
+            dt.Columns.Add("Số điện thoại", typeof(string));
+            dt.Columns.Add("Khu vực", typeof(string));
+            dt.Columns.Add("Nơi đi", typeof(string));
+            dt.Columns.Add("Nơi đến", typeof(string));
+            dt.Columns.Add("Ngày đi", typeof(string));
+            dt.Columns.Add("Ngày đến", typeof(string));
+            dt.Columns.Add("Đơn vị tính", typeof(string));
+            dt.Columns.Add("Số lượng", typeof(double));
+            dt.Columns.Add("Đơn giá", typeof(double));
+            dt.Columns.Add("Thành tiền", typeof(double));
+            dt.Columns.Add("Số xe", typeof(string));
+            dt.Columns.Add("Ghi chú", typeof(string));
+
+            //Filter data by from/to date
             List<CustomerOrder> customerOrders = ClarityDB.Instance.CustomerOrders.ToList();
             List<CustomerOrder> filteredCustomerOrders = new List<CustomerOrder>();
-
             foreach (CustomerOrder customerOrder in customerOrders)
             {
                 if (DateTime.Compare(Convert.ToDateTime(customerOrder.DepartDate), fromDate) >= 0 &&
@@ -211,51 +206,51 @@ namespace Transportation.Api
                 }
             }
 
-            const int numOfColumn = 15;
-            //Add table headers going cell by cell.
-            string[] headers = new string[numOfColumn] {
-                    "STT", "Mã đơn hàng", "Tên khách hàng", "Số điện thoại", "Khu vực", "Nơi đi",
-                    "Nơi đến", "Ngày đi", "Ngày đến", "Đơn vị tính", "Số lượng", "Đơn giá", "Thành tiền",
-                    "Số xe", "Ghi chú" };
-            ApplyHeaderForWorkSheet(workSheet, headers, numOfColumn);
-
-            //Format text columns
-            int[] textColumns = new int[] { 2, 3, 4, 5, 6, 7, 8, 9, 11, 14, 15 };
-            FormatTextForEntireColumn(workSheet, textColumns);
-
             //Binding data
             for (int i = 0; i < filteredCustomerOrders.Count; i++)
             {
                 var customerOrder = filteredCustomerOrders[i];
-                int rowIndex = i + 2;
-                workSheet.Cells[rowIndex, 1] = i + 1;
-                workSheet.Cells[rowIndex, 2] = customerOrder.Code;
-                workSheet.Cells[rowIndex, 3] = customerOrder.CustomerName;
-                workSheet.Cells[rowIndex, 4] = customerOrder.CustomerPhone;
-                workSheet.Cells[rowIndex, 5] = customerOrder.CustomerArea;
-                workSheet.Cells[rowIndex, 6] = customerOrder.Departure;
-                workSheet.Cells[rowIndex, 7] = customerOrder.Destination;
-                workSheet.Cells[rowIndex, 8] = customerOrder.DepartDate;
-                workSheet.Cells[rowIndex, 9] = customerOrder.ReturnDate;
-                workSheet.Cells[rowIndex, 10] = customerOrder.Unit;
-                workSheet.Cells[rowIndex, 11] = customerOrder.Quantity;
-                workSheet.Cells[rowIndex, 12] = customerOrder.UnitPrice;
-                workSheet.Cells[rowIndex, 13] = customerOrder.TotalPay;
-                workSheet.Cells[rowIndex, 14] = this.helperService.GetLicensePlate(Convert.ToInt32(customerOrder.TruckID));
-                workSheet.Cells[rowIndex, 15] = customerOrder.Notes;
+                dt.Rows.Add(new object[] { i + 1 , customerOrder.Code, customerOrder.CustomerName , customerOrder.CustomerPhone, customerOrder.CustomerArea,
+                                           customerOrder.Departure, customerOrder.Destination, customerOrder.DepartDate, customerOrder.ReturnDate,
+                                           customerOrder.Unit, customerOrder.Quantity, customerOrder.UnitPrice, customerOrder.TotalPay,
+                                           this.helperService.GetLicensePlate(Convert.ToInt32(customerOrder.TruckID)), customerOrder.Notes});
             }
-
-            //AutoFit columns
-            AutoFixColumnWidth(workSheet, numOfColumn);
+            return dt;
         }
 
-        private void BindDataWagonToWorkSheet(_Worksheet workSheet, DateTime fromDate, DateTime toDate)
+        private DataTable BuildDataTableForWagon(DateTime fromDate, DateTime toDate)
         {
-            workSheet.Name = "ToaHang_DuyenHai_" + DateTime.Now.ToString(formatDate);
+            DataTable dt = new DataTable();
+            dt.TableName = "ToaHang_" + DateTime.Now.ToString(formatDate);
 
+            //Add table headers going cell by cell.
+            dt.Columns.Add("STT", typeof(int));
+            dt.Columns.Add("Mã toa hàng", typeof(string));
+            dt.Columns.Add("Ngày thanh toán", typeof(string));
+            dt.Columns.Add("Nơi thanh toán", typeof(string));
+            dt.Columns.Add("Ngày đi", typeof(string));
+            dt.Columns.Add("Ngày đến", typeof(string));
+            dt.Columns.Add("Số xe", typeof(string));
+            dt.Columns.Add("Tài xế", typeof(string));
+            dt.Columns.Add("Ghi chú", typeof(string));
+            dt.Columns.Add("Phí xe", typeof(double));
+            dt.Columns.Add("Điện thoại + Dịch vụ", typeof(double));
+            dt.Columns.Add("Phí phát sinh", typeof(double));
+            dt.Columns.Add("Nguyên nhân phát sinh", typeof(string));
+            dt.Columns.Add("Biên bản phạt", typeof(string));
+            dt.Columns.Add("Diễn giải phụ", typeof(string));
+            dt.Columns.Add("Tiền xe", typeof(double));
+            dt.Columns.Add("Sửa xe", typeof(double));
+            dt.Columns.Add("Tiền dâu", typeof(double));
+            dt.Columns.Add("Lượng", typeof(double));
+            dt.Columns.Add("Dịch vụ", typeof(double));
+            dt.Columns.Add("Hàng về", typeof(double));
+            dt.Columns.Add("Trích 10%", typeof(double));
+            dt.Columns.Add("Khác", typeof(double));
+
+            //Filter data by from/to date
             List<Wagon> wagons = ClarityDB.Instance.Wagons.ToList();
             List<Wagon> filteredWagons = new List<Wagon>();
-
             foreach (Wagon wagon in wagons)
             {
                 if (DateTime.Compare(Convert.ToDateTime(wagon.PaymentDate), fromDate) >= 0 &&
@@ -264,51 +259,70 @@ namespace Transportation.Api
                     filteredWagons.Add(wagon);
                 }
             }
-
-            const int numOfColumn = 23;
-            //Add table headers going cell by cell.
-            string[] headers = new string[numOfColumn] {
-                    "STT", "Mã toa hàng", "Ngày thanh toán", "Nơi thanh toán", "Ngày đi", "Ngày đến","Số xe", "Tài xế",
-                "Ghi chú", "Phí xe", "Điện thoại + Dịch vụ", "Phí phát sinh", "Nguyên nhân phát sinh","Biên bản phạt",
-                "Diễn giải phụ", "Tiền xe", "Sửa xe", "Tiền dâu", "Lượng", "Dịch vụ", "Hàng về", "Trích 10%", "Khác" };
-            ApplyHeaderForWorkSheet(workSheet, headers, numOfColumn);
-
-            //Format text columns
-            int[] textColumns = new int[] { 2, 3, 4, 5, 6, 7, 8, 9, 13, 14, 15 };
-            FormatTextForEntireColumn(workSheet, textColumns);
-
+            
             //Binding data
             for (int i = 0; i < filteredWagons.Count; i++)
             {
-                var customerOrder = filteredWagons[i];
-                int rowIndex = i + 2;
-                workSheet.Cells[rowIndex, 1] = i + 1;
-                workSheet.Cells[rowIndex, 2] = customerOrder.Code;
-                workSheet.Cells[rowIndex, 3] = customerOrder.PaymentDate;
-                workSheet.Cells[rowIndex, 4] = customerOrder.PaymentPlace;
-                workSheet.Cells[rowIndex, 5] = customerOrder.DepartDate;
-                workSheet.Cells[rowIndex, 6] = customerOrder.ReturnDate;
-                workSheet.Cells[rowIndex, 7] = customerOrder.Truck.LicensePlate;
-                workSheet.Cells[rowIndex, 8] = customerOrder.Employee.FullName;
-                workSheet.Cells[rowIndex, 9] = customerOrder.Notes;
-                workSheet.Cells[rowIndex, 10] = customerOrder.CostOfTruck;
-                workSheet.Cells[rowIndex, 11] = customerOrder.CostOfService;
-                workSheet.Cells[rowIndex, 12] = customerOrder.CostOfTangBoXe;
-                workSheet.Cells[rowIndex, 13] = customerOrder.ReasonForPhiPhatXinh;
-                workSheet.Cells[rowIndex, 14] = customerOrder.CostOfPenalty;
-                workSheet.Cells[rowIndex, 15] = customerOrder.CostOfExtra;
-                workSheet.Cells[rowIndex, 16] = customerOrder.PaymentOfTruck;
-                workSheet.Cells[rowIndex, 17] = customerOrder.PaymentOfRepairing;
-                workSheet.Cells[rowIndex, 18] = customerOrder.PaymentOfOil;
-                workSheet.Cells[rowIndex, 19] = customerOrder.PaymentOfLuong;
-                workSheet.Cells[rowIndex, 20] = customerOrder.PaymentOfService;
-                workSheet.Cells[rowIndex, 21] = customerOrder.PaymentOfHangVe;
-                workSheet.Cells[rowIndex, 22] = customerOrder.PaymentOf10Percent;
-                workSheet.Cells[rowIndex, 23] = customerOrder.PaymentOfOthers;
+                var wagon = filteredWagons[i];
+                dt.Rows.Add(new object[] { i + 1 , wagon.Code, wagon.PaymentDate , wagon.PaymentPlace, wagon.DepartDate,
+                                           wagon.ReturnDate, wagon.Truck.LicensePlate, wagon.Employee.FullName,
+                                           wagon.Notes, wagon.CostOfTruck, wagon.CostOfService, wagon.CostOfTangBoXe,
+                                           wagon.ReasonForPhiPhatXinh, wagon.CostOfPenalty, wagon.CostOfExtra,
+                                           wagon.PaymentOfTruck, wagon.PaymentOfRepairing, wagon.PaymentOfOil, wagon.PaymentOfLuong,
+                                           wagon.PaymentOfService, wagon.PaymentOfHangVe, wagon.PaymentOf10Percent, wagon.PaymentOfOthers});
             }
 
-            //AutoFit columns
-            AutoFixColumnWidth(workSheet, numOfColumn);
+            return dt;
+        }
+
+        private DataTable BuildDataTableForWagonSettlement(DateTime fromDate, DateTime toDate)
+        {
+            DataTable dt = new DataTable();
+            dt.TableName = "QuyetToan_" + DateTime.Now.ToString(formatDate);
+
+            //Add table headers going cell by cell.
+            dt.Columns.Add("STT", typeof(int));
+            dt.Columns.Add("Mã toa hàng", typeof(string));
+            dt.Columns.Add("Mã quyết toán", typeof(string));
+            dt.Columns.Add("Khách hàng", typeof(string));
+            dt.Columns.Add("Ngày phát sinh", typeof(string));
+            dt.Columns.Add("Nơi thanh toán", typeof(string));
+            dt.Columns.Add("Ngày giao dịch", typeof(string));
+            dt.Columns.Add("Nơi đi", typeof(string));
+            dt.Columns.Add("Nơi đến", typeof(string));
+            dt.Columns.Add("Đơn vị tính", typeof(string));
+            dt.Columns.Add("Số lượng", typeof(double));
+            dt.Columns.Add("Đơn giá", typeof(double));
+            dt.Columns.Add("Tổng phí", typeof(double));
+            dt.Columns.Add("Đã thanh toán", typeof(string));
+            dt.Columns.Add("Chiết khấu", typeof(string));
+            dt.Columns.Add("Còn lại", typeof(string));
+
+            //Filter data by from/to date
+            List<WagonSettlement> wagonSettlements = ClarityDB.Instance.WagonSettlements.ToList();
+            List<WagonSettlement> filteredWagonSettlements = new List<WagonSettlement>();
+            foreach (WagonSettlement wagonSettlement in wagonSettlements)
+            {
+                if (wagonSettlement.PaymentDate != null) {
+                    if (DateTime.Compare(Convert.ToDateTime(wagonSettlement.PaymentDate), fromDate) >= 0 &&
+                    DateTime.Compare(Convert.ToDateTime(wagonSettlement.PaymentDate), toDate) <= 0)
+                    {
+                        filteredWagonSettlements.Add(wagonSettlement);
+                    }
+                }
+            }
+
+            //Binding data
+            for (int i = 0; i < filteredWagonSettlements.Count; i++)
+            {
+                var wagonSettlement = filteredWagonSettlements[i];
+                dt.Rows.Add(new object[] { i + 1 , wagonSettlement.WagonCode, wagonSettlement.Code , wagonSettlement.Customer.FullName, wagonSettlement.Date,
+                                           wagonSettlement.PaymentPlace, wagonSettlement.PaymentDate, wagonSettlement.Departure,
+                                           wagonSettlement.Destination, wagonSettlement.Unit, wagonSettlement.Quantity, wagonSettlement.UnitPrice,
+                                           wagonSettlement.TotalAmount, wagonSettlement.Payment, wagonSettlement.Discount, wagonSettlement.PaymentRemain});
+            }
+
+            return dt;
         }
 
         [Route(HttpVerb.Delete, "/deleteExcelFile/{folderName}")]
@@ -324,33 +338,7 @@ namespace Transportation.Api
             return new RestApiResult { StatusCode = HttpStatusCode.OK };
         }
 
-        private void ApplyHeaderForWorkSheet(_Worksheet workSheet, string[] headers, int numOfColumn)
-        {
-            for (int columnIndex = 0; columnIndex < headers.Count(); columnIndex++)
-            {
-                workSheet.Cells[1, columnIndex + 1] = headers[columnIndex];
-            }
-            //Format headers
-            workSheet.Range[workSheet.Cells[1, 1], workSheet.Cells[1, numOfColumn]].Font.Bold = true;
-            workSheet.Range[workSheet.Cells[1, 1], workSheet.Cells[1, numOfColumn]].VerticalAlignment = XlVAlign.xlVAlignCenter;
-            workSheet.Range[workSheet.Cells[1, 1], workSheet.Cells[1, numOfColumn]].HorizontalAlignment = XlHAlign.xlHAlignCenter;
-        }
-
-        private void FormatTextForEntireColumn(_Worksheet workSheet, int[] columns)
-        {
-            foreach (int columnIndex in columns)
-            {
-                workSheet.Cells[1, columnIndex].EntireColumn.NumberFormat = "@";
-            }
-        }
-
-        private void AutoFixColumnWidth(_Worksheet workSheet, int numOfColumn)
-        {
-            Range oRng = workSheet.Range[workSheet.Cells[1, 1], workSheet.Cells[1, numOfColumn]];
-            oRng.EntireColumn.AutoFit();
-        }
-
-        private string createExcelFile(_Workbook workBook, string fileName)
+        private string saveExcelFile(DataTable dt, string fileName)
         {
             string appPath = HttpContext.Current.Request.ApplicationPath;
             string physicalPath = HttpContext.Current.Request.MapPath(appPath).TrimEnd('\\');
@@ -362,12 +350,10 @@ namespace Transportation.Api
             }
             string fileNamePath = string.Format("{0}\\{1}.xlsx", outputFolder, fileName);
 
-            workBook.SaveAs(fileNamePath, XlFileFormat.xlWorkbookDefault, Type.Missing, Type.Missing, false, false,
-                XlSaveAsAccessMode.xlNoChange, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-            workBook.Close();
+            CreateExcelFile.CreateExcelDocument(dt, fileNamePath);
 
             return string.Format("{0}/{1}.xlsx", folderName, fileName);
-
         }
+
     }
 }

@@ -29,5 +29,15 @@ module Clarity.Service {
         .error((data, status) => { this.doCallback(errorCallback, data, status); });
     }
 
+    getWagonSettlementReportByDate(dateObject: any, successCallback: Function, errorCallback: Function) {
+      this.http.get('/api/wagonSettlementReportByDate', { params: { date: JSON.stringify(dateObject) } })
+        .success((data: Array<Model.WagonReportModel>) => {
+          this.doCallback(successCallback, data);
+        })
+        .error((data, status) => {
+          this.doCallback(errorCallback, data, status);
+        });
+    }
+
   }
 }

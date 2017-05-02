@@ -47,6 +47,7 @@ var config = {
 	, 'js/model/PaymentModel.js'
     , 'js/model/ExportTypeModel.js'
     , 'js/model/WagonReportModel.js'
+    , 'js/model/WagonSettlementReportModel.js'
 
 	, 'js/services/IService.js'
 	, 'js/services/BaseService.js'

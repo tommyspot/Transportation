@@ -16,6 +16,7 @@ namespace Transportation.Api
 {
     public class WagonService
     {
+        const string formatDate = "dd/MM/yyyy";
         public WagonService() { }
 
         [Route(HttpVerb.Get, "/wagons")]
@@ -94,16 +95,16 @@ namespace Transportation.Api
         public RestApiResult GetWagonReportByDate(string date)
         {
             var dateJSON = JsonConvert.DeserializeObject<JObject>(date);
-            DateTime fromDate = Convert.ToDateTime(dateJSON.Value<string>("fromDate"));
-            DateTime toDate = Convert.ToDateTime(dateJSON.Value<string>("toDate"));
+            DateTime fromDate = DateTime.ParseExact(dateJSON.Value<string>("fromDate"), formatDate, CultureInfo.InvariantCulture);
+            DateTime toDate = DateTime.ParseExact(dateJSON.Value<string>("toDate"), formatDate, CultureInfo.InvariantCulture);
 
             List<Wagon> wagons = ClarityDB.Instance.Wagons.ToList();
             List<Wagon> filteredWagons = new List<Wagon>();
 
             foreach (Wagon wagon in wagons)
             {
-                if (DateTime.Compare(Convert.ToDateTime(wagon.PaymentDate), fromDate) >= 0 &&
-                    DateTime.Compare(Convert.ToDateTime(wagon.PaymentDate), toDate) <= 0)
+                DateTime paymentDate = DateTime.ParseExact(wagon.PaymentDate, formatDate, CultureInfo.InvariantCulture);
+                if (DateTime.Compare(paymentDate, fromDate) >= 0 && DateTime.Compare(paymentDate, toDate) <= 0)
                 {
                     filteredWagons.Add(wagon);
                 }

@@ -15,6 +15,7 @@ module Clarity.Controller {
     public exportService: service.ExportService;
     public orderCustomerService: service.CustomerOrderService;
     public wagonService: service.WagonService;
+    public wagonSettlementService: service.WagonSettlementService;
 
     public isExportLoading: boolean;
     public isViewLoading: boolean;
@@ -22,6 +23,7 @@ module Clarity.Controller {
     public toDate: string;
     public filteredCustomerOrders: Array<model.CustomerOrderModel>;
     public wagonReport: model.WagonReportModel;
+    public wagonSettlementReport: model.WagonSettlementReportModel;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -34,8 +36,10 @@ module Clarity.Controller {
       this.exportService = new service.ExportService($http);
       this.orderCustomerService = new service.CustomerOrderService($http);
       this.wagonService = new service.WagonService($http);
+      this.wagonSettlementService = new service.WagonSettlementService($http);
 
       this.wagonReport = new model.WagonReportModel();
+      this.wagonSettlementReport = new model.WagonSettlementReportModel();
       $scope.viewModel = this;
     }
 
@@ -118,7 +122,29 @@ module Clarity.Controller {
       });
     }
 
+    viewWagonSettlement() {
+      this.isViewLoading = true;
+      this.wagonSettlementService.getWagonSettlementReportByDate({ fromDate: this.wagonSettlementReport.fromDate, toDate: this.wagonSettlementReport.toDate }, (data) => {
+        this.isViewLoading = false;
+        this.wagonSettlementReport.data = data;
+      }, null);
+    }
 
-    
+    exportWagonSettlement() {
+      this.isExportLoading = true;
+      let jsonObject = {
+        type: model.ExportType.WagonSettlement,
+        fromDate: this.wagonSettlementReport.fromDate,
+        toDate: this.wagonSettlementReport.toDate
+      }
+
+      this.exportService.exportToExcel(jsonObject, (data) => {
+        this.isExportLoading = false;
+        window.location.href = '/output/' + data['fileName'];
+      }, () => {
+        this.isExportLoading = false;
+      });
+    }
+
 	}
 }

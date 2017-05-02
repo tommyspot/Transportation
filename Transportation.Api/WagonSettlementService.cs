@@ -10,11 +10,13 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Data;
 using System.Data.Entity.Validation;
+using Newtonsoft.Json;
 
 namespace Transportation.Api
 {
     public class WagonSettlementService
     {
+        const string formatDate = "dd/MM/yyyy";
         public WagonSettlementService() { }
 
         [Route(HttpVerb.Get, "/wagonSettlements")]
@@ -23,6 +25,39 @@ namespace Transportation.Api
             var wagonSettlements = ClarityDB.Instance.WagonSettlements;
 
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(wagonSettlements) };
+        }
+
+        [Route(HttpVerb.Get, "/wagonSettlementReportByDate")]
+        public RestApiResult GetWagonSettlementReportByDate(string date)
+        {
+            var dateJSON = JsonConvert.DeserializeObject<JObject>(date);
+            DateTime fromDate = DateTime.ParseExact(dateJSON.Value<string>("fromDate"), formatDate, CultureInfo.InvariantCulture);
+            DateTime toDate = DateTime.ParseExact(dateJSON.Value<string>("toDate"), formatDate, CultureInfo.InvariantCulture);
+
+            List<WagonSettlement> wagonSettlements = ClarityDB.Instance.WagonSettlements.ToList();
+            List<WagonSettlement> filteredWagonSettlements = new List<WagonSettlement>();
+
+            foreach (WagonSettlement wagonSettlement in wagonSettlements)
+            {
+                if(wagonSettlement.PaymentDate != null)
+                {
+                    DateTime paymentDate = DateTime.ParseExact(wagonSettlement.PaymentDate, formatDate, CultureInfo.InvariantCulture);
+                    if (DateTime.Compare(paymentDate, fromDate) >= 0 && DateTime.Compare(paymentDate, toDate) <= 0)
+                    {
+                        filteredWagonSettlements.Add(wagonSettlement);
+                    }
+                }
+            }
+
+            var wagonSettlementReportDataList = filteredWagonSettlements.Select(w => new WagonSettlementReportData
+            {
+                Code = w.Code,
+                TotalAmount = w.TotalAmount,
+                TotalPayment = 100, //waiting confirm
+                Profit = 80         //TotalAmount - TotalPayment
+            }).ToList();
+
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonReportDataArray(wagonSettlementReportDataList) };
         }
 
         [Route(HttpVerb.Post, "/wagonSettlements")]
@@ -114,6 +149,18 @@ namespace Transportation.Api
             foreach (WagonSettlement wagonSettlement in wagonSettlements)
             {
                 array.Add(wagonSettlement.ToJson());
+            }
+
+            return array;
+        }
+
+        private JArray BuildJsonReportDataArray(List<WagonSettlementReportData> wagonSettlementReportDataList)
+        {
+            JArray array = new JArray();
+
+            foreach (WagonSettlementReportData wagonSettlementReport in wagonSettlementReportDataList)
+            {
+                array.Add(wagonSettlementReport.ToJson());
             }
 
             return array;
