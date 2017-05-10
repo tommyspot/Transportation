@@ -462,7 +462,9 @@ clarityApp.controller('UserController', Clarity.Controller.UserController);
 
 clarityApp.filter('filterDate', function () {
     return function (input, filterDate) {
-        if (input == null || input.length == 0) { return; }
+        if (input == null || input.length == 0) {
+            return;
+        }
 
         if (!filterDate) {
             return input;
@@ -471,18 +473,12 @@ clarityApp.filter('filterDate', function () {
         var result = [];
         for (var i = 0; i < input.length; i++) {
             var customerOrder = input[i];
-
-            if (customerOrder.departDate.getTime() === filterDate.getTime()) {
+            var helper = new Clarity.Helper.MainHelper();
+            var d1 = helper.formatStringToDateTime(customerOrder.departDate);
+            var d2 = helper.formatStringToDateTime(filterDate);
+            if (d1.getTime() == d2.getTime()) {
                 result.push(customerOrder);
             }
-
-            //if ((filterDate.id == null || filterDate.id == '' || filterDate.id == user.id)
-            //  && (filterDate.username == null || filterDate.username == '' || user.username.toLowerCase().indexOf(filterDate.username.toLowerCase()) > -1)
-            //  && filterDate.isInvited == user.isInvited) {
-            //	result.push(user);
-            //} else if (user.name && user.name.toLowerCase().indexOf(name.toLowerCase()) > -1) {
-            //	result.push(user);
-            //}
         }
 
         return result;

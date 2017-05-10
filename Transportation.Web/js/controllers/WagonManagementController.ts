@@ -23,7 +23,6 @@ module Clarity.Controller {
     public employeeList: Array<Model.EmployeeModel>
     public customerList: Array<Model.CustomerModel>
     public customerOrderList: Array<Model.CustomerOrderModel>
-		public customerOrderListTmp: Array<Model.CustomerOrderModel>
     public wagonList: Array<Model.WagonModel>;
     public wagonListTmp: Array<Model.WagonModel>;
 
@@ -66,13 +65,6 @@ module Clarity.Controller {
           self.initPagination();
         }
       });
-
-			this.$scope.$watch('viewModel.searchDate', function (newVal, oldVal) {
-        if ((oldVal == newVal) || oldVal == undefined || newVal == undefined)
-          return;
-
-				self.customerOrderListTmp = self.$filter('filter')(self.customerOrderList, { 'date': newVal });
-      }, true);
     }
 
     initWagon() {
@@ -129,16 +121,12 @@ module Clarity.Controller {
     }
 
     initTruckList() {
-			//if (this.$rootScope && this.$rootScope.truckList && this.$rootScope.truckList.length > 0) {
-			//	this.truckList = this.$rootScope.truckList;
-			//} else {
 			this.truckService.getAll((results: Array<Model.TruckModel>) => {
 				this.$rootScope.truckList = results;
         this.truckList = this.$rootScope.truckList;
 
         this.initCustomerOrderList();
 			}, null);
-			//}
     }
 
     initEmployeeList() {
@@ -179,7 +167,6 @@ module Clarity.Controller {
     initCustomerOrderList() {
       this.customerOrderService.getAll((results: Array<Model.CustomerOrderModel>) => {
         this.customerOrderList = results;
-				this.customerOrderListTmp = angular.copy(this.customerOrderList);
 				this.getTruckListInCustomerOrder();
       }, null);
     }
@@ -352,28 +339,26 @@ module Clarity.Controller {
       return max;
     }
 
-		getTruckListInCustomerOrder() {
+    getTruckListInCustomerOrder() {
+      if (this.customerOrderList && this.truckList) {
+        this.truckListInCustomerOrder = angular.copy(this.truckList);
+        for (let i = this.truckListInCustomerOrder.length - 1; i >= 0; i--) {
+          var truck = this.truckListInCustomerOrder[i];
+          var foundTruck = false;
+          for (let j = 0; j < this.customerOrderList.length; j++) {
+            var customerOrder = this.customerOrderList[j];
+            if (customerOrder.truckId == truck.id) {
+              foundTruck = true;
+              break;
+            }
+          }
 
-			if (this.customerOrderList && this.truckList) {
-				this.truckListInCustomerOrder = angular.copy(this.truckList);
-				for (let i = this.truckListInCustomerOrder.length - 1; i >= 0; i--) {
-					var truck = this.truckListInCustomerOrder[i];
-					var foundTruck = false;
-					for (let j = 0; j < this.customerOrderList.length; j++) {
-						var customerOrder = this.customerOrderList[j];
-						if (customerOrder.truckId == truck.id) {
-							foundTruck = true;
-							break;
-						}
-					}
-
-					if (!foundTruck) {
-						this.truckListInCustomerOrder.splice(i, 1);
-					}
-				}
-
-			}
-		}
+          if (!foundTruck) {
+            this.truckListInCustomerOrder.splice(i, 1);
+          }
+        }
+      }
+    }
 
 		formatedCurencyForWagon() {
 			if (this.currentWagon) {

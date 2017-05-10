@@ -115,7 +115,7 @@
 													<select ui-select2 id="wagonSettlementCustomerId-{{$index}}" class="form-control ui-select-2" data-ng-model="wagonSettlement.customerOrderId"
 																	data-ng-change="viewModel.bindDataCustomerOrderTowagonSettlement(wagonSettlement, wagonSettlement.customerOrderId)">
 														<option value="">--Chọn đơn hàng--</option>
-														<option ng-repeat="customerOrder in viewModel.customerOrderListTmp | filter: viewModel.search | filterDate: viewModel.searchDate" value="{{customerOrder.id}}">
+														<option ng-repeat="customerOrder in viewModel.customerOrderList | filter: viewModel.search | filterDate: viewModel.searchDate" value="{{customerOrder.id}}">
 															{{customerOrder.customerName}}_{{customerOrder.customerPhone}}_{{customerOrder.quantity}}
 														</option>
 													</select>
@@ -248,7 +248,7 @@
 									<div class="row">
 										<div class="col-sm-12">
 											<ul class="list-group">
-												<li class="list-group-item" data-ng-repeat="customerOrder in viewModel.customerOrderListTmp | filter: viewModel.search | filterDate: viewModel.searchDate">
+												<li class="list-group-item" data-ng-repeat="customerOrder in viewModel.customerOrderList | filter: viewModel.search | filterDate: viewModel.searchDate">
 													{{customerOrder.customerName}}_{{customerOrder.customerPhone}}_{{customerOrder.quantity}}
 												</li>
 											</ul>

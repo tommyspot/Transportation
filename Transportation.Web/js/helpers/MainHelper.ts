@@ -175,6 +175,12 @@ module Clarity.Helper {
       return false;
     }
 
+    public formatStringToDateTime(date: string) {
+      var day = parseInt(date.split('/')[0]);
+      var month = parseInt(date.split('/')[1]) - 1;
+      var year = parseInt(date.split('/')[2]);
+      return new Date(year, month, day);
+    }
   }
 
 }
