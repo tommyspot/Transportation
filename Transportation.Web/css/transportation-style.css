@@ -5682,6 +5682,8 @@ div.bootstrap {
           color: #C0392B; }
     #ng-app .banner .logo {
       height: 54px; }
+  #ng-app .pagination {
+    margin: 0; }
   #ng-app .pagination > .active > a,
   #ng-app .pagination > .active > a:hover,
   #ng-app .pagination > .active > a:focus,
@@ -5898,8 +5900,13 @@ div.bootstrap {
   #ng-app .view-page .show-records-per-page {
     width: auto;
     display: inline-block; }
+  #ng-app .view-page button {
+    height: 34px;
+    margin-top: -4px; }
   #ng-app .view-page .action-row {
     margin-bottom: 20px; }
+  #ng-app .view-page .fa-spin {
+    font-size: 24px; }
   #ng-app #wagonFormSection form {
     color: #34495E;
     border: 1px solid #34495E;

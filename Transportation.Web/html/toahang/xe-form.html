@@ -1,18 +1,17 @@
-﻿<div id="employeeFormSection" class="bootstrap form">
+﻿<div id="truckFormSection" class="bootstrap form">
 	<div class="container">
 		<form name="truckForm">
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="licensePlate">Biển Số <span class="required-symbol">*</span></label>
-						<span class="required-field" ng-if="truckForm.licensePlate.$touched && truckForm.licensePlate.$invalid">('Biển số' phải được nhập)</span>
+						<span class="required-field" ng-if="truckForm.licensePlate.$touched && truckForm.licensePlate.$invalid">(Biển số phải được nhập)</span>
 						<input id="licensePlate" name="licensePlate" class="form-control" type="text" ng-model="viewModel.currentTruck.licensePlate" required>
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="yearOfManufacture">Năm Sản Xuất</label>
-						<span class="required-field" ng-if="truckForm.yearOfManufacture.$touched && truckForm.yearOfManufacture.$invalid">('Năm Sản Xuất' phải có 4 ký tự)</span>
 						<input id="yearOfManufacture" name="yearOfManufacture" class="form-control" type="number" pattern="[0-9]{4}" ng-model="viewModel.currentTruck.yearOfManufacture">
 					</div>
 				</div>

@@ -23,7 +23,8 @@ module Clarity.Controller {
 		public areas: Array<String>;
 		public totalOwnedFormated: string;
 		public totalPayFormated: string;
-		public totalDebtFormated: string;
+    public totalDebtFormated: string;
+    public isLoading: boolean;
 
     constructor(private $scope,
       public $rootScope: IRootScope,
@@ -36,7 +37,7 @@ module Clarity.Controller {
 			this.customerService = new service.CustomerService($http);
 			this.employeeService = new service.EmployeeService($http);
       $scope.viewModel = this;
-			this.pageSize = 5;
+			this.pageSize = 10;
       this.initCustomer();
 			this.areas = ['An Giang', 'Bà Rịa - Vũng Tàu', 'Bắc Giang', 'Bắc Kạn', 'Bạc Liêu', 'Bắc Ninh', 'Bến Tre', 'Bình Định', 'Bình Dương', 'Bình Phước', 'Bình Thuận',
 				'Cà Mau',	'Cần Thơ', 'Cao Bằng', 'Đà Nẵng', 'Đắk Lắk',	'Đắk Nông',	'Điện Biên',	'Đồng Nai',	'Đồng Tháp',	'Gia Lai',	'Hà Giang',	'Hà Nam',	'Hà Nội',	'Hà Tĩnh',
@@ -82,7 +83,8 @@ module Clarity.Controller {
       }
     }
 
-		initCustomerList() {
+    initCustomerList() {
+      this.isLoading = true;
       this.customerService.getAll((results: Array<Model.CustomerModel>) => {
         this.customerList = results;
         this.customerList.sort(function (a: any, b: any) {
@@ -90,6 +92,7 @@ module Clarity.Controller {
         });
         this.customerListTmp = this.customerList;
         this.initPagination();
+        this.isLoading = false;
       }, null);
     }
 

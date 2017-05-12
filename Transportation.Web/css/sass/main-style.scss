@@ -156,6 +156,9 @@ div.bootstrap {
     }
   }
   /*PAGING*/
+  .pagination{
+    margin: 0;
+  }
   .pagination > .active > a,
   .pagination > .active > a:hover,
   .pagination > .active > a:focus,
@@ -166,7 +169,6 @@ div.bootstrap {
     border-color: $transport-color-2;
     color: #FFFFFF;
   }
-
   .pagination > li > a,
   .pagination > li > span {
     color: $transport-color-2;
@@ -507,14 +509,19 @@ div.bootstrap {
   }
 
   .view-page {
-
     .show-records-per-page {
       width: auto;
       display: inline-block;
     }
-
+    button{
+      height: 34px;
+      margin-top: -4px;
+    }
     .action-row {
       margin-bottom: 20px;
+    }
+    .fa-spin{
+      font-size: 24px;
     }
   }
 

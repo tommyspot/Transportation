@@ -105,7 +105,7 @@ namespace Transportation.Api
                 dt.Rows.Add(new object[] { i + 1 , truck.LicensePlate, truck.YearOfManufacture , truck.Vin, truck.EngineNo,
                                            truck.Brand, truck.Weight, truck.BuyingDate, truck.StartUsingDate,
                                            truck.MonthlyPayment, truck.Stock, truck.CheckDate, truck.InsuranceDate,
-                                           this.helperService.GetEmployeeName(Convert.ToInt32(truck.EmployeeId))});
+                                           String.IsNullOrEmpty(truck.EmployeeId) ? "" : this.helperService.GetEmployeeName(Convert.ToInt32(truck.EmployeeId))});
             }
 
             return dt;
@@ -168,7 +168,7 @@ namespace Transportation.Api
             {
                 var customer = customers[i];
                 dt.Rows.Add(new object[] { i + 1 , customer.Code, customer.FullName , customer.Area, customer.PhoneNo,
-                                           this.helperService.GetEmployeeName(Convert.ToInt32(customer.EmployeeID)),
+                                           String.IsNullOrEmpty(customer.EmployeeID) ? "" : this.helperService.GetEmployeeName(Convert.ToInt32(customer.EmployeeID)),
                                            customer.TotalOwned, customer.TotalPay, customer.TotalDebt, customer.Type });
             }
 
@@ -216,7 +216,7 @@ namespace Transportation.Api
                 dt.Rows.Add(new object[] { i + 1 , customerOrder.Code, customerOrder.CustomerName , customerOrder.CustomerPhone, customerOrder.CustomerArea,
                                            customerOrder.Departure, customerOrder.Destination, customerOrder.DepartDate, customerOrder.ReturnDate,
                                            customerOrder.Unit, customerOrder.Quantity, customerOrder.UnitPrice, customerOrder.TotalPay,
-                                           this.helperService.GetLicensePlate(Convert.ToInt32(customerOrder.TruckID)), customerOrder.Notes});
+                                           String.IsNullOrEmpty(customerOrder.TruckID) ? "" : this.helperService.GetLicensePlate(Convert.ToInt32(customerOrder.TruckID)), customerOrder.Notes});
             }
             return dt;
         }

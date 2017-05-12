@@ -44,7 +44,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="pointer" data-ng-repeat="truck in viewModel.truckList"
+              <tr data-ng-if="viewModel.isLoading">
+                <td class="text-center" colspan="7">
+                  <i class="fa fa-spinner fa-spin"></i>
+                </td>
+              </tr>
+              <tr data-ng-if="!viewModel.isLoading" class="pointer" data-ng-repeat="truck in viewModel.getTruckListOnPage()"
                   data-ng-click="viewModel.$location.path('/ql-toa-hang/xe/' + truck.id)">
                 <td class="align-center" data-ng-click="$event.stopPropagation();">
                   <input id="truck-{{$index}}" type="checkbox" data-ng-model="truck.isChecked" />

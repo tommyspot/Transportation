@@ -1,12 +1,13 @@
-﻿<div id="employeeFormSection" class="bootstrap form">
+﻿<div id="customerOrderFormSection" class="bootstrap form">
 	<div class="container">
-		<form name="truckForm">
-
+		<form name="customerOrderForm">
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="address">Mã Khách Hàng</label>
-						<select ui-select2 id="customerId" class="form-control ui-select-2" data-ng-model="viewModel.currentCustomerOrder.customerId" data-ng-change="viewModel.applyCustomer(viewModel.currentCustomerOrder.customerId)">
+            <label for="customerId">Mã Khách Hàng <span class="required-symbol">*</span></label>
+            <span class="required-field" ng-if="customerOrderForm.customerId.$dirty && customerOrderForm.customerId.$invalid">(Mã Khách Hàng phải được nhập)</span>
+            <select id="customerId" name="customerId" ui-select2 class="form-control ui-select-2" data-ng-model="viewModel.currentCustomerOrder.customerId"
+                    data-ng-change="viewModel.applyCustomer(viewModel.currentCustomerOrder.customerId)" required>
 							<option value="">--Khách hàng mới--</option>
 							<option ng-repeat="customer in viewModel.customerList" value="{{customer.id}}">{{customer.code}}</option>
 						</select>
@@ -14,9 +15,9 @@
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="licensePlate">Tên Khách Hàng <span class="required-symbol">*</span></label>
-						<span class="required-field" ng-if="truckForm.licensePlate.$touched && truckForm.licensePlate.$invalid">('Tên Khách Hàng' phải được nhập)</span>
-						<input id="licensePlate" name="licensePlate" class="form-control" type="text" ng-model="viewModel.currentCustomerOrder.customerName" required>
+						<label for="customerName">Tên Khách Hàng <span class="required-symbol">*</span></label>
+						<span class="required-field" ng-if="customerOrderForm.customerName.$touched && customerOrderForm.customerName.$invalid">(Tên Khách Hàng phải được nhập)</span>
+						<input id="customerName" name="customerName" class="form-control" type="text" ng-model="viewModel.currentCustomerOrder.customerName" required>
 					</div>
 				</div>
 			</div>
@@ -24,17 +25,18 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="customerPhone">Số Điện Thoại  <span class="required-symbol">*</span></label>
-						<span class="required-field" ng-if="truckForm.customerPhone.$touched && truckForm.customerPhone.$invalid">('Số Điện Thoại' phải được nhập)</span>
+						<label for="customerPhone">Số Điện Thoại <span class="required-symbol">*</span></label>
+						<span class="required-field" ng-if="customerOrderForm.customerPhone.$touched && customerOrderForm.customerPhone.$invalid">(Số Điện Thoại phải được nhập)</span>
 						<input id="customerPhone" name="customerPhone" class="form-control" type="text" pattern="[0-9]+" ng-model="viewModel.currentCustomerOrder.customerPhone" required>
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="customerArea">Khu vực <span class="required-symbol">*</span></label>
-						<select id="area" class="form-control" data-ng-model="viewModel.currentCustomerOrder.customerArea">
+            <span class="required-field" ng-if="customerOrderForm.customerArea.$touched && customerOrderForm.customerArea.$invalid">(Khu vực phải được nhập)</span>
+						<select id="customerArea" name="customerArea" class="form-control" data-ng-model="viewModel.currentCustomerOrder.customerArea" required>
 							<option value="">--Chọn khu vực--</option>
-							<option ng-repeat="area in viewModel.areas">{{area}}</option>
+							<option ng-repeat="area in viewModel.areas" value="{{area}}">{{area}}</option>
 						</select>
 					</div>
 				</div>
@@ -65,16 +67,18 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="departDate">Ngày Đi <span class="required-symbol">*</span></label>
+            <span class="required-field" ng-if="customerOrderForm.departDate.$touched && customerOrderForm.departDate.$invalid">(Ngày đi phải được nhập)</span>
             <datepicker class="date-picker" date-format="dd/MM/yyyy">
-              <input id="departDate" class="form-control" name="departDate" type="text" ng-model="viewModel.currentCustomerOrder.departDate">
+              <input id="departDate" class="form-control" name="departDate" type="text" ng-model="viewModel.currentCustomerOrder.departDate" required>
             </datepicker>
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="returnDate">Ngày Đến <span class="required-symbol">*</span></label>
+            <span class="required-field" ng-if="customerOrderForm.returnDate.$touched && customerOrderForm.returnDate.$invalid">(Ngày đến phải được nhập)</span>
             <datepicker class="date-picker" date-format="dd/MM/yyyy">
-              <input id="returnDate" class="form-control" name="returnDate" type="text" ng-model="viewModel.currentCustomerOrder.returnDate">
+              <input id="returnDate" class="form-control" name="returnDate" type="text" ng-model="viewModel.currentCustomerOrder.returnDate" required>
             </datepicker>
 					</div>
 				</div>
@@ -119,8 +123,10 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="totalPay">Số xe <span class="required-symbol">*</span></label>
-						<select ui-select-2 id="unit" class="form-control ui-select-2" data-ng-model="viewModel.currentCustomerOrder.truckId" data-ng-change="viewModel.getCustomerOrderCode()">
+						<label for="truckId">Số xe <span class="required-symbol">*</span></label>
+            <span class="required-field" ng-if="customerOrderForm.truckId.$dirty && customerOrderForm.truckId.$invalid">(Số xe phải được nhập)</span>
+						<select ui-select-2 id="truckId" name="truckId" class="form-control ui-select-2" data-ng-model="viewModel.currentCustomerOrder.truckId"
+                    data-ng-change="viewModel.getCustomerOrderCode()" required>
 							<option value="">--Chọn xe--</option>
 							<option ng-repeat="truck in viewModel.truckList" value="{{truck.id}}">{{truck.licensePlate}}</option>
 						</select>
@@ -141,29 +147,28 @@
 						<textarea id="notes" name="notes" class="form-control" type="text" ng-model="viewModel.currentCustomerOrder.notes"></textarea>
 					</div>
 				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						
-					</div>
-				</div>
 			</div>
 
-			<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/don-hang-cua-khach/tao'"
-							data-ng-click="viewModel.createCustomerOrder(viewModel.currentCustomerOrder)" data-ng-disabled="truckForm.$invalid">
-				<span class="glyphicon glyphicon-ok"></span>
-				<span>Lưu</span>
-			</button>
+      <div class="row margin-bottom-20">
+        <div class="col-sm-12">
+          <button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/don-hang-cua-khach/tao'"
+                  data-ng-click="viewModel.createCustomerOrder(viewModel.currentCustomerOrder)" data-ng-disabled="customerOrderForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Lưu</span>
+          </button>
 
-			<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/don-hang-cua-khach/sua/' + viewModel.currentCustomerOrder.id"
-							data-ng-click="viewModel.updateCustomerOrder(viewModel.currentCustomerOrder)" data-ng-disabled="truckForm.$invalid">
-				<span class="glyphicon glyphicon-ok"></span>
-				<span>Cập nhật</span>
-			</button>
+          <button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/don-hang-cua-khach/sua/' + viewModel.currentCustomerOrder.id"
+                  data-ng-click="viewModel.updateCustomerOrder(viewModel.currentCustomerOrder)" data-ng-disabled="customerOrderForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Cập nhật</span>
+          </button>
 
-			<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/don-hang-cua-khach')">
-				<span class="glyphicon glyphicon-remove"></span>
-				<span>Hủy</span>
-			</button>
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/don-hang-cua-khach')">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span>Hủy</span>
+          </button>
+        </div>
+      </div>
 
 		</form>
 	</div>

@@ -14,8 +14,6 @@
 						<label for="mobile">Số điện thoại <span class="required-symbol">*</span></label>
 						<span class="required-field" ng-if="employeeForm.mobile.$touched && employeeForm.mobile.$invalid">(Số ĐT phải được nhập)</span>
 						<input id="mobile" name="mobile" class="form-control" type="text" pattern="[0-9]+" ng-model="viewModel.currentEmployee.mobile" required>
-
-
 					</div>
 				</div>
 			</div>
@@ -38,8 +36,6 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-
-
 						<label for="title">Chức vụ</label>
 						<select id="title" class="form-control" data-ng-model="viewModel.currentEmployee.title">
 							<option value="">--Chọn chức vụ--</option>
@@ -111,13 +107,9 @@
 					<div class="form-group">
 						<label for="notes">Ghi chú</label>
 						<textarea id="notes" name="notes" class="form-control" type="text" ng-model="viewModel.currentEmployee.notes"></textarea>
-
 					</div>
 				</div>
-				<div class="col-sm-6">
-				</div>
 			</div>
-
 		</form>
 
 		<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/tao'"

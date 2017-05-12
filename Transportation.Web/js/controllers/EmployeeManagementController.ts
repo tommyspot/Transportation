@@ -19,7 +19,8 @@ module Clarity.Controller {
     public currentPage: number;
     public pageSize: number;
     public isCheckedAll: boolean;
-		public titles: Array<String>;
+    public titles: Array<String>;
+    public isLoading: boolean;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -32,7 +33,7 @@ module Clarity.Controller {
       this.employeeService = new service.EmployeeService($http);
       $scope.viewModel = this;
 
-      this.pageSize = 5;
+      this.pageSize = 10;
       this.initEmployee();
 
       var self = this;
@@ -63,6 +64,7 @@ module Clarity.Controller {
         if (this.$location.path() === '/ql-toa-hang/nhan-vien/tao') {
           this.currentEmployee = new Model.EmployeeModel();
         } else if (this.$location.path() === '/ql-toa-hang/nhan-vien') {
+          this.isLoading = true;
           this.initEmployeeList();
         }
       }
@@ -76,6 +78,7 @@ module Clarity.Controller {
         });
         this.employeeListTmp = this.employeeList;
         this.initPagination();
+        this.isLoading = false;
       }, null);
     }
 

@@ -13,12 +13,21 @@ namespace Transportation
 {
     public class CustomerOrder : Entity
     {
+        [Required]
+        public string CustomerID { get; set; }
+        [Required]
 		public string CustomerName { get; set; }
-		public string CustomerID { get; set; }
-		public string TruckID { get; set; }
-		public string Code { get; set; }
-		public string CustomerPhone { get; set; }
+        [Required]
+        public string CustomerPhone { get; set; }
+        [Required]
         public string CustomerArea { get; set; }
+        [Required]
+        public string DepartDate { get; set; }
+        [Required]
+        public string ReturnDate { get; set; }
+        [Required]
+        public string TruckID { get; set; }
+		public string Code { get; set; }
 		public string CustomerCode { get; set; }
 		public long CreatedUserID { get; set; }
 		public string Unit { get; set; }
@@ -28,8 +37,6 @@ namespace Transportation
 		public string TruckLicensePlate { get; set; }
 		public long UnitPrice { get; set; }
 		public long TotalPay { get; set; }
-		public string DepartDate { get; set; }
-		public string ReturnDate { get; set; }
 		public string Notes { get; set; }
 		public DateTime CreatedDate { get; set; }
         public CustomerOrder() {

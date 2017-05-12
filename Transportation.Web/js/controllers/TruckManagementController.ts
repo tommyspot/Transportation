@@ -21,7 +21,8 @@ module Clarity.Controller {
 		public pageSize: number;
 		public isCheckedAll: boolean;
 		public mainHelper: helper.MainHelper;
-		public monthlyPaymentFormated: string;
+    public monthlyPaymentFormated: string;
+    public isLoading: boolean;
 
 		constructor(private $scope,
 			public $rootScope: IRootScope,
@@ -34,7 +35,7 @@ module Clarity.Controller {
 			this.truckService = new service.TruckService($http);
 			this.employeeService = new service.EmployeeService($http);
 			$scope.viewModel = this;
-			this.pageSize = 5;
+			this.pageSize = 10;
 			this.initTruck();
       this.mainHelper = new helper.MainHelper($http, $cookieStore);
 
@@ -70,7 +71,8 @@ module Clarity.Controller {
           this.currentTruck = new Model.TruckModel();
           this.initEmployeeList();
 
-				} else if (this.$location.path() === '/ql-toa-hang/xe') {
+        } else if (this.$location.path() === '/ql-toa-hang/xe') {
+          this.isLoading = true;
 					this.initTruckList();
 				}
 			}
@@ -83,7 +85,8 @@ module Clarity.Controller {
 					return a.id - b.id;
 				});
 				this.truckListTmp = this.truckList;
-				this.initPagination();
+        this.initPagination();
+        this.isLoading = false;
 			}, null);
 		}
 

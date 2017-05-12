@@ -26,7 +26,8 @@ module Clarity.Controller {
     public isCheckedAll: boolean;
 		public areas: Array<String>;
 		public unitPriceFormated: string;
-		public mainHelper: helper.MainHelper;
+    public mainHelper: helper.MainHelper;
+    public isLoading: boolean;
 
     constructor(private $scope,
       public $rootScope: IRootScope,
@@ -41,7 +42,7 @@ module Clarity.Controller {
 			this.customerService = new service.CustomerService($http);
 			this.truckService = new service.TruckService($http);
       $scope.viewModel = this;
-			this.pageSize = 5;
+			this.pageSize = 10;
       this.initCustomerOrder();
 
 			var self = this;
@@ -102,6 +103,7 @@ module Clarity.Controller {
         if (this.$location.path() === '/ql-toa-hang/don-hang-cua-khach/tao') {
           this.currentCustomerOrder = new Model.CustomerOrderModel();
         } else if (this.$location.path() === '/ql-toa-hang/don-hang-cua-khach') {
+          this.isLoading = true;
           this.initCustomerOrderList();
         }
       }
@@ -115,6 +117,7 @@ module Clarity.Controller {
         });
         this.customerOrderListTmp = this.customerOrderList;
         this.initPagination();
+        this.isLoading = false;
       }, null);
     }
 

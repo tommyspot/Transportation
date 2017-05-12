@@ -14,11 +14,10 @@ namespace Transportation
     {
         [Required]
         public string FullName { get; set; }
-        
+        [Required]
+        public string Mobile { get; set; }
         public string CardID { get; set; }
         public string Address { get; set; }
-		[Required]
-		public string Mobile { get; set; }
         public string DriverLicenseRank { get; set; }
         public string DriverLicenseID { get; set; }
         public string DriverLicenseAddress { get; set; }
