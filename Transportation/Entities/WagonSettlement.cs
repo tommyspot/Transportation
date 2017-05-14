@@ -28,7 +28,6 @@ namespace Transportation
         //[Required]
         //public long EmployeeID { get; set; }
         //public virtual Employee Employee { get; set; }
-
         public long Payment { get; set; }
         public string PaymentPlace { get; set; }
         public long PaymentRemain { get; set; }
@@ -93,7 +92,6 @@ namespace Transportation
             CustomerID = json.Value<long>("customerId");
             WagonID = json.Value<long>("wagonId");
             Date = json.Value<string>("date");
-			
 			//EmployeeID = json.Value<long>("employeeId");
 
 			Payment = json.Value<long>("payment");

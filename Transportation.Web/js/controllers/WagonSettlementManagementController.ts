@@ -47,7 +47,7 @@ module Clarity.Controller {
 			this.mainHelper = new helper.MainHelper($http, $cookieStore);
       $scope.viewModel = this;
 
-      this.pageSize = 5;
+      this.pageSize = 10;
       this.initWagonSettlement();
 
       var self = this;

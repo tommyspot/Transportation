@@ -30,13 +30,11 @@ namespace Transportation
         public long EmployeeID { get; set; }
         public virtual Employee Employee{ get; set; }
         public virtual Collection<WagonSettlement> WagonSetlements { get; set; }
-
         public long CostOfTruck { get; set; }
         public long CostOfService { get; set; }
         public long CostOfTangBoXe { get; set; }
         public long CostOfPenalty { get; set; }
         public long CostOfExtra { get; set; }
-
         public long PaymentOfTruck { get; set; }
         public long PaymentOfRepairing { get; set; }
         public long PaymentOfOil { get; set; }

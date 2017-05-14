@@ -240,8 +240,8 @@ namespace Transportation.Api
             dt.Columns.Add("Điện thoại + Dịch vụ", typeof(double));
             dt.Columns.Add("Phí phát sinh", typeof(double));
             dt.Columns.Add("Nguyên nhân phát sinh", typeof(string));
-            dt.Columns.Add("Biên bản phạt", typeof(string));
-            dt.Columns.Add("Diễn giải phụ", typeof(string));
+            dt.Columns.Add("Biên bản phạt", typeof(double));
+            dt.Columns.Add("Diễn giải phụ", typeof(double));
             dt.Columns.Add("Tiền xe", typeof(double));
             dt.Columns.Add("Sửa xe", typeof(double));
             dt.Columns.Add("Tiền dâu", typeof(double));

@@ -55,7 +55,7 @@ module Clarity.Controller {
 			this.search = { truckLicensePlate: '' };
       $scope.viewModel = this;
 
-      this.pageSize = 5;
+      this.pageSize = 10;
       this.initWagon();
 
       var self = this;
