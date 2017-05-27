@@ -385,7 +385,7 @@ div.bootstrap {
     }
   }
 
-  #mainPage, #qlToaHangPage {
+  #mainPage, #qlToaHangPage, #qlGarage {
 
     .manage-box {
       height: 212px;
@@ -501,6 +501,16 @@ div.bootstrap {
 
     .qlbc-box.qlbc-box {
       background-color: #27ae60;
+    }
+
+    .manage-box.sp-box {
+      background-color: #f1c40f;
+    }
+    .manage-box.nk-box {
+      background-color: #2C3E50;
+    }
+    .manage-box.bh-box {
+      background-color: #e74c3c;
     }
 
     .no-margin-right {

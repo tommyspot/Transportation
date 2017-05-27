@@ -82,7 +82,12 @@
     <Compile Include="Entities\CustomerOrder.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Enums\ExportType.cs" />
+    <Compile Include="Entities\OrderDetail.cs" />
+    <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\Payment.cs" />
+    <Compile Include="Entities\Inventory.cs" />
+    <Compile Include="Entities\ProductInput.cs" />
+    <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\Truck.cs" />
     <Compile Include="Entities\WagonSettlement.cs" />
     <Compile Include="Entities\Wagon.cs" />

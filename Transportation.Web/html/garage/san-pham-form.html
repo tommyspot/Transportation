@@ -1,0 +1,39 @@
+﻿<div id="productFormSection" class="bootstrap form">
+	<div class="container">
+		<form name="productForm">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="name">Tên sản phẩm <span class="required-symbol">*</span></label>
+						<span class="required-field" ng-if="productForm.name.$touched && productForm.name.$invalid">(Tên sản phẩm phải được nhập)</span>
+						<input id="name" name="name" class="form-control" type="text" ng-model="viewModel.currentProduct.name" required>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="origin">Xuất xứ</label>
+						<input id="origin" name="origin" class="form-control" type="text" ng-model="viewModel.currentProduct.origin" required>
+					</div>
+				</div>
+			</div>
+		</form>
+
+		<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-garage/san-pham/tao'"
+						data-ng-click="viewModel.createProduct(viewModel.currentProduct)" data-ng-disabled="productForm.$invalid">
+			<span class="glyphicon glyphicon-ok"></span>
+			<span>Lưu</span>
+		</button>
+
+		<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-garage/san-pham/sua/' + viewModel.currentProduct.id"
+						data-ng-click="viewModel.updateProduct(viewModel.currentProduct)" data-ng-disabled="productForm.$invalid">
+			<span class="glyphicon glyphicon-ok"></span>
+			<span>Cập nhật</span>
+		</button>
+
+		<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/san-pham')">
+			<span class="glyphicon glyphicon-remove"></span>
+			<span>Hủy</span>
+		</button>
+
+	</div>
+</div>

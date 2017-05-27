@@ -26,9 +26,6 @@ module Clarity.Controller {
     goToWagonsManagement() {
       this.$location.path('/ql-toa-hang');
     }
-    goToGarageManagement() {
-      this.$location.path('/ql-garage');
-    }
 
     goToTruckSection() {
       this.$location.path('/ql-toa-hang/xe');
@@ -62,5 +59,20 @@ module Clarity.Controller {
       this.$location.path('/ql-bao-cao');
     }
 
+    goToGarageManagement() {
+      this.$location.path('/ql-garage');
+    }
+
+    goToProductManagement() {
+      this.$location.path('/ql-garage/san-pham');
+    }
+
+    goToProductInputManagement() {
+      this.$location.path('/ql-garage/nhap-kho');
+    }
+
+    goToSaleManagement() {
+      this.$location.path('/ql-garage/ban-hang');
+    }
 	}
 }

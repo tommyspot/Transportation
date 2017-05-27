@@ -5828,7 +5828,7 @@ div.bootstrap {
     display: block;
     content: '';
     clear: both; }
-  #ng-app #mainPage .manage-box, #ng-app #qlToaHangPage .manage-box {
+  #ng-app #mainPage .manage-box, #ng-app #qlToaHangPage .manage-box, #ng-app #qlGarage .manage-box {
     height: 212px;
     width: 212px;
     background-color: #2980B9;
@@ -5837,65 +5837,71 @@ div.bootstrap {
     color: white;
     margin: 0 20px 20px 0;
     cursor: pointer; }
-    #ng-app #mainPage .manage-box .icon, #ng-app #qlToaHangPage .manage-box .icon {
+    #ng-app #mainPage .manage-box .icon, #ng-app #qlToaHangPage .manage-box .icon, #ng-app #qlGarage .manage-box .icon {
       font-size: 50px;
       margin-top: 50px;
       margin-bottom: 10px; }
-  #ng-app #mainPage .manage-box.long-box, #ng-app #qlToaHangPage .manage-box.long-box {
+  #ng-app #mainPage .manage-box.long-box, #ng-app #qlToaHangPage .manage-box.long-box, #ng-app #qlGarage .manage-box.long-box {
     width: 444px; }
   @media (min-width: 768px) {
-    #ng-app #mainPage .manage-box, #ng-app #qlToaHangPage .manage-box {
+    #ng-app #mainPage .manage-box, #ng-app #qlToaHangPage .manage-box, #ng-app #qlGarage .manage-box {
       height: 140px;
       width: 140px; }
-      #ng-app #mainPage .manage-box h4, #ng-app #qlToaHangPage .manage-box h4 {
+      #ng-app #mainPage .manage-box h4, #ng-app #qlToaHangPage .manage-box h4, #ng-app #qlGarage .manage-box h4 {
         font-size: 14px; }
-      #ng-app #mainPage .manage-box .icon, #ng-app #qlToaHangPage .manage-box .icon {
+      #ng-app #mainPage .manage-box .icon, #ng-app #qlToaHangPage .manage-box .icon, #ng-app #qlGarage .manage-box .icon {
         font-size: 40px;
         margin-top: 30px;
         margin-bottom: 10px; }
-    #ng-app #mainPage .manage-box.long-box, #ng-app #qlToaHangPage .manage-box.long-box {
+    #ng-app #mainPage .manage-box.long-box, #ng-app #qlToaHangPage .manage-box.long-box, #ng-app #qlGarage .manage-box.long-box {
       width: 270px; } }
   @media (min-width: 992px) {
-    #ng-app #mainPage .manage-box, #ng-app #qlToaHangPage .manage-box {
+    #ng-app #mainPage .manage-box, #ng-app #qlToaHangPage .manage-box, #ng-app #qlGarage .manage-box {
       height: 180px;
       width: 180px; }
-      #ng-app #mainPage .manage-box .icon, #ng-app #qlToaHangPage .manage-box .icon {
+      #ng-app #mainPage .manage-box .icon, #ng-app #qlToaHangPage .manage-box .icon, #ng-app #qlGarage .manage-box .icon {
         font-size: 60px;
         margin-top: 40px;
         margin-bottom: 10px; }
-    #ng-app #mainPage .manage-box.long-box, #ng-app #qlToaHangPage .manage-box.long-box {
+    #ng-app #mainPage .manage-box.long-box, #ng-app #qlToaHangPage .manage-box.long-box, #ng-app #qlGarage .manage-box.long-box {
       width: 360px; } }
   @media (min-width: 1200px) {
-    #ng-app #mainPage .manage-box, #ng-app #qlToaHangPage .manage-box {
+    #ng-app #mainPage .manage-box, #ng-app #qlToaHangPage .manage-box, #ng-app #qlGarage .manage-box {
       width: 220px;
       height: 200px; }
-      #ng-app #mainPage .manage-box h4, #ng-app #qlToaHangPage .manage-box h4 {
+      #ng-app #mainPage .manage-box h4, #ng-app #qlToaHangPage .manage-box h4, #ng-app #qlGarage .manage-box h4 {
         font-size: 20px; }
-      #ng-app #mainPage .manage-box .icon, #ng-app #qlToaHangPage .manage-box .icon {
+      #ng-app #mainPage .manage-box .icon, #ng-app #qlToaHangPage .manage-box .icon, #ng-app #qlGarage .manage-box .icon {
         font-size: 70px;
         margin-top: 40px;
         margin-bottom: 10px; }
-    #ng-app #mainPage .manage-box.long-box, #ng-app #qlToaHangPage .manage-box.long-box {
+    #ng-app #mainPage .manage-box.long-box, #ng-app #qlToaHangPage .manage-box.long-box, #ng-app #qlGarage .manage-box.long-box {
       width: 440px; } }
-  #ng-app #mainPage .manage-box.garage-box, #ng-app #qlToaHangPage .manage-box.garage-box {
+  #ng-app #mainPage .manage-box.garage-box, #ng-app #qlToaHangPage .manage-box.garage-box, #ng-app #qlGarage .manage-box.garage-box {
     background-color: #C0392B; }
-  #ng-app #mainPage .manage-box.xe-box, #ng-app #qlToaHangPage .manage-box.xe-box {
+  #ng-app #mainPage .manage-box.xe-box, #ng-app #qlToaHangPage .manage-box.xe-box, #ng-app #qlGarage .manage-box.xe-box {
     background-color: #2C3E50; }
-  #ng-app #mainPage .manage-box.nv-box, #ng-app #qlToaHangPage .manage-box.nv-box {
+  #ng-app #mainPage .manage-box.nv-box, #ng-app #qlToaHangPage .manage-box.nv-box, #ng-app #qlGarage .manage-box.nv-box {
     background-color: #3498db; }
-  #ng-app #mainPage .manage-box.kh-box, #ng-app #qlToaHangPage .manage-box.kh-box {
+  #ng-app #mainPage .manage-box.kh-box, #ng-app #qlToaHangPage .manage-box.kh-box, #ng-app #qlGarage .manage-box.kh-box {
     background-color: #95a5a6; }
-  #ng-app #mainPage .manage-box.th-box, #ng-app #qlToaHangPage .manage-box.th-box {
+  #ng-app #mainPage .manage-box.th-box, #ng-app #qlToaHangPage .manage-box.th-box, #ng-app #qlGarage .manage-box.th-box {
     background-color: #f1c40f; }
-  #ng-app #mainPage .manage-box.qt-box, #ng-app #qlToaHangPage .manage-box.qt-box {
+  #ng-app #mainPage .manage-box.qt-box, #ng-app #qlToaHangPage .manage-box.qt-box, #ng-app #qlGarage .manage-box.qt-box {
     background-color: #e74c3c; }
-  #ng-app #mainPage .manage-box.dhkh-box, #ng-app #qlToaHangPage .manage-box.dhkh-box {
+  #ng-app #mainPage .manage-box.dhkh-box, #ng-app #qlToaHangPage .manage-box.dhkh-box, #ng-app #qlGarage .manage-box.dhkh-box {
     background-color: #2ecc71; }
-  #ng-app #mainPage .manage-box.qldn-box, #ng-app #qlToaHangPage .manage-box.qldn-box {
+  #ng-app #mainPage .manage-box.qldn-box, #ng-app #qlToaHangPage .manage-box.qldn-box, #ng-app #qlGarage .manage-box.qldn-box {
     background-color: #FF9800; }
-  #ng-app #mainPage .qlbc-box.qlbc-box, #ng-app #qlToaHangPage .qlbc-box.qlbc-box {
+  #ng-app #mainPage .qlbc-box.qlbc-box, #ng-app #qlToaHangPage .qlbc-box.qlbc-box, #ng-app #qlGarage .qlbc-box.qlbc-box {
     background-color: #27ae60; }
-  #ng-app #mainPage .no-margin-right, #ng-app #qlToaHangPage .no-margin-right {
+  #ng-app #mainPage .manage-box.sp-box, #ng-app #qlToaHangPage .manage-box.sp-box, #ng-app #qlGarage .manage-box.sp-box {
+    background-color: #f1c40f; }
+  #ng-app #mainPage .manage-box.nk-box, #ng-app #qlToaHangPage .manage-box.nk-box, #ng-app #qlGarage .manage-box.nk-box {
+    background-color: #2C3E50; }
+  #ng-app #mainPage .manage-box.bh-box, #ng-app #qlToaHangPage .manage-box.bh-box, #ng-app #qlGarage .manage-box.bh-box {
+    background-color: #e74c3c; }
+  #ng-app #mainPage .no-margin-right, #ng-app #qlToaHangPage .no-margin-right, #ng-app #qlGarage .no-margin-right {
     margin-right: 0px; }
   #ng-app .view-page .show-records-per-page {
     width: auto;

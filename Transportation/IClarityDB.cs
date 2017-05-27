@@ -13,7 +13,13 @@ namespace Transportation
 		IDbSet<Wagon> Wagons { get; set; }
         IDbSet<WagonSettlement> WagonSettlements { get; set; }
 		IDbSet<Payment> Payments { get; set; }
-		Database Database { get; }
+
+        IDbSet<Product> Products { get; set; }
+        IDbSet<ProductInput> ProductInputs { get; set; }
+        IDbSet<Inventory> Inventories { get; set; }
+        IDbSet<Order> Orders { get; set; }
+        IDbSet<OrderDetail> OrderDetails { get; set; }
+        Database Database { get; }
 
         void AddEntity<T>(T entity) where T : class;
         int SaveChanges();

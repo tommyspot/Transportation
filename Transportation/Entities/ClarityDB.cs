@@ -49,8 +49,14 @@ namespace Transportation
 		public virtual IDbSet<Wagon> Wagons { get; set; }
         public virtual IDbSet<WagonSettlement> WagonSettlements { get; set; }
 		public virtual IDbSet<Payment> Payments { get; set; }
+        //GARAGE
+        public virtual IDbSet<Product> Products { get; set; }
+        public virtual IDbSet<ProductInput> ProductInputs { get; set; }
+        public virtual IDbSet<Inventory> Inventories { get; set; }
+        public virtual IDbSet<Order> Orders { get; set; }
+        public virtual IDbSet<OrderDetail> OrderDetails { get; set; }
 
-		protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
@@ -74,6 +80,16 @@ namespace Transportation
                 .HasRequired(x => x.Wagon)
                 .WithMany(x => x.WagonSetlements)
                 .WillCascadeOnDelete();
+
+            modelBuilder.Entity<ProductInput>()
+                .HasRequired(x => x.Product)
+                .WithRequiredDependent()
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<Inventory>()
+            .HasRequired(x => x.Product)
+            .WithRequiredDependent()
+            .WillCascadeOnDelete();
         }
     }
 }

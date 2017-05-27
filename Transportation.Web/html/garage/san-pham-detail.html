@@ -1,0 +1,32 @@
+﻿<div id="productInfo" class="bootstrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3">
+        <img class="avatar" src="/img/logo.gif" style="width: 100%"/>
+      </div>
+      <div class="col-sm-9">
+        <div class="list-group-item user-info">
+          <h2 class="text-center title-name">{{viewModel.currentProduct.id}}</h2>
+          <p><span class="bold-text">Tên sản phẩm:</span> <span>{{viewModel.currentProduct.name}}</span></p>
+          <p><span class="bold-text">Xuất xứ:</span> <span>{{viewModel.currentProduct.origin}}</span></p>
+
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/san-pham')">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+            <span>Quay lại</span>
+          </button>
+
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/san-pham/sua/' + viewModel.currentProduct.id)">
+            <span class="glyphicon glyphicon-pencil"></span>
+            <span>Sửa sản phẩm</span>
+          </button>
+
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.removeProductInDetail(viewModel.currentProduct)">
+            <span class="glyphicon glyphicon-trash"></span>
+            <span>Xóa sản phẩm</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

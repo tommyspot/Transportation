@@ -20,7 +20,12 @@ namespace Transportation.UnitTests
 		public virtual IDbSet<Wagon> Wagons { get; set; }
         public virtual IDbSet<WagonSettlement> WagonSettlements { get; set; }
 		public virtual IDbSet<Payment> Payments { get; set; }
-		public Database Database
+        public virtual IDbSet<Product> Products { get; set; }
+        public virtual IDbSet<ProductInput> ProductInputs { get; set; }
+        public virtual IDbSet<Inventory> Inventories { get; set; }
+        public virtual IDbSet<Order> Orders { get; set; }
+        public virtual IDbSet<OrderDetail> OrderDetails { get; set; }
+        public Database Database
         {
             get { return null; }
         }
