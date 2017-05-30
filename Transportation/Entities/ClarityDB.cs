@@ -83,13 +83,15 @@ namespace Transportation
 
             modelBuilder.Entity<ProductInput>()
                 .HasRequired(x => x.Product)
-                .WithRequiredDependent()
+                .WithMany()
+                .HasForeignKey(x => x.ProductID)
                 .WillCascadeOnDelete();
 
             modelBuilder.Entity<Inventory>()
-            .HasRequired(x => x.Product)
-            .WithRequiredDependent()
-            .WillCascadeOnDelete();
+                .HasRequired(x => x.Product)
+                .WithMany()
+                .HasForeignKey(x => x.ProductID)
+                .WillCascadeOnDelete();
         }
     }
 }

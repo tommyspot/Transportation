@@ -227,6 +227,27 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
 	    access: 'authorized'
 	})
 
+    .when('/ql-garage/nhap-kho', {
+        templateUrl: '/html/garage/nhap-kho.html' + '?v=' + VERSION_NUMBER,
+        controller: 'ProductInputManagementController',
+        access: 'authorized'
+    })
+    .when('/ql-garage/nhap-kho/tao', {
+        templateUrl: '/html/garage/nhap-kho-form.html' + '?v=' + VERSION_NUMBER,
+        controller: 'ProductInputManagementController',
+        access: 'authorized'
+    })
+    .when('/ql-garage/nhap-kho/:product_input_id', {
+        templateUrl: '/html/garage/nhap-kho-detail.html' + '?v=' + VERSION_NUMBER,
+        controller: 'ProductInputManagementController',
+        access: 'authorized'
+    })
+	.when('/ql-garage/nhap-kho/sua/:product_input_id', {
+	    templateUrl: '/html/garage/nhap-kho-form.html' + '?v=' + VERSION_NUMBER,
+	    controller: 'ProductInputManagementController',
+	    access: 'authorized'
+	})
+
     .otherwise({ redirectTo: '/' });
 });
 
@@ -423,6 +444,9 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
                         case '/ql-garage/san-pham':
                             breadCrumb.name = 'Sản phẩm';
                             break;
+                        case '/ql-garage/nhap-kho':
+                            breadCrumb.name = 'Nhập kho';
+                            break;
 
                         case '/ql-toa-hang/nhan-vien/tao':
                         case '/ql-toa-hang/xe/tao':
@@ -431,6 +455,7 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
                         case '/ql-toa-hang/don-hang-cua-khach/tao':
                         case '/ql-dang-nhap/tao':
                         case '/ql-garage/san-pham/tao':
+                        case '/ql-garage/nhap-kho/tao':
                             breadCrumb.name = 'Tạo mới';
                             break;
                         case '/ql-toa-hang/nhan-vien/sua':
@@ -441,6 +466,7 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
                         case '/ql-toa-hang/quyet-toan/sua':
                         case '/ql-dang-nhap/sua':
                         case '/ql-garage/san-pham/sua':
+                        case '/ql-garage/nhap-kho/sua':
                             breadCrumb.name = 'Sửa';
                             break;
 
@@ -454,15 +480,18 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
                     var wagonDetailPattern = /\/ql-toa-hang\/toa-hang\/(\d*)$/g;
                     var wagonSettlementDetailPattern = /\/ql-toa-hang\/quyet-toan\/(\d*)$/g;
                     var productDetailPattern = /\/ql-garage\/san-pham\/(\d*)$/g;
+                    var productInputDetailPattern = /\/ql-garage\/nhap-kho\/(\d*)$/g;
 
                     var employeeEditorPattern = /\/ql-toa-hang\/nhan-vien\/sua\/(\d*)$/g;
                     var wagonEditorPattern = /\/ql-toa-hang\/toa-hang\/sua\/(\d*)$/g;
                     var productEditorPattern = /\/ql-garage\/san-pham\/sua\/(\d*)$/g;
+                    var productInputEditorPattern = /\/ql-garage\/nhap-kho\/sua\/(\d*)$/g;
 
                     if (employeeDetailPattern.test(nav) || employeeEditorPattern.test(nav)
 						|| wagonDetailPattern.test(nav) || wagonEditorPattern.test(nav)
 						|| wagonSettlementDetailPattern.test(nav)
-                        || productDetailPattern.test(nav) || productEditorPattern.test(nav)) {
+                        || productDetailPattern.test(nav) || productEditorPattern.test(nav)
+                        || productInputDetailPattern.test(nav) || productInputEditorPattern.test(nav)) {
                         var pieces = nav.split('/');
                         breadCrumb.name = pieces[pieces.length - 1];
                     }
@@ -499,6 +528,7 @@ clarityApp.controller('WagonSettlementManagementController', Clarity.Controller.
 clarityApp.controller('ReportManagementController', Clarity.Controller.ReportManagementController);
 clarityApp.controller('UserController', Clarity.Controller.UserController);
 clarityApp.controller('ProductManagementController', Clarity.Controller.ProductManagementController);
+clarityApp.controller('ProductInputManagementController', Clarity.Controller.ProductInputManagementController);
 
 clarityApp.filter('filterDate', function () {
     return function (input, filterDate) {
