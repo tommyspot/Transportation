@@ -113,6 +113,7 @@
     <Content Include="font\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="gulpfile.js" />
     <Content Include="html\baocao\bao-cao.html" />
+    <Content Include="html\garage\ban-hang.html" />
     <Content Include="html\garage\nhap-kho.html" />
     <Content Include="html\garage\san-pham-form.html" />
     <Content Include="html\garage\san-pham.html" />
@@ -166,6 +167,7 @@
     <Content Include="js\clarity-app.js" />
     <TypeScriptCompile Include="js\controllers\CustomerOrderManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\CustomerManagementController.ts" />
+    <TypeScriptCompile Include="js\controllers\OrderManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\ProductInputManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\ProductManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\UserController.ts" />
@@ -180,6 +182,7 @@
     <Content Include="font\roboto\Roboto-Regular.ttf" />
     <TypeScriptCompile Include="js\controllers\IController.ts" />
     <TypeScriptCompile Include="js\helpers\MainHelper.ts" />
+    <TypeScriptCompile Include="js\model\OrderModel.ts" />
     <TypeScriptCompile Include="js\model\ProductInputModel.ts" />
     <TypeScriptCompile Include="js\model\ProductModel.ts" />
     <TypeScriptCompile Include="js\model\PaymentModel.ts" />
@@ -197,6 +200,7 @@
     <TypeScriptCompile Include="js\model\UserModel.ts" />
     <TypeScriptCompile Include="js\services\AuthenticationService.ts" />
     <TypeScriptCompile Include="js\services\CustomerOrderService.ts" />
+    <TypeScriptCompile Include="js\services\OrderService.ts" />
     <TypeScriptCompile Include="js\services\ProductInputService.ts" />
     <TypeScriptCompile Include="js\services\ProductService.ts" />
     <TypeScriptCompile Include="js\services\ExportService.ts" />

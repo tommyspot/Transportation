@@ -92,6 +92,11 @@ namespace Transportation
                 .WithMany()
                 .HasForeignKey(x => x.ProductID)
                 .WillCascadeOnDelete();
+
+            modelBuilder.Entity<OrderDetail>()
+                .HasRequired(x => x.Order)
+                .WithMany(x => x.OrderDetails)
+                .WillCascadeOnDelete();
         }
     }
 }

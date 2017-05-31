@@ -10,8 +10,6 @@ namespace Transportation
         [Required]
         public string Name { get; set; }
         public string Origin { get; set; }
-        //public virtual ProductInput ProductInput { get; set; }
-        //public virtual Inventory Inventory { get; set; }
         public Product() {
         }
 

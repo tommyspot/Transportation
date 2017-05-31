@@ -248,6 +248,12 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
 	    access: 'authorized'
 	})
 
+    .when('/ql-garage/ban-hang', {
+        templateUrl: '/html/garage/ban-hang.html' + '?v=' + VERSION_NUMBER,
+        controller: 'OrderManagementController',
+        access: 'authorized'
+    })
+
     .otherwise({ redirectTo: '/' });
 });
 
@@ -447,6 +453,9 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
                         case '/ql-garage/nhap-kho':
                             breadCrumb.name = 'Nhập kho';
                             break;
+                        case '/ql-garage/ban-hang':
+                            breadCrumb.name = 'Bán hàng';
+                            break;
 
                         case '/ql-toa-hang/nhan-vien/tao':
                         case '/ql-toa-hang/xe/tao':
@@ -468,10 +477,6 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
                         case '/ql-garage/san-pham/sua':
                         case '/ql-garage/nhap-kho/sua':
                             breadCrumb.name = 'Sửa';
-                            break;
-
-                        case '/ql-garage':
-                            breadCrumb.name = 'Quản lý garage';
                             break;
                     }
 
@@ -529,6 +534,7 @@ clarityApp.controller('ReportManagementController', Clarity.Controller.ReportMan
 clarityApp.controller('UserController', Clarity.Controller.UserController);
 clarityApp.controller('ProductManagementController', Clarity.Controller.ProductManagementController);
 clarityApp.controller('ProductInputManagementController', Clarity.Controller.ProductInputManagementController);
+clarityApp.controller('OrderManagementController', Clarity.Controller.OrderManagementController);
 
 clarityApp.filter('filterDate', function () {
     return function (input, filterDate) {

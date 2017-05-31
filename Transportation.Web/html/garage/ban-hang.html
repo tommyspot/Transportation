@@ -1,0 +1,94 @@
+﻿<div id="productInputList" class="bootstrap view-page">
+	<div class="container">
+		<div class="row action-row">
+			<div class="col-sm-9">
+				<span>
+					<label for="numOfProductInputs">Hiển thị</label>
+					<select id="numOfProductInputs" class="form-control show-records-per-page" data-ng-model="viewModel.pageSize" data-ng-change="viewModel.initPagination()" convert-to-number>
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="99999">All</option>
+					</select>
+				</span>
+				<button type="button" class="btn btn-default" data-ng-click="viewModel.goToOrderForm()">
+					<span class="glyphicon glyphicon-plus"></span>
+					<span class="hidden-xs">Tạo đơn hàng</span>
+				</button>
+				<button type="button" class="btn btn-default" data-ng-click="viewModel.removeOrders()">
+					<span class="glyphicon glyphicon-trash"></span>
+					<span class="hidden-xs">Xóa đơn hàng</span>
+				</button>
+			</div>
+			<div class="col-sm-3">
+				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Search" />
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="table-responsive">
+					<table class="table table-hover table-bordered">
+						<thead>
+							<tr>
+								<th class="align-center">
+									<input id="checkAllProducts" type="checkbox" data-ng-model="viewModel.isCheckedAll"
+												 data-ng-change="viewModel.selectAllProductsOnPage()" />
+								</th>
+								<th class="align-center">Mã đơn hàng</th>
+								<th class="align-center hidden-xs">Tên khách hàng</th>
+                <th class="align-center hidden-xs">Nhân viên bán</th>
+                <th class="align-center hidden-xs">Thành tiền</th>
+                <th class="align-center hidden-xs">Ngày bán</th>
+							</tr>
+						</thead>
+						<tbody>
+              <tr data-ng-if="viewModel.isLoading">
+                <td class="text-center" colspan="6">
+                  <i class="fa fa-spinner fa-spin"></i>
+                </td>
+              </tr>
+							<tr data-ng-if="!viewModel.isLoading" class="pointer" data-ng-repeat="order in viewModel.getOrderListOnPage()"
+									data-ng-click="viewModel.$location.path('/ql-garage/ban-hang/' + order.id)">
+								<td class="align-center" data-ng-click="$event.stopPropagation();">
+									<input id="order-{{$index}}" type="checkbox" data-ng-model="order.isChecked" />
+								</td>
+								<td class="align-center hidden-xs">{{order.code}}</td>
+								<td class="align-center">{{order.customerName}}</td>
+                <td class="align-center hidden-xs">{{order.employeeName}}</td>
+                <td class="align-center hidden-xs">{{order.totalAmount}}</td>
+                <td class="align-center hidden-xs">{{order.date}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<nav aria-label="navigation" data-ng-if="viewModel.numOfPages > 0">
+					<ul class="pagination">
+						<li class="pointer" ng-class="{'disabled': viewModel.currentPage === 1}" data-ng-click="viewModel.goToPreviousPage()">
+							<a aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+
+						<li class="pointer" data-ng-repeat="pageIndex in viewModel.getNumberPage() track by $index"
+								data-ng-click="viewModel.goToPage($index + 1)" ng-class="{'active': $index + 1 === viewModel.currentPage}">
+							<span>{{$index + 1}}</span>
+						</li>
+
+						<li class="pointer" ng-class="{'disabled': viewModel.currentPage >= viewModel.numOfPages}" data-ng-click="viewModel.goToNextPage()">
+							<a aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+
+	</div>
+</div>

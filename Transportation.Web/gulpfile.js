@@ -50,6 +50,7 @@ var config = {
     , 'js/model/WagonSettlementReportModel.js'
     , 'js/model/ProductModel.js'
     , 'js/model/ProductInputModel.js'
+    , 'js/model/OrderModel.js'
 
 	, 'js/services/IService.js'
 	, 'js/services/BaseService.js'
@@ -65,6 +66,7 @@ var config = {
 	, 'js/services/PaymentService.js'
     , 'js/services/ProductService.js'
     , 'js/services/ProductInputService.js'
+    , 'js/services/OrderService.js'
 
 	, 'js/controllers/IController.js'
 	, 'js/controllers/authentication/LoginController.js'
@@ -80,6 +82,7 @@ var config = {
 	, 'js/controllers/UserController.js'
     , 'js/controllers/ProductManagementController.js'
     , 'js/controllers/ProductInputManagementController.js'
+    , 'js/controllers/OrderManagementController.js'
 
     // controllers, services written with TypeScript must be placed before clarity-app.js
     , 'js/clarity-app.js'
