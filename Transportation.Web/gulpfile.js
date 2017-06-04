@@ -51,6 +51,7 @@ var config = {
     , 'js/model/ProductModel.js'
     , 'js/model/ProductInputModel.js'
     , 'js/model/OrderModel.js'
+    , 'js/model/InventoryModel.js'
 
 	, 'js/services/IService.js'
 	, 'js/services/BaseService.js'
@@ -67,6 +68,7 @@ var config = {
     , 'js/services/ProductService.js'
     , 'js/services/ProductInputService.js'
     , 'js/services/OrderService.js'
+    , 'js/services/InventoryService.js'
 
 	, 'js/controllers/IController.js'
 	, 'js/controllers/authentication/LoginController.js'

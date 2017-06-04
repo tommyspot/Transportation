@@ -7,7 +7,6 @@ declare var VERSION_NUMBER;
 
 module Clarity.Controller {
 	import service = Clarity.Service;
-	import helper = Clarity.Helper;
 
   export class ProductInputManagementController {
     public currentProductInput: Model.ProductInputModel;

@@ -53,10 +53,10 @@
 								<td class="align-center" data-ng-click="$event.stopPropagation();">
 									<input id="order-{{$index}}" type="checkbox" data-ng-model="order.isChecked" />
 								</td>
-								<td class="align-center hidden-xs">{{order.code}}</td>
+								<td class="align-center hidden-xs">{{order.id}}</td>
 								<td class="align-center">{{order.customerName}}</td>
                 <td class="align-center hidden-xs">{{order.employeeName}}</td>
-                <td class="align-center hidden-xs">{{order.totalAmount}}</td>
+                <td class="align-center hidden-xs">{{order.totalAmount | currency: "" : 0}}</td>
                 <td class="align-center hidden-xs">{{order.date}}</td>
 							</tr>
 						</tbody>

@@ -253,6 +253,11 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
         controller: 'OrderManagementController',
         access: 'authorized'
     })
+    .when('/ql-garage/ban-hang/tao', {
+        templateUrl: '/html/garage/ban-hang-form.html' + '?v=' + VERSION_NUMBER,
+        controller: 'OrderManagementController',
+        access: 'authorized'
+    })
 
     .otherwise({ redirectTo: '/' });
 });
@@ -465,6 +470,7 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
                         case '/ql-dang-nhap/tao':
                         case '/ql-garage/san-pham/tao':
                         case '/ql-garage/nhap-kho/tao':
+                        case '/ql-garage/ban-hang/tao':
                             breadCrumb.name = 'Tạo mới';
                             break;
                         case '/ql-toa-hang/nhan-vien/sua':
@@ -476,6 +482,7 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
                         case '/ql-dang-nhap/sua':
                         case '/ql-garage/san-pham/sua':
                         case '/ql-garage/nhap-kho/sua':
+                        case '/ql-garage/ban-hang/sua':
                             breadCrumb.name = 'Sửa';
                             break;
                     }
@@ -486,17 +493,20 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
                     var wagonSettlementDetailPattern = /\/ql-toa-hang\/quyet-toan\/(\d*)$/g;
                     var productDetailPattern = /\/ql-garage\/san-pham\/(\d*)$/g;
                     var productInputDetailPattern = /\/ql-garage\/nhap-kho\/(\d*)$/g;
+                    var orderPattern = /\/ql-garage\/ban-hang\/(\d*)$/g;
 
                     var employeeEditorPattern = /\/ql-toa-hang\/nhan-vien\/sua\/(\d*)$/g;
                     var wagonEditorPattern = /\/ql-toa-hang\/toa-hang\/sua\/(\d*)$/g;
                     var productEditorPattern = /\/ql-garage\/san-pham\/sua\/(\d*)$/g;
                     var productInputEditorPattern = /\/ql-garage\/nhap-kho\/sua\/(\d*)$/g;
+                    var orderEditorPattern = /\/ql-garage\/ban-hang\/sua\/(\d*)$/g;
 
                     if (employeeDetailPattern.test(nav) || employeeEditorPattern.test(nav)
 						|| wagonDetailPattern.test(nav) || wagonEditorPattern.test(nav)
 						|| wagonSettlementDetailPattern.test(nav)
                         || productDetailPattern.test(nav) || productEditorPattern.test(nav)
-                        || productInputDetailPattern.test(nav) || productInputEditorPattern.test(nav)) {
+                        || productInputDetailPattern.test(nav) || productInputEditorPattern.test(nav)
+                        || orderPattern.test(nav) || orderEditorPattern.test(nav)) {
                         var pieces = nav.split('/');
                         breadCrumb.name = pieces[pieces.length - 1];
                     }

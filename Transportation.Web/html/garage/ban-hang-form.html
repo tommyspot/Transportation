@@ -1,0 +1,122 @@
+﻿<div id="orderFormSection" class="bootstrap form">
+	<div class="container">
+		<form name="orderForm">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="customerName">Tên khách hàng <span class="required-symbol">*</span></label>
+						<span class="required-field" ng-if="orderForm.customerName.$touched && orderForm.customerName.$invalid">(Tên khách hàng phải được nhập)</span>
+						<input id="customerName" name="customerName" class="form-control" type="text" ng-model="viewModel.currentOrder.customerName" required>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="employeeName">Nhân viên</label>
+						<input id="employeeName" name="employeeName" class="form-control" type="text" ng-model="viewModel.currentOrder.employeeName">
+					</div>
+				</div>
+			</div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="date">Ngày</label>
+            <datepicker class="date-picker" date-format="dd/MM/yyyy" date-set="20/10/1989">
+              <input id="date" class="form-control" name="date" type="text" ng-model="viewModel.currentOrder.date">
+            </datepicker>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="totalAmount">Tổng thành tiền</label>
+            <input id="totalAmount" name="totalAmount" class="form-control" type="text" 
+                   value={{viewModel.currentOrder.totalAmount}} data-ng-disabled="true">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="saleOff">Giảm giá (% < 100)</label>
+            <input id="saleOff" class="form-control" name="saleOff" type="number" min="0" max="100" ng-model="viewModel.currentOrder.saleOff">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="realTotalAmount">Tiền thực trả</label>
+            <input id="realTotalAmount" name="realTotalAmount" class="form-control" type="text"
+                   value={{viewModel.currentOrder.totalAmount*(100-viewModel.currentOrder.saleOff)/100}} data-ng-disabled="true">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <button type="button" class="btn btn-default" data-ng-click="viewModel.addOrderDetail()">
+            <span class="glyphicon glyphicon-plus"></span>
+            <span class="hidden-xs">Bán hàng</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="row margin-top-15">
+        <div class="col-sm-12">
+          <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+              <thead>
+                <tr>
+                  <th class="align-center">STT</th>
+                  <th class="align-center hidden-xs">Tên sản phẩm</th>
+                  <th class="align-center">Số lượng</th>
+                  <th class="align-center">Đơn giá</th>
+                  <th class="align-center hidden-xs">Thành tiền</th>
+                  <th class="align-center hidden-xs"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-ng-repeat="orderDetail in viewModel.currentOrder.orderDetails">
+                  <td class="align-center">{{$index + 1}}</td>
+                  <td class="align-center hidden-xs">
+                    <select ui-select2 class="form-control ui-select-2" data-ng-model="orderDetail.productId"
+                            data-ng-change="viewModel.onInventoryViewChanged(orderDetail)">
+                      <option value="" selected="selected">--Chọn sản phẩm --</option>
+                      <option data-ng-repeat="inventory in viewModel.inventoryViewList" value="{{inventory.productId}}">{{inventory.productName}} [{{inventory.quantity}}]</option>
+                    </select>
+                  </td>
+                  <td class="align-center">
+                    <input class="form-control" type="number" min="1" max="{{viewModel.getInventoryViewByProductId(orderDetail.productId).quantity}}" 
+                      data-ng-model="orderDetail.quantity" data-ng-change="viewModel.onQuantityChanged(orderDetail)"/>
+                  </td>
+                  <td class="align-center">{{orderDetail.price | currency: "" : 0}}</td>
+                  <td class="align-center hidden-xs">{{orderDetail.price * orderDetail.quantity | currency: "" : 0}}</td>
+                  <th class="align-center">
+                    <button class="btn btn-default" data-ng-click="viewModel.deleteOrderDetail($index)">
+                      <span class="glyphicon glyphicon-trash"></span> <span>Xóa</span>
+                    </button>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+		</form>
+
+		<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-garage/ban-hang/tao'"
+						data-ng-click="viewModel.createOrder(viewModel.currentOrder)" data-ng-disabled="orderForm.$invalid">
+			<span class="glyphicon glyphicon-ok"></span>
+			<span>Lưu</span>
+		</button>
+
+		<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-garage/ban-hang/sua/' + viewModel.currentOrder.id"
+						data-ng-click="viewModel.updateOrder(viewModel.currentOrder)" data-ng-disabled="orderForm.$invalid">
+			<span class="glyphicon glyphicon-ok"></span>
+			<span>Cập nhật</span>
+		</button>
+
+		<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/ban-hang')">
+			<span class="glyphicon glyphicon-remove"></span>
+			<span>Hủy</span>
+		</button>
+
+	</div>
+</div>

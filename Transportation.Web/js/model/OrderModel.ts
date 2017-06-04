@@ -2,14 +2,20 @@
 
 module Clarity.Model {
 
-    export class OrderModel extends Model.BaseModel {
-        public code: string;
-        public customerName: string;
-        public employeeName: string;
-        public date: string;
-        public orderDetails: Array<OrderDetailModel>; 
-        public totalAmount: number;
-        public isChecked: boolean;
+  export class OrderModel extends Model.BaseModel {
+    public code: string;
+    public customerName: string;
+    public employeeName: string;
+    public date: string;
+    public orderDetails: Array<OrderDetailModel>;
+    public saleOff: number;
+    public totalAmount: number;
+    public isChecked: boolean;
+
+    constructor() {
+      super();
+      this.orderDetails = new Array<OrderDetailModel>();
+    }
   }
 
     export class OrderDetailModel extends Model.BaseModel {
@@ -17,6 +23,5 @@ module Clarity.Model {
       public productId: number;
       public price: number;
       public quantity: number;
-      public date: string;
     }
 }

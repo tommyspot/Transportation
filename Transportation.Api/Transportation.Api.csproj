@@ -96,6 +96,7 @@
     <Compile Include="AuthenticationService.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="ProductInputService.cs" />
+    <Compile Include="InventoryService.cs" />
     <Compile Include="ProductService.cs" />
     <Compile Include="ExportToExcel\CreateExcelFile.cs" />
     <Compile Include="CustomerOrderService.cs" />

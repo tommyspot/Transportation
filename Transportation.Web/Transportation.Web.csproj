@@ -115,6 +115,7 @@
     <Content Include="html\baocao\bao-cao.html" />
     <Content Include="html\garage\ban-hang.html" />
     <Content Include="html\garage\nhap-kho.html" />
+    <Content Include="html\garage\ban-hang-form.html" />
     <Content Include="html\garage\san-pham-form.html" />
     <Content Include="html\garage\san-pham.html" />
     <Content Include="html\garage\ql-garage.html" />
@@ -184,6 +185,7 @@
     <TypeScriptCompile Include="js\helpers\MainHelper.ts" />
     <TypeScriptCompile Include="js\model\OrderModel.ts" />
     <TypeScriptCompile Include="js\model\ProductInputModel.ts" />
+    <TypeScriptCompile Include="js\model\InventoryModel.ts" />
     <TypeScriptCompile Include="js\model\ProductModel.ts" />
     <TypeScriptCompile Include="js\model\PaymentModel.ts" />
     <TypeScriptCompile Include="js\model\CustomerOrderModel.ts" />
@@ -202,6 +204,7 @@
     <TypeScriptCompile Include="js\services\CustomerOrderService.ts" />
     <TypeScriptCompile Include="js\services\OrderService.ts" />
     <TypeScriptCompile Include="js\services\ProductInputService.ts" />
+    <TypeScriptCompile Include="js\services\InventoryService.ts" />
     <TypeScriptCompile Include="js\services\ProductService.ts" />
     <TypeScriptCompile Include="js\services\ExportService.ts" />
     <TypeScriptCompile Include="js\services\CustomerService.ts" />

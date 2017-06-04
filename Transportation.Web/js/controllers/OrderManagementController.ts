@@ -12,8 +12,13 @@ module Clarity.Controller {
   export class OrderManagementController {
     public currentOrder: Model.OrderModel;
     public orderService: service.OrderService;
+    public inventoryService: service.InventoryService;
+    public productService: service.ProductService;
 
     public orderList: Array<Model.OrderModel>;
+    public inventoryViewList: Array<Model.InventoryViewModel>;
+    public productList: Array<Model.ProductModel>;
+
     public productInputListTmp: Array<Model.OrderModel>;
     public numOfPages: number;
     public currentPage: number;
@@ -30,6 +35,8 @@ module Clarity.Controller {
       private $routeParams: any) {
 
       this.orderService = new service.OrderService($http);
+      this.inventoryService = new service.InventoryService($http);
+      this.productService = new service.ProductService($http);
       $scope.viewModel = this;
 
       this.pageSize = 10;
@@ -61,6 +68,9 @@ module Clarity.Controller {
       } else {
         if (this.$location.path() === '/ql-garage/ban-hang/tao') {
           this.currentOrder = new Model.OrderModel();
+          this.currentOrder.saleOff = 0;
+          this.currentOrder.totalAmount = 0;
+          this.initInventoryViewList();
         } else if (this.$location.path() === '/ql-garage/ban-hang') {
           this.isLoading = true;
           this.initOrderList();
@@ -77,6 +87,26 @@ module Clarity.Controller {
         this.productInputListTmp = this.orderList;
         this.initPagination();
         this.isLoading = false;
+      }, null);
+    }
+
+    initInventoryViewList() {
+      this.productService.getAll((results: Array<Model.ProductModel>) => {
+        this.productList = results;
+
+        this.inventoryService.getAll((results: Array<Model.InventoryModel>) => {
+          this.inventoryViewList = [];
+          results.map(inventory => {
+            var inventoryView = new Model.InventoryViewModel();
+            inventoryView.id = inventory.id;
+            inventoryView.productId = inventory.productId;
+            inventoryView.productName = this.getProductById(inventory.productId).name;
+            inventoryView.productPrice = this.getProductById(inventory.productId).latestPrice;
+            inventoryView.quantity = inventory.quantity;
+            this.inventoryViewList.push(inventoryView);
+          });
+        }, null);
+
       }, null);
     }
 
@@ -149,21 +179,72 @@ module Clarity.Controller {
       }
     }
 
-    createProduct(product: Model.ProductModel) {
+    createOrder(product: Model.OrderModel) {
       this.orderService.create(product,
         (data) => {
-          this.$location.path('/ql-garage/don-hang');
+          this.$location.path('/ql-garage/ban-hang');
         }, null);
     }
 
-    updateProduct(product: Model.ProductModel) {
+    updateOrder(product: Model.OrderModel) {
       this.orderService.update(product, (data) => {
-        this.$location.path('/ql-garage/don-hang');
+        this.$location.path('/ql-garage/ban-hang');
       }, null);
     }
 
     goToOrderForm() {
-      this.$location.path('/ql-garage/don-hang/tao');
+      this.$location.path('/ql-garage/ban-hang/tao');
     }
+
+    addOrderDetail() {
+      var orderDetail = new Model.OrderDetailModel();
+      this.currentOrder.orderDetails.push(orderDetail);
+    }
+
+    deleteOrderDetail(index: number) {
+      this.currentOrder.orderDetails.splice(index, 1);
+      this.currentOrder.totalAmount = this.calculateTotalAmountOrder();
+    }
+
+    getProductById(id: number) {
+      for (let product of this.productList) {
+        if (product.id == id) {
+          return product;
+        }
+      }
+
+      return null;
+    }
+
+    getInventoryViewByProductId(id: number) {
+      for (let inventory of this.inventoryViewList) {
+        if (inventory.productId == id) {
+          return inventory;
+        }
+      }
+      return null;
+    }
+
+    onInventoryViewChanged(orderDetail: Model.OrderDetailModel) {
+      orderDetail.price = this.getInventoryViewByProductId(orderDetail.productId).productPrice;
+      orderDetail.quantity = 1;
+      this.currentOrder.totalAmount = this.calculateTotalAmountOrder();
+    }
+
+    onQuantityChanged(orderDetail: Model.OrderDetailModel) {
+      this.currentOrder.totalAmount = this.calculateTotalAmountOrder();
+    }
+
+    calculateTotalAmountOrder() {
+      if (this.currentOrder && this.currentOrder.orderDetails && this.currentOrder.orderDetails.length) {
+        let total = 0;
+        for (var orderDetail of this.currentOrder.orderDetails) {
+          total += orderDetail.price * orderDetail.quantity;
+        }
+        return total;
+      }
+      return 0;
+    }
+
 	}
 }
