@@ -258,6 +258,16 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
         controller: 'OrderManagementController',
         access: 'authorized'
     })
+    .when('/ql-garage/ban-hang/:order_id', {
+        templateUrl: '/html/garage/ban-hang-detail.html' + '?v=' + VERSION_NUMBER,
+        controller: 'OrderManagementController',
+        access: 'authorized'
+    })
+	.when('/ql-garage/ban-hang/sua/:order_id', {
+	    templateUrl: '/html/garage/ban-hang-form.html' + '?v=' + VERSION_NUMBER,
+	    controller: 'OrderManagementController',
+	    access: 'authorized'
+	})
 
     .otherwise({ redirectTo: '/' });
 });

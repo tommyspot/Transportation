@@ -1,0 +1,59 @@
+﻿<div id="orderInfo" class="bootstrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3">
+        <img class="avatar" src="/img/logo.gif" style="width: 100%"/>
+      </div>
+      <div class="col-sm-9">
+        <div class="list-group-item user-info">
+          <h2 class="text-center title-name">{{viewModel.currentOrder.id}}</h2>
+          <p><span class="bold-text">Tên khách hàng:</span> <span>{{viewModel.currentOrder.customerName}}</span></p>
+          <p><span class="bold-text">Nhân viên:</span> <span>{{viewModel.currentOrder.employeeName}}</span></p>
+          <p><span class="bold-text">Ngày:</span> <span>{{viewModel.currentOrder.date}}</span></p>
+          <p><span class="bold-text">Tổng thành tiền:</span> <span>{{viewModel.currentOrder.totalAmount | currency: "" : 0}}</span></p>
+          <p><span class="bold-text">Giảm giá:</span> <span>{{viewModel.currentOrder.saleOff}}%</span></p>
+          <p><span class="bold-text">Tiền thực trả:</span> <span>{{viewModel.currentOrder.totalAmount*(100-viewModel.currentOrder.saleOff)/100 | currency: "" : 0}}</span></p>
+
+          <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+              <thead>
+                <tr>
+                  <th class="align-center">STT</th>
+                  <th class="align-center">Tên sản phẩm</th>
+                  <th class="align-center hidden-xs">Số lượng</th>
+                  <th class="align-center hidden-xs">Đơn giá</th>
+                  <th class="align-center">Thành tiền</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-ng-repeat="orderDetail in viewModel.currentOrder.orderDetails">
+                  <td class="align-center">{{$index + 1}}</td>
+                  <td class="align-center">{{viewModel.getProductById(orderDetail.productId).name}}</td>
+                  <td class="align-center hidden-xs">{{orderDetail.quantity}}</td>
+                  <td class="align-center hidden-xs">{{orderDetail.price | currency: "" : 0}}</td>
+                  <td class="align-center">{{orderDetail.price * orderDetail.quantity | currency: "" : 0}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/ban-hang')">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+            <span>Quay lại</span>
+          </button>
+
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/ban-hang/sua/' + viewModel.currentOrder.id)">
+            <span class="glyphicon glyphicon-pencil"></span>
+            <span>Sửa đơn hàng</span>
+          </button>
+
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.removeOrderInDetail(viewModel.currentOrder)">
+            <span class="glyphicon glyphicon-trash"></span>
+            <span>Xóa đơn hàng</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

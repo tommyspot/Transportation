@@ -79,9 +79,7 @@ namespace Transportation.Api
             }
 
             order.ApplyJson(json);
-
-            //if (employee.IsInvalid())
-            //    return new RestApiResult { StatusCode = HttpStatusCode.BadRequest };
+            UpdateOrderDetailsFromJson(id, json);
 
             ClarityDB.Instance.SaveChanges();
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
@@ -125,6 +123,25 @@ namespace Transportation.Api
                     inventory.Quantity += orderDetail.Quantity;
                 }
             }
+        }
+
+        private void UpdateOrderDetailsFromJson(long orderID, JObject json)
+        {
+            DeleteOrderDetails(orderID);
+            AddOrderDetailFromJson(orderID, json);
+        }
+
+        private void DeleteOrderDetails(long orderID)
+        {
+            var orderDetails = ClarityDB.Instance.OrderDetails.Where(x => x.OrderID == orderID);
+            foreach (OrderDetail orderDetail in orderDetails)
+            {
+                //update inventory
+                Inventory inventory = ClarityDB.Instance.Inventories.FirstOrDefault(x => x.ProductID == orderDetail.ProductID);
+                inventory.Quantity += orderDetail.Quantity;
+                ClarityDB.Instance.OrderDetails.Remove(orderDetail);
+            }
+            ClarityDB.Instance.SaveChanges();
         }
 
         private JArray BuildJsonArray(IEnumerable<Order> orders)

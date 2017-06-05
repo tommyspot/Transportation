@@ -116,6 +116,7 @@
     <Content Include="html\garage\ban-hang.html" />
     <Content Include="html\garage\nhap-kho.html" />
     <Content Include="html\garage\ban-hang-form.html" />
+    <Content Include="html\garage\ban-hang-detail.html" />
     <Content Include="html\garage\san-pham-form.html" />
     <Content Include="html\garage\san-pham.html" />
     <Content Include="html\garage\ql-garage.html" />

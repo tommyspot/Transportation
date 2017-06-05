@@ -57,11 +57,13 @@ module Clarity.Controller {
         if (this.$location.path() === '/ql-garage/ban-hang/' + orderId) {
           this.orderService.getById(orderId, (data) => {
             this.currentOrder = data;
+            this.initProductList();
           }, null);
         } else if (this.$location.path() === '/ql-garage/ban-hang/sua/' + orderId) {
           if (this.currentOrder == null) {
             this.orderService.getById(orderId, (data) => {
               this.currentOrder = data;
+              this.initInventoryViewList();
             }, null);
           }
         }
@@ -107,6 +109,12 @@ module Clarity.Controller {
           });
         }, null);
 
+      }, null);
+    }
+
+    initProductList() {
+      this.productService.getAll((results: Array<Model.ProductModel>) => {
+        this.productList = results;
       }, null);
     }
 
@@ -170,11 +178,11 @@ module Clarity.Controller {
       }
     }
 
-    removeProductInDetail(product: Model.ProductModel) {
+    removeOrderInDetail(order: Model.OrderModel) {
       var confirmDialog = this.$window.confirm('Bạn có muốn xóa đơn hàng?');
       if (confirmDialog) {
-        this.orderService.deleteEntity(product, (data) => {
-          this.$location.path('/ql-garage/san-pham');
+        this.orderService.deleteEntity(order, (data) => {
+          this.$location.path('/ql-garage/ban-hang');
         }, null);
       }
     }
@@ -207,19 +215,22 @@ module Clarity.Controller {
     }
 
     getProductById(id: number) {
-      for (let product of this.productList) {
-        if (product.id == id) {
-          return product;
+      if (this.productList && this.productList.length > 0) {
+        for (let product of this.productList) {
+          if (product.id == id) {
+            return product;
+          }
         }
       }
-
       return null;
     }
 
     getInventoryViewByProductId(id: number) {
-      for (let inventory of this.inventoryViewList) {
-        if (inventory.productId == id) {
-          return inventory;
+      if (this.inventoryViewList && this.inventoryViewList.length > 0) {
+        for (let inventory of this.inventoryViewList) {
+          if (inventory.productId == id) {
+            return inventory;
+          }
         }
       }
       return null;
@@ -227,7 +238,7 @@ module Clarity.Controller {
 
     onInventoryViewChanged(orderDetail: Model.OrderDetailModel) {
       orderDetail.price = this.getInventoryViewByProductId(orderDetail.productId).productPrice;
-      orderDetail.quantity = 1;
+      orderDetail.quantity = orderDetail.quantity ? orderDetail.quantity : 1;
       this.currentOrder.totalAmount = this.calculateTotalAmountOrder();
     }
 

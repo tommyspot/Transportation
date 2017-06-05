@@ -29,6 +29,7 @@ namespace Transportation
             json["date"] = Date;
             json["saleOff"] = SaleOff;
             json["totalAmount"] = TotalAmount;
+            json["orderDetails"] = BuildJsonArray(OrderDetails);
             return json;
         }
 
@@ -48,6 +49,18 @@ namespace Transportation
             Date = json.Value<string>("date");
             SaleOff = json.Value <long>("saleOff");
             TotalAmount = json.Value<long>("totalAmount");
+        }
+
+        private JArray BuildJsonArray(Collection<OrderDetail> orderDetails)
+        {
+            JArray jsons = new JArray();
+
+            foreach (OrderDetail orderDetail in orderDetails)
+            {
+                jsons.Add(orderDetail.ToJson());
+            }
+
+            return jsons;
         }
     }
 }

@@ -83,8 +83,7 @@
                     </select>
                   </td>
                   <td class="align-center">
-                    <input class="form-control" type="number" min="1" max="{{viewModel.getInventoryViewByProductId(orderDetail.productId).quantity}}" 
-                      data-ng-model="orderDetail.quantity" data-ng-change="viewModel.onQuantityChanged(orderDetail)"/>
+                    <input class="form-control" type="number" min="1" data-ng-model="orderDetail.quantity" data-ng-change="viewModel.onQuantityChanged(orderDetail)"/>
                   </td>
                   <td class="align-center">{{orderDetail.price | currency: "" : 0}}</td>
                   <td class="align-center hidden-xs">{{orderDetail.price * orderDetail.quantity | currency: "" : 0}}</td>
