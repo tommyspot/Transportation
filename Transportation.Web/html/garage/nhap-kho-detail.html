@@ -1,0 +1,35 @@
+﻿<div id="productInputInfo" class="bootstrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3">
+        <img class="avatar" src="/img/logo.gif" style="width: 100%"/>
+      </div>
+      <div class="col-sm-9">
+        <div class="list-group-item user-info">
+          <h2 class="text-center title-name">{{viewModel.currentProductInput.id}}</h2>
+          <p><span class="bold-text">Tên sản phẩm:</span> <span>{{viewModel.getProductById(viewModel.currentProductInput.productId).name}}</span></p>
+          <p><span class="bold-text">Số lượng:</span> <span>{{viewModel.currentProductInput.quantity | currency: "" : 0}}</span></p>
+          <p><span class="bold-text">Đơn giá:</span> <span>{{viewModel.currentProductInput.price | currency: "" : 0}}</span></p>
+          <p><span class="bold-text">Thành tiền:</span> <span>{{viewModel.currentProductInput.quantity * viewModel.currentProductInput.price | currency: "" : 0}}</span></p>
+          <p><span class="bold-text">Ngày nhập kho:</span> <span>{{viewModel.currentProductInput.dateInput}}</span></p>
+
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/nhap-kho')">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+            <span>Quay lại</span>
+          </button>
+
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/nhap-kho/sua/' + viewModel.currentProductInput.id)">
+            <span class="glyphicon glyphicon-pencil"></span>
+            <span>Sửa kho hàng</span>
+          </button>
+
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.removeProductInputInDetail(viewModel.currentProductInput)">
+            <span class="glyphicon glyphicon-trash"></span>
+            <span>Xóa kho hàng</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

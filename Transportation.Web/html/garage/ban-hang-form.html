@@ -20,7 +20,7 @@
         <div class="col-sm-6">
           <div class="form-group">
             <label for="date">Ngày</label>
-            <datepicker class="date-picker" date-format="dd/MM/yyyy" date-set="20/10/1989">
+            <datepicker class="date-picker" date-format="dd/MM/yyyy" date-set="{{viewModel.todayFormat}}">
               <input id="date" class="form-control" name="date" type="text" ng-model="viewModel.currentOrder.date">
             </datepicker>
           </div>
@@ -87,11 +87,11 @@
                   </td>
                   <td class="align-center">{{orderDetail.price | currency: "" : 0}}</td>
                   <td class="align-center hidden-xs">{{orderDetail.price * orderDetail.quantity | currency: "" : 0}}</td>
-                  <th class="align-center">
+                  <td class="align-center">
                     <button class="btn btn-default" data-ng-click="viewModel.deleteOrderDetail($index)">
                       <span class="glyphicon glyphicon-trash"></span> <span>Xóa</span>
                     </button>
-                  </th>
+                  </td>
                 </tr>
               </tbody>
             </table>

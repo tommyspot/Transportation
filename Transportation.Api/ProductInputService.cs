@@ -36,6 +36,30 @@ namespace Transportation.Api
             return new RestApiResult { StatusCode = HttpStatusCode.OK };
         }
 
+        [Route(HttpVerb.Post, "/productInputs/list")]
+        public RestApiResult CreateList(JArray jsonList)
+        {
+            if (jsonList == null)
+            {
+                return new RestApiResult { StatusCode = HttpStatusCode.BadRequest };
+            }
+
+            foreach (JObject json in jsonList) {
+                ProductInput productInputs = ProductInput.FromJson(json);
+                productInputs.CreatedDate = DateTime.Now;
+                ClarityDB.Instance.ProductInputs.Add(productInputs);
+                //update Inventory and Product
+                long productId = json.Value<long>("productId");
+                long quantity = json.Value<long>("quantity");
+                long price = json.Value<long>("price");
+                UpdateInventory(productId, quantity);
+                UpdateLatestPriceForProduct(productId, price);
+            }
+            ClarityDB.Instance.SaveChanges();
+
+            return new RestApiResult { StatusCode = HttpStatusCode.OK };
+        }
+
         [Route(HttpVerb.Get, "/productInputs/{id}")]
         public RestApiResult GetProductInputByID(long id)
         {
@@ -58,6 +82,7 @@ namespace Transportation.Api
                 return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
             }
 
+            UpdateInventoryAfterDeleteProductInput(productInput.ProductID, productInput.Quantity);
             ClarityDB.Instance.ProductInputs.Remove(productInput);
             ClarityDB.Instance.SaveChanges();
 
@@ -73,13 +98,41 @@ namespace Transportation.Api
                 return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
             }
 
+            long newQuantity = json.Value<long>("quantity");
+            long oldQuantity = productInput.Quantity;
+            long deltaQuantity = newQuantity - oldQuantity;
+            UpdateInventoryAfterUpdateProductInput(productInput.ProductID, deltaQuantity);
+
             productInput.ApplyJson(json);
-
-            //if (employee.IsInvalid())
-            //    return new RestApiResult { StatusCode = HttpStatusCode.BadRequest };
-
             ClarityDB.Instance.SaveChanges();
+            
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json};
+        }
+
+        private void UpdateInventory(long productId, long quantity) {
+            Inventory inventory = ClarityDB.Instance.Inventories.FirstOrDefault(x => x.ProductID == productId);
+            inventory.Quantity += quantity;
+            ClarityDB.Instance.SaveChanges();
+        }
+
+        private void UpdateInventoryAfterDeleteProductInput(long productId, long quantity)
+        {
+            Inventory inventory = ClarityDB.Instance.Inventories.FirstOrDefault(x => x.ProductID == productId);
+            inventory.Quantity -= quantity;
+            ClarityDB.Instance.SaveChanges();
+        }
+
+        private void UpdateInventoryAfterUpdateProductInput(long productId, long quantity)
+        {
+            Inventory inventory = ClarityDB.Instance.Inventories.FirstOrDefault(x => x.ProductID == productId);
+            inventory.Quantity += quantity;
+            ClarityDB.Instance.SaveChanges();
+        }
+        private void UpdateLatestPriceForProduct(long productId, long price)
+        {
+            Product product = ClarityDB.Instance.Products.FirstOrDefault(x => x.ID == productId);
+            product.LatestPrice = price;
+            ClarityDB.Instance.SaveChanges();
         }
 
         private JArray BuildJsonArray(IEnumerable<ProductInput> productInputs)

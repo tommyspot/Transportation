@@ -1,0 +1,69 @@
+﻿<div id="productInputFormSection" class="bootstrap form">
+	<div class="container">
+		<form name="productInputForm">
+      <div class="row">
+        <div class="col-sm-12">
+          <button type="button" class="btn btn-default" data-ng-click="viewModel.addProductInput()">
+            <span class="glyphicon glyphicon-plus"></span>
+            <span class="hidden-xs">Nhập hàng</span>
+          </button>
+        </div>
+      </div>
+      <div class="row margin-top-15">
+        <div class="col-sm-12">
+          <table class="table table-hover table-bordered">
+            <thead>
+              <tr>
+                <th class="align-center">STT</th>
+                <th class="align-center hidden-xs">Tên sản phẩm</th>
+                <th class="align-center">Số lượng</th>
+                <th class="align-center">Giá</th>
+                <th class="align-center hidden-xs">Ngày nhập kho</th>
+                <th class="align-center"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-ng-repeat="productInput in viewModel.productInputListForm">
+                <td class="align-center">{{$index + 1}}</td>
+                <td class="align-center hidden-xs">
+                  <select ui-select2 class="form-control ui-select-2" data-ng-model="productInput.productId" required>
+                    <option value="" selected="selected">--Chọn sản phẩm --</option>
+                    <option data-ng-repeat="product in viewModel.productList" value="{{product.id}}">{{product.name}}</option>
+                  </select>
+                </td>
+                <td class="align-center">
+                  <input class="form-control" type="number" min="1" data-ng-model="productInput.quantity" required/>
+                </td>
+                <td class="align-center">
+                  <input class="form-control" type="number" min="1" data-ng-model="productInput.price" required/>
+                </td>
+                <td class="align-center hidden-xs">
+                  <datepicker class="date-picker" date-format="dd/MM/yyyy" date-set="{{viewModel.todayFormat}}">
+                    <input id="date" class="form-control" name="date" type="text" ng-model="productInput.dateInput" />
+                  </datepicker>
+                </td>
+                <td class="align-center">
+                  <button class="btn btn-default" data-ng-click="viewModel.removeProductInput($index)">
+                    <span class="glyphicon glyphicon-trash"></span> <span>Xóa</span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+		</form>
+
+		<button class="btn btn-default positive-btn" data-ng-click="viewModel.createProductInputList(viewModel.productInputListForm)" 
+      data-ng-disabled="productInputForm.$invalid || viewModel.productInputListForm.length == 0">
+			<span class="glyphicon glyphicon-ok"></span>
+			<span>Lưu</span>
+		</button>
+
+		<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/nhap-kho')">
+			<span class="glyphicon glyphicon-remove"></span>
+			<span>Hủy</span>
+		</button>
+
+	</div>
+</div>

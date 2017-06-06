@@ -106,7 +106,14 @@ namespace Transportation.Api.Framework
         {
             if (!string.IsNullOrEmpty(context.RequestBody))
             {
-                dictionary.Add("json", JObject.Parse(context.RequestBody));
+                if (JToken.Parse(context.RequestBody) is JObject)
+                {
+                    dictionary.Add("json", JObject.Parse(context.RequestBody));
+                }
+                else if (JToken.Parse(context.RequestBody) is JArray)
+                {
+                    dictionary.Add("jsonList", JArray.Parse(context.RequestBody));
+                }
             }
         }
 

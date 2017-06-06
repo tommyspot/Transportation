@@ -1,0 +1,53 @@
+﻿<div id="productInputFormSection" class="bootstrap form">
+	<div class="container">
+		<form name="productInputForm">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="name">Tên sản phẩm <span class="required-symbol">*</span></label>
+						<span class="required-field" ng-if="productInputForm.name.$touched && productInputForm.name.$invalid">(Tên sản phẩm phải được nhập)</span>
+            <select ui-select2 class="form-control ui-select-2" data-ng-model="viewModel.currentProductInput.productId" required>
+              <option value="" selected="selected">--Chọn sản phẩm --</option>
+              <option data-ng-repeat="product in viewModel.productList" value="{{product.id}}">{{product.name}}</option>
+            </select>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="date">Ngày nhập kho</label>
+            <datepicker class="date-picker" date-format="dd/MM/yyyy" date-set="{{viewModel.todayFormat}}">
+              <input id="date" class="form-control" name="date" type="text" ng-model="viewModel.currentProductInput.dateInput" />
+            </datepicker>
+					</div>
+				</div>
+			</div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="quantity">Số lượng <span class="required-symbol">*</span></label>
+            <span class="required-field" ng-if="productInputForm.quantity.$touched && productInputForm.quantity.$invalid">(Số lượng phải được nhập)</span>
+            <input id="quantity" class="form-control" name="quantity" type="text" ng-model="viewModel.currentProductInput.quantity" required />
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="price">Giá <span class="required-symbol">*</span></label>
+            <span class="required-field" ng-if="productInputForm.price.$touched && productInputForm.price.$invalid">(Giá phải được nhập)</span>
+            <input id="price" class="form-control" name="price" type="text" ng-model="viewModel.currentProductInput.price" required />
+          </div>
+        </div>
+      </div>
+		</form>
+
+		<button class="btn btn-default positive-btn" data-ng-click="viewModel.updateProductInput(viewModel.currentProductInput)" data-ng-disabled="productInputForm.$invalid">
+			<span class="glyphicon glyphicon-ok"></span>
+			<span>Cập nhật</span>
+		</button>
+
+		<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/nhap-kho')">
+			<span class="glyphicon glyphicon-remove"></span>
+			<span>Hủy</span>
+		</button>
+
+	</div>
+</div>

@@ -53,10 +53,10 @@
 								<td class="align-center" data-ng-click="$event.stopPropagation();">
 									<input id="productInput-{{$index}}" type="checkbox" data-ng-model="productInput.isChecked" />
 								</td>
-								<td class="align-center hidden-xs">{{productInput.productId}}</td>
-								<td class="align-center">{{productInput.quantity}}</td>
-								<td class="align-center hidden-xs">{{productInput.price}}</td>
-                <td class="align-center hidden-xs">{{productInput.quantity * productInput.price}}</td>
+								<td>{{viewModel.getProductById(productInput.productId).name}}</td>
+								<td class="align-center">{{productInput.quantity | currency: "" : 0}}</td>
+								<td class="align-center hidden-xs">{{productInput.price | currency: "" : 0}}</td>
+                <td class="align-center hidden-xs">{{productInput.quantity * productInput.price | currency: "" : 0}}</td>
                 <td class="align-center hidden-xs">{{productInput.dateInput}}</td>
 							</tr>
 						</tbody>

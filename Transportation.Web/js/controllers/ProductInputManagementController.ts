@@ -6,19 +6,26 @@
 declare var VERSION_NUMBER;
 
 module Clarity.Controller {
-	import service = Clarity.Service;
+  import service = Clarity.Service;
+  import helper = Clarity.Helper;
 
   export class ProductInputManagementController {
     public currentProductInput: Model.ProductInputModel;
     public productInputService: service.ProductInputService;
+    public productService: service.ProductService;
+    public mainHelper: helper.MainHelper;
 
     public productInputList: Array<Model.ProductInputModel>;
+    public productInputListForm: Array<Model.ProductInputModel>;
     public productInputListTmp: Array<Model.ProductInputModel>;
+    public productList: Array<Model.ProductModel>;
+
     public numOfPages: number;
     public currentPage: number;
     public pageSize: number;
     public isCheckedAll: boolean;
     public isLoading: boolean;
+    public todayFormat: string;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -26,9 +33,12 @@ module Clarity.Controller {
       private $location: ng.ILocationService,
       private $window: ng.IWindowService,
       private $filter: ng.IFilterService,
+      private $cookieStore: ng.ICookieStoreService,
       private $routeParams: any) {
 
+      this.mainHelper = new helper.MainHelper($http, $cookieStore);
       this.productInputService = new service.ProductInputService($http);
+      this.productService = new service.ProductService($http);
       $scope.viewModel = this;
 
       this.pageSize = 10;
@@ -44,6 +54,8 @@ module Clarity.Controller {
     }
 
     initProductInput() {
+      this.initProductList();
+
       var productInputId = this.$routeParams.product_input_id;
       if (productInputId) {
         if (this.$location.path() === '/ql-garage/nhap-kho/' + productInputId) {
@@ -59,15 +71,16 @@ module Clarity.Controller {
         }
       } else {
         if (this.$location.path() === '/ql-garage/nhap-kho/tao') {
-          this.currentProductInput = new Model.ProductInputModel();
+          this.productInputListForm = [];
+          this.todayFormat = this.mainHelper.formatDateTimeDDMMYYYY(new Date());
         } else if (this.$location.path() === '/ql-garage/nhap-kho') {
           this.isLoading = true;
-          this.initProductList();
+          this.initProductInputList();
         }
       }
     }
 
-    initProductList() {
+    initProductInputList() {
       this.productInputService.getAll((results: Array<Model.ProductInputModel>) => {
         this.productInputList = results;
         this.productInputList.sort(function (a: any, b: any) {
@@ -76,6 +89,15 @@ module Clarity.Controller {
         this.productInputListTmp = this.productInputList;
         this.initPagination();
         this.isLoading = false;
+      }, null);
+    }
+
+    initProductList() {
+      this.productService.getAll((results: Array<Model.ProductModel>) => {
+        this.productList = results;
+        this.productList.sort(function (a: any, b: any) {
+          return a.id - b.id;
+        });
       }, null);
     }
 
@@ -132,37 +154,58 @@ module Clarity.Controller {
           var product = this.productInputList[i];
           if (product.isChecked) {
             this.productInputService.deleteEntity(product, (data) => {
-              this.initProductList();
+              this.initProductInputList();
             }, () => { });
           }
         }
       }
     }
 
-    removeProductInDetail(product: Model.ProductModel) {
-      var confirmDialog = this.$window.confirm('Bạn có muốn xóa sản phẩm?');
+    removeProductInputInDetail(productInput: Model.ProductInputModel) {
+      var confirmDialog = this.$window.confirm('Bạn có muốn xóa kho hàng?');
       if (confirmDialog) {
-        this.productInputService.deleteEntity(product, (data) => {
-          this.$location.path('/ql-garage/san-pham');
+        this.productInputService.deleteEntity(productInput, (data) => {
+          this.$location.path('/ql-garage/nhap-kho');
         }, null);
       }
     }
 
-    createProduct(product: Model.ProductModel) {
-      this.productInputService.create(product,
-        (data) => {
-          this.$location.path('/ql-garage/san-pham');
-        }, null);
-    }
-
-    updateProduct(product: Model.ProductModel) {
-      this.productInputService.update(product, (data) => {
-        this.$location.path('/ql-garage/san-pham');
+    updateProductInput(productInput: Model.ProductInputModel) {
+      this.productInputService.update(productInput, (data) => {
+        this.$location.path('/ql-garage/nhap-kho');
       }, null);
     }
 
     goToProductInputForm() {
       this.$location.path('/ql-garage/nhap-kho/tao');
+    }
+
+    addProductInput() {
+      let productInput = new Model.ProductInputModel();
+      this.productInputListForm.push(productInput);
+    }
+
+    removeProductInput(index) {
+      if (this.productInputListForm && this.productInputListForm.length > 0) {
+        this.productInputListForm.splice(index, 1);
+      }
+    }
+
+    createProductInputList(productInputs: Array<Model.ProductInputModel>) {
+      this.productInputService.createList(productInputs, (data) => {
+        this.$location.path('/ql-garage/nhap-kho');
+      }, null);
+    }
+
+    getProductById(id: number) {
+      if (this.productList && this.productList.length > 0) {
+        for (let product of this.productList) {
+          if (product.id == id) {
+            return product;
+          }
+        }
+      }
+      return null;
     }
 	}
 }

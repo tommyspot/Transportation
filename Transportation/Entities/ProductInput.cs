@@ -22,7 +22,7 @@ namespace Transportation
         {
             JObject json = new JObject();
             json["id"] = ID;
-            json["productID"] = ProductID;
+            json["productId"] = ProductID;
             json["quantity"] = Quantity;
             json["price"] = Price;
             json["dateInput"] = DateInput;
@@ -39,7 +39,7 @@ namespace Transportation
         public void ApplyJson(JObject json)
         {
             ID = json.Value<long>("id");
-            ProductID = json.Value<long>("productID");
+            ProductID = json.Value<long>("productId");
             Quantity = json.Value<long>("quantity");
             Price = json.Value<long>("price");
             DateInput = json.Value<string>("dateInput");

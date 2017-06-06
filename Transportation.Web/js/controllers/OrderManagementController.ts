@@ -14,6 +14,7 @@ module Clarity.Controller {
     public orderService: service.OrderService;
     public inventoryService: service.InventoryService;
     public productService: service.ProductService;
+    public mainHelper: helper.MainHelper;
 
     public orderList: Array<Model.OrderModel>;
     public inventoryViewList: Array<Model.InventoryViewModel>;
@@ -25,6 +26,7 @@ module Clarity.Controller {
     public pageSize: number;
     public isCheckedAll: boolean;
     public isLoading: boolean;
+    public todayFormat: string;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -32,8 +34,10 @@ module Clarity.Controller {
       private $location: ng.ILocationService,
       private $window: ng.IWindowService,
       private $filter: ng.IFilterService,
+      private $cookieStore: ng.ICookieStoreService,
       private $routeParams: any) {
 
+      this.mainHelper = new helper.MainHelper($http, $cookieStore);
       this.orderService = new service.OrderService($http);
       this.inventoryService = new service.InventoryService($http);
       this.productService = new service.ProductService($http);
@@ -69,6 +73,7 @@ module Clarity.Controller {
         }
       } else {
         if (this.$location.path() === '/ql-garage/ban-hang/tao') {
+          this.todayFormat = this.mainHelper.formatDateTimeDDMMYYYY(new Date());
           this.currentOrder = new Model.OrderModel();
           this.currentOrder.saleOff = 0;
           this.currentOrder.totalAmount = 0;

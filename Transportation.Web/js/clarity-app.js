@@ -243,7 +243,7 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
         access: 'authorized'
     })
 	.when('/ql-garage/nhap-kho/sua/:product_input_id', {
-	    templateUrl: '/html/garage/nhap-kho-form.html' + '?v=' + VERSION_NUMBER,
+	    templateUrl: '/html/garage/nhap-kho-sua.html' + '?v=' + VERSION_NUMBER,
 	    controller: 'ProductInputManagementController',
 	    access: 'authorized'
 	})

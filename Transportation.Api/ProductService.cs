@@ -32,6 +32,8 @@ namespace Transportation.Api
 
             ClarityDB.Instance.Products.Add(product);
             ClarityDB.Instance.SaveChanges();
+            //Create inventory
+            CreateInventory(product.ID);
 
             return new RestApiResult { StatusCode = HttpStatusCode.OK };
         }
@@ -74,12 +76,17 @@ namespace Transportation.Api
             }
 
             product.ApplyJson(json);
-
-            //if (employee.IsInvalid())
-            //    return new RestApiResult { StatusCode = HttpStatusCode.BadRequest };
-
             ClarityDB.Instance.SaveChanges();
-            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json};
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
+        }
+
+        private void CreateInventory(long productId) {
+            Inventory inventory = new Inventory();
+            inventory.ProductID = productId;
+            inventory.Quantity = 0;
+            inventory.CreatedDate = DateTime.Now;
+            ClarityDB.Instance.Inventories.Add(inventory);
+            ClarityDB.Instance.SaveChanges();
         }
 
         private JArray BuildJsonArray(IEnumerable<Product> products)

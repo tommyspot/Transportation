@@ -3,12 +3,11 @@ module Clarity.Helper {
 
   export class MainHelper {
 		public authenticationService: Clarity.Service.AuthenticationService;
+
     constructor(private $http: ng.IHttpService,
       private $cookieStore: ng.ICookieStoreService) {
 			this.authenticationService = new Clarity.Service.AuthenticationService($http, $cookieStore);
 		};
-
-
 
     public getCurrentDateTimeString() {
       var d = new Date();

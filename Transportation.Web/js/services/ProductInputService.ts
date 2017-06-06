@@ -9,5 +9,13 @@ module Clarity.Service {
       super($http);
       this.url = '/api/productInputs';
     }
+
+    createList(entityList: Array<Model.ProductInputModel>, successCallback: Function, errorCallback: Function) {
+      this.http.post('/api/productInputs/list', entityList)
+        .success((data) => { this.doCallback(successCallback, data); })
+        .error((data, status) => {
+          this.doCallback(errorCallback, data, status);
+        });
+    }
   }
 }
