@@ -25,6 +25,8 @@ namespace Transportation.UnitTests
         public virtual IDbSet<Inventory> Inventories { get; set; }
         public virtual IDbSet<Order> Orders { get; set; }
         public virtual IDbSet<OrderDetail> OrderDetails { get; set; }
+        public virtual IDbSet<InputOrder> InputOrders { get; set; }
+
         public Database Database
         {
             get { return null; }

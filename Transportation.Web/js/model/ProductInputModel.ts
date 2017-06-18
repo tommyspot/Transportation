@@ -5,8 +5,11 @@ module Clarity.Model {
     export class ProductInputModel extends Model.BaseModel {
         public productId: string;
         public quantity: number;
-        public price: number;
-        public dateInput: string;
+        public inputPrice: number;
+        public salePrice: number;
         public isChecked: boolean;
+        //format value
+        public inputPriceFormated: string;
+        public salePriceFormated: string;
     }
 }

@@ -74,5 +74,9 @@ module Clarity.Controller {
     goToSaleManagement() {
       this.$location.path('/ql-garage/ban-hang');
     }
+
+    goToReportGarageManagement() {
+      this.$location.path('/ql-garage/quan-ly');
+    }
 	}
 }

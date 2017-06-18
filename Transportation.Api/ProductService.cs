@@ -19,6 +19,38 @@ namespace Transportation.Api
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(products) };
         }
 
+        [Route(HttpVerb.Get, "/productInfos")]
+        public RestApiResult GetAllProductInfo()
+        {
+            var products = ClarityDB.Instance.Products;
+            var productInfoList = new List<ProductInfo>();
+            foreach (var product in products) {
+                ProductInfo productInfo = new ProductInfo();
+                productInfo.Name = product.Name;
+                productInfo.SumOfInput = ClarityDB.Instance.ProductInputs.Any(x => x.ProductID == product.ID) ?
+                    ClarityDB.Instance.ProductInputs.Where(x => x.ProductID == product.ID).Sum(x => x.Quantity) : 0;
+
+                productInfo.SumOfInputTotalAmount = ClarityDB.Instance.ProductInputs.Any(x => x.ProductID == product.ID) ?
+                    ClarityDB.Instance.ProductInputs.Where(x => x.ProductID == product.ID).Sum(x => x.Quantity * x.InputPrice) : 0;
+
+                productInfo.SumOfSale = ClarityDB.Instance.OrderDetails.Any(x => x.ProductID == product.ID) ?
+                    ClarityDB.Instance.OrderDetails.Where(x => x.ProductID == product.ID).Sum(x => x.Quantity) : 0;
+
+                productInfo.SumOfSaleTotalAmount = ClarityDB.Instance.OrderDetails.Any(x => x.ProductID == product.ID) ?
+                    ClarityDB.Instance.OrderDetails.Where(x => x.ProductID == product.ID).Sum(x => x.Quantity * x.Price) : 0;
+
+                productInfo.NumOfRemain = ClarityDB.Instance.Inventories.Any(x => x.ProductID == product.ID) ? 
+                    ClarityDB.Instance.Inventories.Where(x => x.ProductID == product.ID).FirstOrDefault().Quantity : 0;
+
+                productInfo.Profit = productInfo.SumOfInput != 0 ?
+                    productInfo.SumOfSaleTotalAmount - (productInfo.SumOfSale * productInfo.SumOfInputTotalAmount / productInfo.SumOfInput) : 0;
+
+                productInfoList.Add(productInfo);
+            }
+
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonProductInfoArray(productInfoList) };
+        }
+
         [Route(HttpVerb.Post, "/products")]
         public RestApiResult Create(JObject json)
         {
@@ -96,6 +128,18 @@ namespace Transportation.Api
             foreach (Product product in products)
             {
                 array.Add(product.ToJson());
+            }
+
+            return array;
+        }
+
+        private JArray BuildJsonProductInfoArray(IEnumerable<ProductInfo> productInfoList)
+        {
+            JArray array = new JArray();
+
+            foreach (ProductInfo productInfo in productInfoList)
+            {
+                array.Add(productInfo.ToJson());
             }
 
             return array;

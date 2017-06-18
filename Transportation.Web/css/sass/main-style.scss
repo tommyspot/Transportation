@@ -512,6 +512,9 @@ div.bootstrap {
     .manage-box.bh-box {
       background-color: #e74c3c;
     }
+    .manage-box.ql-box {
+      background-color: #27ae60;
+    }
 
     .no-margin-right {
       margin-right: 0px;
@@ -659,6 +662,10 @@ div.bootstrap {
     margin-left: 40px;
   }
 
+  .margin-top-7{
+    margin-top: 7px;
+  }
+
   .right-align {
     text-align: right;
   }
@@ -667,8 +674,40 @@ div.bootstrap {
     cursor: pointer;
   }
 
+  .disabled{
+    background-color:#eeeeee;
+    opacity: 1;
+  }
+
   .align-center {
     text-align: center;
+  }
+
+  .align-middle{
+    vertical-align: middle;
+  }
+
+  .sort-asc-ico{
+    font-size: 20px;
+    position: absolute;
+    top: 14px;
+    color: $transport-color-2;
+  }
+  .sort-desc-ico{
+    font-size: 20px;
+    position: absolute;
+    top: 4px;
+    color: $transport-color-2;
+  }
+
+  .main-btn{
+    background-color: $transport-color-2;
+    border-color: $transport-color-2;
+    color: #FFFFFF;
+
+    &:hover{
+      opacity: 0.9;
+    }
   }
 
   .required-symbol {

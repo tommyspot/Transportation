@@ -115,11 +115,11 @@
     <Content Include="html\baocao\bao-cao.html" />
     <Content Include="html\garage\nhap-kho-detail.html" />
     <Content Include="html\garage\nhap-kho-form.html" />
-    <Content Include="html\garage\ban-hang.html" />
     <Content Include="html\garage\nhap-kho.html" />
+    <Content Include="html\garage\ban-hang.html" />
     <Content Include="html\garage\ban-hang-form.html" />
     <Content Include="html\garage\ban-hang-detail.html" />
-    <Content Include="html\garage\nhap-kho-sua.html" />
+    <Content Include="html\garage\quan-ly.html" />
     <Content Include="html\garage\san-pham-form.html" />
     <Content Include="html\garage\san-pham.html" />
     <Content Include="html\garage\ql-garage.html" />
@@ -172,8 +172,9 @@
     <Content Include="js\clarity-app.js" />
     <TypeScriptCompile Include="js\controllers\CustomerOrderManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\CustomerManagementController.ts" />
+    <TypeScriptCompile Include="js\controllers\InputOrderManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\OrderManagementController.ts" />
-    <TypeScriptCompile Include="js\controllers\ProductInputManagementController.ts" />
+    <TypeScriptCompile Include="js\controllers\ProductInfoManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\ProductManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\UserController.ts" />
     <TypeScriptCompile Include="js\controllers\ReportManagementController.ts" />
@@ -187,6 +188,7 @@
     <Content Include="font\roboto\Roboto-Regular.ttf" />
     <TypeScriptCompile Include="js\controllers\IController.ts" />
     <TypeScriptCompile Include="js\helpers\MainHelper.ts" />
+    <TypeScriptCompile Include="js\model\InputOrderModel.ts" />
     <TypeScriptCompile Include="js\model\OrderModel.ts" />
     <TypeScriptCompile Include="js\model\ProductInputModel.ts" />
     <TypeScriptCompile Include="js\model\InventoryModel.ts" />
@@ -206,8 +208,8 @@
     <TypeScriptCompile Include="js\model\UserModel.ts" />
     <TypeScriptCompile Include="js\services\AuthenticationService.ts" />
     <TypeScriptCompile Include="js\services\CustomerOrderService.ts" />
+    <TypeScriptCompile Include="js\services\InputOrderService.ts" />
     <TypeScriptCompile Include="js\services\OrderService.ts" />
-    <TypeScriptCompile Include="js\services\ProductInputService.ts" />
     <TypeScriptCompile Include="js\services\InventoryService.ts" />
     <TypeScriptCompile Include="js\services\ProductService.ts" />
     <TypeScriptCompile Include="js\services\ExportService.ts" />

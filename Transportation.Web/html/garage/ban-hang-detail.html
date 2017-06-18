@@ -8,11 +8,16 @@
         <div class="list-group-item user-info">
           <h2 class="text-center title-name">{{viewModel.currentOrder.id}}</h2>
           <p><span class="bold-text">Tên khách hàng:</span> <span>{{viewModel.currentOrder.customerName}}</span></p>
-          <p><span class="bold-text">Nhân viên:</span> <span>{{viewModel.currentOrder.employeeName}}</span></p>
-          <p><span class="bold-text">Ngày:</span> <span>{{viewModel.currentOrder.date}}</span></p>
+          <p><span class="bold-text">Số điện thoại:</span> <span>{{viewModel.currentOrder.mobile}}</span></p>
+          <p><span class="bold-text">Số xe:</span> <span>{{viewModel.currentOrder.licensePlate}}</span></p>
+          <p><span class="bold-text">CMND:</span> <span>{{viewModel.currentOrder.cardId}}</span></p>
+          <p><span class="bold-text">Địa chỉ:</span> <span>{{viewModel.currentOrder.address}}</span></p>
+          <p><span class="bold-text">Nhân viên bán hàng:</span> <span>{{viewModel.currentOrder.employeeName}}</span></p>
+          <p><span class="bold-text">Ngày bán:</span> <span>{{viewModel.currentOrder.date}}</span></p>
           <p><span class="bold-text">Tổng thành tiền:</span> <span>{{viewModel.currentOrder.totalAmount | currency: "" : 0}}</span></p>
           <p><span class="bold-text">Giảm giá:</span> <span>{{viewModel.currentOrder.saleOff}}%</span></p>
           <p><span class="bold-text">Tiền thực trả:</span> <span>{{viewModel.currentOrder.totalAmount*(100-viewModel.currentOrder.saleOff)/100 | currency: "" : 0}}</span></p>
+          <p><span class="bold-text">Ghi chú:</span> <span>{{viewModel.currentOrder.note}}</span></p>
 
           <div class="table-responsive">
             <table class="table table-hover table-bordered">

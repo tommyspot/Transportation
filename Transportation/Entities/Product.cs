@@ -10,7 +10,6 @@ namespace Transportation
         [Required]
         public string Name { get; set; }
         public string Origin { get; set; }
-        public long LatestPrice { get; set; }
         public Product() {
         }
 
@@ -20,7 +19,6 @@ namespace Transportation
             json["id"] = ID;
             json["name"] = Name;
             json["origin"] = Origin;
-            json["latestPrice"] = LatestPrice;
             return json;
         }
 
@@ -36,7 +34,6 @@ namespace Transportation
             ID = json.Value<long>("id");
             Name = json.Value<string>("name");
             Origin = json.Value<string>("origin");
-            LatestPrice = json.Value<long>("latestPrice");
         }
     }
 }

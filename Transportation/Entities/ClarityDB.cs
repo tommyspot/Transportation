@@ -55,6 +55,7 @@ namespace Transportation
         public virtual IDbSet<Inventory> Inventories { get; set; }
         public virtual IDbSet<Order> Orders { get; set; }
         public virtual IDbSet<OrderDetail> OrderDetails { get; set; }
+        public virtual IDbSet<InputOrder> InputOrders { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -96,6 +97,11 @@ namespace Transportation
             modelBuilder.Entity<OrderDetail>()
                 .HasRequired(x => x.Order)
                 .WithMany(x => x.OrderDetails)
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<ProductInput>()
+                .HasRequired(x => x.InputOrder)
+                .WithMany(x => x.ProductInputs)
                 .WillCascadeOnDelete();
         }
     }

@@ -67,13 +67,14 @@ module Clarity.Controller {
           if (this.currentOrder == null) {
             this.orderService.getById(orderId, (data) => {
               this.currentOrder = data;
+              this.initFormatPriceForOrderDetails(this.currentOrder);
               this.initInventoryViewList();
             }, null);
           }
         }
       } else {
         if (this.$location.path() === '/ql-garage/ban-hang/tao') {
-          this.todayFormat = this.mainHelper.formatDateTimeDDMMYYYY(new Date());
+          this.todayFormat = new Date().toLocaleString();
           this.currentOrder = new Model.OrderModel();
           this.currentOrder.saleOff = 0;
           this.currentOrder.totalAmount = 0;
@@ -108,7 +109,7 @@ module Clarity.Controller {
             inventoryView.id = inventory.id;
             inventoryView.productId = inventory.productId;
             inventoryView.productName = this.getProductById(inventory.productId).name;
-            inventoryView.productPrice = this.getProductById(inventory.productId).latestPrice;
+            inventoryView.latestPrice = inventory.latestPrice;
             inventoryView.quantity = inventory.quantity;
             this.inventoryViewList.push(inventoryView);
           });
@@ -121,6 +122,14 @@ module Clarity.Controller {
       this.productService.getAll((results: Array<Model.ProductModel>) => {
         this.productList = results;
       }, null);
+    }
+
+    initFormatPriceForOrderDetails(order: Model.OrderModel) {
+      if (order && order.orderDetails && order.orderDetails.length > 0) {
+        for (var orderDetail of order.orderDetails) {
+          orderDetail.priceFormatted = orderDetail.price != 0 ? orderDetail.price.toLocaleString() : '';
+        }
+      }
     }
 
     initPagination() {
@@ -216,7 +225,7 @@ module Clarity.Controller {
 
     deleteOrderDetail(index: number) {
       this.currentOrder.orderDetails.splice(index, 1);
-      this.currentOrder.totalAmount = this.calculateTotalAmountOrder();
+      this.updateTotalAmount();
     }
 
     getProductById(id: number) {
@@ -242,25 +251,29 @@ module Clarity.Controller {
     }
 
     onInventoryViewChanged(orderDetail: Model.OrderDetailModel) {
-      orderDetail.price = this.getInventoryViewByProductId(orderDetail.productId).productPrice;
-      orderDetail.quantity = orderDetail.quantity ? orderDetail.quantity : 1;
-      this.currentOrder.totalAmount = this.calculateTotalAmountOrder();
-    }
-
-    onQuantityChanged(orderDetail: Model.OrderDetailModel) {
-      this.currentOrder.totalAmount = this.calculateTotalAmountOrder();
-    }
-
-    calculateTotalAmountOrder() {
-      if (this.currentOrder && this.currentOrder.orderDetails && this.currentOrder.orderDetails.length) {
-        let total = 0;
-        for (var orderDetail of this.currentOrder.orderDetails) {
-          total += orderDetail.price * orderDetail.quantity;
-        }
-        return total;
+      if (!orderDetail.price) {
+        orderDetail.price = this.getInventoryViewByProductId(orderDetail.productId).latestPrice;
       }
-      return 0;
+      orderDetail.quantity = orderDetail.quantity ? orderDetail.quantity : 1;
+      orderDetail.priceFormatted = orderDetail.price != 0 ? orderDetail.price.toLocaleString() : '';
+      this.updateTotalAmount();
     }
 
+    updateTotalAmount() {
+      this.currentOrder.totalAmount = 0;
+      if (this.currentOrder && this.currentOrder.orderDetails && this.currentOrder.orderDetails.length) {
+        for (var orderDetail of this.currentOrder.orderDetails) {
+          this.currentOrder.totalAmount += orderDetail.price * orderDetail.quantity;
+        }
+      }
+    }
+
+    setFormatedCurencyForOrderDetail(orderDetail: Model.OrderDetailModel) {
+      if (orderDetail.priceFormatted && orderDetail.priceFormatted != '') {
+        orderDetail.price = parseInt(orderDetail.priceFormatted.replace(/,/g, ''));
+        orderDetail.priceFormatted = orderDetail.price.toLocaleString();
+      }
+      this.updateTotalAmount();
+    }
 	}
 }

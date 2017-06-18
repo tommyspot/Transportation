@@ -5285,6 +5285,8 @@ div.bootstrap {
     background-color: #2C3E50; }
   #ng-app #mainPage .manage-box.bh-box, #ng-app #qlToaHangPage .manage-box.bh-box, #ng-app #qlGarage .manage-box.bh-box {
     background-color: #e74c3c; }
+  #ng-app #mainPage .manage-box.ql-box, #ng-app #qlToaHangPage .manage-box.ql-box, #ng-app #qlGarage .manage-box.ql-box {
+    background-color: #27ae60; }
   #ng-app #mainPage .no-margin-right, #ng-app #qlToaHangPage .no-margin-right, #ng-app #qlGarage .no-margin-right {
     margin-right: 0px; }
   #ng-app .view-page .show-records-per-page {
@@ -5369,12 +5371,35 @@ div.bootstrap {
     margin-top: 15px; }
   #ng-app .margin-left-40 {
     margin-left: 40px; }
+  #ng-app .margin-top-7 {
+    margin-top: 7px; }
   #ng-app .right-align {
     text-align: right; }
   #ng-app .pointer {
     cursor: pointer; }
+  #ng-app .disabled {
+    background-color: #eeeeee;
+    opacity: 1; }
   #ng-app .align-center {
     text-align: center; }
+  #ng-app .align-middle {
+    vertical-align: middle; }
+  #ng-app .sort-asc-ico {
+    font-size: 20px;
+    position: absolute;
+    top: 14px;
+    color: #C0392B; }
+  #ng-app .sort-desc-ico {
+    font-size: 20px;
+    position: absolute;
+    top: 4px;
+    color: #C0392B; }
+  #ng-app .main-btn {
+    background-color: #C0392B;
+    border-color: #C0392B;
+    color: #FFFFFF; }
+    #ng-app .main-btn:hover {
+      opacity: 0.9; }
   #ng-app .required-symbol {
     color: #C0392B; }
   #ng-app .required-field {

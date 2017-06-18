@@ -1,4 +1,4 @@
-﻿<div id="productInputList" class="bootstrap view-page">
+﻿<div id="inputOrderList" class="bootstrap view-page">
 	<div class="container">
 		<div class="row action-row">
 			<div class="col-sm-9">
@@ -11,13 +11,13 @@
 						<option value="99999">All</option>
 					</select>
 				</span>
-				<button type="button" class="btn btn-default" data-ng-click="viewModel.goToProductInputForm()">
+				<button type="button" class="btn btn-default" data-ng-click="viewModel.goToInputOrderForm()">
 					<span class="glyphicon glyphicon-plus"></span>
-					<span class="hidden-xs">Tạo kho hàng mới</span>
+					<span class="hidden-xs">Nhập mới</span>
 				</button>
-				<button type="button" class="btn btn-default" data-ng-click="viewModel.removeProductInputs()">
+				<button type="button" class="btn btn-default" data-ng-click="viewModel.removeOrders()">
 					<span class="glyphicon glyphicon-trash"></span>
-					<span class="hidden-xs">Xóa kho hàng</span>
+					<span class="hidden-xs">Xóa</span>
 				</button>
 			</div>
 			<div class="col-sm-3">
@@ -31,15 +31,15 @@
 					<table class="table table-hover table-bordered">
 						<thead>
 							<tr>
-								<th class="align-center">
+								<th class="text-center">
 									<input id="checkAllProducts" type="checkbox" data-ng-model="viewModel.isCheckedAll"
-												 data-ng-change="viewModel.selectAllProductsOnPage()" />
+												 data-ng-change="viewModel.selectAllInputOrdersOnPage()" />
 								</th>
-								<th class="align-center">Tên sản phẩm</th>
-								<th class="align-center hidden-xs">Số lượng</th>
-                <th class="align-center hidden-xs">Đơn giá</th>
-                <th class="align-center hidden-xs">Thành tiền</th>
-                <th class="align-center hidden-xs">Ngày nhập kho</th>
+								<th class="text-center">Mã</th>
+								<th class="text-center">Tên nhà cung cấp</th>
+                <th class="text-center">Số sản phẩm</th>
+                <th class="text-center">Thành tiền</th>
+                <th class="text-center">Ngày nhập hàng</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -48,16 +48,16 @@
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
-							<tr data-ng-if="!viewModel.isLoading" class="pointer" data-ng-repeat="productInput in viewModel.getProductInputListOnPage()"
-									data-ng-click="viewModel.$location.path('/ql-garage/nhap-kho/' + productInput.id)">
-								<td class="align-center" data-ng-click="$event.stopPropagation();">
-									<input id="productInput-{{$index}}" type="checkbox" data-ng-model="productInput.isChecked" />
+							<tr data-ng-if="!viewModel.isLoading" class="pointer" data-ng-repeat="inputOrder in viewModel.getInputOrderListOnPage()"
+									data-ng-click="viewModel.$location.path('/ql-garage/nhap-kho/' + inputOrder.id)">
+								<td class="text-center" data-ng-click="$event.stopPropagation();">
+									<input id="order-{{$index}}" type="checkbox" data-ng-model="inputOrder.isChecked" />
 								</td>
-								<td>{{viewModel.getProductById(productInput.productId).name}}</td>
-								<td class="align-center">{{productInput.quantity | currency: "" : 0}}</td>
-								<td class="align-center hidden-xs">{{productInput.price | currency: "" : 0}}</td>
-                <td class="align-center hidden-xs">{{productInput.quantity * productInput.price | currency: "" : 0}}</td>
-                <td class="align-center hidden-xs">{{productInput.dateInput}}</td>
+								<td class="text-center">{{inputOrder.id}}</td>
+								<td class="text-center">{{inputOrder.vendor}}</td>
+                <td class="text-right">{{inputOrder.productInputs.length}}</td>
+                <td class="text-right">{{inputOrder.totalAmount | currency: "" : 0}}</td>
+                <td class="text-center">{{inputOrder.date}}</td>
 							</tr>
 						</tbody>
 					</table>

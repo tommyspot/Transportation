@@ -229,22 +229,22 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
 
     .when('/ql-garage/nhap-kho', {
         templateUrl: '/html/garage/nhap-kho.html' + '?v=' + VERSION_NUMBER,
-        controller: 'ProductInputManagementController',
+        controller: 'InputOrderManagementController',
         access: 'authorized'
     })
     .when('/ql-garage/nhap-kho/tao', {
         templateUrl: '/html/garage/nhap-kho-form.html' + '?v=' + VERSION_NUMBER,
-        controller: 'ProductInputManagementController',
+        controller: 'InputOrderManagementController',
         access: 'authorized'
     })
-    .when('/ql-garage/nhap-kho/:product_input_id', {
+    .when('/ql-garage/nhap-kho/:input_order_id', {
         templateUrl: '/html/garage/nhap-kho-detail.html' + '?v=' + VERSION_NUMBER,
-        controller: 'ProductInputManagementController',
+        controller: 'InputOrderManagementController',
         access: 'authorized'
     })
-	.when('/ql-garage/nhap-kho/sua/:product_input_id', {
-	    templateUrl: '/html/garage/nhap-kho-sua.html' + '?v=' + VERSION_NUMBER,
-	    controller: 'ProductInputManagementController',
+	.when('/ql-garage/nhap-kho/sua/:input_order_id', {
+	    templateUrl: '/html/garage/nhap-kho-form.html' + '?v=' + VERSION_NUMBER,
+	    controller: 'InputOrderManagementController',
 	    access: 'authorized'
 	})
 
@@ -268,6 +268,12 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
 	    controller: 'OrderManagementController',
 	    access: 'authorized'
 	})
+
+    .when('/ql-garage/quan-ly', {
+        templateUrl: '/html/garage/quan-ly.html' + '?v=' + VERSION_NUMBER,
+        controller: 'ProductInfoManagementController',
+        access: 'authorized'
+    })
 
     .otherwise({ redirectTo: '/' });
 });
@@ -471,6 +477,9 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
                         case '/ql-garage/ban-hang':
                             breadCrumb.name = 'Bán hàng';
                             break;
+                        case '/ql-garage/quan-ly':
+                            breadCrumb.name = 'Quản lý';
+                            break;
 
                         case '/ql-toa-hang/nhan-vien/tao':
                         case '/ql-toa-hang/xe/tao':
@@ -553,8 +562,9 @@ clarityApp.controller('WagonSettlementManagementController', Clarity.Controller.
 clarityApp.controller('ReportManagementController', Clarity.Controller.ReportManagementController);
 clarityApp.controller('UserController', Clarity.Controller.UserController);
 clarityApp.controller('ProductManagementController', Clarity.Controller.ProductManagementController);
-clarityApp.controller('ProductInputManagementController', Clarity.Controller.ProductInputManagementController);
 clarityApp.controller('OrderManagementController', Clarity.Controller.OrderManagementController);
+clarityApp.controller('InputOrderManagementController', Clarity.Controller.InputOrderManagementController);
+clarityApp.controller('ProductInfoManagementController', Clarity.Controller.ProductInfoManagementController);
 
 clarityApp.filter('filterDate', function () {
     return function (input, filterDate) {

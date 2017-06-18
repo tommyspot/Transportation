@@ -52,6 +52,7 @@ var config = {
     , 'js/model/ProductInputModel.js'
     , 'js/model/OrderModel.js'
     , 'js/model/InventoryModel.js'
+    , 'js/model/InputOrderModel.js'
 
 	, 'js/services/IService.js'
 	, 'js/services/BaseService.js'
@@ -66,9 +67,9 @@ var config = {
 	, 'js/services/ExportService.js'
 	, 'js/services/PaymentService.js'
     , 'js/services/ProductService.js'
-    , 'js/services/ProductInputService.js'
     , 'js/services/OrderService.js'
     , 'js/services/InventoryService.js'
+    , 'js/services/InputOrderService.js'
 
 	, 'js/controllers/IController.js'
 	, 'js/controllers/authentication/LoginController.js'
@@ -83,8 +84,9 @@ var config = {
     , 'js/controllers/ReportManagementController.js'
 	, 'js/controllers/UserController.js'
     , 'js/controllers/ProductManagementController.js'
-    , 'js/controllers/ProductInputManagementController.js'
     , 'js/controllers/OrderManagementController.js'
+    , 'js/controllers/InputOrderManagementController.js'
+    , 'js/controllers/ProductInfoManagementController.js'
 
     // controllers, services written with TypeScript must be placed before clarity-app.js
     , 'js/clarity-app.js'

@@ -53,7 +53,6 @@ namespace Transportation.Api
                 long quantity = json.Value<long>("quantity");
                 long price = json.Value<long>("price");
                 UpdateInventory(productId, quantity);
-                UpdateLatestPriceForProduct(productId, price);
             }
             ClarityDB.Instance.SaveChanges();
 
@@ -126,12 +125,6 @@ namespace Transportation.Api
         {
             Inventory inventory = ClarityDB.Instance.Inventories.FirstOrDefault(x => x.ProductID == productId);
             inventory.Quantity += quantity;
-            ClarityDB.Instance.SaveChanges();
-        }
-        private void UpdateLatestPriceForProduct(long productId, long price)
-        {
-            Product product = ClarityDB.Instance.Products.FirstOrDefault(x => x.ID == productId);
-            product.LatestPrice = price;
             ClarityDB.Instance.SaveChanges();
         }
 

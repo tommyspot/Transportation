@@ -19,6 +19,7 @@ namespace Transportation
         IDbSet<Inventory> Inventories { get; set; }
         IDbSet<Order> Orders { get; set; }
         IDbSet<OrderDetail> OrderDetails { get; set; }
+        IDbSet<InputOrder> InputOrders { get; set; }
         Database Database { get; }
 
         void AddEntity<T>(T entity) where T : class;

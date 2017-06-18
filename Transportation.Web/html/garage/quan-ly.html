@@ -1,0 +1,110 @@
+﻿<div id="productManagementList" class="bootstrap view-page">
+	<div class="container">
+		<div class="row action-row">
+			<div class="col-sm-9">
+				<span>
+					<label for="numOfTrucks">Hiển thị</label>
+					<select id="numOfTrucks" class="form-control show-records-per-page" data-ng-model="viewModel.pageSize" data-ng-change="viewModel.initPagination()" convert-to-number>
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="99999">All</option>
+					</select>
+				</span>
+        <button type="button" class="btn btn-default" data-ng-click="viewModel.exportReport()">
+          <i class="fa fa-print" aria-hidden="true"></i>
+          <span class="hidden-xs">In báo cáo</span>
+          &nbsp;<i data-ng-if="viewModel.isExportLoading" class="fa fa-spinner fa-pulse"></i>
+        </button>
+			</div>
+			<div class="col-sm-3">
+				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Search" />
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="table-responsive">
+					<table class="table table-hover table-bordered">
+						<thead>
+							<tr>
+                <th class="col-sm-1 text-center">STT</th>
+								<th class="col-sm-2 text-center pointer" data-ng-click="viewModel.orderBy('name')">Tên sản phẩm &nbsp;
+                  <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'name'" aria-hidden="true"
+                     data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}" ></i>
+                </th>
+								<th class="col-sm-1 text-center pointer" data-ng-click="viewModel.orderBy('sumOfInput')">SL nhập &nbsp;
+                  <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'sumOfInput'" aria-hidden="true"
+                     data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}"></i>
+                </th>
+                <th class="col-sm-2 text-center pointer" data-ng-click="viewModel.orderBy('sumOfInputTotalAmount')">Tổng giá trị nhập &nbsp;
+                  <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'sumOfInputTotalAmount'" aria-hidden="true"
+                     data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}"></i>
+                </th>
+                <th class="col-sm-1 text-center pointer" data-ng-click="viewModel.orderBy('sumOfSale')">SL bán &nbsp;
+                  <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'sumOfSale'" aria-hidden="true"
+                     data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}"></i>
+                </th>
+                <th class="col-sm-2 text-center pointer" data-ng-click="viewModel.orderBy('sumOfSaleTotalAmount')">Tổng giá trị bán &nbsp;
+                  <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'sumOfSaleTotalAmount'" aria-hidden="true"
+                     data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}"></i>
+                </th>
+                <th class="col-sm-1 text-center pointer" data-ng-click="viewModel.orderBy('numOfRemain')">SL hiện tại &nbsp;
+                  <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'numOfRemain'" aria-hidden="true"
+                     data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}"></i>
+                </th>
+                <th class="col-sm-2 text-center pointer" data-ng-click="viewModel.orderBy('profit')">Lợi nhuận ước tính &nbsp;
+                  <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'profit'" aria-hidden="true"
+                     data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}"></i>
+                </th>
+							</tr>
+						</thead>
+						<tbody>
+              <tr data-ng-if="viewModel.isLoading">
+                <td class="text-center" colspan="8">
+                  <i class="fa fa-spinner fa-spin"></i>
+                </td>
+              </tr>
+							<tr data-ng-if="!viewModel.isLoading" data-ng-repeat="productInfo in viewModel.getProductInfoListOnPage()">
+								<td class="text-center">{{$index + 1}}</td>
+								<td>{{productInfo.name}}</td>
+								<td class="text-right">{{productInfo.sumOfInput | currency: "" : 0}}</td>
+                <td class="text-right">{{productInfo.sumOfInputTotalAmount | currency: "" : 0}}</td>
+                <td class="text-right">{{productInfo.sumOfSale | currency: "" : 0}}</td>
+                <td class="text-right">{{productInfo.sumOfSaleTotalAmount | currency: "" : 0}}</td>
+                <td class="text-right">{{productInfo.numOfRemain | currency: "" : 0}}</td>
+                <td class="text-right">{{productInfo.profit | currency: "" : 0}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<nav aria-label="navigation" data-ng-if="viewModel.numOfPages > 0">
+					<ul class="pagination">
+						<li class="pointer" ng-class="{'disabled': viewModel.currentPage === 1}" data-ng-click="viewModel.goToPreviousPage()">
+							<a aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+
+						<li class="pointer" data-ng-repeat="pageIndex in viewModel.getNumberPage() track by $index"
+								data-ng-click="viewModel.goToPage($index + 1)" ng-class="{'active': $index + 1 === viewModel.currentPage}">
+							<span>{{$index + 1}}</span>
+						</li>
+
+						<li class="pointer" ng-class="{'disabled': viewModel.currentPage >= viewModel.numOfPages}" data-ng-click="viewModel.goToNextPage()">
+							<a aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+
+	</div>
+</div>

@@ -11,6 +11,7 @@ namespace Transportation
         public long ProductID { get; set; }
         public virtual Product Product { get; set; }
         public long Quantity { get; set; }
+        public long LatestPrice { get; set; }
 
         public Inventory() {
         }
@@ -21,6 +22,7 @@ namespace Transportation
             json["id"] = ID;
             json["productId"] = ProductID;
             json["quantity"] = Quantity;
+            json["latestPrice"] = LatestPrice;
             return json;
         }
 
@@ -36,6 +38,7 @@ namespace Transportation
             ID = json.Value<long>("id");
             ProductID = json.Value<long>("productId");
             Quantity = json.Value<long>("quantity");
+            LatestPrice = json.Value<long>("latestPrice");
         }
     }
 }

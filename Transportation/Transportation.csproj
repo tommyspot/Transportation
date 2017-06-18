@@ -86,6 +86,8 @@
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\Payment.cs" />
     <Compile Include="Entities\Inventory.cs" />
+    <Compile Include="Entities\InputOrder.cs" />
+    <Compile Include="Model\ProductInfo.cs" />
     <Compile Include="Entities\ProductInput.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\Truck.cs" />

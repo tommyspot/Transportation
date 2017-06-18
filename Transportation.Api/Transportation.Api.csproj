@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationService.cs" />
+    <Compile Include="InputOrderService.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="ProductInputService.cs" />
     <Compile Include="InventoryService.cs" />

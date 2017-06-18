@@ -77,6 +77,23 @@ namespace Transportation.Api
             }
         }
 
+        [Route(Framework.HttpVerb.Post, "/exportGarageToExcel")]
+        public RestApiResult ExportGarageToExcel(JArray jsonList)
+        {
+            try
+            {
+                DataTable dt = BuildDataTableForGarage(jsonList);
+                string fileName = "Baocao_Garage_" + DateTime.Now.ToString(formatStringDate);
+                
+
+                string fileNamePath = saveExcelFile(dt, fileName);
+                return new RestApiResult { Json = JObject.Parse(string.Format("{{ fileName: '{0}'}}", fileNamePath)) };
+            }
+            catch (Exception ex)
+            {
+                return new RestApiResult { StatusCode = HttpStatusCode.InternalServerError, Json = ex.ToString() };
+            }
+        }
         private DataTable BuildDataTableForTruck()
         {
             DataTable dt = new DataTable();
@@ -323,6 +340,33 @@ namespace Transportation.Api
                                            wagonSettlement.PaymentPlace, wagonSettlement.PaymentDate, wagonSettlement.Departure,
                                            wagonSettlement.Destination, wagonSettlement.Unit, wagonSettlement.Quantity, wagonSettlement.UnitPrice,
                                            wagonSettlement.TotalAmount, wagonSettlement.Payment, wagonSettlement.Discount, wagonSettlement.PaymentRemain});
+            }
+
+            return dt;
+        }
+
+        private DataTable BuildDataTableForGarage(JArray jsonList)
+        {
+            DataTable dt = new DataTable();
+            dt.TableName = "Garage_" + DateTime.Now.ToString(formatStringDate);
+            //Add table headers going cell by cell.
+            dt.Columns.Add("STT", typeof(int));
+            dt.Columns.Add("Tên sản phẩm", typeof(string));
+            dt.Columns.Add("SL nhập", typeof(int));
+            dt.Columns.Add("Tổng giá trị nhâp", typeof(int));
+            dt.Columns.Add("SL bán", typeof(int));
+            dt.Columns.Add("Tổng giá trị bán", typeof(int));
+            dt.Columns.Add("SL hiện tại", typeof(int));
+            dt.Columns.Add("Lợi nhuận ước tính", typeof(int));
+
+            //Binding data
+            int index = 1;
+            foreach (JObject json in jsonList)
+            {
+                ProductInfo productInfo = ProductInfo.FromJson(json);
+                dt.Rows.Add(new object[] { index , productInfo.Name, productInfo.SumOfInput, productInfo.SumOfInputTotalAmount,
+                                            productInfo.SumOfSale, productInfo.SumOfSaleTotalAmount, productInfo.NumOfRemain, productInfo.Profit});
+                index++;
             }
 
             return dt;

@@ -9,5 +9,11 @@ module Clarity.Service {
       super($http);
       this.url = '/api/products';
     }
+
+    getAllProductInfo(successCallback: Function, errorCallback: Function) {
+      this.http.get('/api/productInfos')
+        .success((data) => { this.doCallback(successCallback, data); })
+        .error((data, status) => { this.doCallback(errorCallback, data, status); });
+    }
   }
 }

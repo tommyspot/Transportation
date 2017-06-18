@@ -8,6 +8,7 @@ module Clarity.Model {
     Customer,
     OrderCustomer,
     Wagon,
-    WagonSettlement
+    WagonSettlement,
+    ProductInfo
   }
 }

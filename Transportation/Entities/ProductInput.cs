@@ -10,10 +10,13 @@ namespace Transportation
         public DateTime CreatedDate { get; set; }
         [Required]
         public long ProductID { get; set; }
+        [Required]
+        public long InputOrderID { get; set; }
+        public virtual InputOrder InputOrder { get; set; }
         public virtual Product Product { get; set; }
         public long Quantity { get; set; }
-        public long Price { get; set; }
-        public string DateInput { get; set; }
+        public long InputPrice { get; set; }
+        public long SalePrice { get; set; }
 
         public ProductInput() {
         }
@@ -23,9 +26,10 @@ namespace Transportation
             JObject json = new JObject();
             json["id"] = ID;
             json["productId"] = ProductID;
+            json["inputOrderID"] = InputOrderID;
             json["quantity"] = Quantity;
-            json["price"] = Price;
-            json["dateInput"] = DateInput;
+            json["inputPrice"] = InputPrice;
+            json["salePrice"] = SalePrice;
             return json;
         }
 
@@ -40,9 +44,10 @@ namespace Transportation
         {
             ID = json.Value<long>("id");
             ProductID = json.Value<long>("productId");
+            InputOrderID = json.Value<long>("inputOrderID");
             Quantity = json.Value<long>("quantity");
-            Price = json.Value<long>("price");
-            DateInput = json.Value<string>("dateInput");
+            InputPrice = json.Value<long>("inputPrice");
+            SalePrice = json.Value<long>("salePrice");
         }
     }
 }
