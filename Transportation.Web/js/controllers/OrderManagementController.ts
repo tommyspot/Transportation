@@ -28,6 +28,7 @@ module Clarity.Controller {
     public isLoading: boolean;
     public todayFormat: string;
     public currentDay: Date;
+    public originOrderDetails: Array<Model.OrderDetailModel>;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -70,6 +71,7 @@ module Clarity.Controller {
           if (this.currentOrder == null) {
             this.orderService.getById(orderId, (data) => {
               this.currentOrder = data;
+              this.originOrderDetails = angular.copy(this.currentOrder.orderDetails);
               this.initFormatPriceForOrderDetails(this.currentOrder);
               this.initInventoryViewList();
             }, null);
@@ -287,14 +289,15 @@ module Clarity.Controller {
       return null;
     }
 
-    onInventoryViewChanged(orderDetail: Model.OrderDetailModel) {
-      if (!orderDetail.price) {
+    onInventoryViewChanged(orderDetail: Model.OrderDetailModel, index: number) {
+      const originOrderDetail = this.originOrderDetails && this.originOrderDetails[index];
+      if (this.originOrderDetails == null || (originOrderDetail && orderDetail.productId != originOrderDetail.productId)) {
         orderDetail.price = this.getInventoryViewByProductId(orderDetail.productId).latestPrice;
+        orderDetail.priceFormatted = orderDetail.price != 0 ? orderDetail.price.toLocaleString() : '';
+        orderDetail.quantity = 1;
+        this.updateTotalAmount();
+        this.updateNote();
       }
-      orderDetail.quantity = orderDetail.quantity ? orderDetail.quantity : 1;
-      orderDetail.priceFormatted = orderDetail.price != 0 ? orderDetail.price.toLocaleString() : '';
-      this.updateTotalAmount();
-      this.updateNote();
     }
 
     onQuantityOrderDetailChanged() {

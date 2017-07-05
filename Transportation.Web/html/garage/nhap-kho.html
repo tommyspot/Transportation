@@ -35,7 +35,7 @@
 									<input id="checkAllProducts" type="checkbox" data-ng-model="viewModel.isCheckedAll"
 												 data-ng-change="viewModel.selectAllInputOrdersOnPage()" />
 								</th>
-								<th class="text-center">Mã</th>
+								<th class="text-center">STT</th>
 								<th class="text-center">Tên nhà cung cấp</th>
                 <th class="text-center">Số sản phẩm</th>
                 <th class="text-center">Thành tiền</th>
@@ -53,7 +53,7 @@
 								<td class="text-center" data-ng-click="$event.stopPropagation();">
 									<input id="order-{{$index}}" type="checkbox" data-ng-model="inputOrder.isChecked" />
 								</td>
-								<td class="text-center">{{inputOrder.id}}</td>
+								<td class="text-center">{{$index + 1}}</td>
 								<td class="text-center">{{inputOrder.vendor}}</td>
                 <td class="text-right">{{inputOrder.productInputs.length}}</td>
                 <td class="text-right">{{inputOrder.totalAmount | currency: "" : 0}}</td>

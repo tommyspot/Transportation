@@ -31,13 +31,13 @@
 					<table class="table table-hover table-bordered">
 						<thead>
 							<tr>
-								<th class="align-center">
+								<th class="text-center">
 									<input id="checkAllProducts" type="checkbox" data-ng-model="viewModel.isCheckedAll"
 												 data-ng-change="viewModel.selectAllProductsOnPage()" />
 								</th>
-								<th class="align-center hidden-xs">Mã sản phẩm</th>
-								<th class="align-center">Tên sản phẩm</th>
-								<th class="align-center hidden-xs">Xuất xứ</th>
+								<th class="text-center">STT</th>
+								<th class="text-center">Tên sản phẩm</th>
+								<th class="text-center">Xuất xứ</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -48,12 +48,12 @@
               </tr>
 							<tr data-ng-if="!viewModel.isLoading" class="pointer" data-ng-repeat="product in viewModel.getProductListOnPage()"
 									data-ng-click="viewModel.$location.path('/ql-garage/san-pham/' + product.id)">
-								<td class="align-center" data-ng-click="$event.stopPropagation();">
+								<td class="text-center" data-ng-click="$event.stopPropagation();">
 									<input id="product-{{$index}}" type="checkbox" data-ng-model="product.isChecked" />
 								</td>
-								<td class="align-center hidden-xs">{{product.id}}</td>
+								<td class="text-center">{{$index + 1}}</td>
 								<td>{{product.name}}</td>
-								<td class="align-center hidden-xs">{{product.origin}}</td>
+								<td class="text-center">{{product.origin}}</td>
 							</tr>
 						</tbody>
 					</table>

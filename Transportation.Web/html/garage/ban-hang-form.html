@@ -57,7 +57,7 @@
                   <th class="col-sm-1 text-center">STT</th>
                   <th class="col-sm-3 text-center">Tên sản phẩm</th>
                   <th class="col-sm-1 text-center">Số lượng</th>
-                  <th class="col-sm-2 text-center">Đơn giá</th>
+                  <th class="col-sm-2 text-center">Đơn giá</th>s
                   <th class="col-sm-1 text-center">Đơn vị tính</th>
                   <th class="col-sm-3 text-center">Thành tiền</th>
                   <th class="col-sm-1 text-center"></th>
@@ -68,7 +68,7 @@
                   <td class="text-center align-middle">{{$index + 1}}</td>
                   <td class="text-left">
                     <select ui-select2 class="form-control ui-select-2" data-ng-model="orderDetail.productId"
-                            data-ng-change="viewModel.onInventoryViewChanged(orderDetail)">
+                            data-ng-change="viewModel.onInventoryViewChanged(orderDetail, $index)">
                       <option value="" selected="selected">--Chọn sản phẩm --</option>
                       <option data-ng-repeat="inventory in viewModel.inventoryViewList" value="{{inventory.productId}}">{{inventory.productName}} [{{inventory.quantity}}]</option>
                     </select>
