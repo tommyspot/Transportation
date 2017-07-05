@@ -24,7 +24,7 @@
   <body data-ng-init="VERSION_NUMBER = '$VERSION_NUMBER$'">
     <div data-ng-include data-src="'/html/pre-loading.html?v=' + VERSION_NUMBER"></div>
     <!--BANNER-->
-    <div class="bootstrap banner" data-ng-if="locationPath !== undefined && locationPath !== '/login'">
+    <div class="bootstrap banner" data-ng-if="locationPath !== undefined && locationPath !== '/login' && locationPath.indexOf('/ql-garage/ban-hang/in/') === -1">
       <div class="container">
         <div class="row">
           <div class="col-md-6 col-sm-6">
@@ -43,7 +43,7 @@
     </div>
 
     <!--BREADCRUMBS-->
-    <div class="bootstrap company-image-section" data-ng-if="locationPath !== undefined && locationPath !== '/login'">
+    <div class="bootstrap company-image-section" data-ng-if="locationPath !== undefined && locationPath !== '/login' && locationPath.indexOf('/ql-garage/ban-hang/in/') === -1">
       <div class="container">
         <div class="row" data-ng-if="locationPath === '/'">
           <div class="col-sm-3 company-image-wrapper first-image">

@@ -710,6 +710,19 @@ div.bootstrap {
     }
   }
 
+  .hover:hover{
+    cursor: pointer;
+    color: $transport-color-2;
+  }
+
+  .hr{
+    border-top: 2px solid #000000;
+  }
+
+  .padding-right-8{
+    padding-right: 8px;
+  }
+
   .required-symbol {
     color: $transport-color-2;
   }

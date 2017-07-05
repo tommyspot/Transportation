@@ -113,6 +113,8 @@
     <Content Include="font\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="gulpfile.js" />
     <Content Include="html\baocao\bao-cao.html" />
+    <Content Include="html\garage\ban-hang-da-xoa.html" />
+    <Content Include="html\garage\ban-hang-in.html" />
     <Content Include="html\garage\nhap-kho-detail.html" />
     <Content Include="html\garage\nhap-kho-form.html" />
     <Content Include="html\garage\nhap-kho.html" />
@@ -386,6 +388,7 @@
     <None Include="Properties\PublishProfiles\Forecourt.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <Content Include="template\ToaHang_Report_Template.xlsx" />
+    <None Include="Properties\PublishProfiles\hostvn_duyenhai.pubxml" />
     <None Include="Properties\PublishProfiles\Transportation.pubxml" />
   </ItemGroup>
   <ItemGroup>

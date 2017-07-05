@@ -19,9 +19,13 @@
 					<span class="glyphicon glyphicon-trash"></span>
 					<span class="hidden-xs">Xóa đơn hàng</span>
 				</button>
+        <button type="button" class="btn btn-default" data-ng-click="viewModel.goToDeletedOrders()">
+          <span class="glyphicon glyphicon-folder-close"></span>
+          <span class="hidden-xs">Đơn hàng đã xóa</span>
+        </button>
 			</div>
 			<div class="col-sm-3">
-				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Search" />
+				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Tìm kiếm nhanh" />
 			</div>
 		</div>
 
@@ -35,29 +39,31 @@
 									<input id="checkAllProducts" type="checkbox" data-ng-model="viewModel.isCheckedAll"
 												 data-ng-change="viewModel.selectAllProductsOnPage()" />
 								</th>
-								<th class="align-center">Mã đơn hàng</th>
-								<th class="align-center hidden-xs">Tên khách hàng</th>
-                <th class="align-center hidden-xs">Nhân viên bán hàng</th>
-                <th class="align-center hidden-xs">Thành tiền</th>
-                <th class="align-center hidden-xs">Ngày bán</th>
+								<th>Số xe </th>
+								<th>Tên khách hàng</th>
+                <th class="text-right">Thành tiền</th>
+                <th class="text-right">Giảm giá (%)</th>
+                <th class="text-center">Ngày bán</th>
+                <th class="text-center">In</th>
 							</tr>
 						</thead>
 						<tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="6">
+                <td class="text-center" colspan="7">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
 							<tr data-ng-if="!viewModel.isLoading" class="pointer" data-ng-repeat="order in viewModel.getOrderListOnPage()"
 									data-ng-click="viewModel.$location.path('/ql-garage/ban-hang/' + order.id)">
-								<td class="align-center" data-ng-click="$event.stopPropagation();">
+								<td class="text-center" data-ng-click="$event.stopPropagation();">
 									<input id="order-{{$index}}" type="checkbox" data-ng-model="order.isChecked" />
 								</td>
-								<td class="align-center hidden-xs">{{order.id}}</td>
-								<td class="align-center">{{order.customerName}}</td>
-                <td class="align-center hidden-xs">{{order.employeeName}}</td>
-                <td class="align-center hidden-xs">{{order.totalAmount | currency: "" : 0}}</td>
-                <td class="align-center hidden-xs">{{order.date}}</td>
+								<td>{{order.licensePlate}}</td>
+								<td>{{order.customerName}}</td>
+                <td class="text-right">{{order.totalAmount | currency: "" : 0}}</td>
+                <td class="text-right">{{order.saleOff}}</td>
+                <td class="text-center">{{order.date}}</td>
+                <td class="text-center hover" data-ng-click="viewModel.goToOrderPrintPage($event, order)"><i class="fa fa-print"></i></td>
 							</tr>
 						</tbody>
 					</table>

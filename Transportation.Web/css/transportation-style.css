@@ -6016,6 +6016,13 @@ div.bootstrap {
     color: #FFFFFF; }
     #ng-app .main-btn:hover {
       opacity: 0.9; }
+  #ng-app .hover:hover {
+    cursor: pointer;
+    color: #C0392B; }
+  #ng-app .hr {
+    border-top: 2px solid #000000; }
+  #ng-app .padding-right-8 {
+    padding-right: 8px; }
   #ng-app .required-symbol {
     color: #C0392B; }
   #ng-app .required-field {

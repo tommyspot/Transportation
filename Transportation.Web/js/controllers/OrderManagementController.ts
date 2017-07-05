@@ -27,6 +27,7 @@ module Clarity.Controller {
     public isCheckedAll: boolean;
     public isLoading: boolean;
     public todayFormat: string;
+    public currentDay: Date;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -58,7 +59,9 @@ module Clarity.Controller {
     initOrder() {
       var orderId = this.$routeParams.order_id;
       if (orderId) {
-        if (this.$location.path() === '/ql-garage/ban-hang/' + orderId) {
+        if (this.$location.path() === '/ql-garage/ban-hang/' + orderId ||
+          this.$location.path() === '/ql-garage/ban-hang/in/' + orderId) {
+          this.currentDay = new Date();
           this.orderService.getById(orderId, (data) => {
             this.currentOrder = data;
             this.initProductList();
@@ -82,6 +85,9 @@ module Clarity.Controller {
         } else if (this.$location.path() === '/ql-garage/ban-hang') {
           this.isLoading = true;
           this.initOrderList();
+        } else if (this.$location.path() === '/ql-garage/ban-hang/da-xoa') {
+          this.isLoading = true;
+          this.initDeletedOrderList();
         }
       }
     }
@@ -90,7 +96,19 @@ module Clarity.Controller {
       this.orderService.getAll((results: Array<Model.OrderModel>) => {
         this.orderList = results;
         this.orderList.sort(function (a: any, b: any) {
-          return a.id - b.id;
+          return b.id - a.id;
+        });
+        this.productInputListTmp = this.orderList;
+        this.initPagination();
+        this.isLoading = false;
+      }, null);
+    }
+
+    initDeletedOrderList() {
+      this.orderService.getAllDeletedOrders((results: Array<Model.OrderModel>) => {
+        this.orderList = results;
+        this.orderList.sort(function (a: any, b: any) {
+          return b.id - a.id;
         });
         this.productInputListTmp = this.orderList;
         this.initPagination();
@@ -182,9 +200,10 @@ module Clarity.Controller {
       var confirmDialog = this.$window.confirm('Bạn có muốn xóa đơn hàng?');
       if (confirmDialog) {
         for (let i = 0; i < this.orderList.length; i++) {
-          var product = this.orderList[i];
-          if (product.isChecked) {
-            this.orderService.deleteEntity(product, (data) => {
+          var order = this.orderList[i];
+          if (order.isChecked) {
+            order.status = false;
+            this.orderService.changeOrderStatus(order, (data) => {
               this.initOrderList();
             }, () => { });
           }
@@ -195,14 +214,22 @@ module Clarity.Controller {
     removeOrderInDetail(order: Model.OrderModel) {
       var confirmDialog = this.$window.confirm('Bạn có muốn xóa đơn hàng?');
       if (confirmDialog) {
-        this.orderService.deleteEntity(order, (data) => {
+        order.status = false;
+        this.orderService.changeOrderStatus(order, (data) => {
           this.$location.path('/ql-garage/ban-hang');
         }, null);
       }
     }
 
-    createOrder(product: Model.OrderModel) {
-      this.orderService.create(product,
+    restoreOrder(order: Model.OrderModel) {
+      order.status = true;
+      this.orderService.changeOrderStatus(order, (data) => {
+        this.initDeletedOrderList();
+      }, null);
+    }
+
+    createOrder(order: Model.OrderModel) {
+      this.orderService.create(order,
         (data) => {
           this.$location.path('/ql-garage/ban-hang');
         }, null);
@@ -218,6 +245,15 @@ module Clarity.Controller {
       this.$location.path('/ql-garage/ban-hang/tao');
     }
 
+    goToDeletedOrders() {
+      this.$location.path('/ql-garage/ban-hang/da-xoa');
+    }
+
+    goToOrderPrintPage(event: Event, order: Model.OrderModel) {
+      event.stopPropagation();
+      this.$window.open('#/ql-garage/ban-hang/in/' + order.id);
+    }
+
     addOrderDetail() {
       var orderDetail = new Model.OrderDetailModel();
       this.currentOrder.orderDetails.push(orderDetail);
@@ -226,6 +262,7 @@ module Clarity.Controller {
     deleteOrderDetail(index: number) {
       this.currentOrder.orderDetails.splice(index, 1);
       this.updateTotalAmount();
+      this.updateNote();
     }
 
     getProductById(id: number) {
@@ -257,6 +294,12 @@ module Clarity.Controller {
       orderDetail.quantity = orderDetail.quantity ? orderDetail.quantity : 1;
       orderDetail.priceFormatted = orderDetail.price != 0 ? orderDetail.price.toLocaleString() : '';
       this.updateTotalAmount();
+      this.updateNote();
+    }
+
+    onQuantityOrderDetailChanged() {
+      this.updateTotalAmount();
+      this.updateNote();
     }
 
     updateTotalAmount() {
@@ -268,12 +311,23 @@ module Clarity.Controller {
       }
     }
 
+    updateNote() {
+      this.currentOrder.note = '';
+      if (this.currentOrder && this.currentOrder.orderDetails && this.currentOrder.orderDetails.length) {
+        for (var orderDetail of this.currentOrder.orderDetails) {
+          this.currentOrder.note += this.getProductById(orderDetail.productId).name + ':' + orderDetail.quantity +
+            ':' + orderDetail.price + ', ';
+        }
+      }
+    }
+
     setFormatedCurencyForOrderDetail(orderDetail: Model.OrderDetailModel) {
       if (orderDetail.priceFormatted && orderDetail.priceFormatted != '') {
         orderDetail.price = parseInt(orderDetail.priceFormatted.replace(/,/g, ''));
         orderDetail.priceFormatted = orderDetail.price.toLocaleString();
       }
       this.updateTotalAmount();
+      this.updateNote();
     }
 	}
 }

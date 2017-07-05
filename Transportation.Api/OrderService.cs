@@ -14,7 +14,15 @@ namespace Transportation.Api
         [Route(HttpVerb.Get, "/orders")]
         public RestApiResult GetAll()
         {
-            var orders = ClarityDB.Instance.Orders;
+            var orders = ClarityDB.Instance.Orders.Where(x => x.Status);
+
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(orders) };
+        }
+
+        [Route(HttpVerb.Get, "/deletedOrders")]
+        public RestApiResult GetAllDeletedOrders()
+        {
+            var orders = ClarityDB.Instance.Orders.Where(x => !x.Status);
 
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(orders) };
         }
@@ -85,7 +93,20 @@ namespace Transportation.Api
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
         }
 
+        [Route(HttpVerb.Put, "/orders/status/{id}")]
+        public RestApiResult ChangeDeleteStatus(long id, JObject json)
+        {
+            Order order = ClarityDB.Instance.Orders.FirstOrDefault(x => x.ID == id);
 
+            if (order == null)
+            {
+                return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
+            }
+
+            order.Status = json.Value<bool>("status");
+            ClarityDB.Instance.SaveChanges();
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = order.ToJson() };
+        }
         private void AddOrderDetailFromJson(long orderID, JObject json)
         {
             Order order = ClarityDB.Instance.Orders.FirstOrDefault(x => x.ID == orderID);

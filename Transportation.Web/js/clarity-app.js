@@ -258,8 +258,18 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
         controller: 'OrderManagementController',
         access: 'authorized'
     })
+    .when('/ql-garage/ban-hang/da-xoa', {
+        templateUrl: '/html/garage/ban-hang-da-xoa.html' + '?v=' + VERSION_NUMBER,
+        controller: 'OrderManagementController',
+        access: 'authorized'
+    })
     .when('/ql-garage/ban-hang/:order_id', {
         templateUrl: '/html/garage/ban-hang-detail.html' + '?v=' + VERSION_NUMBER,
+        controller: 'OrderManagementController',
+        access: 'authorized'
+    })
+    .when('/ql-garage/ban-hang/in/:order_id', {
+        templateUrl: '/html/garage/ban-hang-in.html' + '?v=' + VERSION_NUMBER,
         controller: 'OrderManagementController',
         access: 'authorized'
     })
@@ -479,6 +489,9 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
                             break;
                         case '/ql-garage/quan-ly':
                             breadCrumb.name = 'Quản lý';
+                            break;
+                        case '/ql-garage/ban-hang/da-xoa':
+                            breadCrumb.name = 'Đơn hàng đã xóa';
                             break;
 
                         case '/ql-toa-hang/nhan-vien/tao':

@@ -9,5 +9,18 @@ module Clarity.Service {
       super($http);
       this.url = '/api/orders';
     }
+
+    getAllDeletedOrders(successCallback: Function, errorCallback: Function) {
+      this.http.get('/api/deletedOrders')
+        .success((data) => { this.doCallback(successCallback, data); })
+        .error((data, status) => { this.doCallback(errorCallback, data, status); });
+    }
+
+    changeOrderStatus(entity: Model.BaseModel, successCallback: Function, errorCallback: Function) {
+      this.http.put(this.url + '/status/' + entity.id, entity)
+        .success((data) => { this.doCallback(successCallback, data); })
+        .error((data, status) => { this.doCallback(errorCallback, data, status); });
+    }
+
   }
 }
