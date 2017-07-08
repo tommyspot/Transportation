@@ -171,9 +171,7 @@ namespace Transportation.Api
             dt.Columns.Add("STT", typeof(int));
             dt.Columns.Add("Mã khách hàng", typeof(string));
             dt.Columns.Add("Họ tên", typeof(string));
-            dt.Columns.Add("Khu vực", typeof(string));
             dt.Columns.Add("Số điện thoại", typeof(string));
-            dt.Columns.Add("Nhân viên chịu trách nhiệm", typeof(string));
             dt.Columns.Add("Số phát sinh", typeof(double));
             dt.Columns.Add("Tổng trả", typeof(double));
             dt.Columns.Add("Còn nợ lại", typeof(double));
@@ -184,9 +182,8 @@ namespace Transportation.Api
             for (int i = 0; i < customers.Count; i++)
             {
                 var customer = customers[i];
-                dt.Rows.Add(new object[] { i + 1 , customer.Code, customer.FullName , customer.Area, customer.PhoneNo,
-                                           String.IsNullOrEmpty(customer.EmployeeID) ? "" : this.helperService.GetEmployeeName(Convert.ToInt32(customer.EmployeeID)),
-                                           customer.TotalOwned, customer.TotalPay, customer.TotalDebt, customer.Type });
+                dt.Rows.Add(new object[] { i + 1 , customer.Code, customer.FullName , customer.PhoneNo,
+                    customer.TotalOwned, customer.TotalPay, customer.TotalDebt, customer.Type });
             }
 
             return dt;

@@ -35,7 +35,7 @@ namespace Transportation.Api
 
             Customer customer = Customer.FromJson(json);
 			customer.CreatedDate = DateTime.Now;
-			customer.Code = customer.Area.Replace(" ", "") + "_" + customer.FullName.Replace(" ", "") + "_" + customer.PhoneNo;
+			customer.Code = customer.FullName.Replace(" ", "") + "_" + customer.PhoneNo;
 
 			ClarityDB.Instance.Customers.Add(customer);
             ClarityDB.Instance.SaveChanges();
@@ -83,8 +83,7 @@ namespace Transportation.Api
 			}
 
 			customer.ApplyJson(json);
-			customer.Code = customer.Area.Replace(" ", "") + "_" + customer.FullName.Replace(" ", "") + "_" + customer.PhoneNo;
-			customer.CreatedDate = DateTime.Now;
+			customer.Code = customer.FullName.Replace(" ", "") + "_" + customer.PhoneNo;
 			ClarityDB.Instance.SaveChanges();
 
 			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };

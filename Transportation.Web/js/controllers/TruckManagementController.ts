@@ -143,7 +143,7 @@ module Clarity.Controller {
 		}
 
 		removeTrucks() {
-			var confirmDialog = this.$window.confirm('Bạn có muốn xóa xe?');
+			var confirmDialog = this.$window.confirm('Bạn có muốn xóa những xe được chọn?');
 			if (confirmDialog) {
 				for (let i = 0; i < this.truckList.length; i++) {
 					var truck = this.truckList[i];
@@ -157,7 +157,7 @@ module Clarity.Controller {
 		}
 
 		removeTruckInDetail(truck: Model.TruckModel) {
-			var confirmDialog = this.$window.confirm('Bạn có muốn xóa xe?');
+			var confirmDialog = this.$window.confirm('Bạn có muốn xóa xe này?');
 			if (confirmDialog) {
 				this.truckService.deleteEntity(truck, (data) => {
 					this.$location.path('/ql-toa-hang/xe');

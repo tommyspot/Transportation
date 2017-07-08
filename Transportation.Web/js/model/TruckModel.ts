@@ -19,5 +19,4 @@ module Clarity.Model {
         public isDeleted: boolean;
         public isChecked: boolean;
     }
-
 }

@@ -5405,6 +5405,8 @@ div.bootstrap {
     color: #C0392B; }
   #ng-app .hr {
     border-top: 2px solid #000000; }
+  #ng-app .checkbox-width {
+    width: 70px; }
   #ng-app .padding-right-8 {
     padding-right: 8px; }
   #ng-app .required-symbol {

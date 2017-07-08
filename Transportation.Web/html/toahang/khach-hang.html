@@ -1,4 +1,4 @@
-﻿<div id="CustomerList" class="bootstrap view-page">
+﻿<div id="customerList" class="bootstrap view-page">
 	<div class="container">
 		<div class="row action-row">
 			<div class="col-sm-9">
@@ -21,7 +21,7 @@
 				</button>
 			</div>
 			<div class="col-sm-3">
-				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Search" />
+				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Tìm kiếm nhanh" />
 			</div>
 		</div>
 
@@ -31,35 +31,35 @@
 					<table class="table table-hover table-bordered">
 						<thead>
 							<tr>
-								<th class="align-center">
+								<th class="checkbox-width text-center">
 									<input id="checkAllCustomers" type="checkbox" data-ng-model="viewModel.isCheckedAll"
 												 data-ng-change="viewModel.selectAllCustomersOnPage()" />
 								</th>
-								<th class="align-center hidden-xs">Mã KH</th>
-								<th class="align-center hidden-xs">Tên KH</th>
-								<th class="align-center">Khu vực</th>
-								<th class="align-center hidden-xs">Số Phát Sinh</th>
-								<th class="align-center hidden-xs">Tổng trả</th>
-								<th class="align-center">Còn nợ lại</th>
+								<th class="text-center">Mã KH</th>
+								<th class="col-sm-2 text-center">Tên KH</th>
+								<th class="col-sm-1 text-center">Số điện thoại</th>
+								<th class="col-sm-2 text-center">Số phát sinh</th>
+								<th class="col-sm-2 text-center">Tổng trả</th>
+								<th class="col-sm-2 text-center">Còn nợ lại</th>
 							</tr>
 						</thead>
 						<tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="6">
+                <td class="text-center" colspan="7">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
 							<tr data-ng-if="!viewModel.isLoading" class="pointer" data-ng-repeat="customer in viewModel.getCustomerListOnPage()"
 									data-ng-click="viewModel.$location.path('/ql-toa-hang/khach-hang/' + customer.id)">
-								<td class="align-center" data-ng-click="$event.stopPropagation();">
+								<td class="text-center" data-ng-click="$event.stopPropagation();">
 									<input id="customer-{{$index}}" type="checkbox" data-ng-model="customer.isChecked" />
 								</td>
-								<td class="align-center hidden-xs">{{customer.code}}</td>
-								<td class="align-center hidden-xs">{{customer.fullName}}</td>
-								<td class="align-center">{{customer.area}}</td>
-								<td class="align-center hidden-xs">{{customer.totalOwned.toLocaleString()}}</td>
-								<td class="align-center hidden-xs">{{customer.totalPay.toLocaleString()}}</td>
-								<td class="align-center">{{customer.totalDebt.toLocaleString()}}</td>
+								<td>{{customer.code}}</td>
+								<td>{{customer.fullName}}</td>
+								<td>{{customer.phoneNo}}</td>
+								<td class="text-right">{{customer.totalOwned.toLocaleString()}}</td>
+								<td class="text-right">{{customer.totalPay.toLocaleString()}}</td>
+								<td class="text-right">{{customer.totalDebt.toLocaleString()}}</td>
 							</tr>
 						</tbody>
 					</table>

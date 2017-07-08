@@ -13,14 +13,12 @@ module Clarity.Controller {
 		public currentCustomer: Model.CustomerModel;
     public customerService: service.CustomerService;
 		public employeeService: service.EmployeeService;
-		public employeeList: Array<Model.EmployeeModel>;
     public customerList: Array<Model.CustomerModel>;
 		public customerListTmp: Array<Model.CustomerModel>;
     public numOfPages: number;
     public currentPage: number;
     public pageSize: number;
     public isCheckedAll: boolean;
-		public areas: Array<String>;
 		public totalOwnedFormated: string;
 		public totalPayFormated: string;
     public totalDebtFormated: string;
@@ -39,12 +37,7 @@ module Clarity.Controller {
       $scope.viewModel = this;
 			this.pageSize = 10;
       this.initCustomer();
-			this.areas = ['An Giang', 'Bà Rịa - Vũng Tàu', 'Bắc Giang', 'Bắc Kạn', 'Bạc Liêu', 'Bắc Ninh', 'Bến Tre', 'Bình Định', 'Bình Dương', 'Bình Phước', 'Bình Thuận',
-				'Cà Mau',	'Cần Thơ', 'Cao Bằng', 'Đà Nẵng', 'Đắk Lắk',	'Đắk Nông',	'Điện Biên',	'Đồng Nai',	'Đồng Tháp',	'Gia Lai',	'Hà Giang',	'Hà Nam',	'Hà Nội',	'Hà Tĩnh',
-				'Hải Dương',	'Hải Phòng',	'Hậu Giang',	'Hòa Bình',	'Hưng Yên',	'Khánh Hòa',	'Kiên Giang',	'Kon Tum',	'Lai Châu',	'Lâm Đồng',	'Lạng Sơn',	'Lào Cai',	'Long An',
-				'Nam Định', 'Nghệ An', 'Ninh Bình', 'Ninh Thuận', 'Phú Thọ', 'Phú Yên', 'Quảng Bình', 'Quảng Nam', 'Quảng Ngãi', 'Quảng Ninh', 'Quảng Trị', 'Sóc Trăng',
-				'Sơn La',	'Tây Ninh',	'Thái Bình', 'Thái Nguyên',	'Thanh Hóa',	'Thừa Thiên Huế',	'Tiền Giang',	'TP HCM',	'Trà Vinh',	'Tuyên Quang',	'Vĩnh Long',	'Vĩnh Phúc',
-				'Yên Bái'];
+
 			var self = this;
       $scope.$watch('searchText', function (value) {
         if (self.customerListTmp && self.customerListTmp.length > 0) {
@@ -56,7 +49,6 @@ module Clarity.Controller {
 
 		initCustomer() {
       var customerId = this.$routeParams.customer_id;
-			this.initEmployeeList();
 			this.initCustomerList();
       if (customerId) {
         if (this.$location.path() === '/ql-toa-hang/khach-hang/' + customerId) {
@@ -93,12 +85,6 @@ module Clarity.Controller {
         this.customerListTmp = this.customerList;
         this.initPagination();
         this.isLoading = false;
-      }, null);
-    }
-
-		initEmployeeList() {
-      this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
-        this.employeeList = results;
       }, null);
     }
 
@@ -149,7 +135,7 @@ module Clarity.Controller {
     }
 
     removeCustomers() {
-      var confirmDialog = this.$window.confirm('Do you want to delete the Customer?');
+      var confirmDialog = this.$window.confirm('Bạn có muốn xóa những khách hàng được chọn?');
       if (confirmDialog) {
         for (let i = 0; i < this.customerList.length; i++) {
           var Customer = this.customerList[i];
@@ -163,7 +149,7 @@ module Clarity.Controller {
     }
 
     removeCustomerInDetail(Customer: Model.CustomerModel) {
-      var confirmDialog = this.$window.confirm('Do you want to delete the Customer?');
+      var confirmDialog = this.$window.confirm('Bạn có muốn xóa khách hàng này?');
       if (confirmDialog) {
         this.customerService.deleteEntity(Customer, (data) => {
           this.$location.path('/ql-toa-hang/khach-hang');
@@ -188,18 +174,6 @@ module Clarity.Controller {
     goToCustomerForm() {
       this.$location.path('/ql-toa-hang/khach-hang/tao');
     }
-
-		getEmployeeName(id) {
-			if (this.employeeList){
-				for (var i = 0; i < this.employeeList.length; i++) {
-					var employee = this.employeeList[i];
-					if (employee.id == id) {
-						return employee.fullName;
-					}
-				}
-			}
-			return '';
-		}
 
 		setCurrencyFormat(changeFormatNumber, type) {
 			if (changeFormatNumber && changeFormatNumber != '') {

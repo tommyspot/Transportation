@@ -204,7 +204,6 @@ module Clarity.Controller {
 				var newCustomer = new Model.CustomerModel();
 				newCustomer.fullName = customerOrder.customerName;
 				newCustomer.phoneNo = customerOrder.customerPhone;
-				newCustomer.area = customerOrder.customerArea;
 
 				this.customerService.create(newCustomer, (data) => {
 					customerOrder.customerId = data.id;
@@ -235,7 +234,6 @@ module Clarity.Controller {
 					if (customerOrderId == id) {
 						this.currentCustomerOrder.customerName = this.customerList[i].fullName;
 						this.currentCustomerOrder.customerPhone = this.customerList[i].phoneNo;
-						this.currentCustomerOrder.customerArea = this.customerList[i].area;
 						this.currentCustomerOrder.customerCode = this.customerList[i].code;
 						break;
 					}

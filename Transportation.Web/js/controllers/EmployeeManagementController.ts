@@ -129,7 +129,7 @@ module Clarity.Controller {
     }
 
     removeEmployees() {
-      var confirmDialog = this.$window.confirm('Bạn có muốn xóa nhân viên?');
+      var confirmDialog = this.$window.confirm('Bạn có muốn xóa những nhân viên được chọn?');
       if (confirmDialog) {
         for (let i = 0; i < this.employeeList.length; i++) {
           var employee = this.employeeList[i];
@@ -143,7 +143,7 @@ module Clarity.Controller {
     }
 
     removeEmployeeInDetail(employee: Model.EmployeeModel) {
-      var confirmDialog = this.$window.confirm('Bạn có muốn xóa nhân viên?');
+      var confirmDialog = this.$window.confirm('Bạn có muốn xóa nhân viên này?');
       if (confirmDialog) {
         this.employeeService.deleteEntity(employee, (data) => {
           this.$location.path('/ql-toa-hang/nhan-vien');

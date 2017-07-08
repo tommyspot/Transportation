@@ -9,106 +9,97 @@
 						<input id="fullName" name="fullName" class="form-control" type="text" ng-model="viewModel.currentEmployee.fullName" required>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="mobile">Số điện thoại <span class="required-symbol">*</span></label>
+						<label for="mobile">Điện thoại <span class="required-symbol">*</span></label>
 						<span class="required-field" ng-if="employeeForm.mobile.$touched && employeeForm.mobile.$invalid">(Số ĐT phải được nhập)</span>
 						<input id="mobile" name="mobile" class="form-control" type="text" pattern="[0-9]+" ng-model="viewModel.currentEmployee.mobile" required>
 					</div>
 				</div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="idNumber">CMND </label>
+            <input id="idNumber" name="idNumber" class="form-control" type="text" ng-model="viewModel.currentEmployee.cardId">
+          </div>
+        </div>
 			</div>
 
 			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="idNumber">CMND </label>
-						<input id="idNumber" name="idNumber" class="form-control" type="text" ng-model="viewModel.currentEmployee.cardId">
-					</div>
-				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="address">Địa chỉ</label>
 						<input id="address" name="address" class="form-control" type="text" ng-model="viewModel.currentEmployee.address">
 					</div>
 				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="title">Chức vụ</label>
-						<select id="title" class="form-control" data-ng-model="viewModel.currentEmployee.title">
-							<option value="">--Chọn chức vụ--</option>
-							<option ng-repeat="title in viewModel.titles">{{title}}</option>
-						</select>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="driverLicenseRank">Hạng (GPLX)</label>
-						<input id="driverLicenseRank" name="driverLicenseRank" class="form-control" type="text" ng-model="viewModel.currentEmployee.driverLicenseRank">
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="driverLicenseAddress">Nơi cấp (GPLX)</label>
-						<input id="driverLicenseAddress" name="driverLicenseAddress" class="form-control" type="text" ng-model="viewModel.currentEmployee.driverLicenseAddress">
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="driverLicenseId">Số GPLX</label>
-						<input id="driverLicenseId" name="driverLicenseId" class="form-control" type="text" ng-model="viewModel.currentEmployee.driverLicenseId">
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="driverLicenseDate">Ngày cấp (GPLX)</label>
-            <datepicker class="date-picker" date-format="dd/MM/yyyy">
-              <input id="driverLicenseDate" class="form-control" name="driverLicenseDate" type="text" ng-model="viewModel.currentEmployee.driverLicenseDate">
-            </datepicker>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="driverLicenseExpirationDate">Ngày hết hạn (GPLX)</label>
-            <datepicker class="date-picker" date-format="dd/MM/yyyy">
-              <input id="driverLicenseExpirationDate" class="form-control" name="driverLicenseExpirationDate" type="text" ng-model="viewModel.currentEmployee.driverLicenseExpirationDate">
-            </datepicker>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="startDate">Ngày bắt đầu làm việc</label>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="title">Chức vụ</label>
+            <select id="title" class="form-control" data-ng-model="viewModel.currentEmployee.title">
+              <option value="">--Chọn chức vụ--</option>
+              <option ng-repeat="title in viewModel.titles">{{title}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="startDate">Ngày bắt đầu làm việc</label>
             <datepicker class="date-picker" date-format="dd/MM/yyyy">
               <input id="startDate" class="form-control" name="startDate" type="text" ng-model="viewModel.currentEmployee.startDate">
             </datepicker>
+          </div>
+        </div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-2">
+					<div class="form-group">
+						<label for="driverLicenseRank">Hạng GPLX</label>
+						<input id="driverLicenseRank" name="driverLicenseRank" class="form-control" type="text" ng-model="viewModel.currentEmployee.driverLicenseRank">
 					</div>
 				</div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="driverLicenseAddress">Nơi cấp GPLX</label>
+            <input id="driverLicenseAddress" name="driverLicenseAddress" class="form-control" type="text" ng-model="viewModel.currentEmployee.driverLicenseAddress">
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="driverLicenseId">Số GPLX</label>
+            <input id="driverLicenseId" name="driverLicenseId" class="form-control" type="text" ng-model="viewModel.currentEmployee.driverLicenseId">
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label for="driverLicenseDate">Ngày cấp GPLX</label>
+            <datepicker class="date-picker" date-format="dd/MM/yyyy">
+              <input id="driverLicenseDate" class="form-control" name="driverLicenseDate" type="text" ng-model="viewModel.currentEmployee.driverLicenseDate">
+            </datepicker>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <label for="driverLicenseExpirationDate">Ngày hết hạn GPLX</label>
+            <datepicker class="date-picker" date-format="dd/MM/yyyy">
+              <input id="driverLicenseExpirationDate" class="form-control" name="driverLicenseExpirationDate" type="text" ng-model="viewModel.currentEmployee.driverLicenseExpirationDate">
+            </datepicker>
+          </div>
+        </div>
+			</div>
+
+			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="violation">Vi phạm</label>
 						<input id="violation" name="violation" class="form-control" type="text" ng-model="viewModel.currentEmployee.violation"/>
 					</div>
 				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="notes">Ghi chú</label>
-						<textarea id="notes" name="notes" class="form-control" type="text" ng-model="viewModel.currentEmployee.notes"></textarea>
-					</div>
-				</div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="notes">Ghi chú</label>
+            <input id="notes" name="notes" class="form-control" type="text" ng-model="viewModel.currentEmployee.notes" />
+          </div>
+        </div>
 			</div>
 		</form>
 

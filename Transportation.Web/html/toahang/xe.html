@@ -21,7 +21,7 @@
         </button>
       </div>
       <div class="col-sm-3">
-        <input class="form-control" type="text" data-ng-model="searchText" placeholder="Search" />
+        <input class="form-control" type="text" data-ng-model="searchText" placeholder="Tìm kiếm nhanh" />
       </div>
     </div>
 
@@ -31,35 +31,33 @@
           <table class="table table-hover table-bordered">
             <thead>
               <tr>
-                <th class="align-center">
+                <th class="checkbox-width text-center">
 									<input id="checkAllTrucks" type="checkbox" data-ng-model="viewModel.isCheckedAll"
 												 data-ng-change="viewModel.selectAllTrucksOnPage()" />
                 </th>
-                <th class="align-center hidden-xs">Mã Xe</th>
-                <th class="align-center">Biển Số </th>
-                <th class="align-center hidden-xs">Số Khung</th>
-                <th class="align-center hidden-xs">Số Máy</th>
-                <th class="align-center hidden-xs">Năm SX</th>
-                <th class="align-center">Còn Lưu Hành</th>
+                <th class="text-center">Biển số</th>
+                <th class="col-sm-2 text-center">Năm sản xuất</th>
+                <th class="col-sm-2 text-center">Nhãn hiệu</th>
+                <th class="col-sm-2 text-center">Tải trọng</th>
+                <th class="col-sm-2 text-center">Còn lưu hành</th>
               </tr>
             </thead>
             <tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="7">
+                <td class="text-center" colspan="6">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
               <tr data-ng-if="!viewModel.isLoading" class="pointer" data-ng-repeat="truck in viewModel.getTruckListOnPage()"
                   data-ng-click="viewModel.$location.path('/ql-toa-hang/xe/' + truck.id)">
-                <td class="align-center" data-ng-click="$event.stopPropagation();">
+                <td class="text-center" data-ng-click="$event.stopPropagation();">
                   <input id="truck-{{$index}}" type="checkbox" data-ng-model="truck.isChecked" />
                 </td>
-                <td class="align-center hidden-xs">{{truck.id}}</td>
-                <td class="align-center">{{truck.licensePlate}}</td>
-                <td class="align-center hidden-xs">{{truck.vin}}</td>
-                <td class="align-center hidden-xs">{{truck.engineNo}}</td>
-                <td class="align-center hidden-xs">{{truck.yearOfManufacture}}</td>
-                <td class="align-center">{{viewModel.checkStatusTruck(truck)}}</td>
+                <td>{{truck.licensePlate}}</td>
+                <td class="text-center">{{truck.yearOfManufacture}}</td>
+                <td>{{truck.brand}}</td>
+                <td>{{truck.weight}} tấn</td>
+                <td>{{viewModel.checkStatusTruck(truck)}}</td>
               </tr>
             </tbody>
           </table>
@@ -79,8 +77,7 @@
             </li>
 
             <li class="pointer" data-ng-repeat="pageIndex in viewModel.getNumberPage() track by $index"
-                data-ng-click="viewModel.goToPage($index + 1)"
-                ng-class="{'active': $index + 1 === viewModel.currentPage}">
+                data-ng-click="viewModel.goToPage($index + 1)" ng-class="{'active': $index + 1 === viewModel.currentPage}">
               {{pageIndex}}
               <span>{{$index + 1}}</span>
             </li>

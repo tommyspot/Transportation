@@ -15,10 +15,7 @@ namespace Transportation
         [Required]
 		public string FullName { get; set; }
 		[Required]
-        public string Area { get; set; }
-		[Required]
 		public string PhoneNo { get; set; }
-		public string EmployeeID { get; set; }
         public long TotalOwned { get; set; }
         public long TotalPay { get; set; }
         public long TotalDebt { get; set; }
@@ -34,8 +31,6 @@ namespace Transportation
             JObject json = new JObject();
 			json["id"] = ID;
 			json["fullName"] = FullName;
-			json["area"] = Area;
-			json["employeeId"] = EmployeeID;
             json["totalOwned"] = TotalOwned;
             json["totalPay"] = TotalPay;
             json["totalDebt"] = TotalDebt;
@@ -49,19 +44,14 @@ namespace Transportation
         {
             Customer customer = new Customer();
             customer.ApplyJson(json);
-
             return customer;
         }
 
         public void ApplyJson(JObject json)
         {
             ID = json.Value<long>("id");
-
             FullName = json.Value<string>("fullName");
-            Area = json.Value<string>("area");
-            EmployeeID = json.Value<string>("employeeId");
             TotalOwned = json.Value<long>("totalOwned");
-
             TotalPay = json.Value<long>("totalPay");
             TotalDebt = json.Value<long>("totalDebt");
 			PhoneNo = json.Value<string>("phoneNo");
