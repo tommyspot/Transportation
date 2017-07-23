@@ -115,17 +115,17 @@ namespace Transportation.Api
             }
 
             wagonSettlement.ApplyJson(json);
-			if (wagonSettlement.PaymentRemain == 0) {
-				wagonSettlement.PaymentStatus = "Không Nợ";
-			}
-
 			var newPayment  = json.Value<long>("newPayment");
 			if (newPayment > 0 && !String.IsNullOrEmpty(wagonSettlement.PaymentDate))
 			{
 				wagonSettlement.Payment += newPayment;
 				wagonSettlement.PaymentRemain -= newPayment;
+                if (wagonSettlement.PaymentRemain == 0)
+                {
+                    wagonSettlement.PaymentStatus = "Không Nợ";
+                }
 
-				Payment payment = new Payment();
+                Payment payment = new Payment();
 				payment.PaymentDate = wagonSettlement.PaymentDate;
 				payment.PaymentAmount = newPayment;
 				payment.WagonSettlementCode = wagonSettlement.Code;
@@ -134,11 +134,9 @@ namespace Transportation.Api
 
 				Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == wagonSettlement.CustomerID);
 				customer.NeedUpdatePayment = true;
-
 			}
 
 			ClarityDB.Instance.SaveChanges();
-
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json};
         }
 

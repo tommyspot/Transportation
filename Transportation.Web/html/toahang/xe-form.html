@@ -1,123 +1,161 @@
 ﻿<div id="truckFormSection" class="bootstrap form">
 	<div class="container">
-		<form name="truckForm">
-			<div class="row">
-				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="licensePlate">Biển số xe <span class="required-symbol">*</span></label>
-						<span class="required-field" ng-if="truckForm.licensePlate.$touched && truckForm.licensePlate.$invalid">(Biển số xe phải được nhập)</span>
-						<input id="licensePlate" name="licensePlate" class="form-control" type="text" ng-model="viewModel.currentTruck.licensePlate" required>
-					</div>
-				</div>
-				<div class="col-sm-2">
-					<div class="form-group">
-						<label for="yearOfManufacture">Năm SX</label>
-						<input id="yearOfManufacture" name="yearOfManufacture" class="form-control" type="number" pattern="[0-9]{4}" ng-model="viewModel.currentTruck.yearOfManufacture">
-					</div>
-				</div>
-        <div class="col-sm-3">
-          <div class="form-group">
-            <label for="driverLicenseId">Nhãn hiệu</label>
-            <input id="driverLicenseId" name="driverLicenseId" class="form-control" type="text" ng-model="viewModel.currentTruck.brand">
-          </div>
+		<form name="truckForm" class="form-horizontal">
+      <div class="form-group">
+        <div class="col-sm-12">
+          <button class="btn btn-default" data-ng-class="{'main-btn': !truckForm.$invalid}"
+              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/xe/tao'"
+              data-ng-click="viewModel.createTruck(viewModel.currentTruck)" data-ng-disabled="truckForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Lưu</span>
+          </button>
+          <button class="btn btn-default" data-ng-class="{'main-btn': !truckForm.$invalid}"
+              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/xe/sua/' + viewModel.currentTruck.id"
+              data-ng-click="viewModel.updateTruck(viewModel.currentTruck)" data-ng-disabled="truckForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Cập nhật</span>
+          </button>
+          <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-toa-hang/xe')">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span>Hủy</span>
+          </button>
         </div>
-        <div class="col-sm-3">
-          <div class="form-group">
-            <label for="weight">Tải trọng (tấn)</label>
-            <input id="weight" name="weight" class="form-control" type="number" ng-model="viewModel.currentTruck.weight">
-          </div>
-        </div>
-			</div>
+      </div>
 
-			<div class="row">
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="address">Số khung</label>
-						<input id="address" name="address" class="form-control" type="text" ng-model="viewModel.currentTruck.vin">
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="mobile">Số máy</label>
-						<input id="mobile" name="mobile" class="form-control" type="text" ng-model="viewModel.currentTruck.engineNo">
-					</div>
-				</div>
-        <div class="col-sm-3">
-          <div class="form-group">
-            <label for="driverLicenseExpirationDate">Tài xế chịu trách nhiệm</label>
-            <select ui-select2 id="employeeId" class="form-control ui-select-2" data-ng-model="viewModel.currentTruck.employeeId">
-              <option value="">--Chọn tài xế--</option>
-              <option ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
-            </select>
-          </div>
+      <div class="form-group margin-top-20">
+        <label for="licensePlate" class="col-sm-2 control-label">Biển số xe <span class="required-symbol">*</span></label>
+        <div class="col-sm-4" data-ng-class="{'has-error': truckForm.licensePlate.$touched && truckForm.licensePlate.$invalid}">
+          <input id="licensePlate" name="licensePlate" class="form-control" type="text"
+              data-ng-model="viewModel.currentTruck.licensePlate" required />
         </div>
-        <div class="col-sm-3">
-          <div class="form-group">
-            <label for="monthlyPaymentFormated">Tiền thanh toán hàng tháng</label>
-            <input id="monthlyPaymentFormated" name="monthlyPaymentFormated" class="form-control" type="text" maxlength="15"
-                   ng-model="viewModel.monthlyPaymentFormated" data-ng-change="viewModel.setCurrencyFormat(viewModel.monthlyPaymentFormated)">
-          </div>
+        <div class="col-sm-4 validate-error">
+          <span class="required-field" data-ng-if="truckForm.licensePlate.$touched && truckForm.licensePlate.$invalid">
+          Biển số xe phải được nhập</span>
         </div>
-			</div>
+      </div>
 
-			<div class="row">
-				<div class="col-sm-2">
-					<div class="form-group">
-						<label for="violation">Ngày mua</label>
-            <datepicker class="date-picker" date-format="dd/MM/yyyy">
-              <input id="violation" class="form-control" name="violation" type="text" ng-model="viewModel.currentTruck.buyingDate">
-            </datepicker>
-					</div>
-				</div>
-				<div class="col-sm-2">
-					<div class="form-group">
-						<label for="startUsingDate">Ngày lưu hành</label>
-            <datepicker class="date-picker" date-format="dd/MM/yyyy">
-              <input id="startUsingDate" class="form-control" name="startUsingDate" type="text" ng-model="viewModel.currentTruck.startUsingDate">
-            </datepicker>
-          </div>
-				</div>
-        <div class="col-sm-2">
-          <div class="form-group">
-            <label for="title">Bảo hiểm đến</label>
-            <datepicker class="date-picker" date-format="dd/MM/yyyy">
-              <input id="insuranceDate" class="form-control" name="insuranceDate" type="text" ng-model="viewModel.currentTruck.insuranceDate">
-            </datepicker>
-          </div>
+      <div class="form-group">
+        <label for="yearOfManufacture" class="col-sm-2 control-label">Năm sản xuất</label>
+        <div class="col-sm-4">
+          <input id="yearOfManufacture" name="yearOfManufacture" class="form-control" type="number" pattern="[0-9]{4}"
+              data-ng-model="viewModel.currentTruck.yearOfManufacture" />
         </div>
-        <div class="col-sm-3">
-          <div class="form-group">
-            <label for="title">Ngày đăng kiểm gần nhất</label>
-            <datepicker class="date-picker" date-format="dd/MM/yyyy">
-              <input id="checkDate" class="form-control" name="checkDate" type="text" ng-model="viewModel.currentTruck.checkDate">
-            </datepicker>
-          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="driverLicenseId" class="col-sm-2 control-label">Nhãn hiệu</label>
+        <div class="col-sm-4">
+          <input id="driverLicenseId" name="driverLicenseId" class="form-control" type="text"
+              data-ng-model="viewModel.currentTruck.brand" />
         </div>
-        <div class="col-sm-3">
-          <div class="form-group">
-            <label for="stock">Cổ phần (%)</label>
-            <input id="stock" name="stock" class="form-control" type="number" ng-model="viewModel.currentTruck.stock">
-          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="weight" class="col-sm-2 control-label">Tải trọng (tấn)</label>
+        <div class="col-sm-4">
+          <input id="weight" name="weight" class="form-control" type="number" data-ng-model="viewModel.currentTruck.weight" />
         </div>
-			</div>
+      </div>
 
-			<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/xe/tao'"
-							data-ng-click="viewModel.createTruck(viewModel.currentTruck)" data-ng-disabled="truckForm.$invalid">
-				<span class="glyphicon glyphicon-ok"></span>
-				<span>Lưu</span>
-			</button>
+      <div class="form-group">
+        <label for="vin" class="col-sm-2 control-label">Số khung</label>
+        <div class="col-sm-4">
+          <input id="vin" name="vin" class="form-control" type="text" data-ng-model="viewModel.currentTruck.vin" />
+        </div>
+      </div>
 
-			<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/xe/sua/' + viewModel.currentTruck.id"
-							data-ng-click="viewModel.updateTruck(viewModel.currentTruck)" data-ng-disabled="truckForm.$invalid">
-				<span class="glyphicon glyphicon-ok"></span>
-				<span>Cập nhật</span>
-			</button>
+      <div class="form-group">
+        <label for="engineNo" class="col-sm-2 control-label">Số máy</label>
+        <div class="col-sm-4">
+          <input id="engineNo" name="engineNo" class="form-control" type="text" data-ng-model="viewModel.currentTruck.engineNo" />
+        </div>
+      </div>
 
-			<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/xe')">
-				<span class="glyphicon glyphicon-remove"></span>
-				<span>Hủy</span>
-			</button>
+      <div class="form-group">
+        <label for="employeeId" class="col-sm-2 control-label">Tài xế chịu trách nhiệm</label>
+        <div class="col-sm-4">
+          <select ui-select2 id="employeeId" class="form-control ui-select-2" data-ng-model="viewModel.currentTruck.employeeId">
+            <option value="">--Chọn tài xế--</option>
+            <option data-ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
+          </select>
+        </div>
+      </div>
 
+      <div class="form-group">
+        <label for="monthlyPayment" class="col-sm-2 control-label">Tiền thanh toán hàng tháng</label>
+        <div class="col-sm-4">
+          <input id="monthlyPayment" name="monthlyPayment" class="form-control" type="text"
+              data-ng-model="viewModel.currentTruck.monthlyPaymentFormatted" maxlength="15"
+              data-ng-change="viewModel.formatCurrency('monthlyPayment')" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="buyingDate" class="col-sm-2 control-label">Ngày mua</label>
+        <div class="col-sm-4">
+          <datepicker class="date-picker" date-format="dd/MM/yyyy">
+            <input id="buyingDate" class="form-control" name="buyingDate" type="text"
+                data-ng-model="viewModel.currentTruck.buyingDate" />
+          </datepicker>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="startUsingDate" class="col-sm-2 control-label">Ngày lưu hành</label>
+        <div class="col-sm-4">
+          <datepicker class="date-picker" date-format="dd/MM/yyyy">
+            <input id="startUsingDate" class="form-control" name="startUsingDate" type="text"
+                data-ng-model="viewModel.currentTruck.startUsingDate" />
+          </datepicker>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="insuranceDate" class="col-sm-2 control-label">Bảo hiểm đến</label>
+        <div class="col-sm-4">
+          <datepicker class="date-picker" date-format="dd/MM/yyyy">
+            <input id="insuranceDate" class="form-control" name="insuranceDate" type="text"
+                data-ng-model="viewModel.currentTruck.insuranceDate" />
+          </datepicker>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="checkDate" class="col-sm-2 control-label">Ngày đăng kiểm gần nhất</label>
+        <div class="col-sm-4">
+          <datepicker class="date-picker" date-format="dd/MM/yyyy">
+            <input id="checkDate" class="form-control" name="checkDate" type="text" data-ng-model="viewModel.currentTruck.checkDate" />
+          </datepicker>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="stock" class="col-sm-2 control-label">Cổ phần (%)</label>
+        <div class="col-sm-4">
+          <input id="stock" name="stock" class="form-control" type="number" data-ng-model="viewModel.currentTruck.stock" />
+        </div>
+      </div>
+
+      <div class="form-group margin-top-20">
+        <div class="col-sm-12">
+          <button class="btn btn-default" data-ng-class="{'main-btn': !truckForm.$invalid}"
+              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/xe/tao'"
+              data-ng-click="viewModel.createTruck(viewModel.currentTruck)" data-ng-disabled="truckForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Lưu</span>
+          </button>
+          <button class="btn btn-default" data-ng-class="{'main-btn': !truckForm.$invalid}"
+              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/xe/sua/' + viewModel.currentTruck.id"
+              data-ng-click="viewModel.updateTruck(viewModel.currentTruck)" data-ng-disabled="truckForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Cập nhật</span>
+          </button>
+          <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-toa-hang/xe')">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span>Hủy</span>
+          </button>
+        </div>
+      </div>
 		</form>
 	</div>
 </div>

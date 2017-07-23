@@ -1,124 +1,163 @@
 ﻿<div id="employeeFormSection" class="bootstrap form">
 	<div class="container">
-		<form name="employeeForm">
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="fullName">Họ tên <span class="required-symbol">*</span></label>
-						<span class="required-field" ng-if="employeeForm.fullName.$touched && employeeForm.fullName.$invalid">(Họ tên phải được nhập)</span>
-						<input id="fullName" name="fullName" class="form-control" type="text" ng-model="viewModel.currentEmployee.fullName" required>
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="mobile">Điện thoại <span class="required-symbol">*</span></label>
-						<span class="required-field" ng-if="employeeForm.mobile.$touched && employeeForm.mobile.$invalid">(Số ĐT phải được nhập)</span>
-						<input id="mobile" name="mobile" class="form-control" type="text" pattern="[0-9]+" ng-model="viewModel.currentEmployee.mobile" required>
-					</div>
-				</div>
-        <div class="col-sm-3">
-          <div class="form-group">
-            <label for="idNumber">CMND </label>
-            <input id="idNumber" name="idNumber" class="form-control" type="text" ng-model="viewModel.currentEmployee.cardId">
-          </div>
-        </div>
-			</div>
+		<form name="employeeForm" class="form-horizontal">
+      <div class="form-group">
+        <div class="col-sm-12">
+          <button class="btn btn-default" data-ng-class="{'main-btn': !employeeForm.$invalid}"
+              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/tao'"
+              data-ng-click="viewModel.createEmployee(viewModel.currentEmployee)" data-ng-disabled="employeeForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Lưu</span>
+          </button>
 
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="address">Địa chỉ</label>
-						<input id="address" name="address" class="form-control" type="text" ng-model="viewModel.currentEmployee.address">
-					</div>
-				</div>
-        <div class="col-sm-3">
-          <div class="form-group">
-            <label for="title">Chức vụ</label>
-            <select id="title" class="form-control" data-ng-model="viewModel.currentEmployee.title">
-              <option value="">--Chọn chức vụ--</option>
-              <option ng-repeat="title in viewModel.titles">{{title}}</option>
-            </select>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="form-group">
-            <label for="startDate">Ngày bắt đầu làm việc</label>
-            <datepicker class="date-picker" date-format="dd/MM/yyyy">
-              <input id="startDate" class="form-control" name="startDate" type="text" ng-model="viewModel.currentEmployee.startDate">
-            </datepicker>
-          </div>
-        </div>
-			</div>
+          <button class="btn btn-default" data-ng-class="{'main-btn': !employeeForm.$invalid}"
+              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/sua/' + viewModel.currentEmployee.id"
+              data-ng-click="viewModel.updateEmployee(viewModel.currentEmployee)" data-ng-disabled="employeeForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Cập nhật</span>
+          </button>
 
-			<div class="row">
-				<div class="col-sm-2">
-					<div class="form-group">
-						<label for="driverLicenseRank">Hạng GPLX</label>
-						<input id="driverLicenseRank" name="driverLicenseRank" class="form-control" type="text" ng-model="viewModel.currentEmployee.driverLicenseRank">
-					</div>
-				</div>
-        <div class="col-sm-3">
-          <div class="form-group">
-            <label for="driverLicenseAddress">Nơi cấp GPLX</label>
-            <input id="driverLicenseAddress" name="driverLicenseAddress" class="form-control" type="text" ng-model="viewModel.currentEmployee.driverLicenseAddress">
-          </div>
+          <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien')">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span>Hủy</span>
+          </button>
         </div>
-        <div class="col-sm-3">
-          <div class="form-group">
-            <label for="driverLicenseId">Số GPLX</label>
-            <input id="driverLicenseId" name="driverLicenseId" class="form-control" type="text" ng-model="viewModel.currentEmployee.driverLicenseId">
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="form-group">
-            <label for="driverLicenseDate">Ngày cấp GPLX</label>
-            <datepicker class="date-picker" date-format="dd/MM/yyyy">
-              <input id="driverLicenseDate" class="form-control" name="driverLicenseDate" type="text" ng-model="viewModel.currentEmployee.driverLicenseDate">
-            </datepicker>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="form-group">
-            <label for="driverLicenseExpirationDate">Ngày hết hạn GPLX</label>
-            <datepicker class="date-picker" date-format="dd/MM/yyyy">
-              <input id="driverLicenseExpirationDate" class="form-control" name="driverLicenseExpirationDate" type="text" ng-model="viewModel.currentEmployee.driverLicenseExpirationDate">
-            </datepicker>
-          </div>
-        </div>
-			</div>
+      </div>
 
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="violation">Vi phạm</label>
-						<input id="violation" name="violation" class="form-control" type="text" ng-model="viewModel.currentEmployee.violation"/>
-					</div>
-				</div>
-        <div class="col-sm-6">
-          <div class="form-group">
-            <label for="notes">Ghi chú</label>
-            <input id="notes" name="notes" class="form-control" type="text" ng-model="viewModel.currentEmployee.notes" />
-          </div>
+      <div class="form-group margin-top-20">
+        <label for="fullName" class="col-sm-2 control-label">Họ tên <span class="required-symbol">*</span></label>
+        <div class="col-sm-4" data-ng-class="{'has-error': employeeForm.fullName.$touched && employeeForm.fullName.$invalid}">
+          <input id="fullName" name="fullName" class="form-control" type="text"
+              data-ng-model="viewModel.currentEmployee.fullName" required />
         </div>
-			</div>
+        <div class="col-sm-4 validate-error">
+          <span class="required-field" data-ng-if="employeeForm.fullName.$touched && employeeForm.fullName.$invalid">
+            Họ tên phải được nhập</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="mobile" class="col-sm-2 control-label">Số điện thoại <span class="required-symbol">*</span></label>
+        <div class="col-sm-4" data-ng-class="{'has-error': employeeForm.mobile.$touched && employeeForm.mobile.$invalid}">
+          <input id="mobile" name="mobile" class="form-control" type="text" pattern="[0-9]+" 
+                 data-ng-model="viewModel.currentEmployee.mobile" required />
+        </div>
+        <div class="col-sm-4 validate-error">
+          <span class="required-field" data-ng-if="employeeForm.mobile.$touched && employeeForm.mobile.$invalid">
+            SĐT phải được nhập hoặc SĐT không hợp lệ
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="idNumber" class="col-sm-2 control-label">CMND</label>
+        <div class="col-sm-4">
+          <input id="idNumber" name="idNumber" class="form-control" type="text" data-ng-model="viewModel.currentEmployee.cardId" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="address" class="col-sm-2 control-label">Địa chỉ</label>
+        <div class="col-sm-4">
+          <input id="address" name="address" class="form-control" type="text" data-ng-model="viewModel.currentEmployee.address" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">Chức vụ</label>
+        <div class="col-sm-4">
+          <select id="title" class="form-control" data-ng-model="viewModel.currentEmployee.title">
+            <option value="">--Chọn chức vụ--</option>
+            <option data-ng-repeat="title in viewModel.titles">{{title}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="startDate" class="col-sm-2 control-label">Ngày bắt đầu làm việc</label>
+        <div class="col-sm-4">
+          <datepicker class="date-picker" date-format="dd/MM/yyyy">
+            <input id="startDate" class="form-control" name="startDate" type="text" data-ng-model="viewModel.currentEmployee.startDate" />
+          </datepicker>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="driverLicenseRank" class="col-sm-2 control-label">Hạng GPLX</label>
+        <div class="col-sm-4">
+          <input id="driverLicenseRank" name="driverLicenseRank" class="form-control" type="text"
+                 data-ng-model="viewModel.currentEmployee.driverLicenseRank" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="driverLicenseAddress" class="col-sm-2 control-label">Nơi cấp GPLX</label>
+        <div class="col-sm-4">
+          <input id="driverLicenseAddress" name="driverLicenseAddress" class="form-control" type="text"
+                 data-ng-model="viewModel.currentEmployee.driverLicenseAddress" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="driverLicenseId" class="col-sm-2 control-label">Số GPLX</label>
+        <div class="col-sm-4">
+          <input id="driverLicenseId" name="driverLicenseId" class="form-control" type="text"
+                 data-ng-model="viewModel.currentEmployee.driverLicenseId" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="driverLicenseDate" class="col-sm-2 control-label">Ngày cấp GPLX</label>
+        <div class="col-sm-4">
+          <datepicker class="date-picker" date-format="dd/MM/yyyy">
+            <input id="driverLicenseDate" class="form-control" name="driverLicenseDate" type="text"
+                   data-ng-model="viewModel.currentEmployee.driverLicenseDate" />
+          </datepicker>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="driverLicenseExpirationDate" class="col-sm-2 control-label">Ngày hết hạn GPLX</label>
+        <div class="col-sm-4">
+          <datepicker class="date-picker" date-format="dd/MM/yyyy">
+            <input id="driverLicenseExpirationDate" name="driverLicenseExpirationDate" class="form-control" type="text"
+                   data-ng-model="viewModel.currentEmployee.driverLicenseExpirationDate" />
+          </datepicker>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="violation" class="col-sm-2 control-label">Vi phạm</label>
+        <div class="col-sm-4">
+          <input id="violation" name="violation" class="form-control" type="text" data-ng-model="viewModel.currentEmployee.violation" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="notes" class="col-sm-2 control-label">Ghi chú</label>
+        <div class="col-sm-4">
+          <input id="notes" name="notes" class="form-control" type="text" data-ng-model="viewModel.currentEmployee.notes" />
+        </div>
+      </div>
+
+      <div class="form-group margin-top-20">
+        <div class="col-sm-12">
+          <button class="btn btn-default" data-ng-class="{'main-btn': !employeeForm.$invalid}"
+                  data-ng-if="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/tao'"
+                  data-ng-click="viewModel.createEmployee(viewModel.currentEmployee)" data-ng-disabled="employeeForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Lưu</span>
+          </button>
+
+          <button class="btn btn-default" data-ng-class="{'main-btn': !employeeForm.$invalid}"
+                  data-ng-if="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/sua/' + viewModel.currentEmployee.id"
+                  data-ng-click="viewModel.updateEmployee(viewModel.currentEmployee)" data-ng-disabled="employeeForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Cập nhật</span>
+          </button>
+
+          <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien')">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span>Hủy</span>
+          </button>
+        </div>
+      </div>
 		</form>
-
-		<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/tao'"
-						data-ng-click="viewModel.createEmployee(viewModel.currentEmployee)" data-ng-disabled="employeeForm.$invalid">
-			<span class="glyphicon glyphicon-ok"></span>
-			<span>Lưu</span>
-		</button>
-
-		<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/sua/' + viewModel.currentEmployee.id"
-						data-ng-click="viewModel.updateEmployee(viewModel.currentEmployee)" data-ng-disabled="employeeForm.$invalid">
-			<span class="glyphicon glyphicon-ok"></span>
-			<span>Cập nhật</span>
-		</button>
-
-		<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien')">
-			<span class="glyphicon glyphicon-remove"></span>
-			<span>Hủy</span>
-		</button>
-
 	</div>
 </div>

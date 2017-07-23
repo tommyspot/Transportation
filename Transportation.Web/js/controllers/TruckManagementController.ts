@@ -7,21 +7,24 @@ declare var VERSION_NUMBER;
 
 module Clarity.Controller {
 	import service = Clarity.Service;
-	import helper = Clarity.Helper;
+  import helper = Clarity.Helper;
 
-	export class TruckManagementController {
+  const formatSuffix = 'Formatted';
+
+  export class TruckManagementController {
+    public mainHelper: helper.MainHelper;
+    public truckService: service.TruckService;
+    public employeeService: service.EmployeeService;
+
 		public currentTruck: Model.TruckModel;
-		public truckService: service.TruckService;
-		public employeeService: service.EmployeeService;
 		public employeeList: Array<Model.EmployeeModel>;
 		public truckList: Array<Model.TruckModel>;
-		public truckListTmp: Array<Model.TruckModel>;
+    public truckListTmp: Array<Model.TruckModel>;
+
 		public numOfPages: number;
 		public currentPage: number;
 		public pageSize: number;
 		public isCheckedAll: boolean;
-		public mainHelper: helper.MainHelper;
-    public monthlyPaymentFormated: string;
     public isLoading: boolean;
 
 		constructor(private $scope,
@@ -30,7 +33,8 @@ module Clarity.Controller {
 			public $location: ng.ILocationService,
 			public $window: ng.IWindowService,
 			public $filter: ng.IFilterService,
-			private $routeParams: any, private $cookieStore: ng.ICookieStoreService) {
+      private $routeParams: any,
+      private $cookieStore: ng.ICookieStoreService) {
 
 			this.truckService = new service.TruckService($http);
 			this.employeeService = new service.EmployeeService($http);
@@ -53,15 +57,15 @@ module Clarity.Controller {
 			if (truckId) {
 				if (this.$location.path() === '/ql-toa-hang/xe/' + truckId) {
 					this.truckService.getById(truckId, (data) => {
-						this.currentTruck = data;
-						this.monthlyPaymentFormated = data.monthlyPayment.toLocaleString();
+            this.currentTruck = data;
+            this.mainHelper.initFormattedProperty(this.currentTruck, ['monthlyPayment'], formatSuffix);
+            this.initEmployeeList();
 					}, null);
 				} else if (this.$location.path() === '/ql-toa-hang/xe/sua/' + truckId) {
 					if (this.currentTruck == null) {
 						this.truckService.getById(truckId, (data) => {
 							this.currentTruck = data;
-              this.monthlyPaymentFormated = data.monthlyPayment.toLocaleString();
-
+              this.mainHelper.initFormattedProperty(this.currentTruck, ['monthlyPayment'], formatSuffix);
               this.initEmployeeList();
 						}, null);
 					}
@@ -82,7 +86,7 @@ module Clarity.Controller {
 			this.truckService.getAll((results: Array<Model.TruckModel>) => {
 				this.truckList = results;
 				this.truckList.sort(function (a: any, b: any) {
-					return a.id - b.id;
+					return b.id - a.id;
 				});
 				this.truckListTmp = this.truckList;
         this.initPagination();
@@ -181,44 +185,23 @@ module Clarity.Controller {
 
 		goToTruckForm() {
 			this.$location.path('/ql-toa-hang/xe/tao');
-		}
+    }
 
-		changeDateFormat(date) {
-			var formatedDate = '';
-			if (date) {
-				var newDate = new Date(date);
-				var dateNo = newDate.getDate().toString();
-				dateNo = dateNo.toString().length == 2 ? dateNo : '0' + dateNo;
-				var monthNo = (newDate.getMonth() + 1).toString();
-				monthNo = monthNo.toString().length == 2 ? monthNo : '0' + monthNo;
-				var yearNo = newDate.getFullYear();
-				formatedDate = dateNo + '/' + monthNo + '/' + yearNo;
-			}
-			return formatedDate;
-		}
+    goToTruckEditForm(event: Event, truckId: number) {
+      event.stopPropagation();
+      this.$location.path(`/ql-toa-hang/xe/sua/${truckId}`);
+    }
 
 		checkStatusTruck(truck) {
 			return truck.isDeleted ? 'Không' : 'Có';
 		}
 
-		getEmployeeName(id) {
-			if (this.employeeList){
-				for (var i = 0; i < this.employeeList.length; i++) {
-					var employee = this.employeeList[i];
-					if (employee.id == id) {
-						return employee.fullName;
-					}
-				}
-			}
-			return '';
+    getEmployeeName(employeeId: string) {
+      return this.mainHelper.getPropertyValue(this.employeeList, 'id', employeeId, 'fullName');
 		}
 
-		setCurrencyFormat(changeFormatNumber) {
-			if (changeFormatNumber && changeFormatNumber != '') {
-				this.currentTruck.monthlyPayment = parseInt(changeFormatNumber.replace(/,/g, ''));
-				this.monthlyPaymentFormated = this.currentTruck.monthlyPayment.toLocaleString();
-			}
+    formatCurrency(propertyName: string) {
+      this.mainHelper.formatCurrency(this.currentTruck, propertyName, `${propertyName}${formatSuffix}`);
 		}
-
 	}
 }

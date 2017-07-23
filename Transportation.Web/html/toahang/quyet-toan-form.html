@@ -1,142 +1,98 @@
-﻿<div id="employeeFormSection" class="bootstrap form">
+﻿<div id="wagonSettlementFormSection" class="bootstrap form">
 	<div class="container">
-		<form name="employeeForm">
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="customerId">Khách Hàng</label>
-						<input id="customerId" name="customerId" class="form-control" type="text" data-ng-model="viewModel.currentWagonSettlement.customerCode" disabled>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="date">Ngày Phát Sinh</label>
-						<input id="date" name="date" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.date" disabled>
-					</div>
-				</div>
-			</div>
+    <form name="wagonSettlementForm" class="form-horizontal">
+      <div class="form-group">
+        <div class="col-sm-12">
+          <button class="btn btn-default" data-ng-class="{'main-btn': !wagonSettlementForm.$invalid}"
+                  data-ng-if="viewModel.$location.path() === '/ql-toa-hang/quyet-toan/sua/' + viewModel.currentWagonSettlement.id"
+                  data-ng-click="viewModel.updateWagonSettlement(viewModel.currentWagonSettlement)" data-ng-disabled="wagonSettlementForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Cập nhật</span>
+          </button>
 
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="paymentPlace">Nơi thanh toán</label>
-						<input id="paymentPlace" name="paymentPlace" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.paymentPlace" disabled>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="paymentDate">Ngày giao dịch</label>
-            <datepicker class="date-picker" date-format="dd/MM/yyyy">
-              <input id="paymentDate" class="form-control" name="paymentDate" type="text" ng-model="viewModel.currentWagonSettlement.paymentDate">
-            </datepicker>
-					</div>
-				</div>
-			</div>
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/quyet-toan')">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span>Hủy</span>
+          </button>
+        </div>
+      </div>
 
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="totalDebt">Nơi đi</label>
-						<input id="departure" name="departure" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.departure" disabled>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="type">Nơi đến</label>
-						<input id="unit" name="unit" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.destination" disabled>
-					</div>
-				</div>
-			</div>
+      <div class="form-group margin-top-20">
+        <label for="customerId" class="col-sm-2 control-label">Tên khách hàng</label>
+        <div class="col-sm-4">
+          <input id="customerId" name="customerId" class="form-control" type="text" value={{viewModel.getCustomerName(viewModel.currentWagonSettlement.customerId)}} disabled>
+        </div>
+        <label for="totalAmount" class="col-sm-2 control-label">Tổng phí</label>
+        <div class="col-sm-4 text-right">
+          {{viewModel.currentWagonSettlement.quantity * viewModel.currentWagonSettlement.unitPrice | currency: "" : 0}}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="wagonId" class="col-sm-2 control-label">Quyết toán toa hàng</label>
+        <div class="col-sm-4">
+          <input id="wagonId" name="wagonId" class="form-control" type="text" value={{viewModel.getWagonCode(viewModel.currentWagonSettlement.wagonId)}} disabled>
+        </div>
+        <label for="payment" class="col-sm-2 control-label">Đã thanh toán</label>
+        <div class="col-sm-4 text-right">
+          {{viewModel.currentWagonSettlement.payment | currency: "" : 0}}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="destination" class="col-sm-2 control-label">Nơi đến</label>
+        <div class="col-sm-4">
+          <input id="destination" name="destination" class="form-control" type="text" value={{viewModel.currentWagonSettlement.destination}} disabled>
+        </div>
+        <label for="paymentRemain" class="col-sm-2 control-label">Còn lại</label>
+        <div class="col-sm-4 text-right">
+          {{viewModel.currentWagonSettlement.paymentRemain | currency: "" : 0}}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="quantity" class="col-sm-2 control-label">Số lượng</label>
+        <div class="col-sm-4">
+          <input id="quantity" name="quantity" class="form-control" type="text" value={{viewModel.currentWagonSettlement.quantity}} disabled>
+        </div>
+        <label for="paymentDate" class="col-sm-2 control-label">Ngày giao dịch</label>
+        <div class="col-sm-4">
+          <datepicker class="date-picker" date-format="dd/MM/yyyy" date-set="{{viewModel.todayFormat}}">
+            <input id="paymentDate" class="form-control" name="paymentDate" type="text" ng-model="viewModel.currentWagonSettlement.paymentDate">
+          </datepicker>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="unit" class="col-sm-2 control-label">Đơn vị tính</label>
+        <div class="col-sm-4">
+          <input id="unit" name="unit" class="form-control" type="text" data-ng-model="viewModel.currentWagonSettlement.unit" disabled>
+        </div>
+        <label for="newPayment" class="col-sm-2 control-label">Thanh toán mới</label>
+        <div class="col-sm-4">
+          <input id="newPayment" name="newPayment" class="form-control text-right" type="text" maxlength="15" data-ng-model="viewModel.currentWagonSettlement.newPaymentFormatted"
+                 data-ng-change="viewModel.updateNewPayment()" max={{viewModel.currentWagonSettlement.paymentRemain}} validator-max/>
+          <span class="required-field validate-error" data-ng-if="wagonSettlementForm.newPayment.$error.maxValue">(<b>Thanh toán mới</b> phải nhỏ hơn <b>Còn lại</b>)</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="unitPrice" class="col-sm-2 control-label">Đơn giá</label>
+        <div class="col-sm-4">
+          <input id="unitPrice" name="unitPrice" class="form-control" type="text" data-ng-model="viewModel.currentWagonSettlement.unitPriceFormatted" disabled>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <div class="col-sm-12">
+          <button class="btn btn-default" data-ng-class="{'main-btn': !wagonSettlementForm.$invalid}"
+              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/quyet-toan/sua/' + viewModel.currentWagonSettlement.id"
+              data-ng-click="viewModel.updateWagonSettlement(viewModel.currentWagonSettlement)" data-ng-disabled="wagonSettlementForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Cập nhật</span>
+          </button>
 
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="wagonId">Quyết toán toa hàng</label>
-						<input id="wagonId" name="wagonId" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.wagonCode" disabled>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="unit">Đơn vị tính</label>
-						<input id="unit" name="unit" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.unit" disabled>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="quantity">Số lượng</label>
-						<input id="quantity" name="quantity" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.quantity" disabled>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="unitPrice">Đơn giá</label>
-						<input id="unitPrice" name="unitPrice" class="form-control" type="text" value="{{viewModel.currentWagonSettlement.unitPrice.toLocaleString()}}" disabled>
-					</div>
-				</div>
-			</div>
-
-
-
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="totalDebt">Tổng Phí</label>
-						<input id="departure" name="departure" class="form-control" type="text" value="{{viewModel.currentWagonSettlement.totalAmount.toLocaleString()}}" disabled>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="payment">Đã thanh toán</label>
-						<input id="payment" name="payment" class="form-control" type="text" value="{{viewModel.currentWagonSettlement.payment.toLocaleString()}}" disabled>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="totalDebt">Chiết Khấu</label>
-						<input id="discount" name="discount" class="form-control" type="text" value="{{viewModel.currentWagonSettlement.discount.toLocaleString()}}" disabled>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="paymentRemain">Còn Lại</label>
-						<input id="paymentRemain" name="paymentRemain" class="form-control" type="text" value="{{viewModel.currentWagonSettlement.paymentRemain.toLocaleString()}}" disabled>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="totalDebt">Thanh toán mới</label>
-						<input id="newPayment" name="newPayment" class="form-control" type="text" maxlength="15" ng-model="viewModel.currentWagonSettlement.newPaymentFormated" data-ng-change="viewModel.updateNewPayment(viewModel.currentWagonSettlement.newPaymentFormated)">
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<!--<label for="paymentRemain">Còn Lại</label>
-						<input id="paymentRemain" name="paymentRemain" class="form-control" type="text" ng-model="viewModel.currentWagonSettlement.paymentRemain" disabled>-->
-					</div>
-				</div>
-			</div>
-
-			<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/quyet-toan/sua/' + viewModel.currentWagonSettlement.id"
-							data-ng-click="viewModel.updateWagonSettlement(viewModel.currentWagonSettlement)" data-ng-disabled="employeeForm.$invalid">
-				<span class="glyphicon glyphicon-ok"></span>
-				<span>Cập nhật</span>
-			</button>
-
-			<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/quyet-toan')">
-				<span class="glyphicon glyphicon-remove"></span>
-				<span>Hủy</span>
-			</button>
-
-		</form>
-	</div>
-
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/quyet-toan')">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span>Hủy</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>

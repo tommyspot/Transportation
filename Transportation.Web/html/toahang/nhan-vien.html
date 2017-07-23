@@ -40,11 +40,12 @@
 								<th class="col-sm-2 text-center">Chức vụ</th>
                 <th class="col-sm-2 text-center">Ngày làm việc</th>
 								<th class="col-sm-2 text-center">Tình trạng</th>
+                <th class="edit-column-width text-center">Sửa</th>
 							</tr>
 						</thead>
 						<tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="6">
+                <td class="text-center" colspan="7">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
@@ -58,6 +59,9 @@
 								<td>{{employee.title}}</td>
                 <td>{{employee.startDate}}</td>
 								<td>{{viewModel.checkStatusEmployee(employee)}}</td>
+                <td class="text-center edit-column" data-ng-click="viewModel.goToEmployeeEditForm($event, employee.id)">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </td>
 							</tr>
 						</tbody>
 					</table>

@@ -1,76 +1,84 @@
 ﻿<div id="wagonSettlementInfo" class="bootstrap">
   <div class="container">
-    
-    <div class="row">
-      <div class="col-sm-12">
-        <h2 class="text-center">QUYẾT TOÁN TOA HÀNG - {{viewModel.currentWagonSettlement.wagonCode}}</h2>
+    <div class="form-detail">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2 class="text-center">QUYẾT TOÁN TOA HÀNG - {{viewModel.getWagonCode(viewModel.currentWagonSettlement.wagonId)}}</h2>
+        </div>
+      </div>
+      <div class="row margin-top-20">
+        <div class="col-sm-2">
+          <p class="bold-text">Khách hàng:</p>
+        </div>
+        <div class="col-sm-10">
+          <p>{{viewModel.getCustomerName(viewModel.currentWagonSettlement.customerId)}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <p class="bold-text">Đơn vị tính:</p>
+        </div>
+        <div class="col-sm-10">
+          <p>{{viewModel.currentWagonSettlement.unit}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <p class="bold-text">Số lượng:</p>
+        </div>
+        <div class="col-sm-10">
+          <p>{{viewModel.currentWagonSettlement.quantity | currency: "" : 0}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <p class="bold-text">Đơn giá:</p>
+        </div>
+        <div class="col-sm-10">
+          <p>{{viewModel.currentWagonSettlement.unitPrice | currency: "" : 0}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <p class="bold-text">Nơi đến:</p>
+        </div>
+        <div class="col-sm-10">
+          <p>{{viewModel.currentWagonSettlement.destination}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <p class="bold-text">Tổng Phí:</p>
+        </div>
+        <div class="col-sm-10">
+          <p>{{viewModel.currentWagonSettlement.quantity * viewModel.currentWagonSettlement.unitPrice | currency: "" : 0}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <p class="bold-text">Đã thanh toán:</p>
+        </div>
+        <div class="col-sm-10">
+          <p>{{viewModel.currentWagonSettlement.payment | currency: "" : 0}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <p class="bold-text">Còn lại:</p>
+        </div>
+        <div class="col-sm-10">
+          <p>{{viewModel.currentWagonSettlement.paymentRemain | currency: "" : 0}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <p class="bold-text">Thanh toán mới:</p>
+        </div>
+        <div class="col-sm-10">
+          <p data-ng-repeat="payment in viewModel.paymentList">{{payment.paymentDate}} _ {{payment.paymentAmount | currency: "" : 0}}</p>
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <p><span class="bold-text">Khách hàng:</span> <span>{{viewModel.getCustomerCode(viewModel.currentWagonSettlement.customerId)}}</span></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <p><span class="bold-text">Ngày phát sinh:</span> <span>{{viewModel.currentWagonSettlement.date}}</span></p>
-      </div>
-    </div>
-    <!--<div class="row">
-      <div class="col-sm-12">
-        <p><span class="bold-text">Người thu:</span> <span>{{viewModel.currentWagonSettlement.employeeId}}</span></p>
-      </div>
-    </div>-->
-    <!--<div class="row">
-      <div class="col-sm-12">
-        <p><span class="bold-text">Quyết toán toa hàng:</span> <span>{{viewModel.currentWagonSettlement.wagonId}}</span></p>
-      </div>
-    </div>-->
-    <div class="row">
-      <div class="col-sm-12">
-        <p><span class="bold-text">Đơn vị tính:</span> <span>{{viewModel.currentWagonSettlement.unit}}</span></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <p><span class="bold-text">Số lượng:</span> <span>{{viewModel.currentWagonSettlement.quantity.toLocaleString()}}</span></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <p><span class="bold-text">Đơn giá:</span> <span>{{viewModel.currentWagonSettlement.unitPrice.toLocaleString()}}</span></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <p><span class="bold-text">Nơi đi:</span> <span>{{viewModel.currentWagonSettlement.departure}}</span></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <p><span class="bold-text">Nơi đến:</span> <span>{{viewModel.currentWagonSettlement.destination}}</span></p>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-12">
-        <p><span class="bold-text">Tổng Phí:</span> <span>{{viewModel.currentWagonSettlement.totalAmount.toLocaleString()}}</span></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <p><span class="bold-text">Đã thanh toán:</span> <span>{{viewModel.currentWagonSettlement.payment.toLocaleString()}}</span></p>
-      </div>
-    </div>
-
-		<div class="row">
-			<div class="col-sm-12">
-				<p><span class="bold-text">Thanh toán mới:</span></p>
-				<p data-ng-repeat="payment in viewModel.paymentList">{{payment.paymentDate}} _ {{payment.paymentAmount.toLocaleString()}}</p>
-			</div>
-		</div>
-
-
 
     <div class="row margin-bottom-20">
       <div class="col-sm-12">
@@ -83,13 +91,7 @@
 					<span class="glyphicon glyphicon-pencil"></span>
 					<span>Sửa</span>
 				</button>
-
-				<button class="btn btn-default negative-btn" data-ng-click="viewModel.removeCustomerInDetail(viewModel.currentWagonSettlement)">
-					<span class="glyphicon glyphicon-trash"></span>
-					<span>Xóa</span>
-				</button>
         </div>
     </div>
-
   </div>
 </div>

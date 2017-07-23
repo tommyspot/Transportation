@@ -10,8 +10,8 @@ module Clarity.Controller {
 	import helper = Clarity.Helper;
 
   export class EmployeeManagementController {
-    public currentEmployee: Model.EmployeeModel;
     public employeeService: service.EmployeeService;
+    public currentEmployee: Model.EmployeeModel;
 
     public employeeList: Array<Model.EmployeeModel>;
     public employeeListTmp: Array<Model.EmployeeModel>;
@@ -74,7 +74,7 @@ module Clarity.Controller {
       this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
         this.employeeList = results;
         this.employeeList.sort(function (a: any, b: any) {
-          return a.id - b.id;
+          return b.id - a.id;
         });
         this.employeeListTmp = this.employeeList;
         this.initPagination();
@@ -168,18 +168,9 @@ module Clarity.Controller {
       this.$location.path('/ql-toa-hang/nhan-vien/tao');
     }
 
-    changeDateFormat(date) {
-			var formatedDate = '';
-			if (date) {
-				var newDate = new Date(date);
-				var dateNo = newDate.getDate().toString();
-				dateNo = dateNo.toString().length == 2 ? dateNo : '0' + dateNo;
-				var monthNo = (newDate.getMonth() + 1).toString();
-				monthNo = monthNo.toString().length == 2 ? monthNo : '0' + monthNo;
-				var yearNo = newDate.getFullYear();
-				formatedDate = dateNo + '/' + monthNo + '/' + yearNo;
-			}
-			return formatedDate;
+    goToEmployeeEditForm(event: Event, employeeId: number) {
+      event.stopPropagation();
+      this.$location.path(`/ql-toa-hang/nhan-vien/sua/${employeeId}`);
     }
 
 		checkStatusEmployee(employee) {

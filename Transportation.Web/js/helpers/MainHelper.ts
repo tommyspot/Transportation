@@ -9,7 +9,7 @@ module Clarity.Helper {
 			this.authenticationService = new Clarity.Service.AuthenticationService($http, $cookieStore);
 		};
 
-    public getCurrentDateTimeString() {
+    getCurrentDateTimeString() {
       var d = new Date();
       var day, month, hh, mm, ss = '';
       var year = d.getFullYear();
@@ -54,7 +54,7 @@ module Clarity.Helper {
       return date;
     }
 
-    public formatDateTimeToString(dateStr: string) {
+    formatDateTimeToString(dateStr: string) {
       var d = new Date(dateStr);
       var day, month, hh, mm, ss = '';
       var year = d.getFullYear();
@@ -99,7 +99,7 @@ module Clarity.Helper {
       return date;
     }
 
-    public formatDateToString(date: Date) {
+    formatDateToString(date: Date) {
       var year = date.getFullYear();
       var month = (1 + date.getMonth()).toString();
       month = month.length > 1 ? month : '0' + month;
@@ -113,7 +113,7 @@ module Clarity.Helper {
       return month + '/' + day + '/' + year + ' ' + hour + ':' + minute + ':' + second;
     }
 
-    public convertToESTTimeZone(date: Date) {
+    convertToESTTimeZone(date: Date) {
       var offset = -8.0;
       var utc = date.getTime() + (date.getTimezoneOffset() * 60000);
       var ESTDate = new Date(utc + (3600000 * offset));
@@ -121,7 +121,7 @@ module Clarity.Helper {
       return ESTDate;
     }
 
-    public formatDateTimeDDMMYYYY(d: any) {
+    formatDateTimeDDMMYYYY(d: any) {
       if (!(d instanceof Date)) {
         d = new Date(date);
       }
@@ -135,7 +135,7 @@ module Clarity.Helper {
       return date;
     }
 
-		public formatDateTimeDDMMYYYYNumber(d: any) {
+		formatDateTimeDDMMYYYYNumber(d: any) {
       if (!(d instanceof Date)) {
         d = new Date(date);
       }
@@ -148,14 +148,6 @@ module Clarity.Helper {
       var date = day + month + year;
       return date;
     }
-
-		public formatCurrency(num) {
-			//if (changeFormatNumber && changeFormatNumber != '') {
-			//	this.currentCustomerOrder.unitPrice = parseInt(changeFormatNumber.replace(/,/g, ''));
-			//	this.unitPriceFormated = this.currentCustomerOrder.unitPrice.toLocaleString();
-			//}
-			return num.toLocaleString();
-		}
 
 		isUserHasGreaterOrEqualPermission(checkUserRole) {
       var userRole = this.authenticationService.getUserRole();
@@ -174,12 +166,38 @@ module Clarity.Helper {
       return false;
     }
 
-    public formatStringToDateTime(date: string) {
+    formatStringToDateTime(date: string) {
       var day = parseInt(date.split('/')[0]);
       var month = parseInt(date.split('/')[1]) - 1;
       var year = parseInt(date.split('/')[2]);
       return new Date(year, month, day);
     }
+
+    formatCurrency(object: Object, propertyName: string, formattedPropertyName: string) {
+      if (object[formattedPropertyName] && object[formattedPropertyName] != '') {
+        object[propertyName] = parseInt(object[formattedPropertyName].replace(/,/g, ''));
+        object[formattedPropertyName] = object[propertyName].toLocaleString();
+      }
+    }
+
+    initFormattedProperty(object: Object, propertyNames: Array<string>, formatSuffix: string) {
+      propertyNames.forEach((property: string) => {
+        if (object.hasOwnProperty(property)) {
+          object[`${property}${formatSuffix}`] = object[property].toLocaleString();
+        } 
+      });
+    }
+
+    getPropertyValue(objectList: Array<any>, searchPropertyName: string, searchByValue: string, propertyName: string): string {
+      if (objectList && objectList.length > 0) {
+        const filterObjects = objectList.filter((object: any) => {
+          return object[searchPropertyName] == searchByValue;
+        });
+        return filterObjects && filterObjects.length > 0 ? filterObjects[0][propertyName] : '';
+      }
+      return '';
+    }
+
   }
 
 }

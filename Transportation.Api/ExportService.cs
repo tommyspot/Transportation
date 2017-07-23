@@ -247,23 +247,23 @@ namespace Transportation.Api
             dt.Columns.Add("Nơi thanh toán", typeof(string));
             dt.Columns.Add("Ngày đi", typeof(string));
             dt.Columns.Add("Ngày đến", typeof(string));
+            dt.Columns.Add("Nơi đi", typeof(string));
+            dt.Columns.Add("Nơi đến", typeof(string));
             dt.Columns.Add("Số xe", typeof(string));
             dt.Columns.Add("Tài xế", typeof(string));
-            dt.Columns.Add("Ghi chú", typeof(string));
             dt.Columns.Add("Phí xe", typeof(double));
             dt.Columns.Add("Điện thoại + Dịch vụ", typeof(double));
-            dt.Columns.Add("Phí phát sinh", typeof(double));
-            dt.Columns.Add("Nguyên nhân phát sinh", typeof(string));
+            dt.Columns.Add("Tăng bo xe", typeof(double));
             dt.Columns.Add("Biên bản phạt", typeof(double));
             dt.Columns.Add("Diễn giải phụ", typeof(double));
+            dt.Columns.Add("Diễn giải phụ", typeof(string));
             dt.Columns.Add("Tiền xe", typeof(double));
             dt.Columns.Add("Sửa xe", typeof(double));
-            dt.Columns.Add("Tiền dâu", typeof(double));
+            dt.Columns.Add("Tiền dầu", typeof(double));
             dt.Columns.Add("Lượng", typeof(double));
             dt.Columns.Add("Dịch vụ", typeof(double));
             dt.Columns.Add("Hàng về", typeof(double));
             dt.Columns.Add("Trích 10%", typeof(double));
-            dt.Columns.Add("Khác", typeof(double));
 
             //Filter data by from/to date
             List<Wagon> wagons = ClarityDB.Instance.Wagons.ToList();
@@ -282,11 +282,11 @@ namespace Transportation.Api
             {
                 var wagon = filteredWagons[i];
                 dt.Rows.Add(new object[] { i + 1 , wagon.Code, wagon.PaymentDate , wagon.PaymentPlace, wagon.DepartDate,
-                                           wagon.ReturnDate, wagon.Truck.LicensePlate, wagon.Employee.FullName,
-                                           wagon.Notes, wagon.CostOfTruck, wagon.CostOfService, wagon.CostOfTangBoXe,
-                                           wagon.ReasonForPhiPhatXinh, wagon.CostOfPenalty, wagon.CostOfExtra,
+                                           wagon.ReturnDate, wagon.Departure, wagon.Destination, wagon.Truck.LicensePlate, wagon.Employee.FullName,
+                                           wagon.CostOfTruck, wagon.CostOfService, wagon.CostOfTangBoXe,
+                                           wagon.CostOfPenalty, wagon.CostOfExtra, wagon.TextOfExtra,
                                            wagon.PaymentOfTruck, wagon.PaymentOfRepairing, wagon.PaymentOfOil, wagon.PaymentOfLuong,
-                                           wagon.PaymentOfService, wagon.PaymentOfHangVe, wagon.PaymentOf10Percent, wagon.PaymentOfOthers});
+                                           wagon.PaymentOfService, wagon.PaymentOfHangVe, wagon.PaymentOf10Percent });
             }
 
             return dt;
@@ -302,17 +302,16 @@ namespace Transportation.Api
             dt.Columns.Add("Mã toa hàng", typeof(string));
             dt.Columns.Add("Mã quyết toán", typeof(string));
             dt.Columns.Add("Khách hàng", typeof(string));
-            dt.Columns.Add("Ngày phát sinh", typeof(string));
-            dt.Columns.Add("Nơi thanh toán", typeof(string));
-            dt.Columns.Add("Ngày giao dịch", typeof(string));
-            dt.Columns.Add("Nơi đi", typeof(string));
-            dt.Columns.Add("Nơi đến", typeof(string));
-            dt.Columns.Add("Đơn vị tính", typeof(string));
             dt.Columns.Add("Số lượng", typeof(double));
+            dt.Columns.Add("Nơi thanh toán", typeof(string));
+            dt.Columns.Add("Ngày thanh toán", typeof(string));
+            dt.Columns.Add("Nơi đến", typeof(string));
+            dt.Columns.Add("Lý do phát sinh", typeof(double));
+            dt.Columns.Add("Phí phát sinh", typeof(double));
+            dt.Columns.Add("Đơn vị tính", typeof(string));
             dt.Columns.Add("Đơn giá", typeof(double));
-            dt.Columns.Add("Tổng phí", typeof(double));
+            dt.Columns.Add("Thành tiền", typeof(double));
             dt.Columns.Add("Đã thanh toán", typeof(double));
-            dt.Columns.Add("Chiết khấu", typeof(double));
             dt.Columns.Add("Còn lại", typeof(double));
 
             //Filter data by from/to date
@@ -333,10 +332,10 @@ namespace Transportation.Api
             for (int i = 0; i < filteredWagonSettlements.Count; i++)
             {
                 var wagonSettlement = filteredWagonSettlements[i];
-                dt.Rows.Add(new object[] { i + 1 , wagonSettlement.WagonCode, wagonSettlement.Code , wagonSettlement.Customer.FullName, wagonSettlement.Date,
-                                           wagonSettlement.PaymentPlace, wagonSettlement.PaymentDate, wagonSettlement.Departure,
-                                           wagonSettlement.Destination, wagonSettlement.Unit, wagonSettlement.Quantity, wagonSettlement.UnitPrice,
-                                           wagonSettlement.TotalAmount, wagonSettlement.Payment, wagonSettlement.Discount, wagonSettlement.PaymentRemain});
+                dt.Rows.Add(new object[] { i + 1 , wagonSettlement.WagonID, wagonSettlement.Code , wagonSettlement.Customer.FullName, wagonSettlement.Quantity,
+                                           wagonSettlement.PaymentPlace, wagonSettlement.PaymentDate, wagonSettlement.Destination,
+                                            wagonSettlement.LyDoPhatSinh, wagonSettlement.PhiPhatSinh, wagonSettlement.Unit, wagonSettlement.UnitPrice,
+                                           wagonSettlement.TotalAmount, wagonSettlement.Payment, wagonSettlement.PaymentRemain});
             }
 
             return dt;

@@ -37,15 +37,16 @@
 								</th>
 								<th class="text-center">Mã KH</th>
 								<th class="col-sm-2 text-center">Tên KH</th>
-								<th class="col-sm-1 text-center">Số điện thoại</th>
-								<th class="col-sm-2 text-center">Số phát sinh</th>
-								<th class="col-sm-2 text-center">Tổng trả</th>
-								<th class="col-sm-2 text-center">Còn nợ lại</th>
+								<th class="main-width-column text-center">Số điện thoại</th>
+								<th class="main-width-column text-center">Số phát sinh</th>
+								<th class="main-width-column text-center">Tổng trả</th>
+								<th class="main-width-column text-center">Còn nợ lại</th>
+                <th class="edit-column-width text-center">Sửa</th>
 							</tr>
 						</thead>
 						<tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="7">
+                <td class="text-center" colspan="8">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
@@ -57,9 +58,12 @@
 								<td>{{customer.code}}</td>
 								<td>{{customer.fullName}}</td>
 								<td>{{customer.phoneNo}}</td>
-								<td class="text-right">{{customer.totalOwned.toLocaleString()}}</td>
-								<td class="text-right">{{customer.totalPay.toLocaleString()}}</td>
-								<td class="text-right">{{customer.totalDebt.toLocaleString()}}</td>
+								<td class="text-right">{{customer.totalOwned | currency: "" : 0}}</td>
+								<td class="text-right">{{customer.totalPay | currency: "" : 0}}</td>
+								<td class="text-right">{{customer.totalDebt | currency: "" : 0}}</td>
+                <td class="text-center edit-column" data-ng-click="viewModel.goToCustomerEditForm($event, customer.id)">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </td>
 							</tr>
 						</tbody>
 					</table>

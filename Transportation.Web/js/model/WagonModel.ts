@@ -9,6 +9,8 @@ module Clarity.Model {
     public paymentPlace: string;
     public departDate: string;
     public returnDate: string;
+    public departure: string;
+    public destination: string;
     public truckId: number;
     public employeeId: number;
 
@@ -17,6 +19,7 @@ module Clarity.Model {
     public costOfTangBoXe: number;
     public costOfPenalty: number;
     public costOfExtra: number;
+    public textOfExtra: string;
 
     public paymentOfTruck: number;
     public paymentOfRepairing: number;
@@ -25,30 +28,22 @@ module Clarity.Model {
     public paymentOfService: number;
     public paymentOfHangVe: number;
     public paymentOf10Percent: number;
-    public paymentOfOthers: number;
-		//public pay: number;
-		//public discount: number;
 
-		public costOfTruckFormated: string;
-    public costOfServiceFormated: string;
-    public costOfTangBoXeFormated: string;
-    public costOfPenaltyFormated: string;
-    public costOfExtraFormated: string;
+		public costOfTruckFormatted: string;
+    public costOfServiceFormatted: string;
+    public costOfTangBoXeFormatted: string;
+    public costOfPenaltyFormatted: string;
+    public costOfExtraFormatted: string;
 
-    public paymentOfTruckFormated: string;
-    public paymentOfRepairingFormated: string;
-    public paymentOfOilFormated: string;
-    public paymentOfLuongFormated: string;
-    public paymentOfServiceFormated: string;
-    public paymentOfHangVeFormated: string;
-    public paymentOf10PercentFormated: string;
-    public paymentOfOthersFormated: string;
-		//public payFormated: string;
-		//public discountFormated: string;
+    public paymentOfTruckFormatted: string;
+    public paymentOfRepairingFormatted: string;
+    public paymentOfOilFormatted: string;
+    public paymentOfLuongFormatted: string;
+    public paymentOfServiceFormatted: string;
+    public paymentOfHangVeFormatted: string;
+    public paymentOf10PercentFormatted: string;
 		
-		public reasonForPhiPhatXinh: string;
     public wagonSettlements: Array<Model.WagonSettlementModel>;
-    public notes: string;
     public isChecked: boolean;
   }
 }

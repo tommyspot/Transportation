@@ -7,12 +7,16 @@ declare var VERSION_NUMBER;
 
 module Clarity.Controller {
 	import service = Clarity.Service;
-	import helper = Clarity.Helper;
+  import helper = Clarity.Helper;
+
+  const formatSuffix = 'Formatted';
 
   export class CustomerManagementController {
-		public currentCustomer: Model.CustomerModel;
     public customerService: service.CustomerService;
-		public employeeService: service.EmployeeService;
+    public employeeService: service.EmployeeService;
+    public mainHelper: helper.MainHelper;
+
+    public currentCustomer: Model.CustomerModel;
     public customerList: Array<Model.CustomerModel>;
 		public customerListTmp: Array<Model.CustomerModel>;
     public numOfPages: number;
@@ -30,10 +34,12 @@ module Clarity.Controller {
       public $location: ng.ILocationService,
       public $window: ng.IWindowService,
       public $filter: ng.IFilterService,
-			private $routeParams: any) {
+      private $routeParams: any,
+      private $cookieStore: ng.ICookieStoreService) {
 
 			this.customerService = new service.CustomerService($http);
-			this.employeeService = new service.EmployeeService($http);
+      this.employeeService = new service.EmployeeService($http);
+      this.mainHelper = new helper.MainHelper($http, $cookieStore); 
       $scope.viewModel = this;
 			this.pageSize = 10;
       this.initCustomer();
@@ -54,17 +60,13 @@ module Clarity.Controller {
         if (this.$location.path() === '/ql-toa-hang/khach-hang/' + customerId) {
           this.customerService.getById(customerId, (data) => {
             this.currentCustomer = data;
-						this.currentCustomer.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
-						this.currentCustomer.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
-						this.currentCustomer.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
+            this.mainHelper.initFormattedProperty(this.currentCustomer, ['totalOwned', 'totalPay', 'totalDebt'], formatSuffix);
           }, null);
         } else if (this.$location.path() === '/ql-toa-hang/khach-hang/sua/' + customerId) {
           if (this.currentCustomer == null) {
             this.customerService.getById(customerId, (data) => {
               this.currentCustomer = data;
-							this.currentCustomer.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
-							this.currentCustomer.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
-							this.currentCustomer.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
+              this.mainHelper.initFormattedProperty(this.currentCustomer, ['totalOwned', 'totalPay', 'totalDebt'], formatSuffix);
             }, null);
           }
         }
@@ -80,7 +82,7 @@ module Clarity.Controller {
       this.customerService.getAll((results: Array<Model.CustomerModel>) => {
         this.customerList = results;
         this.customerList.sort(function (a: any, b: any) {
-          return a.id - b.id;
+          return b.id - a.id;
         });
         this.customerListTmp = this.customerList;
         this.initPagination();
@@ -175,40 +177,13 @@ module Clarity.Controller {
       this.$location.path('/ql-toa-hang/khach-hang/tao');
     }
 
-		setCurrencyFormat(changeFormatNumber, type) {
-			if (changeFormatNumber && changeFormatNumber != '') {
-				switch (type) {
-					case '0':
-						this.currentCustomer.totalOwned = parseInt(changeFormatNumber.replace(/,/g, ''));
-						this.currentCustomer.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
-						break;
-					case '1':
-						this.currentCustomer.totalPay = parseInt(changeFormatNumber.replace(/,/g, ''));
-						this.currentCustomer.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
-						break;
-					case '2':
-						this.currentCustomer.totalDebt = parseInt(changeFormatNumber.replace(/,/g, ''));
-						this.currentCustomer.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
-						break;
-				}
+    goToCustomerEditForm(event: Event, customerId: number) {
+      event.stopPropagation();
+      this.$location.path(`/ql-toa-hang/khach-hang/sua/${customerId}`);
+    }
 
-			} else if (changeFormatNumber == ''){
-				switch (type) {
-					case '0':
-						this.currentCustomer.totalOwned = 0;
-						this.currentCustomer.totalOwnedFormated = this.currentCustomer.totalOwned.toLocaleString();
-						break;
-					case '1':
-						this.currentCustomer.totalPay = 0;
-						this.currentCustomer.totalPayFormated = this.currentCustomer.totalPay.toLocaleString();
-						break;
-					case '2':
-						this.currentCustomer.totalDebt = 0;
-						this.currentCustomer.totalDebtFormated = this.currentCustomer.totalDebt.toLocaleString();
-						break;
-				}
-			}
-
+    formatCurrency(propertyName) {
+      this.mainHelper.formatCurrency(this.currentCustomer, propertyName, `${propertyName}${formatSuffix}`);
 		}
 
 	}

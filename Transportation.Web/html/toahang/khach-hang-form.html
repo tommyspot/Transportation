@@ -1,72 +1,108 @@
 ﻿<div id="customerFormSection" class="bootstrap form">
 	<div class="container">
-		<form name="customerForm">
-			<div class="row">
-				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="fullName">Họ tên <span class="required-symbol">*</span></label>
-						<span class="required-field" ng-if="customerForm.fullName.$touched && customerForm.fullName.$invalid">(Họ tên phải được nhập)</span>
-						<input id="fullName" name="fullName" class="form-control" type="text" data-ng-model="viewModel.currentCustomer.fullName" required>
-					</div>
-				</div>
-        <div class="col-sm-4">
-          <div class="form-group">
-            <label for="phoneNo">Số Điện Thoại <span class="required-symbol">*</span></label>
-            <span class="required-field" ng-if="customerForm.phoneNo.$touched && customerForm.phoneNo.$invalid">(SĐT phải được nhập hoặc SĐT không hợp lệ)</span>
-            <input id="phoneNo" name="phoneNo" class="form-control" pattern="[0-9]+" type="text" ng-model="viewModel.currentCustomer.phoneNo" required>
-          </div>
+		<form name="customerForm" class="form-horizontal">
+      <div class="form-group">
+        <div class="col-sm-12">
+          <button class="btn btn-default" data-ng-class="{'main-btn': !customerForm.$invalid}"
+              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/khach-hang/tao'"
+              data-ng-click="viewModel.createCustomer(viewModel.currentCustomer)" data-ng-disabled="customerForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Lưu</span>
+          </button>
+
+          <button class="btn btn-default" data-ng-class="{'main-btn': !customerForm.$invalid}"
+              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/khach-hang/sua/' + viewModel.currentCustomer.id"
+              data-ng-click="viewModel.updateCustomer(viewModel.currentCustomer)" data-ng-disabled="customerForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Cập nhật</span>
+          </button>
+
+          <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-toa-hang/khach-hang')">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span>Hủy</span>
+          </button>
         </div>
-        <div class="col-sm-4">
-          <div class="form-group">
-            <label for="type">Xếp loại</label>
-            <select id="type" class="form-control" data-ng-model="viewModel.currentCustomer.type">
-              <option value="">--Chọn loại khách hàng--</option>
-              <option value="A">A</option>
-              <option value="B">B</option>
-            </select>
-          </div>
+      </div>
+
+      <div class="form-group margin-top-20">
+        <label for="fullName" class="col-sm-2 control-label">Họ tên <span class="required-symbol">*</span></label>
+        <div class="col-sm-4" data-ng-class="{'has-error': customerForm.fullName.$touched && customerForm.fullName.$invalid}">
+          <input id="fullName" name="fullName" class="form-control" type="text"
+                 data-ng-model="viewModel.currentCustomer.fullName" required />
         </div>
-			</div>
-
-			<div class="row">
-				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="totalOwned">Số Phát Sinh</label>
-						<input id="totalOwned" name="mobile" class="form-control" type="text" maxlength="15" ng-model="viewModel.currentCustomer.totalOwnedFormated" data-ng-change="viewModel.setCurrencyFormat(viewModel.currentCustomer.totalOwnedFormated,'0')">
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="totalPay">Tổng trả</label>
-						<input id="totalPay" name="totalPay" class="form-control" type="text" maxlength="15" ng-model="viewModel.currentCustomer.totalPayFormated" data-ng-change="viewModel.setCurrencyFormat(viewModel.currentCustomer.totalPayFormated,'1')">
-					</div>
-				</div>
-        <div class="col-sm-4">
-          <div class="form-group">
-            <label for="totalDebt">Còn nợ lại</label>
-            <input id="totalDebt" name="totalDebt" class="form-control" type="text" maxlength="15" ng-model="viewModel.currentCustomer.totalDebtFormated" data-ng-change="viewModel.setCurrencyFormat(viewModel.currentCustomer.totalDebtFormated,'2')">
-          </div>
+        <div class="col-sm-4 validate-error">
+          <span class="required-field" data-ng-if="customerForm.fullName.$touched && customerForm.fullName.$invalid">
+            Họ tên phải được nhập</span>
         </div>
-			</div>
+      </div>
+      <div class="form-group">
+        <label for="phoneNo" class="col-sm-2 control-label">Số điện thoại <span class="required-symbol">*</span></label>
+        <div class="col-sm-4" data-ng-class="{'has-error': customerForm.phoneNo.$touched && customerForm.phoneNo.$invalid}">
+          <input id="phoneNo" name="phoneNo" class="form-control" pattern="[0-9]+" type="text"
+                 data-ng-model="viewModel.currentCustomer.phoneNo" required />
+        </div>
+        <div class="col-sm-4 validate-error">
+          <span class="required-field" data-ng-if="customerForm.phoneNo.$touched && customerForm.phoneNo.$invalid">
+            SĐT phải được nhập hoặc SĐT không hợp lệ</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="type" class="col-sm-2 control-label">Xếp loại</label>
+        <div class="col-sm-4">
+          <select id="type" name="type" class="form-control" data-ng-model="viewModel.currentCustomer.type">
+            <option value="">--Chọn loại khách hàng--</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="totalOwned" class="col-sm-2 control-label">Số phát sinh</label>
+        <div class="col-sm-4">
+          <input id="totalOwned" name="totalOwned" class="form-control" type="text" maxlength="15"
+                 data-ng-model="viewModel.currentCustomer.totalOwnedFormatted"
+                 data-ng-change="viewModel.formatCurrency('totalOwned')" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="totalPay" class="col-sm-2 control-label">Tổng trả</label>
+        <div class="col-sm-4">
+          <input id="totalPay" name="totalPay" class="form-control" type="text" maxlength="15"
+                 data-ng-model="viewModel.currentCustomer.totalPayFormatted"
+                 data-ng-change="viewModel.formatCurrency('totalPay')" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="totalDebt" class="col-sm-2 control-label">Còn nợ lại</label>
+        <div class="col-sm-4">
+          <input id="totalDebt" name="totalDebt" class="form-control" type="text" maxlength="15"
+                 data-ng-model="viewModel.currentCustomer.totalDebtFormatted"
+                 data-ng-change="viewModel.formatCurrency('totalDebt')" />
+        </div>
+      </div>
 
-			<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/khach-hang/tao'"
-							data-ng-click="viewModel.createCustomer(viewModel.currentCustomer)" data-ng-disabled="customerForm.$invalid">
-				<span class="glyphicon glyphicon-ok"></span>
-				<span>Lưu</span>
-			</button>
+      <div class="form-group">
+        <div class="col-sm-12">
+          <button class="btn btn-default" data-ng-class="{'main-btn': !customerForm.$invalid}"
+                  data-ng-if="viewModel.$location.path() === '/ql-toa-hang/khach-hang/tao'"
+                  data-ng-click="viewModel.createCustomer(viewModel.currentCustomer)" data-ng-disabled="customerForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Lưu</span>
+          </button>
 
-			<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/khach-hang/sua/' + viewModel.currentCustomer.id"
-							data-ng-click="viewModel.updateCustomer(viewModel.currentCustomer)" data-ng-disabled="customerForm.$invalid">
-				<span class="glyphicon glyphicon-ok"></span>
-				<span>Cập nhật</span>
-			</button>
+          <button class="btn btn-default" data-ng-class="{'main-btn': !customerForm.$invalid}"
+                  data-ng-if="viewModel.$location.path() === '/ql-toa-hang/khach-hang/sua/' + viewModel.currentCustomer.id"
+                  data-ng-click="viewModel.updateCustomer(viewModel.currentCustomer)" data-ng-disabled="customerForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Cập nhật</span>
+          </button>
 
-			<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/khach-hang')">
-				<span class="glyphicon glyphicon-remove"></span>
-				<span>Hủy</span>
-			</button>
-
+          <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-toa-hang/khach-hang')">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span>Hủy</span>
+          </button>
+        </div>
+      </div>
 		</form>
 	</div>
-
 </div>

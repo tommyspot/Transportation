@@ -24,6 +24,10 @@ namespace Transportation
         [Required]
         public string ReturnDate { get; set; }
         [Required]
+        public string Departure { get; set; }
+        [Required]
+        public string Destination { get; set; }
+        [Required]
         public long TruckID { get; set; }
         public virtual Truck Truck { get; set; }
         [Required]
@@ -35,6 +39,7 @@ namespace Transportation
         public long CostOfTangBoXe { get; set; }
         public long CostOfPenalty { get; set; }
         public long CostOfExtra { get; set; }
+        public string TextOfExtra { get; set; }
         public long PaymentOfTruck { get; set; }
         public long PaymentOfRepairing { get; set; }
         public long PaymentOfOil { get; set; }
@@ -42,9 +47,6 @@ namespace Transportation
         public long PaymentOfService { get; set; }
         public long PaymentOfHangVe { get; set; }
         public long PaymentOf10Percent { get; set; }
-        public long PaymentOfOthers { get; set; }
-		public string ReasonForPhiPhatXinh { get; set; }
-		public string Notes { get; set; }
 
         public Wagon() {
             WagonSetlements = new Collection<WagonSettlement>();
@@ -54,21 +56,23 @@ namespace Transportation
         {
             JObject json = new JObject();
             json["id"] = ID;
-
             json["code"] = Code;
-            json["departDate"] = DepartDate;
-            json["returnDate"] = ReturnDate;
-            json["truckId"] = TruckID;
-            json["employeeId"] = EmployeeID;
 
             json["paymentDate"] = PaymentDate;
             json["paymentPlace"] = PaymentPlace;
+            json["departDate"] = DepartDate;
+            json["returnDate"] = ReturnDate;
+            json["departure"] = Departure;
+            json["destination"] = Destination;
+            json["truckId"] = TruckID;
+            json["employeeId"] = EmployeeID;
 
             json["costOfTruck"] = CostOfTruck;
             json["costOfService"] = CostOfService;
             json["costOfTangBoXe"] = CostOfTangBoXe;
             json["costOfPenalty"] = CostOfPenalty;
             json["costOfExtra"] = CostOfExtra;
+            json["textOfExtra"] = TextOfExtra;
 
             json["paymentOfTruck"] = PaymentOfTruck;
             json["paymentOfRepairing"] = PaymentOfRepairing;
@@ -77,11 +81,8 @@ namespace Transportation
             json["paymentOfService"] = PaymentOfService;
             json["paymentOfHangVe"] = PaymentOfHangVe;
             json["paymentOf10Percent"] = PaymentOf10Percent;
-            json["paymentOfOthers"] = PaymentOfOthers;
+            
             json["wagonSettlements"] = BuildJsonArray(WagonSetlements);
-			json["reasonForPhiPhatXinh"] = ReasonForPhiPhatXinh;
-			json["notes"] = Notes;
-
             return json;
         }
 
@@ -100,6 +101,8 @@ namespace Transportation
             Code = json.Value<string>("code");
             DepartDate = json.Value<string>("departDate");
             ReturnDate = json.Value<string>("returnDate");
+            Departure = json.Value<string>("departure");
+            Destination = json.Value<string>("destination");
             TruckID = json.Value<long>("truckId");
             EmployeeID = json.Value<long>("employeeId");
 
@@ -111,6 +114,7 @@ namespace Transportation
             CostOfTangBoXe = json.Value<long>("costOfTangBoXe");
             CostOfPenalty = json.Value<long>("costOfPenalty");
             CostOfExtra = json.Value<long>("costOfExtra");
+            TextOfExtra = json.Value<string>("textOfExtra");
 
             PaymentOfTruck = json.Value<long>("paymentOfTruck");
             PaymentOfRepairing = json.Value<long>("paymentOfRepairing");
@@ -119,10 +123,6 @@ namespace Transportation
             PaymentOfService = json.Value<long>("paymentOfService");
             PaymentOfHangVe = json.Value<long>("paymentOfHangVe");
             PaymentOf10Percent = json.Value<long>("paymentOf10Percent");
-            PaymentOfOthers = json.Value<long>("paymentOfOthers");
-
-			ReasonForPhiPhatXinh = json.Value<string>("reasonForPhiPhatXinh");
-			Notes = json.Value<string>("notes");
         }
 
         private JArray BuildJsonArray(Collection<WagonSettlement> wagonSettlements)

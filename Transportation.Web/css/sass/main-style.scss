@@ -5,6 +5,7 @@
 
 $transport-color-1: #34495E;
 $transport-color-2: #C0392B;
+$transport-color-3: #dddddd;
 
 /*Apply Bootstrap Framework*/
 div.bootstrap {
@@ -355,6 +356,13 @@ div.bootstrap {
     }
   }
 
+  /*FORM HORIZONTAL*/
+  .form-horizontal{
+    .control-label{
+      text-align: left;
+    }
+  }
+
   .company-image-section {
     margin-top: 4px;
 
@@ -476,11 +484,11 @@ div.bootstrap {
     }
 
     .manage-box.nv-box {
-      background-color: #3498db;
+      background-color: #95a5a6;
     }
 
     .manage-box.kh-box {
-      background-color: #95a5a6;
+      background-color: #16a085;
     }
 
     .manage-box.th-box {
@@ -538,7 +546,7 @@ div.bootstrap {
     }
   }
 
-  #wagonFormSection {
+  /*#wagonFormSection {
     form {
       color: $transport-color-1;
       border: 1px solid $transport-color-1;
@@ -612,15 +620,16 @@ div.bootstrap {
         margin-bottom: 8px;
       }
     }
-  }
+  }*/
 
   .form-detail {
-    border: 1px solid $transport-color-1;
+    border: 1px solid $transport-color-3;
     margin-left: 0px;
     margin-right: 0px;
     margin-bottom: 10px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    padding: 0px 15px;
   }
 
   .ui-select-2 {
@@ -723,8 +732,55 @@ div.bootstrap {
     width: 70px;
   }
 
+  .stt-width{
+    width:70px;
+  }
+
+  .stt-width-min{
+    width:50px;
+  }
+
+  .main-width-column{
+    width: 120px;
+  }
+
+  .select-padding-decrease{
+    padding: 2px;
+  }
+  
+  .td-padding-decrease{
+    padding: 8px 6px;
+  }
+
+  .td-width-date{
+    width: 130px;
+  }
+
+  .delete-width{
+    width: 50px;
+  }
+
+  .edit-column-width{
+    width: 70px;
+  }
+
+  .edit-column{
+    &:hover{
+      color: $transport-color-2;
+    }
+  }
+
   .padding-right-8{
     padding-right: 8px;
+  }
+
+  .no-bold{
+    font-weight: normal;
+  }
+
+  .validate-error{
+    height: 34px;
+    line-height: 34px;
   }
 
   .required-symbol {

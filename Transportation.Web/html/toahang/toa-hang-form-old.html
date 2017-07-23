@@ -1,0 +1,382 @@
+﻿<div id="wagonFormSection" class="bootstrap">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<form name="wagonForm">
+					<ul class="nav nav-tabs" ng-init="tab = 1">
+						<li ng-class="{'active': tab === 1}"><a data-toggle="tab" data-ng-click="tab = 1">Thông tin</a></li>
+						<li ng-class="{'active': tab === 2}"><a data-toggle="tab" data-ng-click="tab = 2">Đơn hàng</a></li>
+						<li ng-class="{'active': tab === 3}"><a data-toggle="tab" data-ng-click="tab = 3">Chi phí</a></li>
+						<li ng-class="{'active': tab === 4}"><a data-toggle="tab" data-ng-click="tab = 4">Thanh toán với công ty</a></li>
+					</ul>
+
+					<div class="tab-content">
+						<!--TAB 1-->
+						<div class="tab-pane fade" ng-class="{'in active': tab === 1}" data-ng-show="tab === 1">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="paymentDate">Ngày thanh toán <span class="required-symbol">*</span></label>
+										<span class="required-field" ng-if="wagonForm.paymentDate.$touched && wagonForm.paymentDate.$invalid">(Ngày thanh toán phải được nhập)</span>
+                    <datepicker class="date-picker" date-format="dd/MM/yyyy">
+                      <input id="paymentDate" class="form-control" name="paymentDate" type="text" ng-model="viewModel.currentWagon.paymentDate" required>
+                    </datepicker>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="paymentPlace">Nơi thanh toán <span class="required-symbol">*</span></label>
+										<span class="required-field" ng-if="wagonForm.paymentPlace.$touched && wagonForm.paymentPlace.$invalid">(Nơi thanh toán phải được nhập)</span>
+										<select id="paymentPlace" name="paymentPlace" class="form-control" ng-model="viewModel.currentWagon.paymentPlace" required>
+											<option value="" data-placeholder="true">--Chọn nơi thanh toán--</option>
+											<option value="Công ty">Công ty</option>
+											<option value="Mỹ Tường">Mỹ Tường</option>
+											<option value="Kiên Giang">Kiên Giang</option>
+											<option value="Cam Ranh">Cam Ranh</option>
+											<option value="Cà Ná">Cà Ná</option>
+										</select>
+									</div>
+								</div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="departDate">Ngày đi <span class="required-symbol">*</span></label>
+                    <span class="required-field" ng-if="wagonForm.departDate.$touched && wagonForm.departDate.$invalid">(Ngày đi phải được nhập)</span>
+                    <datepicker class="date-picker" date-format="dd/MM/yyyy">
+                      <input id="departDate" class="form-control" name="departDate" type="text" ng-model="viewModel.currentWagon.departDate" required>
+                    </datepicker>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="returnDate">Ngày đến <span class="required-symbol">*</span></label>
+                    <span class="required-field" ng-if="wagonForm.returnDate.$touched && wagonForm.returnDate.$invalid">(Ngày đến phải được nhập)</span>
+                    <datepicker class="date-picker" date-format="dd/MM/yyyy">
+                      <input id="returnDate" class="form-control" name="returnDate" type="text" ng-model="viewModel.currentWagon.returnDate" required>
+                    </datepicker>
+                  </div>
+                </div>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="truckId">Số xe <span class="required-symbol">*</span></label>
+										<select ui-select2 id="truckId" class="form-control ui-select-2" data-ng-model="viewModel.currentWagon.truckId" data-ng-change="viewModel.getWagonCode()">
+											<option value="">--Chọn số xe --</option>
+											<option ng-repeat="truck in viewModel.truckList" value="{{truck.id}}">{{truck.licensePlate}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="employeeId">Tài xế <span class="required-symbol">*</span></label>
+										<select ui-select2 id="employeeId" class="form-control ui-select-2" data-ng-model="viewModel.currentWagon.employeeId">
+											<option value="">--Chọn tài xế--</option>
+											<option ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
+										</select>
+									</div>
+								</div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="departure">Nơi đi <span class="required-symbol">*</span></label>
+                    <input id="departure" name="departure" class="form-control" type="text" ng-model="viewModel.currentWagon.departure" required />
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="destination">Nơi đến <span class="required-symbol">*</span></label>
+                    <input id="destination" name="destination" class="form-control" type="text" ng-model="viewModel.currentWagon.destination" required />
+                  </div>
+                </div>
+							</div>
+						</div>
+
+						<!--TAB 2-->
+						<div class="tab-pane fade" ng-class="{'in active': tab === 2}" data-ng-show="tab === 2">
+							<div class="row">
+								<div class="col-sm-8">
+									<div class="row margin-bottom-15">
+										<div class="col-sm-3">
+											<button type="button" class="btn btn-default" data-ng-click="viewModel.createWagonSettlement(viewModel.currentWagon)">
+												<span class="glyphicon glyphicon-plus"></span>
+												<span class="hidden-xs">Tạo đơn hàng</span>
+											</button>
+										</div>
+									</div>
+
+									<div class="wagonSettlement" data-ng-repeat="wagonSettlement in viewModel.currentWagon.wagonSettlements">
+										<div class="row">
+											<div class="col-sm-2 col-xs-3">
+												<div class="form-group">
+													<label class="label-dh" for="wagonSettlementCustomerId-{{$index}}">Đơn hàng {{$index + 1}}</label>
+												</div>
+											</div>
+											<div class="col-sm-6 col-xs-5">
+												<div class="form-group">
+													<select ui-select2 id="wagonSettlementCustomerId-{{$index}}" class="form-control ui-select-2" data-ng-model="wagonSettlement.customerOrderId"
+																	data-ng-change="viewModel.bindDataCustomerOrderTowagonSettlement(wagonSettlement, wagonSettlement.customerOrderId)">
+														<option value="">--Chọn đơn hàng--</option>
+														<option ng-repeat="customerOrder in viewModel.customerOrderList | filter: viewModel.search | filterDate: viewModel.searchDate" value="{{customerOrder.id}}">
+															{{customerOrder.customerName}}_{{customerOrder.customerPhone}}_{{customerOrder.quantity}}
+														</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-sm-3 col-xs-4">
+												<button class="btn btn-default" data-ng-if="viewModel.showEditWagonSettlement(wagonSettlement)"
+																data-toggle="modal" data-target="#wagonSettlementModal-{{$index}}">
+													<span class="glyphicon glyphicon-pencil"></span> <span>Sửa</span>
+												</button>
+												<button class="btn btn-default" data-ng-click="viewModel.deleteWagonSettlement($index)">
+													<span class="glyphicon glyphicon-trash"></span> <span>Xóa</span>
+												</button>
+											</div>
+										</div>
+										<!--MODAL-->
+										<div class="row">
+											<div class="modal fade" id="wagonSettlementModal-{{$index}}" tabindex="-1" role="dialog">
+												<div class="modal-dialog modal-lg" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close" data-ng-click="viewModel.resetWagonSettlement(wagonSettlement)">
+																<span aria-hidden="true">&times;</span>
+															</button>
+															<h4 class="modal-title" id="myModalLabel">Đơn hàng - {{wagonSettlement.formatedCustomerOrder}}</h4>
+														</div>
+														<div class="modal-body">
+															<div class="row">
+																<div class="col-sm-4">
+																	<div class="form-group">
+																		<label for="wagonSettlementQuantity-{{$index}}">Số lượng</label>
+																		<input id="wagonSettlementQuantity-{{$index}}" class="form-control" type="number" ng-model="wagonSettlement.quantity"
+																					 min="1" max="{{viewModel.getMaxQualityWagonSettlement(wagonSettlement)}}" data-ng-change="viewModel.onChangeWagonSettlementQuatity(wagonSettlement)" disabled="disabled" required>
+																	</div>
+																</div>
+																<div class="col-sm-4">
+																	<div class="form-group">
+																		<label for="wagonSettlementUnitPrice-{{$index}}">Đơn giá</label>
+																		<input id="wagonSettlementUnitPrice-{{$index}}" class="form-control" type="text" value="{{wagonSettlement.unitPrice.toLocaleString()}}" disabled="disabled">
+																	</div>
+																</div>
+																<div class="col-sm-4">
+																	<div class="form-group">
+																		<label for="wagonSettlementTotalAmount-{{$index}}">Thành tiền</label>
+																		<input id="wagonSettlementTotalAmount-{{$index}}" class="form-control" type="text" value="{{wagonSettlement.totalAmount.toLocaleString()}}" disabled="disabled">
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-sm-4">
+																	<div class="form-group">
+																		<label for="wagonSettlementUnit-{{$index}}">Đơn vị tính</label>
+																		<input id="wagonSettlementUnit-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.unit" disabled="disabled">
+																	</div>
+																</div>
+																<div class="col-sm-4">
+																	<div class="form-group">
+																		<label for="wagonSettlementDeparture-{{$index}}">Thanh toán</label>
+																		<input id="wagonSettlementDeparture-{{$index}}" class="form-control" type="text" maxlength="15" ng-model="wagonSettlement.paymentFormated" data-ng-change="viewModel.updateWagonSettlementPayment(wagonSettlement, wagonSettlement.paymentFormated, '')">
+																	</div>
+																</div>
+																<div class="col-sm-4">
+																	<div class="form-group">
+																		<label for="wagonSettlementDestination-{{$index}}">Chiết Khấu</label>
+																		<input id="wagonSettlementDestination-{{$index}}" class="form-control" type="text" maxlength="15" ng-model="wagonSettlement.discountFormated" data-ng-change="viewModel.updateWagonSettlementPayment(wagonSettlement, '', wagonSettlement.discountFormated)">
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-sm-4">
+																	<div class="form-group">
+																		<label for="wagonSettlementDeparture-{{$index}}">Nơi đi</label>
+																		<input id="wagonSettlementDeparture-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.departure" disabled="disabled">
+																	</div>
+																</div>
+																<div class="col-sm-4">
+																	<div class="form-group">
+																		<label for="wagonSettlementDestination-{{$index}}">Nơi đến</label>
+																		<input id="wagonSettlementDestination-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.destination" disabled="disabled">
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-sm-12">
+																	<div class="form-group">
+																		<label for="wagonSettlementNotes-{{$index}}">Ghi chú</label>
+																		<input id="wagonSettlementNotes-{{$index}}" class="form-control" type="text" ng-model="wagonSettlement.notes">
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="viewModel.resetWagonSettlement(wagonSettlement)">Hủy</button>
+															<button type="button" class="btn btn-primary" data-dismiss="modal">Cập nhật</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-sm-4">
+									<div class="row">
+										<div class="col-sm-12 dhkh-title">
+											<h4><b>ĐƠN HÀNG CỦA KHÁCH</b></h4>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="form-group">
+                        <datepicker class="date-picker" date-format="dd/MM/yyyy">
+                          <input id="searchDate" class="form-control" name="searchDate" type="text" ng-model="viewModel.searchDate">
+                        </datepicker>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="form-group">
+												<select ui-select2 id="truckSearch" name="truckSearch" class="form-control ui-select-2" data-ng-model="viewModel.search.truckLicensePlate">
+													<option value="" selected="selected">--Chọn số xe --</option>
+													<option data-ng-repeat="truck in viewModel.truckListInCustomerOrder" value="{{truck.licensePlate}}">{{truck.licensePlate}}</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12">
+											<ul class="list-group">
+												<li class="list-group-item" data-ng-repeat="customerOrder in viewModel.customerOrderList | filter: viewModel.search | filterDate: viewModel.searchDate">
+													{{customerOrder.customerName}}_{{customerOrder.customerPhone}}_{{customerOrder.quantity}}
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!--TAB 3-->
+						<div class="tab-pane fade" ng-class="{'in active': tab === 3}" data-ng-show="tab === 3">
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="costOfTruck">Phí xe</label>
+										<input id="costOfTruck" name="costOfTruck" class="form-control" type="text" ng-model="viewModel.currentWagon.costOfTruckFormated" maxlength="15" data-ng-change="viewModel.setFormatedCurencyForWagon(viewModel.currentWagon.costOfTruckFormated,'0')">
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="costOfService">Điện thoại + Dịch vụ</label>
+										<input id="costOfService" name="costOfService" class="form-control" type="text" ng-model="viewModel.currentWagon.costOfServiceFormated" maxlength="15" data-ng-change="viewModel.setFormatedCurencyForWagon(viewModel.currentWagon.costOfServiceFormated,'1')">
+									</div>
+								</div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="costOfTangBoXe">Tăng bo xe</label>
+                    <input id="costOfTangBoXe" name="costOfTangBoXe" class="form-control" type="text" ng-model="viewModel.currentWagon.costOfTangBoXeFormated" maxlength="15" data-ng-change="viewModel.setFormatedCurencyForWagon(viewModel.currentWagon.costOfTangBoXeFormated,'2')">
+                  </div>
+                </div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="costOfPenalty">Biên bản phạt</label>
+										<input id="costOfPenalty" name="costOfPenalty" class="form-control" type="text" ng-model="viewModel.currentWagon.costOfPenaltyFormated" maxlength="15" data-ng-change="viewModel.setFormatedCurencyForWagon(viewModel.currentWagon.costOfPenaltyFormated,'3')">
+									</div>
+								</div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="textOfExtra">Diễn giải phụ (Lý do)</label>
+                    <input id="textOfExtra" name="textOfExtra" class="form-control" type="text" ng-model="viewModel.currentWagon.textOfExtra" />
+                  </div>
+                </div>
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="costOfExtra">Diễn giải phụ</label>
+										<input id="costOfExtra" name="costOfExtra" class="form-control" type="text" ng-model="viewModel.currentWagon.costOfExtraFormated" maxlength="15" data-ng-change="viewModel.setFormatedCurencyForWagon(viewModel.currentWagon.costOfExtraFormated,'4')">
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!--TAB 4-->
+						<div class="tab-pane fade in" ng-class="{'active': tab === 4}" data-ng-show="tab === 4">
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="paymentOfTruck">Tiền xe</label>
+										<input id="paymentOfTruck" name="paymentOfTruck" class="form-control" type="text" ng-model="viewModel.currentWagon.paymentOfTruckFormated" maxlength="15" data-ng-change="viewModel.setFormatedCurencyForWagon(viewModel.currentWagon.paymentOfTruckFormated,'5')">
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="paymentOfRepairing">Sửa xe</label>
+										<input id="paymentOfRepairing" name="paymentOfRepairing" class="form-control" type="text" ng-model="viewModel.currentWagon.paymentOfRepairingFormated" maxlength="15" data-ng-change="viewModel.setFormatedCurencyForWagon(viewModel.currentWagon.paymentOfRepairingFormated,'6')">
+									</div>
+								</div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="paymentOfOil">Tiền dầu</label>
+                    <input id="paymentOfOil" name="paymentOfOil" class="form-control" type="text" ng-model="viewModel.currentWagon.paymentOfOilFormated" maxlength="15" data-ng-change="viewModel.setFormatedCurencyForWagon(viewModel.currentWagon.paymentOfOilFormated,'7')">
+                  </div>
+                </div>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="paymentOfLuong">Lượng</label>
+										<input id="paymentOfLuong" name="paymentOfLuong" class="form-control" type="text" ng-model="viewModel.currentWagon.paymentOfLuongFormated" maxlength="15" data-ng-change="viewModel.setFormatedCurencyForWagon(viewModel.currentWagon.paymentOfLuongFormated,'8')">
+									</div>
+								</div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="paymentOfService">Dịch vụ</label>
+                    <input id="paymentOfService" name="paymentOfService" class="form-control" type="text" ng-model="viewModel.currentWagon.paymentOfServiceFormated" maxlength="15" data-ng-change="viewModel.setFormatedCurencyForWagon(viewModel.currentWagon.paymentOfServiceFormated,'9')">
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="paymentOfHangVe">Hàng về</label>
+                    <input id="paymentOfHangVe" name="paymentOfHangVe" class="form-control" type="text" ng-model="viewModel.currentWagon.paymentOfHangVeFormated" maxlength="15" data-ng-change="viewModel.setFormatedCurencyForWagon(viewModel.currentWagon.paymentOfHangVeFormated,'10')">
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="paymentOf10Percent">Trích 10%</label>
+                    <input id="paymentOf10Percent" name="paymentOf10Percent" class="form-control" type="number" ng-model="viewModel.currentWagon.paymentOf10Percent">
+                  </div>
+                </div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="row margin-top-20">
+			<div class="col-sm-12">
+				<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/toa-hang/tao'"
+								data-ng-click="viewModel.createWagon(viewModel.currentWagon)" data-ng-disabled="wagonForm.$invalid">
+					<span class="glyphicon glyphicon-ok"></span>
+					<span>Lưu</span>
+				</button>
+
+				<button class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-toa-hang/toa-hang/sua/' + viewModel.currentWagon.id"
+								data-ng-click="viewModel.updateWagon(viewModel.currentWagon)" data-ng-disabled="wagonForm.$invalid">
+					<span class="glyphicon glyphicon-ok"></span>
+					<span>Sửa</span>
+				</button>
+
+				<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/toa-hang')">
+					<span class="glyphicon glyphicon-remove"></span>
+					<span>Hủy</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

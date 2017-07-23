@@ -40,11 +40,12 @@
                 <th class="col-sm-2 text-center">Nhãn hiệu</th>
                 <th class="col-sm-2 text-center">Tải trọng</th>
                 <th class="col-sm-2 text-center">Còn lưu hành</th>
+                <th class="edit-column-width text-center">Sửa</th>
               </tr>
             </thead>
             <tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="6">
+                <td class="text-center" colspan="7">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
@@ -58,6 +59,9 @@
                 <td>{{truck.brand}}</td>
                 <td>{{truck.weight}} tấn</td>
                 <td>{{viewModel.checkStatusTruck(truck)}}</td>
+                <td class="text-center edit-column" data-ng-click="viewModel.goToTruckEditForm($event, truck.id)">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </td>
               </tr>
             </tbody>
           </table>

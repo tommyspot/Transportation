@@ -7,28 +7,32 @@ declare var VERSION_NUMBER;
 
 module Clarity.Controller {
 	import service = Clarity.Service;
-	import helper = Clarity.Helper;
+  import helper = Clarity.Helper;
+
+  const formatSuffix = 'Formatted';
 
   export class WagonSettlementManagementController {
-    public currentWagonSettlement: Model.WagonSettlementModel;
+    public mainHelper: helper.MainHelper;
+    public truckService: service.TruckService;
+    public customerService: service.CustomerService;
+    public wagonService: service.WagonService;
+    public paymentService: service.PaymentService;
+    public exportService: service.ExportService;
     public wagonSettlementService: service.WagonSettlementService;
 
+    public currentWagonSettlement: Model.WagonSettlementModel;
     public truckList: Array<Model.TruckModel>
-    public employeeList: Array<Model.EmployeeModel>
     public customerList: Array<Model.CustomerModel>
-		public paymentList: Array<Model.PaymentModel>
-    public truckService: service.TruckService;
-    public employeeService: service.EmployeeService;
-    public customerService: service.CustomerService;
-		public paymentService: service.PaymentService;
-    public exportService: service.ExportService;
-		public mainHelper: helper.MainHelper;
+    public paymentList: Array<Model.PaymentModel>
+    public wagonList: Array<Model.WagonModel>
 
     public wagonSettlementList: Array<Model.WagonSettlementModel>;
     public wagonSettlementListTmp: Array<Model.WagonSettlementModel>;
     public numOfPages: number;
     public currentPage: number;
     public pageSize: number;
+    public isLoading: boolean;
+    public todayFormat: string;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -40,8 +44,8 @@ module Clarity.Controller {
 
       this.wagonSettlementService = new service.WagonSettlementService($http);
       this.truckService = new service.TruckService($http);
-      this.employeeService = new service.EmployeeService($http);
       this.customerService = new service.CustomerService($http);
+      this.wagonService = new service.WagonService($http);
       this.exportService = new service.ExportService($http);
 			this.paymentService = new service.PaymentService($http);
 			this.mainHelper = new helper.MainHelper($http, $cookieStore);
@@ -61,25 +65,26 @@ module Clarity.Controller {
 
     initWagonSettlement() {
       var wagonId = this.$routeParams.wagonSettlement_id;
-			this.initEmployeeList();
-			this.initCustomerList();
+      this.initCustomerList();
+      this.initWagonList();
       if (wagonId) {
-				
         if (this.$location.path() === '/ql-toa-hang/quyet-toan/' + wagonId) {
           this.wagonSettlementService.getById(wagonId, (data) => {
             this.currentWagonSettlement = data;
             this.initPaymentList(this.currentWagonSettlement.code);
           }, null);
         } else if (this.$location.path() === '/ql-toa-hang/quyet-toan/sua/' + wagonId) {
-					
 					if (this.currentWagonSettlement == null) {
             this.wagonSettlementService.getById(wagonId, (data) => {
               this.currentWagonSettlement = data;
-              this.currentWagonSettlement.customerCode = this.getCustomerCode(this.currentWagonSettlement.customerId)
+              // init data
+              this.todayFormat = new Date().toLocaleString();
+              this.mainHelper.initFormattedProperty(this.currentWagonSettlement, ['unitPrice'], formatSuffix);
+              this.currentWagonSettlement.paymentDate = '';
+              this.currentWagonSettlement.paymentFormatted = '';
             }, null);
           }
 				}
-
 			} else {
         if (this.$location.path() === '/ql-toa-hang/quyet-toan') {
           this.initWagonSettlementList();
@@ -88,25 +93,27 @@ module Clarity.Controller {
     }
 
     initWagonSettlementList() {
+      this.isLoading = true;
       this.wagonSettlementService.getAll((results: Array<Model.WagonSettlementModel>) => {
         this.wagonSettlementList = results;
         this.wagonSettlementList.sort(function (a: any, b: any) {
-          return a.id - b.id;
+          return b.id - a.id;
         });
         this.wagonSettlementListTmp = this.wagonSettlementList;
         this.initPagination();
-      }, null);
-    }
-
-		initEmployeeList() {
-      this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
-        this.employeeList = results;
+        this.isLoading = false;
       }, null);
     }
 
 		initCustomerList() {
       this.customerService.getAll((results: Array<Model.CustomerModel>) => {
         this.customerList = results;
+      }, null);
+    }
+
+    initWagonList() {
+      this.wagonService.getAll((results: Array<Model.WagonModel>) => {
+        this.wagonList = results;
       }, null);
     }
 
@@ -160,34 +167,21 @@ module Clarity.Controller {
       }
     }
 
-		getCustomerCode(id) {
-			if (this.customerList) {
-				for (var i = 0; i < this.customerList.length; i++) {
-					var customer = this.customerList[i];
-					if (customer.id === id) {
-						return customer.code;
-					}
-				}
-			} else {
-				this.customerService.getAll((results: Array<Model.CustomerModel>) => {
-					this.customerList = results;
-					for (var i = 0; i < this.customerList.length; i++) {
-						var customer = this.customerList[i];
-						if (customer.id === id) {
-							return customer.code;
-						}
-					}
-				}, null);
-			}
+		updateNewPayment() {
+      this.mainHelper.formatCurrency(this.currentWagonSettlement, 'newPayment', `newPayment${formatSuffix}`);
+    }
 
-			return '';
-		}
+    getCustomerName(customerId: string): string {
+      return this.mainHelper.getPropertyValue(this.customerList, 'id', customerId, 'fullName');
+    }
 
-		updateNewPayment(newPayment) {
-			if (newPayment && newPayment != '') {
-				this.currentWagonSettlement.newPayment = parseInt(newPayment.replace(/,/g, ''));
-				this.currentWagonSettlement.newPaymentFormated = this.currentWagonSettlement.newPayment.toLocaleString();
-			}
-		}
+    getWagonCode(wagonId: string): string {
+      return this.mainHelper.getPropertyValue(this.wagonList, 'id', wagonId, 'code');
+    }
+
+    goToWagonSettlementEditForm(event: Event, wagonSettlementId: number) {
+      event.stopPropagation();
+      this.$location.path('/ql-toa-hang/quyet-toan/sua/' + wagonSettlementId);
+    }
 	}
 }

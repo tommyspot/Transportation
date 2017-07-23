@@ -13,7 +13,7 @@
         </span>
       </div>
       <div class="col-sm-3">
-        <input class="form-control" type="text" data-ng-model="searchText" placeholder="Search" />
+        <input class="form-control" type="text" data-ng-model="searchText" placeholder="Tìm kiếm nhanh" />
       </div>
     </div>
 
@@ -23,25 +23,32 @@
           <table class="table table-hover table-bordered">
             <thead>
               <tr>
-                <th class="align-center">Ngày Phát Sinh</th>
-								<th class="align-center hidden-xs">Mã Toa hàng</th>
-								<th class="align-center hidden-xs">Mã Khách hàng</th>
-                <th class="align-center hidden-xs">Tổng Phí</th>
-                <th class="align-center hidden-xs">Đã Thanh Toán</th>
-								<th class="align-center hidden-xs">Còn Lại</th>
-								<th class="align-center hidden-xs">Nợ?</th>
+								<th class="text-center">Mã toa hàng</th>
+								<th class="text-center">Tên khách hàng</th>
+                <th class="text-center">Tổng phí</th>
+                <th class="text-center">Đã thanh toán</th>
+								<th class="text-center">Còn lại</th>
+								<th class="text-center">Nợ?</th>
+                <th class="edit-column-width text-center">Sửa</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="pointer" data-ng-repeat="wagonSettlement in viewModel.getWagonSettlementListOnPage()"
+              <tr data-ng-if="viewModel.isLoading">
+                <td class="text-center" colspan="7">
+                  <i class="fa fa-spinner fa-spin"></i>
+                </td>
+              </tr>
+              <tr data-ng-if="!viewModel.isLoading" class="pointer" data-ng-repeat="wagonSettlement in viewModel.getWagonSettlementListOnPage()"
                   data-ng-click="viewModel.$location.path('/ql-toa-hang/quyet-toan/' + wagonSettlement.id)">
-								<td class="align-center">{{wagonSettlement.date}}</td>
-								<td class="align-center hidden-xs">{{wagonSettlement.wagonCode}}</td>
-								<td class="align-center hidden-xs">{{viewModel.getCustomerCode(wagonSettlement.customerId)}}</td>
-                <td class="align-center hidden-xs">{{wagonSettlement.totalAmount.toLocaleString()}}</td>
-								<td class="align-center hidden-xs">{{wagonSettlement.payment.toLocaleString()}}</td>
-								<td class="align-center hidden-xs">{{wagonSettlement.paymentRemain.toLocaleString()}}</td>
-								<td class="align-center hidden-xs">{{wagonSettlement.paymentStatus}}</td>
+								<td>{{viewModel.getWagonCode(wagonSettlement.wagonId)}}</td>
+								<td>{{viewModel.getCustomerName(wagonSettlement.customerId)}}</td>
+                <td class="text-right">{{wagonSettlement.quantity * wagonSettlement.unitPrice | currency: "" : 0}}</td>
+								<td class="text-right">{{wagonSettlement.payment | currency: "" : 0}}</td>
+								<td class="text-right">{{wagonSettlement.paymentRemain| currency: "" : 0}}</td>
+								<td>{{wagonSettlement.paymentStatus}}</td>
+                <td class="text-center edit-column" data-ng-click="viewModel.goToWagonSettlementEditForm($event, wagonSettlement.id)">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </td>
               </tr>
             </tbody>
           </table>

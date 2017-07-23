@@ -1,42 +1,125 @@
 ﻿<div id="employeeInfo" class="bootstrap">
 	<div class="container">
-		<div class="row">
-			<div class="col-sm-3">
-				<img class="avatar" src="/img/logo.gif" style="width: 100%" />
-			</div>
-			<div class="col-sm-9">
-				<div class="list-group-item user-info">
-					<h2 class="text-center title-name">{{viewModel.currentEmployee.fullName}}</h2>
-          <p><span class="bold-text">Điện thoại:</span> <span>{{viewModel.currentEmployee.mobile}}</span></p>
-					<p><span class="bold-text">CMND:</span> <span>{{viewModel.currentEmployee.cardId}}</span></p>
-					<p><span class="bold-text">Địa chỉ:</span> <span>{{viewModel.currentEmployee.address}}</span></p>
-          <p><span class="bold-text">Chức vụ:</span> <span>{{viewModel.currentEmployee.title}}</span></p>
-          <p><span class="bold-text">Ngày bắt đầu làm việc:</span> <span>{{viewModel.currentEmployee.startDate}}</span></p>
+    <div class="form-detail">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2 class="text-center">NHÂN VIÊN - {{viewModel.currentEmployee.fullName}}</h2>
+        </div>
+      </div>
+      <div class="row margin-top-20">
+        <div class="col-sm-3">
+          <p class="bold-text">Điện thoại:</p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentEmployee.mobile}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">CMND:</p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentEmployee.cardId}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">Địa chỉ:</p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentEmployee.address}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">Chức vụ:</p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentEmployee.title}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">Ngày bắt đầu làm việc:</p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentEmployee.startDate}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">Hạng GPLX:</p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentEmployee.driverLicenseRank}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">Nơi cấp GPLX:</p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentEmployee.driverLicenseAddress}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">Số GPLX:</p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentEmployee.driverLicenseId}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">Ngày cấp GPLX:</p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentEmployee.driverLicenseDate}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">Ngày hết hạn GPLX:</p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentEmployee.driverLicenseExpirationDate}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">Vi phạm:</p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentEmployee.violation}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">Ghi chú:</p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentEmployee.notes}}</p>
+        </div>
+      </div>
+    </div>
 
-					<p><span class="bold-text">Hạng GPLX:</span> <span>{{viewModel.currentEmployee.driverLicenseRank}}</span></p>
-          <p><span class="bold-text">Nơi cấp GPLX:</span> <span>{{viewModel.currentEmployee.driverLicenseAddress}}</span></p>
-					<p><span class="bold-text">Số GPLX:</span> <span>{{viewModel.currentEmployee.driverLicenseId}}</span></p>
-					<p><span class="bold-text">Ngày cấp GPLX:</span> <span>{{viewModel.currentEmployee.driverLicenseDate}}</span></p>
-					<p><span class="bold-text">Ngày hết hạn GPLX:</span> <span>{{viewModel.currentEmployee.driverLicenseExpirationDate}}</span></p>
-					
-					<p><span class="bold-text">Vi phạm:</span> <span>{{viewModel.currentEmployee.violation}}</span></p>
-					<p><span class="bold-text">Ghi chú:</span> <span>{{viewModel.currentEmployee.notes}}</span></p>
+		<div class="row margin-top-20">
+			<div class="col-sm-12">
+				<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien')">
+					<span class="glyphicon glyphicon-arrow-left"></span>
+					<span>Quay lại</span>
+				</button>
 
-					<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien')">
-						<span class="glyphicon glyphicon-arrow-left"></span>
-						<span>Quay lại</span>
-					</button>
+				<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien/sua/' + viewModel.currentEmployee.id)">
+					<span class="glyphicon glyphicon-pencil"></span>
+					<span>Sửa nhân viên</span>
+				</button>
 
-					<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien/sua/' + viewModel.currentEmployee.id)">
-						<span class="glyphicon glyphicon-pencil"></span>
-						<span>Sửa nhân viên</span>
-					</button>
-
-					<button class="btn btn-default negative-btn" data-ng-click="viewModel.removeEmployeeInDetail(viewModel.currentEmployee)">
-						<span class="glyphicon glyphicon-trash"></span>
-						<span>Xóa nhân viên</span>
-					</button>
-				</div>
+				<button class="btn btn-default negative-btn" data-ng-click="viewModel.removeEmployeeInDetail(viewModel.currentEmployee)">
+					<span class="glyphicon glyphicon-trash"></span>
+					<span>Xóa nhân viên</span>
+				</button>
 			</div>
 		</div>
 	</div>

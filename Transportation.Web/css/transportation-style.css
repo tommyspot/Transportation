@@ -5578,7 +5578,83 @@ div.bootstrap {
   /*BANNER*/
   /*PAGING*/
   /*TABLE*/
-  /*BREADCRUMB*/ }
+  /*BREADCRUMB*/
+  /*FORM HORIZONTAL*/
+  /*#wagonFormSection {
+    form {
+      color: $transport-color-1;
+      border: 1px solid $transport-color-1;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+
+      .nav-tabs {
+        border-bottom: 1px solid $transport-color-1;
+      }
+
+      .tab-content {
+        height: 360px;
+        overflow-y: auto;
+        padding-top: 20px;
+
+        .row {
+          margin-left: 0px;
+          margin-right: 0px;
+        }
+      }
+
+      .nav-tabs > li > a {
+        color: $transport-color-1;
+        border-radius: 0px;
+
+        &:hover {
+          cursor: default;
+        }
+      }
+
+      .nav-tabs > li:first-child > a {
+        border-top-left-radius: 10px;
+      }
+
+      .nav-tabs > li.active > a {
+        color: #FFFFFF;
+        background-color: $transport-color-2;
+        border: 1px solid $transport-color-2;
+        border-bottom-color: transparent;
+      }
+
+      .remove-section {
+        text-align: right;
+
+        .remove-wagonSettlement {
+          margin-left: 4px;
+        }
+      }
+
+      .wagonSettlement {
+        margin-bottom: 10px;
+
+        .customer-color {
+          color: $transport-color-2;
+        }
+
+        .background-customer-color {
+          background-color: $transport-color-2;
+          color: white;
+        }
+
+        .label-dh {
+          margin-top: 7px;
+          color: $transport-color-2;
+        }
+      }
+
+      .dhkh-title {
+        text-align: center;
+        color: $transport-color-2;
+        margin-bottom: 8px;
+      }
+    }
+  }*/ }
   #ng-app body {
     height: 100%;
     margin: 0;
@@ -5812,6 +5888,8 @@ div.bootstrap {
   #ng-app .date-picker ._720kb-datepicker-calendar-years-pagination a._720kb-datepicker-active {
     background-color: #34495E;
     color: #FFFFFF; }
+  #ng-app .form-horizontal .control-label {
+    text-align: left; }
   #ng-app .company-image-section {
     margin-top: 4px; }
     #ng-app .company-image-section .company-image-wrapper {
@@ -5882,9 +5960,9 @@ div.bootstrap {
   #ng-app #mainPage .manage-box.xe-box, #ng-app #qlToaHangPage .manage-box.xe-box, #ng-app #qlGarage .manage-box.xe-box {
     background-color: #2C3E50; }
   #ng-app #mainPage .manage-box.nv-box, #ng-app #qlToaHangPage .manage-box.nv-box, #ng-app #qlGarage .manage-box.nv-box {
-    background-color: #3498db; }
-  #ng-app #mainPage .manage-box.kh-box, #ng-app #qlToaHangPage .manage-box.kh-box, #ng-app #qlGarage .manage-box.kh-box {
     background-color: #95a5a6; }
+  #ng-app #mainPage .manage-box.kh-box, #ng-app #qlToaHangPage .manage-box.kh-box, #ng-app #qlGarage .manage-box.kh-box {
+    background-color: #16a085; }
   #ng-app #mainPage .manage-box.th-box, #ng-app #qlToaHangPage .manage-box.th-box, #ng-app #qlGarage .manage-box.th-box {
     background-color: #f1c40f; }
   #ng-app #mainPage .manage-box.qt-box, #ng-app #qlToaHangPage .manage-box.qt-box, #ng-app #qlGarage .manage-box.qt-box {
@@ -5915,57 +5993,14 @@ div.bootstrap {
     margin-bottom: 20px; }
   #ng-app .view-page .fa-spin {
     font-size: 24px; }
-  #ng-app #wagonFormSection form {
-    color: #34495E;
-    border: 1px solid #34495E;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px; }
-    #ng-app #wagonFormSection form .nav-tabs {
-      border-bottom: 1px solid #34495E; }
-    #ng-app #wagonFormSection form .tab-content {
-      height: 360px;
-      overflow-y: auto;
-      padding-top: 20px; }
-      #ng-app #wagonFormSection form .tab-content .row {
-        margin-left: 0px;
-        margin-right: 0px; }
-    #ng-app #wagonFormSection form .nav-tabs > li > a {
-      color: #34495E;
-      border-radius: 0px; }
-      #ng-app #wagonFormSection form .nav-tabs > li > a:hover {
-        cursor: default; }
-    #ng-app #wagonFormSection form .nav-tabs > li:first-child > a {
-      border-top-left-radius: 10px; }
-    #ng-app #wagonFormSection form .nav-tabs > li.active > a {
-      color: #FFFFFF;
-      background-color: #C0392B;
-      border: 1px solid #C0392B;
-      border-bottom-color: transparent; }
-    #ng-app #wagonFormSection form .remove-section {
-      text-align: right; }
-      #ng-app #wagonFormSection form .remove-section .remove-wagonSettlement {
-        margin-left: 4px; }
-    #ng-app #wagonFormSection form .wagonSettlement {
-      margin-bottom: 10px; }
-      #ng-app #wagonFormSection form .wagonSettlement .customer-color {
-        color: #C0392B; }
-      #ng-app #wagonFormSection form .wagonSettlement .background-customer-color {
-        background-color: #C0392B;
-        color: white; }
-      #ng-app #wagonFormSection form .wagonSettlement .label-dh {
-        margin-top: 7px;
-        color: #C0392B; }
-    #ng-app #wagonFormSection form .dhkh-title {
-      text-align: center;
-      color: #C0392B;
-      margin-bottom: 8px; }
   #ng-app .form-detail {
-    border: 1px solid #34495E;
+    border: 1px solid #dddddd;
     margin-left: 0px;
     margin-right: 0px;
     margin-bottom: 10px;
     border-top-left-radius: 10px;
-    border-top-right-radius: 10px; }
+    border-top-right-radius: 10px;
+    padding: 0px 15px; }
   #ng-app .ui-select-2 {
     border: none;
     padding: 0;
@@ -6023,8 +6058,31 @@ div.bootstrap {
     border-top: 2px solid #000000; }
   #ng-app .checkbox-width {
     width: 70px; }
+  #ng-app .stt-width {
+    width: 70px; }
+  #ng-app .stt-width-min {
+    width: 50px; }
+  #ng-app .main-width-column {
+    width: 120px; }
+  #ng-app .select-padding-decrease {
+    padding: 2px; }
+  #ng-app .td-padding-decrease {
+    padding: 8px 6px; }
+  #ng-app .td-width-date {
+    width: 130px; }
+  #ng-app .delete-width {
+    width: 50px; }
+  #ng-app .edit-column-width {
+    width: 70px; }
+  #ng-app .edit-column:hover {
+    color: #C0392B; }
   #ng-app .padding-right-8 {
     padding-right: 8px; }
+  #ng-app .no-bold {
+    font-weight: normal; }
+  #ng-app .validate-error {
+    height: 34px;
+    line-height: 34px; }
   #ng-app .required-symbol {
     color: #C0392B; }
   #ng-app .required-field {
