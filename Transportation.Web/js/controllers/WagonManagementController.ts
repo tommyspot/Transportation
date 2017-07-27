@@ -104,7 +104,7 @@ module Clarity.Controller {
       this.wagonService.getAll((results: Array<Model.WagonModel>) => {
         this.wagonList = results;
         this.wagonList.sort(function (a: any, b: any) {
-          return a.id - b.id;
+          return b.id - a.id;
         });
 				for (var i = 0; i < this.wagonList.length; i++) {
 					var currentWagon = this.wagonList[i];

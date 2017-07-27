@@ -1,47 +1,71 @@
 ﻿<div id="orderFormSection" class="bootstrap form">
 	<div class="container">
-		<form id="orderForm" name="orderForm">
-			<div class="row">
-        <div class="col-sm-3">
-          <div class="form-group">
-            <label for="licensePlate">Số xe <span class="required-symbol">*</span></label>
-            <span class="required-field" ng-if="orderForm.licensePlate.$touched && orderForm.licensePlate.$invalid">(Số xe phải được nhập)</span>
-            <input id="licensePlate" name="licensePlate" class="form-control" type="text" ng-model="viewModel.currentOrder.licensePlate" required>
-          </div>
+		<form name="orderForm" class="form-horizontal">
+      <div class="form-group">
+        <div class="col-sm-12">
+          <button type="submit" form="orderForm" class="btn btn-default" data-ng-class="{'main-btn': !orderForm.$invalid}"
+              data-ng-if="viewModel.$location.path() === '/ql-garage/ban-hang/tao'"
+              data-ng-click="viewModel.createOrder(viewModel.currentOrder)" data-ng-disabled="orderForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Lưu</span>
+          </button>
+
+          <button type="submit" form="orderForm" class="btn btn-default" data-ng-class="{'main-btn': !orderForm.$invalid}"
+              data-ng-if="viewModel.$location.path() === '/ql-garage/ban-hang/sua/' + viewModel.currentOrder.id"
+              data-ng-click="viewModel.updateOrder(viewModel.currentOrder)" data-ng-disabled="orderForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Cập nhật</span>
+          </button>
+
+          <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-garage/ban-hang')">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span>Hủy</span>
+          </button>
         </div>
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="customerName">Tên khách hàng</label>
-						<input id="customerName" name="customerName" class="form-control" type="text" ng-model="viewModel.currentOrder.customerName">
-					</div>
-				</div>
-        <div class="col-sm-6">
-          <div class="form-group">
-            <label for="address">Địa chỉ</label>
-            <input id="address" name="address" class="form-control" type="text" ng-model="viewModel.currentOrder.address">
-          </div>
+      </div>
+
+      <div class="form-group margin-top-20">
+        <label for="licensePlate" class="col-sm-2 control-label">Số xe <span class="required-symbol">*</span></label>
+        <div class="col-sm-4" data-ng-class="{'has-error': orderForm.licensePlate.$touched && orderForm.licensePlate.$invalid}">
+          <input id="licensePlate" name="licensePlate" class="form-control" type="text"
+                 data-ng-model="viewModel.currentOrder.licensePlate" required>
         </div>
-			</div>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="form-group">
-            <label for="date">Ngày</label>
-            <datepicker class="date-picker" date-format="dd/MM/yyyy" date-set="{{viewModel.todayFormat}}">
-              <input id="date" class="form-control" name="date" type="text" ng-model="viewModel.currentOrder.date">
-            </datepicker>
-          </div>
+        <div class="col-sm-4 validate-error">
+          <span class="required-field" data-ng-if="orderForm.licensePlate.$touched && orderForm.licensePlate.$invalid">
+          Số xe phải được nhập</span>
         </div>
-        <div class="col-sm-9">
-          <div class="form-group">
-            <label for="totalAmount">Mô tả</label>
-            <input id="address" name="address" class="form-control" type="text" ng-model="viewModel.currentOrder.note">
-          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="customerName" class="col-sm-2 control-label">Tên khách hàng</label>
+        <div class="col-sm-4">
+          <input id="customerName" name="customerName" class="form-control" type="text" data-ng-model="viewModel.currentOrder.customerName">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="address" class="col-sm-2 control-label">Địa chỉ</label>
+        <div class="col-sm-4">
+          <input id="address" name="address" class="form-control" type="text" data-ng-model="viewModel.currentOrder.address">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="date" class="col-sm-2 control-label">Ngày</label>
+        <div class="col-sm-4">
+          <datepicker class="date-picker" date-format="dd/MM/yyyy" date-set="{{viewModel.todayFormat}}">
+            <input id="date" class="form-control" name="date" type="text" data-ng-model="viewModel.currentOrder.date">
+          </datepicker>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="note" class="col-sm-2 control-label">Mô tả</label>
+        <div class="col-sm-4">
+          <input id="note" name="note" class="form-control" type="text" data-ng-model="viewModel.currentOrder.note">
         </div>
       </div>
 
       <div class="row">
-        <div class="col-sm-6">
-          <button type="button" class="btn btn-default main-btn" data-ng-click="viewModel.addOrderDetail()">
+        <div class="col-sm-12 text-right">
+          <button type="button" class="btn btn-default minor-btn" data-ng-click="viewModel.addOrderDetail()">
             <span class="glyphicon glyphicon-plus"></span>
             <span class="hidden-xs">Bán hàng</span>
           </button>
@@ -121,21 +145,23 @@
       </div>
     </div>
 
-    <div class="row margin-bottom-20">
+    <div class="form-group">
       <div class="col-sm-12">
-        <button type="submit" form="orderForm" class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-garage/ban-hang/tao'"
+        <button type="submit" form="orderForm" class="btn btn-default" data-ng-class="{'main-btn': !orderForm.$invalid}"
+                data-ng-if="viewModel.$location.path() === '/ql-garage/ban-hang/tao'"
                 data-ng-click="viewModel.createOrder(viewModel.currentOrder)" data-ng-disabled="orderForm.$invalid">
           <span class="glyphicon glyphicon-ok"></span>
           <span>Lưu</span>
         </button>
 
-        <button type="submit" form="orderForm" class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-garage/ban-hang/sua/' + viewModel.currentOrder.id"
-                data-ng-click="viewModel.updateOrder(viewModel.currentOrder)" data-ng-disabled="orderForm.$invalid">
+        <button type="submit" form="orderForm" class="btn btn-default" data-ng-class="{'main-btn': !orderForm.$invalid}"
+            data-ng-if="viewModel.$location.path() === '/ql-garage/ban-hang/sua/' + viewModel.currentOrder.id"
+            data-ng-click="viewModel.updateOrder(viewModel.currentOrder)" data-ng-disabled="orderForm.$invalid">
           <span class="glyphicon glyphicon-ok"></span>
           <span>Cập nhật</span>
         </button>
 
-        <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/ban-hang')">
+        <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-garage/ban-hang')">
           <span class="glyphicon glyphicon-remove"></span>
           <span>Hủy</span>
         </button>

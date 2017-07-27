@@ -13,7 +13,6 @@ module Clarity.Controller {
 
   export class ReportManagementController {
     public exportService: service.ExportService;
-    public orderCustomerService: service.CustomerOrderService;
     public wagonService: service.WagonService;
     public wagonSettlementService: service.WagonSettlementService;
 
@@ -21,7 +20,6 @@ module Clarity.Controller {
     public isViewLoading: boolean;
     public fromDate: string;
     public toDate: string;
-    public filteredCustomerOrders: Array<model.CustomerOrderModel>;
     public wagonReport: model.WagonReportModel;
     public wagonSettlementReport: model.WagonSettlementReportModel;
 
@@ -34,10 +32,8 @@ module Clarity.Controller {
       private $routeParams: any, private $cookieStore: ng.ICookieStoreService) {
 
       this.exportService = new service.ExportService($http);
-      this.orderCustomerService = new service.CustomerOrderService($http);
       this.wagonService = new service.WagonService($http);
       this.wagonSettlementService = new service.WagonSettlementService($http);
-
       this.wagonReport = new model.WagonReportModel();
       this.wagonSettlementReport = new model.WagonSettlementReportModel();
       $scope.viewModel = this;
@@ -72,14 +68,6 @@ module Clarity.Controller {
       }, () => {
         this.isExportLoading = false;
       });
-    }
-
-    viewCustomerOrder() {
-      this.isViewLoading = true;
-      this.orderCustomerService.getCustomerOrdersByDate({ fromDate: this.fromDate, toDate: this.toDate }, (data) => {
-        this.isViewLoading = false;
-        this.filteredCustomerOrders = data;
-      }, null);
     }
 
     exportCustomerOrder() {

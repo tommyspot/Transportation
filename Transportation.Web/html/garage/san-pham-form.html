@@ -1,39 +1,45 @@
 ﻿<div id="productFormSection" class="bootstrap form">
 	<div class="container">
-		<form id="productForm" name="productForm">
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="name">Tên sản phẩm <span class="required-symbol">*</span></label>
-						<span class="required-field" ng-if="productForm.name.$touched && productForm.name.$invalid">(Tên sản phẩm phải được nhập)</span>
-						<input id="name" name="name" class="form-control" type="text" ng-model="viewModel.currentProduct.name" required>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="origin">Xuất xứ</label>
-						<input id="origin" name="origin" class="form-control" type="text" ng-model="viewModel.currentProduct.origin">
-					</div>
-				</div>
-			</div>
+		<form name="productForm" class="form-horizontal">
+      <div class="form-group margin-top-20">
+        <label for="name" class="col-sm-2 control-label">Tên sản phẩm <span class="required-symbol">*</span></label>
+        <div class="col-sm-4" data-ng-class="{'has-error': productForm.name.$touched && productForm.name.$invalid}">
+          <input id="name" name="name" class="form-control" type="text" data-ng-model="viewModel.currentProduct.name" required>
+        </div>
+        <div class="col-sm-4 validate-error">
+          <span class="required-field" data-ng-if="productForm.name.$touched && productForm.name.$invalid">
+            Tên sản phẩm phải được nhập</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="origin" class="col-sm-2 control-label">Xuất xứ</label>
+        <div class="col-sm-4">
+          <input id="origin" name="origin" class="form-control" type="text" data-ng-model="viewModel.currentProduct.origin">
+        </div>
+      </div>
+
+      <div class="form-group margin-top-20">
+        <div class="col-sm-12">
+          <button class="btn btn-default" data-ng-class="{'main-btn': !productForm.$invalid}"
+              data-ng-if="viewModel.$location.path() === '/ql-garage/san-pham/tao'"
+              data-ng-click="viewModel.createProduct(viewModel.currentProduct)" data-ng-disabled="productForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Lưu</span>
+          </button>
+
+          <button class="btn btn-default" data-ng-class="{'main-btn': !productForm.$invalid}"
+              data-ng-if="viewModel.$location.path() === '/ql-garage/san-pham/sua/' + viewModel.currentProduct.id"
+              data-ng-click="viewModel.updateProduct(viewModel.currentProduct)" data-ng-disabled="productForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Cập nhật</span>
+          </button>
+
+          <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-garage/san-pham')">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span>Hủy</span>
+          </button>
+        </div>
+      </div>
 		</form>
-
-		<button type="submit" form="productForm" class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-garage/san-pham/tao'"
-			data-ng-click="viewModel.createProduct(viewModel.currentProduct)" data-ng-disabled="productForm.$invalid">
-			<span class="glyphicon glyphicon-ok"></span>
-			<span>Lưu</span>
-		</button>
-
-		<button type="submit" form="productForm" class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-garage/san-pham/sua/' + viewModel.currentProduct.id"
-			data-ng-click="viewModel.updateProduct(viewModel.currentProduct)" data-ng-disabled="productForm.$invalid">
-			<span class="glyphicon glyphicon-ok"></span>
-			<span>Cập nhật</span>
-		</button>
-
-		<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/san-pham')">
-			<span class="glyphicon glyphicon-remove"></span>
-			<span>Hủy</span>
-		</button>
-
 	</div>
 </div>

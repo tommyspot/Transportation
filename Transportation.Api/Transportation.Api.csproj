@@ -100,7 +100,6 @@
     <Compile Include="InventoryService.cs" />
     <Compile Include="ProductService.cs" />
     <Compile Include="ExportToExcel\CreateExcelFile.cs" />
-    <Compile Include="CustomerOrderService.cs" />
     <Compile Include="ExportService.cs" />
     <Compile Include="CustomerService.cs" />
     <Compile Include="HelperService.cs" />

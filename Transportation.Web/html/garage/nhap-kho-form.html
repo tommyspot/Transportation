@@ -1,35 +1,59 @@
 ﻿<div id="inputOrderFormSection" class="bootstrap form">
-	<div class="container">
-		<form id="inputOrderForm" name="inputOrderForm">
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="vendor">Nhà cung cấp <span class="required-symbol">*</span></label>
-						<span class="required-field" ng-if="inputOrderForm.vendor.$touched && inputOrderForm.vendor.$invalid">(Nhà cung cấp phải được nhập)</span>
-						<input id="vendor" name="vendor" class="form-control" type="text" ng-model="viewModel.currentInputOrder.vendor" required>
-					</div>
-				</div>
-        <div class="col-sm-6">
-          <div class="form-group">
-            <label for="date">Ngày</label>
-            <datepicker class="date-picker" date-format="dd/MM/yyyy" date-set="{{viewModel.todayFormat}}">
-              <input id="date" class="form-control" name="date" type="text" ng-model="viewModel.currentInputOrder.date">
-            </datepicker>
-          </div>
+  <div class="container">
+    <form name="inputOrderForm" class="form-horizontal">
+      <div class="form-group">
+        <div class="col-sm-12">
+          <button class="btn btn-default" data-ng-class="{'main-btn': !inputOrderForm.$invalid}"
+                  data-ng-if="viewModel.$location.path() === '/ql-garage/nhap-kho/tao'"
+                  data-ng-click="viewModel.createInputOrder(viewModel.currentInputOrder)" data-ng-disabled="inputOrderForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Lưu</span>
+          </button>
+
+          <button class="btn btn-default positive-btn" data-ng-class="{'main-btn': !inputOrderForm.$invalid}"
+                  data-ng-if="viewModel.$location.path() === '/ql-garage/nhap-kho/sua/' + viewModel.currentInputOrder.id"
+                  data-ng-click="viewModel.updateInputOrder(viewModel.currentInputOrder)" data-ng-disabled="inputOrderForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Cập nhật</span>
+          </button>
+
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/nhap-kho')">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span>Hủy</span>
+          </button>
         </div>
-			</div>
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="form-group">
-            <label for="totalAmount">Tổng thành tiền</label>
-            <div class="form-control disabled">{{viewModel.currentInputOrder.totalAmount | currency: "" : 0}} </div>
-          </div>
+      </div>
+      <div class="form-group margin-top-20">
+        <label for="vendor" class="col-sm-2 control-label">Nhà cung cấp <span class="required-symbol">*</span></label>
+        <div class="col-sm-4" data-ng-class="{'has-error': inputOrderForm.vendor.$touched && inputOrderForm.vendor.$invalid}">
+          <input id="vendor" name="vendor" class="form-control" type="text" data-ng-model="viewModel.currentInputOrder.vendor" required>
+        </div>
+        <div class="col-sm-4 validate-error">
+          <span class="required-field" data-ng-if="inputOrderForm.vendor.$touched && inputOrderForm.vendor.$invalid">
+            Nhà cung cấp phải được nhập
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="date" class="col-sm-2 control-label">Ngày</label>
+        <div class="col-sm-4">
+          <datepicker class="date-picker" date-format="dd/MM/yyyy" date-set="{{viewModel.todayFormat}}">
+            <input id="date" name="date" class="form-control" type="text" ng-model="viewModel.currentInputOrder.date">
+          </datepicker>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Tổng thành tiền</label>
+        <div class="col-sm-4 text-middle-input bold-text">
+          {{viewModel.currentInputOrder.totalAmount | currency: "" : 0}}
         </div>
       </div>
 
       <div class="row">
-        <div class="col-sm-6">
-          <button type="button" class="btn btn-default main-btn" data-ng-click="viewModel.addProductInput()">
+        <div class="col-sm-12 text-right">
+          <button type="button" class="btn btn-default minor-btn" data-ng-click="viewModel.addProductInput()">
             <span class="glyphicon glyphicon-plus"></span>
             <span class="hidden-xs">Nhập hàng</span>
           </button>
@@ -42,35 +66,38 @@
             <table class="table table-hover table-bordered">
               <thead>
                 <tr>
-                  <th class="col-sm-1 align-center">STT</th>
-                  <th class="col-sm-3 align-center">Tên sản phẩm <span class="required-symbol">*</span></th>
-                  <th class="col-sm-1 align-center">Số lượng <span class="required-symbol">*</span></th>
-                  <th class="col-sm-2 align-center">Giá nhập <span class="required-symbol">*</span></th>
-                  <th class="col-sm-2 align-center">Thành tiền</th>
-                  <th class="col-sm-2 align-center">Giá bán</th>
-                  <th class="col-sm-1 align-center"></th>
+                  <th class="col-sm-1 text-center">STT</th>
+                  <th class="col-sm-3 text-center">Tên sản phẩm <span class="required-symbol">*</span></th>
+                  <th class="col-sm-1 text-center">Số lượng <span class="required-symbol">*</span></th>
+                  <th class="col-sm-2 text-center">Giá nhập <span class="required-symbol">*</span></th>
+                  <th class="col-sm-2 text-center">Thành tiền</th>
+                  <th class="col-sm-2 text-center">Giá bán</th>
+                  <th class="col-sm-1 text-center"></th>
                 </tr>
               </thead>
               <tbody>
                 <tr data-ng-repeat="productInput in viewModel.currentInputOrder.productInputs">
-                  <td class="align-center">{{$index + 1}}</td>
-                  <td class="align-center">
+                  <td class="text-center align-middle">{{$index + 1}}</td>
+                  <td>
                     <select ui-select2 class="form-control ui-select-2" data-ng-model="productInput.productId" required>
                       <option value="" selected="selected">--Chọn sản phẩm --</option>
                       <option data-ng-repeat="product in viewModel.productList" value="{{product.id}}">{{product.name}}</option>
                     </select>
                   </td>
-                  <td class="align-center">
-                    <input class="form-control" type="number" min="1" data-ng-model="productInput.quantity" data-ng-change="viewModel.updateTotalAmount()" required />
+                  <td class="text-center">
+                    <input class="form-control" type="number" min="1" data-ng-model="productInput.quantity"
+                           data-ng-change="viewModel.updateTotalAmount()" required />
                   </td>
-                  <td class="align-center">
-                    <input class="form-control" type="text" maxlength="15" ng-model="productInput.inputPriceFormated" data-ng-change="viewModel.setFormatedCurencyForProductInput(productInput, 0)" required />
+                  <td>
+                    <input class="form-control text-right" type="text" maxlength="15" data-ng-model="productInput.inputPriceFormatted"
+                           data-ng-change="viewModel.formatCurrency(productInput, 'inputPrice')" required />
                   </td>
-                  <td class="align-center align-middle">{{productInput.inputPrice * productInput.quantity | currency: "" : 0}}</td>
-                  <td class="align-center">
-                    <input class="form-control" type="text" maxlength="15" ng-model="productInput.salePriceFormated" data-ng-change="viewModel.setFormatedCurencyForProductInput(productInput, 1)" />
+                  <td class="text-right align-middle">{{productInput.quantity * productInput.inputPrice | currency: "" : 0}}</td>
+                  <td>
+                    <input class="form-control text-right" type="text" maxlength="15" data-ng-model="productInput.salePriceFormatted"
+                           data-ng-change="viewModel.formatCurrency(productInput, 'salePrice')" />
                   </td>
-                  <td class="align-center">
+                  <td class="text-center">
                     <button type="button" class="btn btn-default" data-ng-click="viewModel.deleteProductInput($index)">
                       <span class="glyphicon glyphicon-trash"></span> <span>Xóa</span>
                     </button>
@@ -81,24 +108,29 @@
           </div>
         </div>
       </div>
-		</form>
 
-		<button type="submit" form="inputOrderForm" class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-garage/nhap-kho/tao'"
-			data-ng-click="viewModel.createInputOrder(viewModel.currentInputOrder)" data-ng-disabled="inputOrderForm.$invalid">
-			<span class="glyphicon glyphicon-ok"></span>
-			<span>Lưu</span>
-		</button>
+      <div class="form-group margin-top-20">
+        <div class="col-sm-12">
+          <button class="btn btn-default" data-ng-class="{'main-btn': !inputOrderForm.$invalid}"
+                  data-ng-if="viewModel.$location.path() === '/ql-garage/nhap-kho/tao'"
+                  data-ng-click="viewModel.createInputOrder(viewModel.currentInputOrder)" data-ng-disabled="inputOrderForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Lưu</span>
+          </button>
 
-		<button type="submit" form="inputOrderForm" class="btn btn-default positive-btn" data-ng-if="viewModel.$location.path() === '/ql-garage/nhap-kho/sua/' + viewModel.currentInputOrder.id"
-			data-ng-click="viewModel.updateInputOrder(viewModel.currentInputOrder)" data-ng-disabled="inputOrderForm.$invalid">
-			<span class="glyphicon glyphicon-ok"></span>
-			<span>Cập nhật</span>
-		</button>
+          <button class="btn btn-default positive-btn" data-ng-class="{'main-btn': !inputOrderForm.$invalid}"
+                  data-ng-if="viewModel.$location.path() === '/ql-garage/nhap-kho/sua/' + viewModel.currentInputOrder.id"
+                  data-ng-click="viewModel.updateInputOrder(viewModel.currentInputOrder)" data-ng-disabled="inputOrderForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Cập nhật</span>
+          </button>
 
-		<button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/nhap-kho')">
-			<span class="glyphicon glyphicon-remove"></span>
-			<span>Hủy</span>
-		</button>
-
-	</div>
+          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/nhap-kho')">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span>Hủy</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>

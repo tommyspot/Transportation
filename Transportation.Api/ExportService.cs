@@ -46,13 +46,6 @@ namespace Transportation.Api
                     dt = BuildDataTableForCustomer();
                     fileName = "Baocao_KhachHang_" + DateTime.Now.ToString(formatStringDate);
                 }
-                else if (json.Value<int>("type") == (int)ExportType.OrderCustomer)
-                {
-                    DateTime fromDate = DateTime.ParseExact(json.Value<string>("fromDate"), formatDate, CultureInfo.InvariantCulture);
-                    DateTime toDate = DateTime.ParseExact(json.Value<string>("toDate"), formatDate, CultureInfo.InvariantCulture);
-                    dt = BuildDataTableForOrderCustomer(fromDate, toDate);
-                    fileName = "Baocao_DonHang_" + DateTime.Now.ToString(formatStringDate);
-                }
                 else if (json.Value<int>("type") == (int)ExportType.Wagon)
                 {
                     DateTime fromDate = DateTime.ParseExact(json.Value<string>("fromDate"), formatDate, CultureInfo.InvariantCulture);
@@ -189,52 +182,6 @@ namespace Transportation.Api
             return dt;
         }
 
-        private DataTable BuildDataTableForOrderCustomer(DateTime fromDate, DateTime toDate)
-        {
-            DataTable dt = new DataTable();
-            dt.TableName = "DonHang_" + DateTime.Now.ToString(formatStringDate);
-
-            //Add table headers going cell by cell.
-            dt.Columns.Add("STT", typeof(int));
-            dt.Columns.Add("Mã đơn hàng", typeof(string));
-            dt.Columns.Add("Tên khách hàng", typeof(string));
-            dt.Columns.Add("Số điện thoại", typeof(string));
-            dt.Columns.Add("Khu vực", typeof(string));
-            dt.Columns.Add("Nơi đi", typeof(string));
-            dt.Columns.Add("Nơi đến", typeof(string));
-            dt.Columns.Add("Ngày đi", typeof(string));
-            dt.Columns.Add("Ngày đến", typeof(string));
-            dt.Columns.Add("Đơn vị tính", typeof(string));
-            dt.Columns.Add("Số lượng", typeof(double));
-            dt.Columns.Add("Đơn giá", typeof(double));
-            dt.Columns.Add("Thành tiền", typeof(double));
-            dt.Columns.Add("Số xe", typeof(string));
-            dt.Columns.Add("Ghi chú", typeof(string));
-
-            //Filter data by from/to date
-            List<CustomerOrder> customerOrders = ClarityDB.Instance.CustomerOrders.ToList();
-            List<CustomerOrder> filteredCustomerOrders = new List<CustomerOrder>();
-            foreach (CustomerOrder customerOrder in customerOrders)
-            {
-                DateTime departDate = DateTime.ParseExact(customerOrder.DepartDate, formatDate, CultureInfo.InvariantCulture);
-                if (DateTime.Compare(departDate, fromDate) >= 0 && DateTime.Compare(departDate, toDate) <= 0)
-                {
-                    filteredCustomerOrders.Add(customerOrder);
-                }
-            }
-
-            //Binding data
-            for (int i = 0; i < filteredCustomerOrders.Count; i++)
-            {
-                var customerOrder = filteredCustomerOrders[i];
-                dt.Rows.Add(new object[] { i + 1 , customerOrder.Code, customerOrder.CustomerName , customerOrder.CustomerPhone, customerOrder.CustomerArea,
-                                           customerOrder.Departure, customerOrder.Destination, customerOrder.DepartDate, customerOrder.ReturnDate,
-                                           customerOrder.Unit, customerOrder.Quantity, customerOrder.UnitPrice, customerOrder.TotalPay,
-                                           String.IsNullOrEmpty(customerOrder.TruckID) ? "" : this.helperService.GetLicensePlate(Convert.ToInt32(customerOrder.TruckID)), customerOrder.Notes});
-            }
-            return dt;
-        }
-
         private DataTable BuildDataTableForWagon(DateTime fromDate, DateTime toDate)
         {
             DataTable dt = new DataTable();
@@ -255,8 +202,8 @@ namespace Transportation.Api
             dt.Columns.Add("Điện thoại + Dịch vụ", typeof(double));
             dt.Columns.Add("Tăng bo xe", typeof(double));
             dt.Columns.Add("Biên bản phạt", typeof(double));
-            dt.Columns.Add("Diễn giải phụ", typeof(double));
             dt.Columns.Add("Diễn giải phụ", typeof(string));
+            dt.Columns.Add("Phí diễn giải phụ", typeof(double));
             dt.Columns.Add("Tiền xe", typeof(double));
             dt.Columns.Add("Sửa xe", typeof(double));
             dt.Columns.Add("Tiền dầu", typeof(double));
@@ -284,7 +231,7 @@ namespace Transportation.Api
                 dt.Rows.Add(new object[] { i + 1 , wagon.Code, wagon.PaymentDate , wagon.PaymentPlace, wagon.DepartDate,
                                            wagon.ReturnDate, wagon.Departure, wagon.Destination, wagon.Truck.LicensePlate, wagon.Employee.FullName,
                                            wagon.CostOfTruck, wagon.CostOfService, wagon.CostOfTangBoXe,
-                                           wagon.CostOfPenalty, wagon.CostOfExtra, wagon.TextOfExtra,
+                                           wagon.CostOfPenalty, wagon.TextOfExtra, wagon.CostOfExtra, 
                                            wagon.PaymentOfTruck, wagon.PaymentOfRepairing, wagon.PaymentOfOil, wagon.PaymentOfLuong,
                                            wagon.PaymentOfService, wagon.PaymentOfHangVe, wagon.PaymentOf10Percent });
             }
@@ -306,7 +253,7 @@ namespace Transportation.Api
             dt.Columns.Add("Nơi thanh toán", typeof(string));
             dt.Columns.Add("Ngày thanh toán", typeof(string));
             dt.Columns.Add("Nơi đến", typeof(string));
-            dt.Columns.Add("Lý do phát sinh", typeof(double));
+            dt.Columns.Add("Lý do phát sinh", typeof(string));
             dt.Columns.Add("Phí phát sinh", typeof(double));
             dt.Columns.Add("Đơn vị tính", typeof(string));
             dt.Columns.Add("Đơn giá", typeof(double));

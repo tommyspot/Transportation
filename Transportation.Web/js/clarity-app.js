@@ -569,7 +569,6 @@ clarityApp.controller('MainController', Clarity.Controller.MainController);
 clarityApp.controller('EmployeeManagementController', Clarity.Controller.EmployeeManagementController);
 clarityApp.controller('TruckManagementController', Clarity.Controller.TruckManagementController);
 clarityApp.controller('CustomerManagementController', Clarity.Controller.CustomerManagementController);
-clarityApp.controller('CustomerOrderManagementController', Clarity.Controller.CustomerOrderManagementController);
 clarityApp.controller('WagonManagementController', Clarity.Controller.WagonManagementController);
 clarityApp.controller('WagonSettlementManagementController', Clarity.Controller.WagonSettlementManagementController);
 clarityApp.controller('ReportManagementController', Clarity.Controller.ReportManagementController);

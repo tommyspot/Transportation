@@ -7,7 +7,9 @@ declare var VERSION_NUMBER;
 
 module Clarity.Controller {
 	import service = Clarity.Service;
-	import helper = Clarity.Helper;
+  import helper = Clarity.Helper;
+
+  const formatSuffix = 'Formatted';
 
   export class InputOrderManagementController {
     public currentInputOrder: Model.InputOrderModel;
@@ -86,7 +88,7 @@ module Clarity.Controller {
       this.inputOrderService.getAll((results: Array<Model.InputOrderModel>) => {
         this.inputOrderList = results;
         this.inputOrderList.sort(function (a: any, b: any) {
-          return a.id - b.id;
+          return b.id - a.id;
         });
         this.inputOrderListTmp = this.inputOrderList;
         this.initPagination();
@@ -103,8 +105,7 @@ module Clarity.Controller {
     initFormatPriceForProductInputs(inputOrder: Model.InputOrderModel) {
       if (inputOrder && inputOrder.productInputs && inputOrder.productInputs.length > 0) {
         for (var productInput of inputOrder.productInputs) {
-          productInput.inputPriceFormated = productInput.inputPrice != 0 ? productInput.inputPrice.toLocaleString() : '';
-          productInput.salePriceFormated = productInput.salePrice != 0 ? productInput.salePrice.toLocaleString() : '';
+          this.mainHelper.initFormattedProperty(productInput, ['inputPrice', 'salePrice'], formatSuffix);
         }
       }
     }
@@ -156,7 +157,7 @@ module Clarity.Controller {
     }
 
     removeOrders() {
-      var confirmDialog = this.$window.confirm('Bạn có muốn xóa kho hàng?');
+      var confirmDialog = this.$window.confirm('Bạn có muốn xóa những kho hàng được chọn?');
       if (confirmDialog) {
         for (let i = 0; i < this.inputOrderList.length; i++) {
           var product = this.inputOrderList[i];
@@ -170,7 +171,7 @@ module Clarity.Controller {
     }
 
     removeInputOrderInDetail(inputOrder: Model.InputOrderModel) {
-      var confirmDialog = this.$window.confirm('Bạn có muốn xóa kho hàng?');
+      var confirmDialog = this.$window.confirm('Bạn có muốn xóa kho hàng này?');
       if (confirmDialog) {
         this.inputOrderService.deleteEntity(inputOrder, (data) => {
           this.$location.path('/ql-garage/nhap-kho');
@@ -193,6 +194,11 @@ module Clarity.Controller {
 
     goToInputOrderForm() {
       this.$location.path('/ql-garage/nhap-kho/tao');
+    }
+
+    goToInputOrderEditForm(event: Event, inputOrderId: number) {
+      event.stopPropagation();
+      this.$location.path(`/ql-garage/nhap-kho/sua/${inputOrderId}`);
     }
 
     addProductInput() {
@@ -225,16 +231,10 @@ module Clarity.Controller {
       }
     }
 
-    setFormatedCurencyForProductInput(productInput: Model.ProductInputModel, type: number) {
-      if (type == 0) {
-        if (productInput.inputPriceFormated && productInput.inputPriceFormated != '') {
-          productInput.inputPrice = parseInt(productInput.inputPriceFormated.replace(/,/g, ''));
-          productInput.inputPriceFormated = productInput.inputPrice.toLocaleString();
-        }
+    formatCurrency(productInput: Model.ProductInputModel, propertyName: string) {
+      this.mainHelper.formatCurrency(productInput, propertyName, `${propertyName}${formatSuffix}`);
+      if (propertyName === 'inputPrice') {
         this.updateTotalAmount();
-      } else if (type == 1) {
-        productInput.salePrice = parseInt(productInput.salePriceFormated.replace(/,/g, ''));
-        productInput.salePriceFormated = productInput.salePrice.toLocaleString();
       }
     }
 

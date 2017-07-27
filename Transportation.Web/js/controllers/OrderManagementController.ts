@@ -9,6 +9,8 @@ module Clarity.Controller {
 	import service = Clarity.Service;
 	import helper = Clarity.Helper;
 
+  const formatSuffix = 'Formatted';
+
   export class OrderManagementController {
     public currentOrder: Model.OrderModel;
     public orderService: service.OrderService;
@@ -199,7 +201,7 @@ module Clarity.Controller {
     }
 
     removeOrders() {
-      var confirmDialog = this.$window.confirm('Bạn có muốn xóa đơn hàng?');
+      var confirmDialog = this.$window.confirm('Bạn có muốn xóa những đơn hàng được chọn?');
       if (confirmDialog) {
         for (let i = 0; i < this.orderList.length; i++) {
           var order = this.orderList[i];
@@ -214,7 +216,7 @@ module Clarity.Controller {
     }
 
     removeOrderInDetail(order: Model.OrderModel) {
-      var confirmDialog = this.$window.confirm('Bạn có muốn xóa đơn hàng?');
+      var confirmDialog = this.$window.confirm('Bạn có muốn xóa đơn hàng này?');
       if (confirmDialog) {
         order.status = false;
         this.orderService.changeOrderStatus(order, (data) => {
@@ -245,6 +247,11 @@ module Clarity.Controller {
 
     goToOrderForm() {
       this.$location.path('/ql-garage/ban-hang/tao');
+    }
+
+    goToOrderEditForm(event: Event, orderId: number) {
+      event.stopPropagation();
+      this.$location.path(`/ql-garage/ban-hang/sua/${orderId}`);
     }
 
     goToDeletedOrders() {
@@ -325,10 +332,7 @@ module Clarity.Controller {
     }
 
     setFormatedCurencyForOrderDetail(orderDetail: Model.OrderDetailModel) {
-      if (orderDetail.priceFormatted && orderDetail.priceFormatted != '') {
-        orderDetail.price = parseInt(orderDetail.priceFormatted.replace(/,/g, ''));
-        orderDetail.priceFormatted = orderDetail.price.toLocaleString();
-      }
+      this.mainHelper.formatCurrency(orderDetail, 'price', `price${formatSuffix}`);
       this.updateTotalAmount();
       this.updateNote();
     }

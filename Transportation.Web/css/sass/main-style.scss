@@ -719,6 +719,16 @@ div.bootstrap {
     }
   }
 
+  .minor-btn{
+    background-color: $transport-color-1;
+    border-color: $transport-color-1;
+    color: #FFFFFF;
+
+    &:hover{
+      opacity: 0.9;
+    }
+  }
+
   .hover:hover{
     cursor: pointer;
     color: $transport-color-2;
@@ -779,6 +789,11 @@ div.bootstrap {
   }
 
   .validate-error{
+    height: 34px;
+    line-height: 34px;
+  }
+
+  .text-middle-input{
     height: 34px;
     line-height: 34px;
   }

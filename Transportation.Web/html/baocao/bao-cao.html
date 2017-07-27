@@ -7,9 +7,8 @@
             <li ng-class="{'active': tab === 1}"><a data-toggle="tab" data-ng-click="tab = 1">Xe</a></li>
             <li ng-class="{'active': tab === 2}"><a data-toggle="tab" data-ng-click="tab = 2">Nhân viên</a></li>
             <li ng-class="{'active': tab === 3}"><a data-toggle="tab" data-ng-click="tab = 3">Khách hàng</a></li>
-            <li ng-class="{'active': tab === 4}"><a data-toggle="tab" data-ng-click="tab = 4">Đơn hàng của khách</a></li>
-            <li ng-class="{'active': tab === 5}"><a data-toggle="tab" data-ng-click="tab = 5">Toa hàng</a></li>
-            <li ng-class="{'active': tab === 6}"><a data-toggle="tab" data-ng-click="tab = 6">Quyết toán (Công nợ)</a></li>
+            <li ng-class="{'active': tab === 4}"><a data-toggle="tab" data-ng-click="tab = 4">Toa hàng</a></li>
+            <li ng-class="{'active': tab === 5}"><a data-toggle="tab" data-ng-click="tab = 5">Quyết toán (Công nợ)</a></li>
           </ul>
 
           <div class="tab-content">
@@ -50,63 +49,6 @@
 
             <!--TAB 4-->
             <div class="tab-pane fade in" ng-class="{'active': tab === 4}" data-ng-show="tab === 4">
-              <div class="row">
-                <div class="col-sm-2">
-                  <div class="form-group">
-                    <label for="fromDate">Từ ngày</label>
-                    <datepicker class="date-picker" date-format="dd/MM/yyyy">
-                      <input id="fromDate" class="form-control" name="fromDate" type="text" ng-model="viewModel.fromDate">
-                    </datepicker>
-                  </div>
-                </div>
-                <div class="col-sm-2">
-                  <div class="form-group">
-                    <label for="toDate">Đến ngày</label>
-                    <datepicker class="date-picker" date-format="dd/MM/yyyy">
-                      <input id="toDate" class="form-control" name="toDate" type="text" ng-model="viewModel.toDate">
-                    </datepicker>
-                  </div>
-                </div>
-                <div class="col-sm-8">
-                  <button class="btn btn-default download-btn from-to-date" data-ng-click="viewModel.viewCustomerOrder()"
-                          data-ng-disabled="viewModel.fromDate == null || viewModel.toDate == null">
-                    Xem <i data-ng-if="viewModel.isViewLoading" class="fa fa-spinner fa-pulse"></i>
-                  </button>
-                  <button class="btn btn-default download-btn from-to-date" data-ng-click="viewModel.exportCustomerOrder()"
-                          data-ng-disabled="viewModel.fromDate == null || viewModel.toDate == null">
-                    Tải về <i data-ng-if="viewModel.isExportLoading" class="fa fa-spinner fa-pulse"></i>
-                  </button>
-                </div>
-              </div>
-            
-              <div class="row" data-ng-if="viewModel.filteredCustomerOrders != null">
-                <div class="col-sm-12 table-responsive" data-ng-if="viewModel.filteredCustomerOrders.length > 0">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th class="align-center hidden-xs">Khu vực</th>
-                        <th class="align-center">Số lượng</th>
-                        <th class="align-center hidden-xs">Thành tiền</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr data-ng-repeat="customerOrder in viewModel.filteredCustomerOrders">
-                        <td class="align-center hidden-xs">{{customerOrder.customerArea}}</td>
-                        <td class="align-center">{{customerOrder.quantity | currency: "" : 0}}</td>
-                        <td class="align-center hidden-xs">{{customerOrder.totalPay | currency: "" : 0}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              
-                <div class="col-sm-12 no-data" data-ng-if="viewModel.filteredCustomerOrders.length ==0">
-                  <h5>Không có dữ liệu</h5>
-                </div>
-              </div>
-            </div>
-
-            <!--TAB 5-->
-            <div class="tab-pane fade in" ng-class="{'active': tab === 5}" data-ng-show="tab === 5">
               <div class="row">
                 <div class="col-sm-2">
                   <div class="form-group">
@@ -164,8 +106,8 @@
               </div>
             </div>
 
-            <!--TAB 6-->
-            <div class="tab-pane fade in" ng-class="{'active': tab === 6}" data-ng-show="tab === 6">
+            <!--TAB 5-->
+            <div class="tab-pane fade in" ng-class="{'active': tab === 5}" data-ng-show="tab === 5">
               <div class="row">
                 <div class="col-sm-2">
                   <div class="form-group">

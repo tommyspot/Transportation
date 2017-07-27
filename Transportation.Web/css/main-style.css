@@ -5435,6 +5435,12 @@ div.bootstrap {
     color: #FFFFFF; }
     #ng-app .main-btn:hover {
       opacity: 0.9; }
+  #ng-app .minor-btn {
+    background-color: #34495E;
+    border-color: #34495E;
+    color: #FFFFFF; }
+    #ng-app .minor-btn:hover {
+      opacity: 0.9; }
   #ng-app .hover:hover {
     cursor: pointer;
     color: #C0392B; }
@@ -5465,6 +5471,9 @@ div.bootstrap {
   #ng-app .no-bold {
     font-weight: normal; }
   #ng-app .validate-error {
+    height: 34px;
+    line-height: 34px; }
+  #ng-app .text-middle-input {
     height: 34px;
     line-height: 34px; }
   #ng-app .required-symbol {

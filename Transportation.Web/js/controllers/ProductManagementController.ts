@@ -127,7 +127,7 @@ module Clarity.Controller {
     }
 
     removeProducts() {
-      var confirmDialog = this.$window.confirm('Bạn có muốn xóa sản phẩm?');
+      var confirmDialog = this.$window.confirm('Bạn có muốn xóa những sản phẩm được chọn?');
       if (confirmDialog) {
         for (let i = 0; i < this.productList.length; i++) {
           var product = this.productList[i];
@@ -141,7 +141,7 @@ module Clarity.Controller {
     }
 
     removeProductInDetail(product: Model.ProductModel) {
-      var confirmDialog = this.$window.confirm('Bạn có muốn xóa sản phẩm?');
+      var confirmDialog = this.$window.confirm('Bạn có muốn xóa sản phẩm này?');
       if (confirmDialog) {
         this.productService.deleteEntity(product, (data) => {
           this.$location.path('/ql-garage/san-pham');
@@ -164,6 +164,11 @@ module Clarity.Controller {
 
     goToProductForm() {
       this.$location.path('/ql-garage/san-pham/tao');
+    }
+
+    goToProductEditForm(event: Event, productId: number) {
+      event.stopPropagation();
+      this.$location.path(`/ql-garage/san-pham/sua/${productId}`);
     }
 	}
 }

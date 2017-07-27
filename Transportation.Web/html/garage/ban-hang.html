@@ -39,17 +39,18 @@
 									<input id="checkAllProducts" type="checkbox" data-ng-model="viewModel.isCheckedAll"
 												 data-ng-change="viewModel.selectAllProductsOnPage()" />
 								</th>
-								<th>Số xe </th>
-								<th>Tên khách hàng</th>
-                <th class="text-right">Thành tiền</th>
-                <th class="text-right">Giảm giá (%)</th>
-                <th class="text-center">Ngày bán</th>
-                <th class="text-center">In</th>
+								<th class="col-sm-2 text-center">Số xe </th>
+								<th class="text-center">Tên khách hàng</th>
+                <th class="col-sm-2 text-center">Thành tiền</th>
+                <th class="col-sm-2 text-center">Giảm giá (%)</th>
+                <th class="col-sm-2 text-center">Ngày bán</th>
+                <th class="edit-column-width  text-center">In</th>
+                <th class="edit-column-width text-center">Sửa</th>
 							</tr>
 						</thead>
 						<tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="7">
+                <td class="text-center" colspan="8">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
@@ -64,6 +65,9 @@
                 <td class="text-right">{{order.saleOff}}</td>
                 <td class="text-center">{{order.date}}</td>
                 <td class="text-center hover" data-ng-click="viewModel.goToOrderPrintPage($event, order)"><i class="fa fa-print"></i></td>
+                <td class="text-center edit-column" data-ng-click="viewModel.goToOrderEditForm($event, order.id)">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </td>
 							</tr>
 						</tbody>
 					</table>

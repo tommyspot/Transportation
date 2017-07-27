@@ -31,20 +31,21 @@
 					<table class="table table-hover table-bordered">
 						<thead>
 							<tr>
-								<th class="text-center">
+								<th class="checkbox-width text-center">
 									<input id="checkAllProducts" type="checkbox" data-ng-model="viewModel.isCheckedAll"
 												 data-ng-change="viewModel.selectAllInputOrdersOnPage()" />
 								</th>
-								<th class="text-center">STT</th>
+								<th class="col-sm-1 text-center">STT</th>
 								<th class="text-center">Tên nhà cung cấp</th>
-                <th class="text-center">Số sản phẩm</th>
-                <th class="text-center">Thành tiền</th>
-                <th class="text-center">Ngày nhập hàng</th>
+                <th class="col-sm-2 text-center">Số sản phẩm</th>
+                <th class="col-sm-2 text-center">Thành tiền</th>
+                <th class="col-sm-2 text-center">Ngày nhập hàng</th>
+                <th class="edit-column-width text-center">Sửa</th>
 							</tr>
 						</thead>
 						<tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="6">
+                <td class="text-center" colspan="7">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
@@ -54,10 +55,13 @@
 									<input id="order-{{$index}}" type="checkbox" data-ng-model="inputOrder.isChecked" />
 								</td>
 								<td class="text-center">{{$index + 1}}</td>
-								<td class="text-center">{{inputOrder.vendor}}</td>
-                <td class="text-right">{{inputOrder.productInputs.length}}</td>
+								<td>{{inputOrder.vendor}}</td>
+                <td class="text-right">{{inputOrder.productInputs.length | currency: "" : 0}}</td>
                 <td class="text-right">{{inputOrder.totalAmount | currency: "" : 0}}</td>
                 <td class="text-center">{{inputOrder.date}}</td>
+                <td class="text-center edit-column" data-ng-click="viewModel.goToInputOrderEditForm($event, inputOrder.id)">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </td>
 							</tr>
 						</tbody>
 					</table>

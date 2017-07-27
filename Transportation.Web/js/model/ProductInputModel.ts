@@ -9,7 +9,7 @@ module Clarity.Model {
         public salePrice: number;
         public isChecked: boolean;
         //format value
-        public inputPriceFormated: string;
-        public salePriceFormated: string;
+        public inputPriceFormatted: string;
+        public salePriceFormatted: string;
     }
 }

@@ -1,61 +1,121 @@
 ﻿<div id="orderInfo" class="bootstrap">
   <div class="container">
-    <div class="row">
-      <div class="col-sm-3">
-        <img class="avatar" src="/img/logo.gif" style="width: 100%"/>
+    <div class="form-detail">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2 class="text-center">BÁN HÀNG - {{viewModel.currentOrder.id}}</h2>
+        </div>
       </div>
-      <div class="col-sm-9">
-        <div class="list-group-item user-info">
-          <h2 class="text-center title-name">{{viewModel.currentOrder.id}}</h2>
-          <p><span class="bold-text">Tên khách hàng:</span> <span>{{viewModel.currentOrder.customerName}}</span></p>
-          <p><span class="bold-text">Số xe:</span> <span>{{viewModel.currentOrder.licensePlate}}</span></p>
-          <p><span class="bold-text">Địa chỉ:</span> <span>{{viewModel.currentOrder.address}}</span></p>
-          <p><span class="bold-text">Ngày bán:</span> <span>{{viewModel.currentOrder.date}}</span></p>
-          <p><span class="bold-text">Tổng thành tiền:</span> <span>{{viewModel.currentOrder.totalAmount | currency: "" : 0}}</span></p>
-          <p><span class="bold-text">Giảm giá:</span> <span>{{viewModel.currentOrder.saleOff}}%</span></p>
-          <p><span class="bold-text">Tiền thực trả:</span> <span>{{viewModel.currentOrder.totalAmount*(100-viewModel.currentOrder.saleOff)/100 | currency: "" : 0}}</span></p>
-          <p><span class="bold-text">Mô tả:</span> <span>{{viewModel.currentOrder.note}}</span></p>
-
+      <div class="row margin-top-20">
+        <div class="col-sm-3">
+          <p class="bold-text">Tên khách hàng:</p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentOrder.customerName}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">Số xe:</p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentOrder.licensePlate}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">Địa chỉ: </p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentOrder.address}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">Ngày bán: </p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentOrder.date}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">Tổng thành tiền: </p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentOrder.totalAmount | currency: "" : 0}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">Giảm giá: </p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentOrder.saleOff}}%</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">Tiền thực trả: </p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentOrder.totalAmount*(100-viewModel.currentOrder.saleOff)/100 | currency: "" : 0}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="bold-text">Mô tả: </p>
+        </div>
+        <div class="col-sm-9">
+          <p>{{viewModel.currentOrder.note}}</p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-sm-12">
           <div class="table-responsive">
             <table class="table table-hover table-bordered">
               <thead>
                 <tr>
-                  <th class="align-center">STT</th>
-                  <th class="align-center">Tên sản phẩm</th>
-                  <th class="align-center hidden-xs">Số lượng</th>
-                  <th class="align-center hidden-xs">Đơn giá</th>
-                  <th class="align-center">Thành tiền</th>
+                  <th class="text-center">STT</th>
+                  <th class="text-center">Tên sản phẩm</th>
+                  <th class="text-center">Số lượng</th>
+                  <th class="text-center">Đơn giá</th>
+                  <th class="text-center">Thành tiền</th>
                 </tr>
               </thead>
               <tbody>
                 <tr data-ng-repeat="orderDetail in viewModel.currentOrder.orderDetails">
-                  <td class="align-center">{{$index + 1}}</td>
-                  <td class="align-center">{{viewModel.getProductById(orderDetail.productId).name}}</td>
-                  <td class="align-center hidden-xs">{{orderDetail.quantity}}</td>
-                  <td class="align-center hidden-xs">{{orderDetail.price | currency: "" : 0}}</td>
-                  <td class="align-center">{{orderDetail.price * orderDetail.quantity | currency: "" : 0}}</td>
+                  <td class="text-center">{{$index + 1}}</td>
+                  <td class="text-center">{{viewModel.getProductById(orderDetail.productId).name}}</td>
+                  <td class="text-center hidden-xs">{{orderDetail.quantity}}</td>
+                  <td class="text-center hidden-xs">{{orderDetail.price | currency: "" : 0}}</td>
+                  <td class="text-center">{{orderDetail.price * orderDetail.quantity | currency: "" : 0}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
-
-          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/ban-hang')">
-            <span class="glyphicon glyphicon-arrow-left"></span>
-            <span>Quay lại</span>
-          </button>
-
-          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/ban-hang/sua/' + viewModel.currentOrder.id)">
-            <span class="glyphicon glyphicon-pencil"></span>
-            <span>Sửa đơn hàng</span>
-          </button>
-
-          <button class="btn btn-default negative-btn" data-ng-click="viewModel.removeOrderInDetail(viewModel.currentOrder)">
-            <span class="glyphicon glyphicon-trash"></span>
-            <span>Xóa đơn hàng</span>
-          </button>
         </div>
       </div>
     </div>
 
+    <div class="row margin-bottom-20">
+      <div class="col-sm-12">
+        <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-garage/ban-hang')">
+          <span class="glyphicon glyphicon-arrow-left"></span>
+          <span>Quay lại</span>
+        </button>
+
+        <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-garage/ban-hang/sua/' + viewModel.currentOrder.id)">
+          <span class="glyphicon glyphicon-pencil"></span>
+          <span>Sửa đơn hàng</span>
+        </button>
+
+        <button class="btn btn-default" data-ng-click="viewModel.removeOrderInDetail(viewModel.currentOrder)">
+          <span class="glyphicon glyphicon-trash"></span>
+          <span>Xóa đơn hàng</span>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
