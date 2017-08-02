@@ -28,22 +28,21 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="table-responsive">
-					<table class="table table-hover table-bordered">
+					<table class="table table-bordered">
 						<thead>
 							<tr>
 								<th class="checkbox-width text-center">
 									<input id="checkAllProducts" type="checkbox" data-ng-model="viewModel.isCheckedAll"
 												 data-ng-change="viewModel.selectAllProductsOnPage()" />
 								</th>
-								<th class="col-sm-1 text-center">STT</th>
 								<th class="text-center">Tên sản phẩm</th>
-								<th class="text-center">Xuất xứ</th>
+								<th class="col-sm-4 text-center">Xuất xứ</th>
                 <th class="edit-column-width text-center">Sửa</th>
 							</tr>
 						</thead>
 						<tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="5">
+                <td class="text-center" colspan="4">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
@@ -52,7 +51,6 @@
 								<td class="text-center" data-ng-click="$event.stopPropagation();">
 									<input id="product-{{$index}}" type="checkbox" data-ng-model="product.isChecked" />
 								</td>
-								<td class="text-center">{{$index + 1}}</td>
 								<td>{{product.name}}</td>
 								<td>{{product.origin}}</td>
                 <td class="text-center edit-column" data-ng-click="viewModel.goToProductEditForm($event, product.id)">
@@ -65,7 +63,7 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row paging">
 			<div class="col-sm-12">
 				<nav aria-label="navigation" data-ng-if="viewModel.numOfPages > 0">
 					<ul class="pagination">

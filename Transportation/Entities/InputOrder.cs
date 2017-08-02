@@ -51,7 +51,9 @@ namespace Transportation
 
             foreach (ProductInput productInput in productInputs)
             {
-                jsons.Add(productInput.ToJson());
+                JObject json = productInput.ToJson();
+                json["productName"] = productInput.Product.Name;
+                jsons.Add(json);
             }
 
             return jsons;

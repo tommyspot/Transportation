@@ -20,6 +20,7 @@ module Clarity.Controller {
     public pageSize: number;
     public isCheckedAll: boolean;
     public isLoading: boolean;
+    public errorMessage: string;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -33,6 +34,7 @@ module Clarity.Controller {
       $scope.viewModel = this;
 
       this.pageSize = 10;
+      this.errorMessage = '';
       this.initProduct();
 
       var self = this;
@@ -72,7 +74,7 @@ module Clarity.Controller {
       this.productService.getAll((results: Array<Model.ProductModel>) => {
         this.productList = results;
         this.productList.sort(function (a: any, b: any) {
-          return a.id - b.id;
+          return b.id - a.id;
         });
         this.productListTmp = this.productList;
         this.initPagination();
@@ -153,7 +155,9 @@ module Clarity.Controller {
       this.productService.create(product,
         (data) => {
           this.$location.path('/ql-garage/san-pham');
-        }, null);
+        }, (error) => {
+          this.errorMessage = error.message;
+        });
     }
 
     updateProduct(product: Model.ProductModel) {

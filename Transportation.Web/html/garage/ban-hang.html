@@ -42,7 +42,7 @@
 								<th class="col-sm-2 text-center">Số xe </th>
 								<th class="text-center">Tên khách hàng</th>
                 <th class="col-sm-2 text-center">Thành tiền</th>
-                <th class="col-sm-2 text-center">Giảm giá (%)</th>
+                <th class="col-sm-1 text-center">Giảm giá</th>
                 <th class="col-sm-2 text-center">Ngày bán</th>
                 <th class="edit-column-width  text-center">In</th>
                 <th class="edit-column-width text-center">Sửa</th>
@@ -62,7 +62,7 @@
 								<td>{{order.licensePlate}}</td>
 								<td>{{order.customerName}}</td>
                 <td class="text-right">{{order.totalAmount | currency: "" : 0}}</td>
-                <td class="text-right">{{order.saleOff}}</td>
+                <td class="text-right">{{order.saleOff}}%</td>
                 <td class="text-center">{{order.date}}</td>
                 <td class="text-center hover" data-ng-click="viewModel.goToOrderPrintPage($event, order)"><i class="fa fa-print"></i></td>
                 <td class="text-center edit-column" data-ng-click="viewModel.goToOrderEditForm($event, order.id)">

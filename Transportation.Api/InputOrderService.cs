@@ -95,15 +95,34 @@ namespace Transportation.Api
             {
                 foreach (JObject productInputsJson in productInputsJsons)
                 {
-                    ProductInput productInput = ProductInput.FromJson(productInputsJson);
-                    productInput.CreatedDate = DateTime.Now;
-                    productInput.InputOrderID = inputOrderID;
-                    inputOrder.ProductInputs.Add(productInput);
-                    //Increase quantity in Inventory
-                    updateInventory(productInput);
+                    string productName = productInputsJson.Value<string>("productName");
+                    Product product = getProductByName(productName);
+                    if (product != null)
+                    {
+                        CreateProductInputForInputOrder(productInputsJson, inputOrder, product.ID);
+                    }
+                    else {
+                        JObject productJson = new JObject();
+                        productJson["name"] = productName;
+                        ProductService productSevice = new ProductService();
+                        productSevice.Create(productJson);
+
+                        Product productAfterCreating = getProductByName(productName);
+                        CreateProductInputForInputOrder(productInputsJson, inputOrder, productAfterCreating.ID);
+                    }
                 }
                 ClarityDB.Instance.SaveChanges();
             }
+        }
+
+        private void CreateProductInputForInputOrder(JObject json, InputOrder inputOrder, long productId) {
+            ProductInput productInput = ProductInput.FromJson(json);
+            productInput.ProductID = productId;
+            productInput.CreatedDate = DateTime.Now;
+            productInput.InputOrderID = inputOrder.ID;
+            inputOrder.ProductInputs.Add(productInput);
+            //Increase quantity in Inventory
+            updateInventory(productInput);
         }
 
         private void updateInventory(ProductInput productInput) {
@@ -155,6 +174,11 @@ namespace Transportation.Api
             }
 
             return array;
+        }
+
+        private Product getProductByName(string name)
+        {
+            return ClarityDB.Instance.Products.Where(x => x.Name == name).FirstOrDefault();
         }
 
     }

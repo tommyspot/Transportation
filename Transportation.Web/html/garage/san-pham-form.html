@@ -3,12 +3,16 @@
 		<form name="productForm" class="form-horizontal">
       <div class="form-group margin-top-20">
         <label for="name" class="col-sm-2 control-label">Tên sản phẩm <span class="required-symbol">*</span></label>
-        <div class="col-sm-4" data-ng-class="{'has-error': productForm.name.$touched && productForm.name.$invalid}">
+        <div class="col-sm-4" data-ng-class="{'has-error': (productForm.name.$touched && productForm.name.$invalid || viewModel.errorMessage != '')}">
           <input id="name" name="name" class="form-control" type="text" data-ng-model="viewModel.currentProduct.name" required>
         </div>
         <div class="col-sm-4 validate-error">
           <span class="required-field" data-ng-if="productForm.name.$touched && productForm.name.$invalid">
             Tên sản phẩm phải được nhập</span>
+
+          <span class="required-field" data-ng-if="viewModel.errorMessage != ''">
+            {{viewModel.errorMessage}}
+          </span>
         </div>
       </div>
       <div class="form-group">

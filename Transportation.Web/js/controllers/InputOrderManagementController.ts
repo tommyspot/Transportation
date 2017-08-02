@@ -19,6 +19,7 @@ module Clarity.Controller {
 
     public inputOrderList: Array<Model.InputOrderModel>;
     public productList: Array<Model.ProductModel>;
+    public productNameList: Array<string>;
 
     public inputOrderListTmp: Array<Model.InputOrderModel>;
     public numOfPages: number;
@@ -99,6 +100,9 @@ module Clarity.Controller {
     initProductList() {
       this.productService.getAll((results: Array<Model.ProductModel>) => {
         this.productList = results;
+        this.productNameList = this.productList.map(product => {
+          return product.name;
+        });
       }, null);
     }
 

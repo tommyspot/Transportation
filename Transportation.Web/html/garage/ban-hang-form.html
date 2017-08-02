@@ -78,12 +78,12 @@
             <table class="table table-hover table-bordered">
               <thead>
                 <tr>
-                  <th class="col-sm-1 text-center">STT</th>
-                  <th class="col-sm-3 text-center">Tên sản phẩm</th>
-                  <th class="col-sm-1 text-center">Số lượng</th>
-                  <th class="col-sm-2 text-center">Đơn giá</th>
-                  <th class="col-sm-1 text-center">Đơn vị tính</th>
-                  <th class="col-sm-3 text-center">Thành tiền</th>
+                  <th class="stt-width text-center">STT</th>
+                  <th class="col-sm-3 text-center">Tên sản phẩm <span class="required-symbol">*</span></th>
+                  <th class="text-center">SL <span class="required-symbol">*</span></th>
+                  <th class="col-sm-2 text-center">Đơn giá <span class="required-symbol">*</span></th>
+                  <th class="col-sm-2 text-center">Đơn vị tính</th>
+                  <th class="col-sm-2 text-center">Thành tiền</th>
                   <th class="col-sm-1 text-center"></th>
                 </tr>
               </thead>
@@ -92,21 +92,23 @@
                   <td class="text-center align-middle">{{$index + 1}}</td>
                   <td class="text-left">
                     <select ui-select2 class="form-control ui-select-2" data-ng-model="orderDetail.productId"
-                            data-ng-change="viewModel.onInventoryViewChanged(orderDetail, $index)">
+                            data-ng-change="viewModel.onInventoryViewChanged(orderDetail, $index)" required>
                       <option value="" selected="selected">--Chọn sản phẩm --</option>
                       <option data-ng-repeat="inventory in viewModel.inventoryViewList" value="{{inventory.productId}}">{{inventory.productName}} [{{inventory.quantity}}]</option>
                     </select>
                   </td>
                   <td class="text-center">
-                    <input class="form-control" type="number" min="1" data-ng-model="orderDetail.quantity" data-ng-change="viewModel.onQuantityOrderDetailChanged()"/>
+                    <input class="form-control" type="number" min="1" data-ng-model="orderDetail.quantity"
+                           data-ng-change="viewModel.onQuantityOrderDetailChanged()" required/>
                   </td>
-                  <td class="text-center">
-                    <input class="form-control" type="text" maxlength="15" data-ng-model="orderDetail.priceFormatted" data-ng-change="viewModel.setFormatedCurencyForOrderDetail(orderDetail)" />
+                  <td>
+                    <input class="form-control text-right" type="text" maxlength="15" data-ng-model="orderDetail.priceFormatted"
+                           data-ng-change="viewModel.setFormatedCurencyForOrderDetail(orderDetail)" required/>
                   </td>
-                  <td class="text-center">
+                  <td>
                     <input class="form-control" type="text" data-ng-model="orderDetail.unit" />
                   </td>
-                  <td class="text-center align-middle">{{orderDetail.price * orderDetail.quantity | currency: "" : 0}}</td>
+                  <td class="text-right align-middle">{{orderDetail.price * orderDetail.quantity | currency: "" : 0}}</td>
                   <td class="text-center">
                     <button type="button" class="btn btn-default" data-ng-click="viewModel.deleteOrderDetail($index)">
                       <span class="glyphicon glyphicon-trash"></span> <span>Xóa</span>

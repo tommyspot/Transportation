@@ -230,6 +230,8 @@
     <Content Include="lib\angular\ng-context-menu.js" />
     <Content Include="lib\angular\ng-context-menu.min.js" />
     <Content Include="lib\angular\ui-bootstrap.min.js" />
+    <Content Include="lib\autocomplete\autocomplete.css" />
+    <Content Include="lib\autocomplete\autocomplete.js" />
     <Content Include="lib\blanket\blanket.min.js" />
     <Content Include="lib\blanket\jasmine-blanket.js" />
     <Content Include="lib\bootstrap\bootstrap.js" />
@@ -245,6 +247,7 @@
     <Content Include="lib\jquery\jquery-ui.min.js" />
     <Content Include="lib\jquery\jquery.d.ts" />
     <Content Include="lib\jquery\jquery.scrollUp.min.js" />
+    <Content Include="lib\locales\angular-locale_vi-vn.js" />
     <Content Include="lib\select2\angular-ui\angular-ui.js" />
     <Content Include="lib\select2\angular-ui\select2.js" />
     <Content Include="lib\select2\select2-spinner.gif" />

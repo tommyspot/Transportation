@@ -62,50 +62,46 @@
 
       <div class="row margin-top-15">
         <div class="col-sm-12">
-          <div class="table-responsive">
-            <table class="table table-hover table-bordered">
-              <thead>
-                <tr>
-                  <th class="col-sm-1 text-center">STT</th>
-                  <th class="col-sm-3 text-center">Tên sản phẩm <span class="required-symbol">*</span></th>
-                  <th class="col-sm-1 text-center">Số lượng <span class="required-symbol">*</span></th>
-                  <th class="col-sm-2 text-center">Giá nhập <span class="required-symbol">*</span></th>
-                  <th class="col-sm-2 text-center">Thành tiền</th>
-                  <th class="col-sm-2 text-center">Giá bán</th>
-                  <th class="col-sm-1 text-center"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-ng-repeat="productInput in viewModel.currentInputOrder.productInputs">
-                  <td class="text-center align-middle">{{$index + 1}}</td>
-                  <td>
-                    <select ui-select2 class="form-control ui-select-2" data-ng-model="productInput.productId" required>
-                      <option value="" selected="selected">--Chọn sản phẩm --</option>
-                      <option data-ng-repeat="product in viewModel.productList" value="{{product.id}}">{{product.name}}</option>
-                    </select>
-                  </td>
-                  <td class="text-center">
-                    <input class="form-control" type="number" min="1" data-ng-model="productInput.quantity"
-                           data-ng-change="viewModel.updateTotalAmount()" required />
-                  </td>
-                  <td>
-                    <input class="form-control text-right" type="text" maxlength="15" data-ng-model="productInput.inputPriceFormatted"
-                           data-ng-change="viewModel.formatCurrency(productInput, 'inputPrice')" required />
-                  </td>
-                  <td class="text-right align-middle">{{productInput.quantity * productInput.inputPrice | currency: "" : 0}}</td>
-                  <td>
-                    <input class="form-control text-right" type="text" maxlength="15" data-ng-model="productInput.salePriceFormatted"
-                           data-ng-change="viewModel.formatCurrency(productInput, 'salePrice')" />
-                  </td>
-                  <td class="text-center">
-                    <button type="button" class="btn btn-default" data-ng-click="viewModel.deleteProductInput($index)">
-                      <span class="glyphicon glyphicon-trash"></span> <span>Xóa</span>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="stt-width col-sm-1 text-center">STT</th>
+                <th class="col-sm-3 text-center">Tên sản phẩm <span class="required-symbol">*</span></th>
+                <th class="text-center">SL <span class="required-symbol">*</span></th>
+                <th class="col-sm-2 text-center">Giá nhập <span class="required-symbol">*</span></th>
+                <th class="col-sm-2 text-center">Thành tiền</th>
+                <th class="col-sm-2 text-center">Giá bán</th>
+                <th class="col-sm-1 text-center"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-ng-repeat="productInput in viewModel.currentInputOrder.productInputs">
+                <td class="text-center align-middle">{{$index + 1}}</td>
+                <td>
+                  <autocomplete data-ng-model="productInput.productName" attr-placeholder="Nhập để tìm sản phẩm..."
+                                click-activation="true" data="viewModel.productNameList" required></autocomplete>
+                </td>
+                <td class="text-center">
+                  <input class="form-control" type="number" min="1" data-ng-model="productInput.quantity"
+                          data-ng-change="viewModel.updateTotalAmount()" required />
+                </td>
+                <td>
+                  <input class="form-control text-right" type="text" maxlength="15" data-ng-model="productInput.inputPriceFormatted"
+                          data-ng-change="viewModel.formatCurrency(productInput, 'inputPrice')" required />
+                </td>
+                <td class="text-right align-middle">{{productInput.quantity * productInput.inputPrice | currency: "" : 0}}</td>
+                <td>
+                  <input class="form-control text-right" type="text" maxlength="15" data-ng-model="productInput.salePriceFormatted"
+                          data-ng-change="viewModel.formatCurrency(productInput, 'salePrice')" />
+                </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-default" data-ng-click="viewModel.deleteProductInput($index)">
+                    <span class="glyphicon glyphicon-trash"></span> <span>Xóa</span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 

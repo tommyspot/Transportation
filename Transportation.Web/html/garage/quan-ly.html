@@ -28,7 +28,7 @@
 					<table class="table table-hover table-bordered">
 						<thead>
 							<tr>
-                <th class="col-sm-1 text-center">STT</th>
+                <th class="stt-width text-center">STT</th>
 								<th class="col-sm-2 text-center pointer" data-ng-click="viewModel.orderBy('name')">Tên sản phẩm &nbsp;
                   <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'name'" aria-hidden="true"
                      data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}" ></i>
@@ -49,7 +49,7 @@
                   <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'sumOfSaleTotalAmount'" aria-hidden="true"
                      data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}"></i>
                 </th>
-                <th class="col-sm-1 text-center pointer" data-ng-click="viewModel.orderBy('numOfRemain')">SL hiện tại &nbsp;
+                <th class="text-center pointer" data-ng-click="viewModel.orderBy('numOfRemain')">SL hiện tại &nbsp;
                   <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'numOfRemain'" aria-hidden="true"
                      data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}"></i>
                 </th>
@@ -81,7 +81,7 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row paging">
 			<div class="col-sm-12">
 				<nav aria-label="navigation" data-ng-if="viewModel.numOfPages > 0">
 					<ul class="pagination">

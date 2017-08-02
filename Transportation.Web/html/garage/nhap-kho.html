@@ -35,7 +35,6 @@
 									<input id="checkAllProducts" type="checkbox" data-ng-model="viewModel.isCheckedAll"
 												 data-ng-change="viewModel.selectAllInputOrdersOnPage()" />
 								</th>
-								<th class="col-sm-1 text-center">STT</th>
 								<th class="text-center">Tên nhà cung cấp</th>
                 <th class="col-sm-2 text-center">Số sản phẩm</th>
                 <th class="col-sm-2 text-center">Thành tiền</th>
@@ -45,7 +44,7 @@
 						</thead>
 						<tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="7">
+                <td class="text-center" colspan="6">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
@@ -54,7 +53,6 @@
 								<td class="text-center" data-ng-click="$event.stopPropagation();">
 									<input id="order-{{$index}}" type="checkbox" data-ng-model="inputOrder.isChecked" />
 								</td>
-								<td class="text-center">{{$index + 1}}</td>
 								<td>{{inputOrder.vendor}}</td>
                 <td class="text-right">{{inputOrder.productInputs.length | currency: "" : 0}}</td>
                 <td class="text-right">{{inputOrder.totalAmount | currency: "" : 0}}</td>
@@ -69,7 +67,7 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row paging">
 			<div class="col-sm-12">
 				<nav aria-label="navigation" data-ng-if="viewModel.numOfPages > 0">
 					<ul class="pagination">

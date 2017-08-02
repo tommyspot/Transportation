@@ -62,6 +62,12 @@ namespace Transportation.Api
             Product product = Product.FromJson(json);
             product.CreatedDate = DateTime.Now;
 
+            if(ClarityDB.Instance.Products.Any(x => x.Name == product.Name))
+            {
+                string errorJson = "{ 'message': 'Tên sản phẩm đã tồn tại' }";
+                return new RestApiResult { StatusCode = HttpStatusCode.Conflict, Json = JObject.Parse(errorJson) };
+            }
+
             ClarityDB.Instance.Products.Add(product);
             ClarityDB.Instance.SaveChanges();
             //Create inventory
