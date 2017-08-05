@@ -39,7 +39,7 @@ module Clarity.Controller {
 			this.Eroles = ['Super', 'WagonSettlement', 'Wagon', 'CustomerOrder'];
 			this.roleList = this.getRoleList();
 			this.initUser();
-			this.mainHelper = new helper.MainHelper($http, $cookieStore);
+			this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
 
 			var self = this;
 			$scope.$watch('searchText', function (value) {

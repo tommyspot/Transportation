@@ -16,8 +16,16 @@ module Clarity.Model {
     public checkDate: string;
     public insuranceDate: string;
     public isDeleted: boolean;
-    public isChecked: boolean;
 
     public monthlyPaymentFormatted: string;
+  }
+
+  export class TruckViewModel extends Model.BaseModel {
+    public licensePlate: string;
+    public yearOfManufacture: string;
+    public brand: string;
+    public weight: string;
+    public hasUsing: string;
+    public isChecked: boolean;
   }
 }

@@ -20,7 +20,7 @@ module Clarity.Controller {
 			private $cookieStore: ng.ICookieStoreService) {
 
       $scope.viewModel = this;
-			this.mainHelper = new helper.MainHelper($http, $cookieStore);
+      this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
     }
 
     goToWagonsManagement() {

@@ -29,7 +29,6 @@ namespace Transportation
         public long Quantity { get; set; }
         public string Destination { get; set; }
         public long UnitPrice { get; set; }
-		public long TotalAmount { get; set; }
         public long PhiPhatSinh { get; set; }
         public string LyDoPhatSinh { get; set; }
 
@@ -53,7 +52,6 @@ namespace Transportation
             json["quantity"] = Quantity;
             json["destination"] = Destination;
 			json["unitPrice"] = UnitPrice;
-            json["totalAmount"] = TotalAmount;
 
             json["phiPhatSinh"] = PhiPhatSinh;
             json["lyDoPhatSinh"] = LyDoPhatSinh;
@@ -86,7 +84,6 @@ namespace Transportation
             Destination = json.Value<string>("destination");
 			
 			UnitPrice = json.Value<long>("unitPrice");
-            TotalAmount = json.Value<long>("totalAmount");
             PhiPhatSinh = json.Value<long>("phiPhatSinh");
             LyDoPhatSinh = json.Value<string>("lyDoPhatSinh");
         }

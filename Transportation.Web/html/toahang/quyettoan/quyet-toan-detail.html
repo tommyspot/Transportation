@@ -11,7 +11,7 @@
           <p class="bold-text">Khách hàng:</p>
         </div>
         <div class="col-sm-10">
-          <p>{{viewModel.getCustomerName(viewModel.currentWagonSettlement.customerId)}}</p>
+          <p><b>{{viewModel.getCustomerName(viewModel.currentWagonSettlement.customerId)}}</b></p>
         </div>
       </div>
       <div class="row">
@@ -51,7 +51,15 @@
           <p class="bold-text">Tổng Phí:</p>
         </div>
         <div class="col-sm-10">
-          <p>{{viewModel.currentWagonSettlement.quantity * viewModel.currentWagonSettlement.unitPrice | currency: "" : 0}}</p>
+          <p><b>{{(viewModel.currentWagonSettlement.quantity * viewModel.currentWagonSettlement.unitPrice + viewModel.currentWagonSettlement.phiPhatSinh )| currency: "" : 0}}</b></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <p class="bold-text">Phí phát sinh:</p>
+        </div>
+        <div class="col-sm-10">
+          <p>{{viewModel.currentWagonSettlement.phiPhatSinh | currency: "" : 0}}</p>
         </div>
       </div>
       <div class="row">

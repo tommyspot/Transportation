@@ -31,10 +31,12 @@ module Clarity.Controller {
       public $window: ng.IWindowService,
       public $rootScope: IRootLoginControllerScope,
       private $http: ng.IHttpService,
-      private $cookieStore: ng.ICookieStoreService) {
+      private $cookieStore: ng.ICookieStoreService,
+      private $filter: ng.IFilterService) {
+
       $scope.viewModel = this;
       this.authenticationService = new service.AuthenticationService($http, $cookieStore);
-      this.mainHelper = new helper.MainHelper($http, $cookieStore);
+      this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
       this.errorMessage = '';
     }
 

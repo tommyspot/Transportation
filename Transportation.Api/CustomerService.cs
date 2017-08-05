@@ -22,7 +22,7 @@ namespace Transportation.Api
         {
             var customers = ClarityDB.Instance.Customers;
 
-            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(customers) };
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArrayCustomer(customers) };
         }
 
         [Route(HttpVerb.Post, "/customers")]
@@ -53,7 +53,7 @@ namespace Transportation.Api
 				return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
 			}
 
-			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = customer.ToJson() };
+			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonCustomer(customer) };
 		}
 
 		[Route(HttpVerb.Delete, "/customers/{id}")]
@@ -89,31 +89,34 @@ namespace Transportation.Api
 			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
 		}
 
-		private JArray BuildJsonArray(IEnumerable<Customer> customers)
+        private JObject BuildJsonCustomer(Customer customer)
         {
-            JArray array = new JArray();
+            customer.TotalOwned = 0;
+            customer.TotalPay = 0;
+            customer.TotalDebt = 0;
+
+            var wagonSettlements = ClarityDB.Instance.WagonSettlements.Where(x => x.CustomerID == customer.ID);
+            foreach (WagonSettlement wagonSettlement in wagonSettlements)
+            {
+                customer.TotalOwned += wagonSettlement.Quantity * wagonSettlement.UnitPrice + wagonSettlement.PhiPhatSinh;
+                customer.TotalPay += wagonSettlement.Payment;
+                customer.TotalDebt += wagonSettlement.PaymentRemain;
+            }
+
+            return customer.ToJson();
+        }
+
+        private JArray BuildJsonArrayCustomer(IEnumerable<Customer> customers)
+        {
+            JArray jArray = new JArray();
 
             foreach (Customer customer in customers)
             {
-				if (customer.NeedUpdatePayment)
-				{
-					customer.TotalOwned = 0;
-					customer.TotalPay = 0;
-					customer.TotalDebt = 0;
-
-					var wagonSettlements = ClarityDB.Instance.WagonSettlements.Where(x => x.CustomerID == customer.ID);
-					foreach (WagonSettlement wagonSettlementItem in wagonSettlements)
-					{
-						customer.TotalOwned += wagonSettlementItem.TotalAmount;
-						customer.TotalPay += wagonSettlementItem.Payment;
-						customer.TotalDebt += wagonSettlementItem.PaymentRemain;
-					}
-					customer.NeedUpdatePayment = false;
-				}
-                array.Add(customer.ToJson());
+                JObject json = BuildJsonCustomer(customer);
+                jArray.Add(json);
             }
 
-            return array;
+            return jArray;
         }
 
     }

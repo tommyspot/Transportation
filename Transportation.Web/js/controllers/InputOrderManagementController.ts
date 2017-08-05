@@ -38,7 +38,7 @@ module Clarity.Controller {
       private $cookieStore: ng.ICookieStoreService,
       private $routeParams: any) {
 
-      this.mainHelper = new helper.MainHelper($http, $cookieStore);
+      this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
       this.inputOrderService = new service.InputOrderService($http);
       this.productService = new service.ProductService($http);
       $scope.viewModel = this;
@@ -109,7 +109,8 @@ module Clarity.Controller {
     initFormatPriceForProductInputs(inputOrder: Model.InputOrderModel) {
       if (inputOrder && inputOrder.productInputs && inputOrder.productInputs.length > 0) {
         for (var productInput of inputOrder.productInputs) {
-          this.mainHelper.initFormattedProperty(productInput, ['inputPrice', 'salePrice'], formatSuffix);
+          this.mainHelper.initCurrencyFormattedProperty(productInput,
+            ['inputPrice', 'salePrice'], formatSuffix);
         }
       }
     }
@@ -236,7 +237,7 @@ module Clarity.Controller {
     }
 
     formatCurrency(productInput: Model.ProductInputModel, propertyName: string) {
-      this.mainHelper.formatCurrency(productInput, propertyName, `${propertyName}${formatSuffix}`);
+      this.mainHelper.onCurrencyPropertyChanged(productInput, propertyName, `${propertyName}${formatSuffix}`);
       if (propertyName === 'inputPrice') {
         this.updateTotalAmount();
       }

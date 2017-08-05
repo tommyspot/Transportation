@@ -282,7 +282,7 @@ namespace Transportation.Api
                 dt.Rows.Add(new object[] { i + 1 , wagonSettlement.WagonID, wagonSettlement.Code , wagonSettlement.Customer.FullName, wagonSettlement.Quantity,
                                            wagonSettlement.PaymentPlace, wagonSettlement.PaymentDate, wagonSettlement.Destination,
                                             wagonSettlement.LyDoPhatSinh, wagonSettlement.PhiPhatSinh, wagonSettlement.Unit, wagonSettlement.UnitPrice,
-                                           wagonSettlement.TotalAmount, wagonSettlement.Payment, wagonSettlement.PaymentRemain});
+                                           wagonSettlement.Quantity * wagonSettlement.UnitPrice, wagonSettlement.Payment, wagonSettlement.PaymentRemain});
             }
 
             return dt;

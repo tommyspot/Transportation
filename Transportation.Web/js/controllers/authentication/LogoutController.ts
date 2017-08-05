@@ -19,10 +19,12 @@ module Clarity.Controller {
       public $window: ng.IWindowService,
       public $rootScope: Controller.IRootScope,
       private $http: ng.IHttpService,
-      private $cookieStore: ng.ICookieStoreService) {
+      private $cookieStore: ng.ICookieStoreService,
+      private $filter: ng.IFilterService) {
+
       $scope.viewModel = this;
       this.authenticationService = new service.AuthenticationService($http, $cookieStore);
-      this.mainHelper = new Helper.MainHelper($http, $cookieStore);   
+      this.mainHelper = new Helper.MainHelper($http, $cookieStore, $filter);   
     }
 
     public submit() {

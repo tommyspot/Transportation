@@ -10,12 +10,12 @@ module Clarity.Spec {
     var httpBackend: ng.IHttpBackendService;
     var $scope, $window, $rootScope, $location;
 
-    beforeEach(inject(function ($location: ng.ILocationService, $cookieStore: ng.ICookieStoreService, $http: ng.IHttpService, $rootScope: Controller.IRootLoginControllerScope, $window: ng.IWindowService, $httpBackend: ng.IHttpBackendService) {
+    beforeEach(inject(function ($location: ng.ILocationService, $cookieStore: ng.ICookieStoreService, $http: ng.IHttpService, $rootScope: Controller.IRootLoginControllerScope, $window: ng.IWindowService, $httpBackend: ng.IHttpBackendService, $filter: ng.IFilterService) {
       $scope = $rootScope.$new();
       httpBackend = $httpBackend;
       $window = $window;
 
-      logoutController = new Controller.LogoutController($scope, $location, $window, $rootScope, $http, $cookieStore);
+      logoutController = new Controller.LogoutController($scope, $location, $window, $rootScope, $http, $cookieStore, $filter);
     }));
     
     describe('.constructor', function () {

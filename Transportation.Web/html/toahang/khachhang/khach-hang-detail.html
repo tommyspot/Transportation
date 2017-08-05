@@ -1,5 +1,12 @@
 ﻿<div id="customerInfo" class="bootstrap">
 	<div class="container">
+
+    <div class="row margin-bottom-15" data-ng-if="viewModel.errorMessage !== ''">
+      <div class="col-sm-12">
+        <span class="required-field">{{viewModel.errorMessage}}</span>
+      </div>
+    </div>
+
     <div class="form-detail">
       <div class="row">
         <div class="col-sm-12">

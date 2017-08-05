@@ -188,7 +188,7 @@ div.bootstrap {
         color: #ffffff;
         font-weight: normal;
         text-transform: uppercase;
-        padding: 12px;
+        padding: 12px 0;
 
         &:first-child{
           border-left: 1px solid $transport-color-1;
@@ -216,6 +216,21 @@ div.bootstrap {
 
   .table-bordered {
     border: none;
+  }
+
+  /*SEARCH TEXT BOX*/
+  .search-text-box{
+    .has-feedback{
+      .form-control-feedback{
+        color: #CCCCCC;
+        pointer-events: visible;
+        cursor: pointer;
+
+        &:hover{
+          color: $transport-color-2;
+        }
+      }
+    }
   }
 
   /*BREADCRUMB*/
@@ -586,82 +601,6 @@ div.bootstrap {
     }
   }
 
-  /*#wagonFormSection {
-    form {
-      color: $transport-color-1;
-      border: 1px solid $transport-color-1;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-
-      .nav-tabs {
-        border-bottom: 1px solid $transport-color-1;
-      }
-
-      .tab-content {
-        height: 360px;
-        overflow-y: auto;
-        padding-top: 20px;
-
-        .row {
-          margin-left: 0px;
-          margin-right: 0px;
-        }
-      }
-
-      .nav-tabs > li > a {
-        color: $transport-color-1;
-        border-radius: 0px;
-
-        &:hover {
-          cursor: default;
-        }
-      }
-
-      .nav-tabs > li:first-child > a {
-        border-top-left-radius: 10px;
-      }
-
-      .nav-tabs > li.active > a {
-        color: #FFFFFF;
-        background-color: $transport-color-2;
-        border: 1px solid $transport-color-2;
-        border-bottom-color: transparent;
-      }
-
-      .remove-section {
-        text-align: right;
-
-        .remove-wagonSettlement {
-          margin-left: 4px;
-        }
-      }
-
-      .wagonSettlement {
-        margin-bottom: 10px;
-
-        .customer-color {
-          color: $transport-color-2;
-        }
-
-        .background-customer-color {
-          background-color: $transport-color-2;
-          color: white;
-        }
-
-        .label-dh {
-          margin-top: 7px;
-          color: $transport-color-2;
-        }
-      }
-
-      .dhkh-title {
-        text-align: center;
-        color: $transport-color-2;
-        margin-bottom: 8px;
-      }
-    }
-  }*/
-
   .form-detail {
     border: 1px solid $transport-color-3;
     margin-left: 0px;
@@ -810,11 +749,22 @@ div.bootstrap {
     width: 50px;
   }
 
-  .edit-column-width{
-    width: 70px;
+  .edit-column-width, .detail-column-width{
+    width: 60px;
+  }
+
+  .detail-column{
+    cursor: pointer;
+    i {
+      font-size: 18px;
+    }
+    &:hover{
+      color: $transport-color-2;
+    }
   }
 
   .edit-column{
+    cursor: pointer;
     &:hover{
       color: $transport-color-2;
     }

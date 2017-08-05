@@ -52,7 +52,7 @@ namespace Transportation.Api
             var wagonSettlementReportDataList = filteredWagonSettlements.Select(w => new WagonSettlementReportData
             {
                 Code = w.Code,
-                TotalAmount = w.TotalAmount,
+                TotalAmount = w.Quantity * w.UnitPrice,
                 TotalPayment = 100, //waiting confirm
                 Profit = 80         //TotalAmount - TotalPayment
             }).ToList();
@@ -132,8 +132,8 @@ namespace Transportation.Api
 				payment.CreatedDate = DateTime.Now;
 				ClarityDB.Instance.Payments.Add(payment);
 
-				Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == wagonSettlement.CustomerID);
-				customer.NeedUpdatePayment = true;
+				//Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == wagonSettlement.CustomerID);
+				//customer.NeedUpdatePayment = true;
 			}
 
 			ClarityDB.Instance.SaveChanges();

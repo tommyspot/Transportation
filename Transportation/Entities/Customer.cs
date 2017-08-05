@@ -16,14 +16,17 @@ namespace Transportation
 		public string FullName { get; set; }
 		[Required]
 		public string PhoneNo { get; set; }
+        public string Code { get; set; }
+        public string Type { get; set; }
+        [NotMapped]
         public long TotalOwned { get; set; }
+        [NotMapped]
         public long TotalPay { get; set; }
+        [NotMapped]
         public long TotalDebt { get; set; }
-		public string Type { get; set; }
-		public string Code { get; set; }
-		public bool NeedUpdatePayment { get; set; }
 		public DateTime CreatedDate { get; set; }
-		public Customer() {
+
+        public Customer() {
         }
 
         public JObject ToJson()

@@ -60,24 +60,21 @@
         <label for="totalOwned" class="col-sm-2 control-label">Số phát sinh</label>
         <div class="col-sm-4">
           <input id="totalOwned" name="totalOwned" class="form-control" type="text" maxlength="15"
-                 data-ng-model="viewModel.currentCustomer.totalOwnedFormatted"
-                 data-ng-change="viewModel.formatCurrency('totalOwned')" />
+                 value="{{viewModel.currentCustomer.totalOwnedFormatted}}" readonly/>
         </div>
       </div>
       <div class="form-group">
         <label for="totalPay" class="col-sm-2 control-label">Tổng trả</label>
         <div class="col-sm-4">
           <input id="totalPay" name="totalPay" class="form-control" type="text" maxlength="15"
-                 data-ng-model="viewModel.currentCustomer.totalPayFormatted"
-                 data-ng-change="viewModel.formatCurrency('totalPay')" />
+                 value="{{viewModel.currentCustomer.totalPayFormatted}}" readonly/>
         </div>
       </div>
       <div class="form-group">
         <label for="totalDebt" class="col-sm-2 control-label">Còn nợ lại</label>
         <div class="col-sm-4">
           <input id="totalDebt" name="totalDebt" class="form-control" type="text" maxlength="15"
-                 data-ng-model="viewModel.currentCustomer.totalDebtFormatted"
-                 data-ng-change="viewModel.formatCurrency('totalDebt')" />
+                 value="{{viewModel.currentCustomer.totalDebtFormatted}}" readonly/>
         </div>
       </div>
 

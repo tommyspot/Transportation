@@ -18,14 +18,16 @@ module Clarity.Controller {
 
 		public currentTruck: Model.TruckModel;
 		public employeeList: Array<Model.EmployeeModel>;
-		public truckList: Array<Model.TruckModel>;
-    public truckListTmp: Array<Model.TruckModel>;
+    public truckList: Array<Model.TruckModel>;
+    public truckListView: Array<Model.TruckViewModel>;  //show on view page for searching
+    public truckListViewTmp: Array<Model.TruckViewModel>;
 
 		public numOfPages: number;
 		public currentPage: number;
 		public pageSize: number;
 		public isCheckedAll: boolean;
     public isLoading: boolean;
+    public searchText: string;
 
 		constructor(private $scope,
 			public $rootScope: IRootScope,
@@ -37,80 +39,95 @@ module Clarity.Controller {
       private $cookieStore: ng.ICookieStoreService) {
 
 			this.truckService = new service.TruckService($http);
-			this.employeeService = new service.EmployeeService($http);
-			$scope.viewModel = this;
-			this.pageSize = 10;
+      this.employeeService = new service.EmployeeService($http);
+      this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
+      $scope.viewModel = this;
+
+      this.pageSize = 10;
+      this.searchText = '';
 			this.initTruck();
-      this.mainHelper = new helper.MainHelper($http, $cookieStore);
 
 			var self = this;
-			$scope.$watch('searchText', function (value) {
-				if (self.truckListTmp && self.truckListTmp.length > 0) {
-					self.truckList = $filter('filter')(self.truckListTmp, value);
+			$scope.$watch('viewModel.searchText', function (value) {
+				if (self.truckListViewTmp && self.truckListViewTmp.length > 0) {
+					self.truckListView = $filter('filter')(self.truckListViewTmp, value);
 					self.initPagination();
 				}
 			});
 		}
 
 		initTruck() {
-			var truckId = this.$routeParams.employee_id;
-			if (truckId) {
-				if (this.$location.path() === '/ql-toa-hang/xe/' + truckId) {
-					this.truckService.getById(truckId, (data) => {
-            this.currentTruck = data;
-            this.mainHelper.initFormattedProperty(this.currentTruck, ['monthlyPayment'], formatSuffix);
-            this.initEmployeeList();
-					}, null);
-				} else if (this.$location.path() === '/ql-toa-hang/xe/sua/' + truckId) {
-					if (this.currentTruck == null) {
-						this.truckService.getById(truckId, (data) => {
-							this.currentTruck = data;
-              this.mainHelper.initFormattedProperty(this.currentTruck, ['monthlyPayment'], formatSuffix);
-              this.initEmployeeList();
-						}, null);
-					}
-				}
+      var truckId = this.$routeParams.truck_id;
+			if (truckId) {  //Detail or Edit
+        this.initCurrentTruck(truckId);
 			} else {
 				if (this.$location.path() === '/ql-toa-hang/xe/tao') {
           this.currentTruck = new Model.TruckModel();
           this.initEmployeeList();
 
         } else if (this.$location.path() === '/ql-toa-hang/xe') {
-          this.isLoading = true;
 					this.initTruckList();
 				}
 			}
 		}
 
-		initTruckList() {
+    initTruckList() {
+      this.isLoading = true;
 			this.truckService.getAll((results: Array<Model.TruckModel>) => {
 				this.truckList = results;
 				this.truckList.sort(function (a: any, b: any) {
 					return b.id - a.id;
-				});
-				this.truckListTmp = this.truckList;
+        });
+        this.mapToTruckListView();
+				this.truckListViewTmp = this.truckListView;
         this.initPagination();
         this.isLoading = false;
 			}, null);
-		}
+    }
 
-		initEmployeeList() {
-			this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
+    initCurrentTruck(truckId: number) {
+      if (this.currentTruck == null) {
+        this.$rootScope.showSpinner();
+
+        this.truckService.getById(truckId, (data: Model.TruckModel) => {
+          this.currentTruck = data;
+          this.mainHelper.initCurrencyFormattedProperty(this.currentTruck, ['monthlyPayment'], formatSuffix);
+          this.initEmployeeList();
+        }, null);
+      }
+    }
+
+    initEmployeeList() {
+      this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
         this.employeeList = results;
-			}, null);
-		}
+        this.$rootScope.hideSpinner();
+      }, null);
+    }
+
+    mapToTruckListView() {
+      this.truckListView = this.truckList.map((truck: Model.TruckModel) => {
+        const truckView = new Model.TruckViewModel();
+        truckView.id = truck.id;
+        truckView.licensePlate = truck.licensePlate;
+        truckView.yearOfManufacture = truck.yearOfManufacture > 0 ? truck.yearOfManufacture.toString() : '';
+        truckView.brand = truck.brand;
+        truckView.weight = truck.weight > 0 ? truck.weight + ' tấn' : '';
+        truckView.hasUsing = truck.isDeleted ? 'Không' : 'Có';
+        return truckView;
+      });
+    }
 
 		initPagination() {
 			this.currentPage = 1;
-			this.numOfPages = this.truckList.length % this.pageSize === 0 ?
-				this.truckList.length / this.pageSize : Math.floor(this.truckList.length / this.pageSize) + 1;
+			this.numOfPages = this.truckListView.length % this.pageSize === 0 ?
+        this.truckListView.length / this.pageSize : Math.floor(this.truckListView.length / this.pageSize) + 1;
 		}
 
 		getTruckListOnPage() {
-			if (this.truckList && this.truckList.length > 0) {
+      if (this.truckListView && this.truckListView.length > 0) {
 				var startIndex = this.pageSize * (this.currentPage - 1);
 				var endIndex = startIndex + this.pageSize;
-				return this.truckList.slice(startIndex, endIndex);
+        return this.truckListView.slice(startIndex, endIndex);
 			}
 		}
 
@@ -149,12 +166,12 @@ module Clarity.Controller {
 		removeTrucks() {
 			var confirmDialog = this.$window.confirm('Bạn có muốn xóa những xe được chọn?');
 			if (confirmDialog) {
-				for (let i = 0; i < this.truckList.length; i++) {
-					var truck = this.truckList[i];
+				for (let i = 0; i < this.truckListView.length; i++) {
+          var truck = this.truckListView[i];
 					if (truck.isChecked) {
 						this.truckService.deleteEntity(truck, (data) => {
 							this.initTruckList();
-						}, () => { });
+						}, null);
 					}
 				}
 			}
@@ -173,8 +190,7 @@ module Clarity.Controller {
 			this.truckService.create(truck,
 				(data) => {
 					this.$location.path('/ql-toa-hang/xe');
-				},
-				() => { });
+				}, null);
 		}
 
 		updateTruck(truck: Model.TruckModel) {
@@ -192,16 +208,16 @@ module Clarity.Controller {
       this.$location.path(`/ql-toa-hang/xe/sua/${truckId}`);
     }
 
-		checkStatusTruck(truck) {
-			return truck.isDeleted ? 'Không' : 'Có';
-		}
-
     getEmployeeName(employeeId: string) {
       return this.mainHelper.getPropertyValue(this.employeeList, 'id', employeeId, 'fullName');
 		}
 
     formatCurrency(propertyName: string) {
-      this.mainHelper.formatCurrency(this.currentTruck, propertyName, `${propertyName}${formatSuffix}`);
-		}
+      this.mainHelper.onCurrencyPropertyChanged(this.currentTruck, propertyName, `${propertyName}${formatSuffix}`);
+    }
+
+    clearSearchText() {
+      this.searchText = '';
+    }
 	}
 }

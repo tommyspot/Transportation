@@ -25,7 +25,8 @@ module Clarity.Controller {
     public employeeList: Array<Model.EmployeeModel>
     public customerList: Array<Model.CustomerModel>
     public wagonList: Array<Model.WagonModel>;
-    public wagonListTmp: Array<Model.WagonModel>;
+    public wagonListView: Array<Model.WagonViewModel>;
+    public wagonListViewTmp: Array<Model.WagonViewModel>;
 
     public numOfPages: number;
     public currentPage: number;
@@ -33,6 +34,7 @@ module Clarity.Controller {
     public isCheckedAll: boolean;
     public isLoading: boolean;
     public totalAmountWagonSettlements: number;
+    public searchText: string;
 
     constructor(private $scope,
       public $rootScope: IRootScope,
@@ -47,16 +49,17 @@ module Clarity.Controller {
       this.employeeService = new service.EmployeeService($http);
       this.customerService = new service.CustomerService($http);
       this.exportService = new service.ExportService($http);
-      this.mainHelper = new helper.MainHelper($http, $cookieStore);
+      this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
       $scope.viewModel = this;
 
       this.pageSize = 10;
+      this.searchText = '';
       this.initWagon();
 
       var self = this;
-      $scope.$watch('searchText', function (value) {
-        if (self.wagonListTmp && self.wagonListTmp.length > 0) {
-          self.wagonList = $filter('filter')(self.wagonListTmp, value);
+      $scope.$watch('viewModel.searchText', function (value) {
+        if (self.wagonListViewTmp && self.wagonListViewTmp.length > 0) {
+          self.wagonListView = $filter('filter')(self.wagonListViewTmp, value);
           self.initPagination();
         }
       });
@@ -65,37 +68,31 @@ module Clarity.Controller {
     initWagon() {
       var wagonId = this.$routeParams.wagon_id;
       if (wagonId) {
-        if (this.$location.path() === '/ql-toa-hang/toa-hang/' + wagonId) {
-					
-          this.wagonService.getById(wagonId, (data) => {
-            this.currentWagon = data;
-
-            this.initTruckList();
-            this.initEmployeeList();
-            this.initCustomerList();
-          }, null);
-        } else if (this.$location.path() === '/ql-toa-hang/toa-hang/sua/' + wagonId) {
-
-          if (this.currentWagon == null) {
-            this.wagonService.getById(wagonId, (data) => {
-              this.currentWagon = data;
-              this.initFormattedCurrencyForWagon();
-
-              this.initTruckList();
-              this.initEmployeeList();
-              this.initCustomerList();
-            }, null);
-          }
-        }
+        this.initCurrentWagon(wagonId);
       } else {
         if (this.$location.path() === '/ql-toa-hang/toa-hang/tao') {
+          this.currentWagon = new Model.WagonModel();
           this.initTruckList();
           this.initEmployeeList();
           this.initCustomerList();
-          this.currentWagon = new Model.WagonModel();
         } else if (this.$location.path() === '/ql-toa-hang/toa-hang') {
           this.initWagonList();
         }
+      }
+    }
+
+    initCurrentWagon(wagonId: number) {
+      if (this.currentWagon == null) {
+        this.$rootScope.showSpinner();
+        this.wagonService.getById(wagonId, (data) => {
+          this.currentWagon = data;
+          this.initFormattedCurrencyForWagon();
+          this.$rootScope.hideSpinner();
+
+          this.initTruckList();
+          this.initEmployeeList();
+          this.initCustomerList();
+        }, null);
       }
     }
 
@@ -106,13 +103,25 @@ module Clarity.Controller {
         this.wagonList.sort(function (a: any, b: any) {
           return b.id - a.id;
         });
-				for (var i = 0; i < this.wagonList.length; i++) {
-					var currentWagon = this.wagonList[i];
-				}
-        this.wagonListTmp = this.wagonList;
+        this.mapToWagonListView();
+        this.wagonListViewTmp = this.wagonListView;
         this.initPagination();
         this.isLoading = false;
       }, null);
+    }
+
+    mapToWagonListView() {
+      this.wagonListView = this.wagonList.map((wagon: Model.WagonModel) => {
+        const wagonView = new Model.WagonViewModel();
+        wagonView.id = wagon.id;
+        wagonView.code = wagon.code;
+        wagonView.departDate = wagon.departDate;
+        wagonView.returnDate = wagon.returnDate;
+        wagonView.departure = wagon.departure;
+        wagonView.destination = wagon.destination;
+        wagonView.totalAmount = this.$filter('currency')(this.calculateTotalAmountWagonSettlements(wagon), '', 0).trim();
+        return wagonView;
+      });
     }
 
     initTruckList() {
@@ -136,15 +145,15 @@ module Clarity.Controller {
 
     initPagination() {
       this.currentPage = 1;
-      this.numOfPages = this.wagonList.length % this.pageSize === 0 ?
-        this.wagonList.length / this.pageSize : Math.floor(this.wagonList.length / this.pageSize) + 1;
+      this.numOfPages = this.wagonListView.length % this.pageSize === 0 ?
+        this.wagonListView.length / this.pageSize : Math.floor(this.wagonListView.length / this.pageSize) + 1;
     }
 
     getWagonListOnPage() {
-      if (this.wagonList && this.wagonList.length > 0) {
+      if (this.wagonListView && this.wagonListView.length > 0) {
         var startIndex = this.pageSize * (this.currentPage - 1);
         var endIndex = startIndex + this.pageSize;
-        return this.wagonList.slice(startIndex, endIndex);
+        return this.wagonListView.slice(startIndex, endIndex);
       }
     }
 
@@ -183,8 +192,8 @@ module Clarity.Controller {
     removeWagons() {
       var confirmDialog = this.$window.confirm('Bạn có muốn xóa những toa hàng đã chọn?');
       if (confirmDialog) {
-        for (let i = 0; i < this.wagonList.length; i++) {
-          var wagon = this.wagonList[i];
+        for (let i = 0; i < this.wagonListView.length; i++) {
+          var wagon = this.wagonListView[i];
           if (wagon.isChecked) {
             this.wagonService.deleteEntity(wagon, (data) => {
               this.initWagonList();
@@ -203,17 +212,10 @@ module Clarity.Controller {
       }
     }
 
-    exportWagonToExcel(wagon: Model.WagonModel) {
-      this.exportService.exportWagonToExcel(wagon, (data) => {
-        window.location.href = '/output/' + data['fileName'];
-      }, null);
-    }
-
     createWagon(wagon: Model.WagonModel) {
-      this.wagonService.create(wagon,
-        (data) => {
-          this.$location.path('/ql-toa-hang/toa-hang');
-        }, null);
+      this.wagonService.create(wagon, (data) => {
+        this.$location.path('/ql-toa-hang/toa-hang');
+      }, null);
     }
 
     updateWagon(wagon: Model.WagonModel) {
@@ -259,13 +261,13 @@ module Clarity.Controller {
           'costOfExtra', 'paymentOfTruck', 'paymentOfRepairing', 'paymentOfOil',
           'paymentOfLuong', 'paymentOfService', 'paymentOfHangVe', 'paymentOf10Percent'
         ];
-        this.mainHelper.initFormattedProperty(this.currentWagon, formattedProperties, formatSufix);
+        this.mainHelper.initCurrencyFormattedProperty(this.currentWagon, formattedProperties, formatSufix);
 
         if (this.currentWagon.wagonSettlements && this.currentWagon.wagonSettlements.length > 0) {
           const wagonSettelments = this.currentWagon.wagonSettlements;
           const wagonSettlementFormattedProperties = ['unitPrice', 'phiPhatSinh', 'payment'];
           wagonSettelments.forEach(wagonSettelment => {
-            this.mainHelper.initFormattedProperty(wagonSettelment, wagonSettlementFormattedProperties, formatSufix);
+            this.mainHelper.initCurrencyFormattedProperty(wagonSettelment, wagonSettlementFormattedProperties, formatSufix);
           });
         }
         this.totalAmountWagonSettlements = this.calculateTotalAmountWagonSettlements(this.currentWagon);
@@ -273,11 +275,11 @@ module Clarity.Controller {
     }
 
     formatCurrency(object: Object, propertyName:string, formattedPropertyName: string) {
-      this.mainHelper.formatCurrency(object, propertyName, formattedPropertyName);
+      this.mainHelper.onCurrencyPropertyChanged(object, propertyName, formattedPropertyName);
     }
 
     onChangeWagonSettlement(wagonSettlement: Model.WagonSettlementModel, propertyName: string, formattedPropertyName: string) {
-      this.mainHelper.formatCurrency(wagonSettlement, propertyName, formattedPropertyName);
+      this.mainHelper.onCurrencyPropertyChanged(wagonSettlement, propertyName, formattedPropertyName);
       this.totalAmountWagonSettlements = this.calculateTotalAmountWagonSettlements(this.currentWagon);
       this.updateWagonSettlementPayment(wagonSettlement);
     }
@@ -305,8 +307,15 @@ module Clarity.Controller {
     }
 
     updateWagonCode() {
-      this.currentWagon.code = this.currentWagon.departDate.replace(/\//g, '')+ '_' +
-        this.mainHelper.getPropertyValue(this.truckList, 'id', this.currentWagon.truckId.toString(), 'licensePlate');
+      if (this.currentWagon.departDate && this.currentWagon.truckId) {
+        this.currentWagon.code = this.currentWagon.departDate.replace(/\//g, '') + '_' +
+          this.mainHelper.getPropertyValue(this.truckList, 'id', this.currentWagon.truckId.toString(), 'licensePlate');
+      }
     }
+
+    clearSearchText() {
+      this.searchText = '';
+    }
+
 	}
 }

@@ -27,131 +27,131 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
     access: 'public'
   })
 
-.when('/ql-dang-nhap', {
-  templateUrl: '/html/user.html' + '?v=' + VERSION_NUMBER,
-  controller: 'UserController',
-  access: 'authorized'
-})
-.when('/ql-dang-nhap/tao', {
-  templateUrl: '/html/user-form.html' + '?v=' + VERSION_NUMBER,
-  controller: 'UserController',
-  access: 'authorized'
-})
-.when('/ql-dang-nhap/:user_id', {
-  templateUrl: '/html/user-detail.html' + '?v=' + VERSION_NUMBER,
-  controller: 'UserController',
-  access: 'authorized'
-})
-.when('/ql-dang-nhap/sua/:user_id', {
-  templateUrl: '/html/user-form.html' + '?v=' + VERSION_NUMBER,
-  controller: 'UserController',
-  access: 'authorized'
-})
-
+  .when('/ql-dang-nhap', {
+    templateUrl: '/html/user.html' + '?v=' + VERSION_NUMBER,
+    controller: 'UserController',
+    access: 'authorized'
+  })
+  .when('/ql-dang-nhap/tao', {
+    templateUrl: '/html/user-form.html' + '?v=' + VERSION_NUMBER,
+    controller: 'UserController',
+    access: 'authorized'
+  })
+  .when('/ql-dang-nhap/:user_id', {
+    templateUrl: '/html/user-detail.html' + '?v=' + VERSION_NUMBER,
+    controller: 'UserController',
+    access: 'authorized'
+  })
+  .when('/ql-dang-nhap/sua/:user_id', {
+    templateUrl: '/html/user-form.html' + '?v=' + VERSION_NUMBER,
+    controller: 'UserController',
+    access: 'authorized'
+  })
+  //TOA HANG
   .when('/ql-toa-hang', {
     templateUrl: '/html/toahang/ql-toa-hang.html' + '?v=' + VERSION_NUMBER,
     controller: 'MainController',
     access: 'authorized'
   })
-.when('/ql-toa-hang/toa-hang', {
-  templateUrl: '/html/toahang/toa-hang.html' + '?v=' + VERSION_NUMBER,
-  controller: 'WagonManagementController',
-  access: 'authorized'
-})
+  .when('/ql-toa-hang/toa-hang', {
+    templateUrl: '/html/toahang/toahang/toa-hang.html' + '?v=' + VERSION_NUMBER,
+    controller: 'WagonManagementController',
+    access: 'authorized'
+  })
   .when('/ql-toa-hang/toa-hang/tao', {
-    templateUrl: '/html/toahang/toa-hang-form.html' + '?v=' + VERSION_NUMBER,
+    templateUrl: '/html/toahang/toahang/toa-hang-form.html' + '?v=' + VERSION_NUMBER,
     controller: 'WagonManagementController',
     access: 'authorized'
   })
   .when('/ql-toa-hang/toa-hang/:wagon_id', {
-    templateUrl: '/html/toahang/toa-hang-detail.html' + '?v=' + VERSION_NUMBER,
+    templateUrl: '/html/toahang/toahang/toa-hang-detail.html' + '?v=' + VERSION_NUMBER,
     controller: 'WagonManagementController',
     access: 'authorized'
   })
   .when('/ql-toa-hang/toa-hang/sua/:wagon_id', {
-    templateUrl: '/html/toahang/toa-hang-form.html' + '?v=' + VERSION_NUMBER,
+    templateUrl: '/html/toahang/toahang/toa-hang-form.html' + '?v=' + VERSION_NUMBER,
     controller: 'WagonManagementController',
     access: 'authorized'
   })
-
+  //XE
   .when('/ql-toa-hang/xe', {
-    templateUrl: '/html/toahang/xe.html' + '?v=' + VERSION_NUMBER,
+    templateUrl: '/html/toahang/xe/xe.html' + '?v=' + VERSION_NUMBER,
     controller: 'TruckManagementController',
     access: 'authorized'
   })
-.when('/ql-toa-hang/xe/tao', {
-  templateUrl: '/html/toahang/xe-form.html' + '?v=' + VERSION_NUMBER,
-  controller: 'TruckManagementController',
-  access: 'authorized'
-})
-.when('/ql-toa-hang/xe/:employee_id', {
-  templateUrl: '/html/toahang/xe-detail.html' + '?v=' + VERSION_NUMBER,
-  controller: 'TruckManagementController',
-  access: 'authorized'
-})
-.when('/ql-toa-hang/xe/sua/:employee_id', {
-  templateUrl: '/html/toahang/xe-form.html' + '?v=' + VERSION_NUMBER,
-  controller: 'TruckManagementController',
-  access: 'authorized'
-})
-
-.when('/ql-toa-hang/khach-hang', {
-  templateUrl: '/html/toahang/khach-hang.html' + '?v=' + VERSION_NUMBER,
-  controller: 'CustomerManagementController',
-  access: 'authorized'
-})
-.when('/ql-toa-hang/khach-hang/tao', {
-  templateUrl: '/html/toahang/khach-hang-form.html' + '?v=' + VERSION_NUMBER,
-  controller: 'CustomerManagementController',
-  access: 'authorized'
-})
-.when('/ql-toa-hang/khach-hang/:customer_id', {
-  templateUrl: '/html/toahang/khach-hang-detail.html' + '?v=' + VERSION_NUMBER,
-  controller: 'CustomerManagementController',
-  access: 'authorized'
-})
-.when('/ql-toa-hang/khach-hang/sua/:customer_id', {
-  templateUrl: '/html/toahang/khach-hang-form.html' + '?v=' + VERSION_NUMBER,
-  controller: 'CustomerManagementController',
-  access: 'authorized'
-})
-
+  .when('/ql-toa-hang/xe/tao', {
+    templateUrl: '/html/toahang/xe/xe-form.html' + '?v=' + VERSION_NUMBER,
+    controller: 'TruckManagementController',
+    access: 'authorized'
+  })
+  .when('/ql-toa-hang/xe/:truck_id', {
+    templateUrl: '/html/toahang/xe/xe-detail.html' + '?v=' + VERSION_NUMBER,
+    controller: 'TruckManagementController',
+    access: 'authorized'
+  })
+  .when('/ql-toa-hang/xe/sua/:truck_id', {
+    templateUrl: '/html/toahang/xe/xe-form.html' + '?v=' + VERSION_NUMBER,
+    controller: 'TruckManagementController',
+    access: 'authorized'
+  })
+  //KHACH HANG
+  .when('/ql-toa-hang/khach-hang', {
+    templateUrl: '/html/toahang/khachhang/khach-hang.html' + '?v=' + VERSION_NUMBER,
+    controller: 'CustomerManagementController',
+    access: 'authorized'
+  })
+  .when('/ql-toa-hang/khach-hang/tao', {
+    templateUrl: '/html/toahang/khachhang/khach-hang-form.html' + '?v=' + VERSION_NUMBER,
+    controller: 'CustomerManagementController',
+    access: 'authorized'
+  })
+  .when('/ql-toa-hang/khach-hang/:customer_id', {
+    templateUrl: '/html/toahang/khachhang/khach-hang-detail.html' + '?v=' + VERSION_NUMBER,
+    controller: 'CustomerManagementController',
+    access: 'authorized'
+  })
+  .when('/ql-toa-hang/khach-hang/sua/:customer_id', {
+    templateUrl: '/html/toahang/khachhang/khach-hang-form.html' + '?v=' + VERSION_NUMBER,
+    controller: 'CustomerManagementController',
+    access: 'authorized'
+  })
+  //NHAN VIEN
   .when('/ql-toa-hang/nhan-vien', {
-    templateUrl: '/html/toahang/nhan-vien.html' + '?v=' + VERSION_NUMBER,
+    templateUrl: '/html/toahang/nhanvien/nhan-vien.html' + '?v=' + VERSION_NUMBER,
     controller: 'EmployeeManagementController',
     access: 'authorized'
   })
   .when('/ql-toa-hang/nhan-vien/tao', {
-    templateUrl: '/html/toahang/nhan-vien-form.html' + '?v=' + VERSION_NUMBER,
+    templateUrl: '/html/toahang/nhanvien/nhan-vien-form.html' + '?v=' + VERSION_NUMBER,
     controller: 'EmployeeManagementController',
     access: 'authorized'
   })
   .when('/ql-toa-hang/nhan-vien/:employee_id', {
-    templateUrl: '/html/toahang/nhan-vien-detail.html' + '?v=' + VERSION_NUMBER,
+    templateUrl: '/html/toahang/nhanvien/nhan-vien-detail.html' + '?v=' + VERSION_NUMBER,
     controller: 'EmployeeManagementController',
     access: 'authorized'
   })
   .when('/ql-toa-hang/nhan-vien/sua/:employee_id', {
-    templateUrl: '/html/toahang/nhan-vien-form.html' + '?v=' + VERSION_NUMBER,
+    templateUrl: '/html/toahang/nhanvien/nhan-vien-form.html' + '?v=' + VERSION_NUMBER,
     controller: 'EmployeeManagementController',
     access: 'authorized'
   })
-
+  //QUYET TOAN
   .when('/ql-toa-hang/quyet-toan', {
-    templateUrl: '/html/toahang/quyet-toan.html' + '?v=' + VERSION_NUMBER,
+    templateUrl: '/html/toahang/quyettoan/quyet-toan.html' + '?v=' + VERSION_NUMBER,
     controller: 'WagonSettlementManagementController',
     access: 'authorized'
   })
   .when('/ql-toa-hang/quyet-toan/:wagonSettlement_id', {
-    templateUrl: '/html/toahang/quyet-toan-detail.html' + '?v=' + VERSION_NUMBER,
+    templateUrl: '/html/toahang/quyettoan/quyet-toan-detail.html' + '?v=' + VERSION_NUMBER,
     controller: 'WagonSettlementManagementController',
     access: 'authorized'
   })
-.when('/ql-toa-hang/quyet-toan/sua/:wagonSettlement_id', {
-  templateUrl: '/html/toahang/quyet-toan-form.html' + '?v=' + VERSION_NUMBER,
-  controller: 'WagonSettlementManagementController',
-  access: 'authorized'
-})
+  .when('/ql-toa-hang/quyet-toan/sua/:wagonSettlement_id', {
+    templateUrl: '/html/toahang/quyettoan/quyet-toan-form.html' + '?v=' + VERSION_NUMBER,
+    controller: 'WagonSettlementManagementController',
+    access: 'authorized'
+  })
 
   .when('/ql-bao-cao', {
     templateUrl: '/html/baocao/bao-cao.html' + '?v=' + VERSION_NUMBER,
@@ -339,7 +339,7 @@ clarityApp.directive('convertToNumber', function () {
   };
 });
 
-clarityApp.directive('validatorMax', function () {
+clarityApp.directive('validatorMax', function ($filter) {
   return {
     require: 'ngModel',
     link: function (scope, element, attrs, ctrl) {
@@ -349,14 +349,14 @@ clarityApp.directive('validatorMax', function () {
           return true;
         }
 
-        var value = parseInt(viewValue.replace(/,/g, ''));
+        var value = parseInt(viewValue.replace(/\./g, ''));
         var max = parseInt(attrs.max);
         if (value <= max) {
           return true;
         }
 
         // it is invalid
-        var newValue = parseInt(modelValue.replace(/,/g, '')).toLocaleString();
+        var newValue = $filter('currency')(parseInt(modelValue.replace(/\./g, '')), '', 0).trim();
         ctrl.$setViewValue(newValue);
         ctrl.$render();
         return false;

@@ -41,7 +41,7 @@ module Clarity.Controller {
       private $cookieStore: ng.ICookieStoreService,
       private $routeParams: any) {
 
-      this.mainHelper = new helper.MainHelper($http, $cookieStore);
+      this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
       this.orderService = new service.OrderService($http);
       this.inventoryService = new service.InventoryService($http);
       this.productService = new service.ProductService($http);
@@ -332,7 +332,7 @@ module Clarity.Controller {
     }
 
     setFormatedCurencyForOrderDetail(orderDetail: Model.OrderDetailModel) {
-      this.mainHelper.formatCurrency(orderDetail, 'price', `price${formatSuffix}`);
+      this.mainHelper.onCurrencyPropertyChanged(orderDetail, 'price', `price${formatSuffix}`);
       this.updateTotalAmount();
       this.updateNote();
     }

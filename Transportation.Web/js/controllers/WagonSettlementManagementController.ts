@@ -21,18 +21,21 @@ module Clarity.Controller {
     public wagonSettlementService: service.WagonSettlementService;
 
     public currentWagonSettlement: Model.WagonSettlementModel;
+    public wagonSettlementList: Array<Model.WagonSettlementModel>;
+    public wagonSettlementListView: Array<Model.WagonSettlementViewModel>;
+    public wagonSettlementListViewTmp: Array<Model.WagonSettlementViewModel>;
+    
     public truckList: Array<Model.TruckModel>
     public customerList: Array<Model.CustomerModel>
     public paymentList: Array<Model.PaymentModel>
     public wagonList: Array<Model.WagonModel>
 
-    public wagonSettlementList: Array<Model.WagonSettlementModel>;
-    public wagonSettlementListTmp: Array<Model.WagonSettlementModel>;
     public numOfPages: number;
     public currentPage: number;
     public pageSize: number;
     public isLoading: boolean;
     public todayFormat: string;
+    public searchText: string;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -47,39 +50,44 @@ module Clarity.Controller {
       this.customerService = new service.CustomerService($http);
       this.wagonService = new service.WagonService($http);
       this.exportService = new service.ExportService($http);
-			this.paymentService = new service.PaymentService($http);
-			this.mainHelper = new helper.MainHelper($http, $cookieStore);
+      this.paymentService = new service.PaymentService($http);
+      this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
       $scope.viewModel = this;
 
       this.pageSize = 10;
+      this.searchText = '';
       this.initWagonSettlement();
 
       var self = this;
-      $scope.$watch('searchText', function (value) {
-        if (self.wagonSettlementListTmp && self.wagonSettlementListTmp.length > 0) {
-          self.wagonSettlementList = $filter('filter')(self.wagonSettlementListTmp, value);
+      $scope.$watch('viewModel.searchText', function (value) {
+        if (self.wagonSettlementListViewTmp && self.wagonSettlementListViewTmp.length > 0) {
+          self.wagonSettlementListView = $filter('filter')(self.wagonSettlementListViewTmp, value);
           self.initPagination();
         }
       });
     }
 
     initWagonSettlement() {
-      var wagonId = this.$routeParams.wagonSettlement_id;
+      var wagonSettlementId = this.$routeParams.wagonSettlement_id;
       this.initCustomerList();
       this.initWagonList();
-      if (wagonId) {
-        if (this.$location.path() === '/ql-toa-hang/quyet-toan/' + wagonId) {
-          this.wagonSettlementService.getById(wagonId, (data) => {
+
+      if (wagonSettlementId) {
+        if (this.$location.path() === '/ql-toa-hang/quyet-toan/' + wagonSettlementId) {
+          this.$rootScope.showSpinner();
+          this.wagonSettlementService.getById(wagonSettlementId, (data) => {
             this.currentWagonSettlement = data;
             this.initPaymentList(this.currentWagonSettlement.code);
           }, null);
-        } else if (this.$location.path() === '/ql-toa-hang/quyet-toan/sua/' + wagonId) {
-					if (this.currentWagonSettlement == null) {
-            this.wagonSettlementService.getById(wagonId, (data) => {
+        } else if (this.$location.path() === '/ql-toa-hang/quyet-toan/sua/' + wagonSettlementId) {
+          if (this.currentWagonSettlement == null) {
+            this.$rootScope.showSpinner();
+            this.wagonSettlementService.getById(wagonSettlementId, (data) => {
               this.currentWagonSettlement = data;
+              this.$rootScope.hideSpinner();
               // init data
               this.todayFormat = new Date().toLocaleString();
-              this.mainHelper.initFormattedProperty(this.currentWagonSettlement, ['unitPrice'], formatSuffix);
+              this.mainHelper.initCurrencyFormattedProperty(this.currentWagonSettlement, ['unitPrice'], formatSuffix);
               this.currentWagonSettlement.paymentDate = '';
               this.currentWagonSettlement.paymentFormatted = '';
             }, null);
@@ -99,27 +107,52 @@ module Clarity.Controller {
         this.wagonSettlementList.sort(function (a: any, b: any) {
           return b.id - a.id;
         });
-        this.wagonSettlementListTmp = this.wagonSettlementList;
-        this.initPagination();
+        this.refreshWagonSettlementListView();
         this.isLoading = false;
       }, null);
+    }
+
+    mapToWagonSettlementListView() {
+      this.wagonSettlementListView = this.wagonSettlementList.map((wagonSettlement: Model.WagonSettlementModel) => {
+        const wagonSettlementView = new Model.WagonSettlementViewModel();
+        wagonSettlementView.id = wagonSettlement.id;
+        wagonSettlementView.wagonCode = this.getWagonCode(wagonSettlement.wagonId);
+        wagonSettlementView.customerName = this.getCustomerName(wagonSettlement.customerId);
+        wagonSettlementView.totalAmount = this.mainHelper.formatCurrency(wagonSettlement.quantity * wagonSettlement.unitPrice + wagonSettlement.phiPhatSinh);
+        wagonSettlementView.phiPhatSinh = this.mainHelper.formatCurrency(wagonSettlement.phiPhatSinh);
+        wagonSettlementView.payment = this.mainHelper.formatCurrency(wagonSettlement.payment);
+        wagonSettlementView.paymentRemain = this.mainHelper.formatCurrency(wagonSettlement.paymentRemain);
+        wagonSettlementView.paymentStatus = wagonSettlement.paymentStatus;
+        return wagonSettlementView;
+      });
+    }
+
+    refreshWagonSettlementListView() {
+      if (this.$location.path() === '/ql-toa-hang/quyet-toan') {
+        this.mapToWagonSettlementListView();
+        this.wagonSettlementListViewTmp = this.wagonSettlementListView;
+        this.initPagination();
+      }
     }
 
 		initCustomerList() {
       this.customerService.getAll((results: Array<Model.CustomerModel>) => {
         this.customerList = results;
+        this.refreshWagonSettlementListView();
       }, null);
     }
 
     initWagonList() {
       this.wagonService.getAll((results: Array<Model.WagonModel>) => {
         this.wagonList = results;
+        this.refreshWagonSettlementListView();
       }, null);
     }
 
 		initPaymentList(code: string) {
 			this.paymentService.getByWagonSettlementCode(code, (data) => {
-				this.paymentList = data;
+        this.paymentList = data;
+        this.$rootScope.hideSpinner();
 			}, null);
 		}
 
@@ -131,15 +164,15 @@ module Clarity.Controller {
 
     initPagination() {
       this.currentPage = 1;
-      this.numOfPages = this.wagonSettlementList.length % this.pageSize === 0 ?
-        this.wagonSettlementList.length / this.pageSize : Math.floor(this.wagonSettlementList.length / this.pageSize) + 1;
+      this.numOfPages = this.wagonSettlementListView.length % this.pageSize === 0 ?
+        this.wagonSettlementListView.length / this.pageSize : Math.floor(this.wagonSettlementListView.length / this.pageSize) + 1;
     }
 
     getWagonSettlementListOnPage() {
-      if (this.wagonSettlementList && this.wagonSettlementList.length > 0) {
+      if (this.wagonSettlementListView && this.wagonSettlementListView.length > 0) {
         var startIndex = this.pageSize * (this.currentPage - 1);
         var endIndex = startIndex + this.pageSize;
-        return this.wagonSettlementList.slice(startIndex, endIndex);
+        return this.wagonSettlementListView.slice(startIndex, endIndex);
       }
     }
 
@@ -168,20 +201,29 @@ module Clarity.Controller {
     }
 
 		updateNewPayment() {
-      this.mainHelper.formatCurrency(this.currentWagonSettlement, 'newPayment', `newPayment${formatSuffix}`);
+      this.mainHelper.onCurrencyPropertyChanged(this.currentWagonSettlement, 'newPayment', `newPayment${formatSuffix}`);
     }
 
-    getCustomerName(customerId: string): string {
-      return this.mainHelper.getPropertyValue(this.customerList, 'id', customerId, 'fullName');
+    getCustomerName(customerId: number): string {
+      if (customerId) {
+        return this.mainHelper.getPropertyValue(this.customerList, 'id', customerId.toString(), 'fullName');
+      }
     }
 
-    getWagonCode(wagonId: string): string {
-      return this.mainHelper.getPropertyValue(this.wagonList, 'id', wagonId, 'code');
+    getWagonCode(wagonId: number): string {
+      if (wagonId) {
+        return this.mainHelper.getPropertyValue(this.wagonList, 'id', wagonId.toString(), 'code');
+      }
     }
 
     goToWagonSettlementEditForm(event: Event, wagonSettlementId: number) {
       event.stopPropagation();
       this.$location.path('/ql-toa-hang/quyet-toan/sua/' + wagonSettlementId);
     }
+
+    clearSearchText() {
+      this.searchText = '';
+    }
+
 	}
 }

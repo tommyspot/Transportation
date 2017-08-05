@@ -20,9 +20,13 @@
 					<span class="hidden-xs">Xóa nhân viên</span>
 				</button>
 			</div>
-			<div class="col-sm-3">
-				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Tìm kiếm nhanh" />
-			</div>
+      <div class="col-sm-3 search-text-box">
+        <div class="form-group has-feedback">
+          <input class="form-control" type="text" data-ng-model="viewModel.searchText" placeholder="Tìm kiếm nhanh" />
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                data-ng-click="viewModel.clearSearchText()"></span>
+        </div>
+      </div>
 		</div>
 
 		<div class="row">
@@ -41,26 +45,29 @@
                 <th class="col-sm-2 text-center">Ngày làm việc</th>
 								<th class="col-sm-2 text-center">Tình trạng</th>
                 <th class="edit-column-width text-center">Sửa</th>
+                <th class="detail-column-width text-center">Xem</th>
 							</tr>
 						</thead>
 						<tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="7">
+                <td class="text-center" colspan="8">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
-							<tr data-ng-if="!viewModel.isLoading" class="pointer" data-ng-repeat="employee in viewModel.getEmployeeListOnPage()"
-									data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien/' + employee.id)">
+							<tr data-ng-if="!viewModel.isLoading" data-ng-repeat="employeeViewModel in viewModel.getEmployeeListOnPage()">
 								<td class="text-center" data-ng-click="$event.stopPropagation();">
-									<input id="employee-{{$index}}" type="checkbox" data-ng-model="employee.isChecked" />
+									<input id="employee-{{$index}}" type="checkbox" data-ng-model="employeeViewModel.isChecked" />
 								</td>
-								<td>{{employee.fullName}}</td>
-								<td>{{employee.mobile}}</td>
-								<td>{{employee.title}}</td>
-                <td>{{employee.startDate}}</td>
-								<td>{{viewModel.checkStatusEmployee(employee)}}</td>
-                <td class="text-center edit-column" data-ng-click="viewModel.goToEmployeeEditForm($event, employee.id)">
+								<td>{{employeeViewModel.fullName}}</td>
+								<td>{{employeeViewModel.mobile}}</td>
+								<td>{{employeeViewModel.title}}</td>
+                <td class="text-center">{{employeeViewModel.startDate}}</td>
+								<td>{{employeeViewModel.status}}</td>
+                <td class="text-center edit-column" data-ng-click="viewModel.goToEmployeeEditForm($event, employeeViewModel.id)">
                   <span class="glyphicon glyphicon-pencil"></span>
+                </td>
+                <td class="text-center detail-column" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien/' + employeeViewModel.id)">
+                  <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                 </td>
 							</tr>
 						</tbody>

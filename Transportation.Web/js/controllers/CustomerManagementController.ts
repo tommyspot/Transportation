@@ -18,15 +18,17 @@ module Clarity.Controller {
 
     public currentCustomer: Model.CustomerModel;
     public customerList: Array<Model.CustomerModel>;
-		public customerListTmp: Array<Model.CustomerModel>;
+    public customerListView: Array<Model.CustomerViewModel>;
+    public customerListViewTmp: Array<Model.CustomerViewModel>;
+
     public numOfPages: number;
     public currentPage: number;
     public pageSize: number;
+
     public isCheckedAll: boolean;
-		public totalOwnedFormated: string;
-		public totalPayFormated: string;
-    public totalDebtFormated: string;
     public isLoading: boolean;
+    public searchText: string;
+    public errorMessage: string;
 
     constructor(private $scope,
       public $rootScope: IRootScope,
@@ -35,19 +37,23 @@ module Clarity.Controller {
       public $window: ng.IWindowService,
       public $filter: ng.IFilterService,
       private $routeParams: any,
-      private $cookieStore: ng.ICookieStoreService) {
+      private $cookieStore: ng.ICookieStoreService,
+      private $timeout: ng.ITimeoutService) {
 
 			this.customerService = new service.CustomerService($http);
       this.employeeService = new service.EmployeeService($http);
-      this.mainHelper = new helper.MainHelper($http, $cookieStore); 
+      this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter); 
       $scope.viewModel = this;
-			this.pageSize = 10;
+
+      this.pageSize = 10;
+      this.searchText = '';
+      this.errorMessage = '';
       this.initCustomer();
 
 			var self = this;
-      $scope.$watch('searchText', function (value) {
-        if (self.customerListTmp && self.customerListTmp.length > 0) {
-          self.customerList = $filter('filter')(self.customerListTmp, value);
+      $scope.$watch('viewModel.searchText', function (value) {
+        if (self.customerListViewTmp && self.customerListViewTmp.length > 0) {
+          self.customerListView = $filter('filter')(self.customerListViewTmp, value);
           self.initPagination();
         }
       });
@@ -55,25 +61,26 @@ module Clarity.Controller {
 
 		initCustomer() {
       var customerId = this.$routeParams.customer_id;
-			this.initCustomerList();
       if (customerId) {
-        if (this.$location.path() === '/ql-toa-hang/khach-hang/' + customerId) {
-          this.customerService.getById(customerId, (data) => {
-            this.currentCustomer = data;
-            this.mainHelper.initFormattedProperty(this.currentCustomer, ['totalOwned', 'totalPay', 'totalDebt'], formatSuffix);
-          }, null);
-        } else if (this.$location.path() === '/ql-toa-hang/khach-hang/sua/' + customerId) {
-          if (this.currentCustomer == null) {
-            this.customerService.getById(customerId, (data) => {
-              this.currentCustomer = data;
-              this.mainHelper.initFormattedProperty(this.currentCustomer, ['totalOwned', 'totalPay', 'totalDebt'], formatSuffix);
-            }, null);
-          }
-        }
+        this.initCurrentCustomer(customerId);
       } else {
         if (this.$location.path() === '/ql-toa-hang/khach-hang/tao') {
           this.currentCustomer = new Model.CustomerModel();
+        } else if (this.$location.path() === '/ql-toa-hang/khach-hang') {
+          this.initCustomerList();
         }
+      }
+    }
+
+    initCurrentCustomer(customerId: number) {
+      if (this.currentCustomer == null) {
+        this.$rootScope.showSpinner();
+        this.customerService.getById(customerId, (data) => {
+          this.currentCustomer = data;
+          this.mainHelper.initCurrencyFormattedProperty(this.currentCustomer,
+            ['totalOwned', 'totalPay', 'totalDebt'], formatSuffix);
+          this.$rootScope.hideSpinner();
+        }, null);
       }
     }
 
@@ -84,23 +91,40 @@ module Clarity.Controller {
         this.customerList.sort(function (a: any, b: any) {
           return b.id - a.id;
         });
-        this.customerListTmp = this.customerList;
+        this.mapToCustomerListView();
+        this.customerListViewTmp = this.customerListView;
         this.initPagination();
         this.isLoading = false;
       }, null);
     }
 
-    initPagination() {
-      this.currentPage = 1;
-      this.numOfPages = this.customerList.length % this.pageSize === 0 ?
-        this.customerList.length / this.pageSize : Math.floor(this.customerList.length / this.pageSize) + 1;
+    mapToCustomerListView() {
+      this.customerListView = this.customerList.map((customer: Model.CustomerModel) => {
+        this.mainHelper.initCurrencyFormattedProperty(customer,
+          ['totalOwned', 'totalPay', 'totalDebt'],formatSuffix);
+        const customerView = new Model.CustomerViewModel();
+        customerView.id = customer.id;
+        customerView.code = customer.code;
+        customerView.fullName = customer.fullName;
+        customerView.phoneNo = customer.phoneNo;
+        customerView.totalOwned = customer.totalOwnedFormatted;
+        customerView.totalPay = customer.totalPayFormatted;
+        customerView.totalDebt = customer.totalDebtFormatted;
+        return customerView;
+      });
     }
 
-		getCustomerListOnPage() {
-      if (this.customerList && this.customerList.length > 0) {
+    initPagination() {
+      this.currentPage = 1;
+      this.numOfPages = this.customerListView.length % this.pageSize === 0 ?
+        this.customerListView.length / this.pageSize : Math.floor(this.customerListView.length / this.pageSize) + 1;
+    }
+
+    getCustomerListOnPage(): Array<Model.CustomerViewModel> {
+      if (this.customerListView && this.customerListView.length > 0) {
         var startIndex = this.pageSize * (this.currentPage - 1);
         var endIndex = startIndex + this.pageSize;
-        return this.customerList.slice(startIndex, endIndex);
+        return this.customerListView.slice(startIndex, endIndex);
       }
     }
 
@@ -121,6 +145,7 @@ module Clarity.Controller {
         this.goToPage(this.currentPage);
       }
     }
+
     goToNextPage() {
       if (this.currentPage < this.numOfPages) {
         this.currentPage++;
@@ -139,32 +164,40 @@ module Clarity.Controller {
     removeCustomers() {
       var confirmDialog = this.$window.confirm('Bạn có muốn xóa những khách hàng được chọn?');
       if (confirmDialog) {
-        for (let i = 0; i < this.customerList.length; i++) {
-          var Customer = this.customerList[i];
-          if (Customer.isChecked) {
-            this.customerService.deleteEntity(Customer, (data) => {
+        for (let i = 0; i < this.customerListView.length; i++) {
+          const customer = this.customerListView[i];
+          if (customer.isChecked) {
+            this.customerService.deleteEntity(customer, (data) => {
               this.initCustomerList();
-            }, () => { });
+            }, (error) => {
+              this.errorMessage = 'Khách hàng được chọn đã có trong Quyết toán';
+              this.$timeout(() => {
+                this.errorMessage = '';
+              }, 8000);
+            });
           }
         }
       }
     }
 
-    removeCustomerInDetail(Customer: Model.CustomerModel) {
+    removeCustomerInDetail(customer: Model.CustomerModel) {
       var confirmDialog = this.$window.confirm('Bạn có muốn xóa khách hàng này?');
       if (confirmDialog) {
-        this.customerService.deleteEntity(Customer, (data) => {
+        this.customerService.deleteEntity(customer, (data) => {
           this.$location.path('/ql-toa-hang/khach-hang');
-        }, null);
+        }, (error) => {
+          this.errorMessage = 'Khách hàng đã có trong Quyết toán';
+          this.$timeout(() => {
+            this.errorMessage = '';
+          }, 8000);
+        });
       }
     }
 
     createCustomer(customer: Model.CustomerModel) {
-      this.customerService.create(customer,
-        (data) => {
-          this.$location.path('/ql-toa-hang/khach-hang');
-        },
-        () => { });
+      this.customerService.create(customer, (data) => {
+        this.$location.path('/ql-toa-hang/khach-hang');
+      }, null);
     }
 
 		updateCustomer(customer: Model.CustomerModel) {
@@ -182,9 +215,9 @@ module Clarity.Controller {
       this.$location.path(`/ql-toa-hang/khach-hang/sua/${customerId}`);
     }
 
-    formatCurrency(propertyName) {
-      this.mainHelper.formatCurrency(this.currentCustomer, propertyName, `${propertyName}${formatSuffix}`);
-		}
+    clearSearchText() {
+      this.searchText = '';
+    }
 
 	}
 }

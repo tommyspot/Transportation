@@ -44,6 +44,15 @@ module Clarity.Model {
     public paymentOf10PercentFormatted: string;
 		
     public wagonSettlements: Array<Model.WagonSettlementModel>;
+  }
+
+  export class WagonViewModel extends Model.BaseModel {
+    public code: string;
+    public departDate: string;
+    public returnDate: string;
+    public departure: string;
+    public destination: string;
+    public totalAmount: string;
     public isChecked: boolean;
   }
 }

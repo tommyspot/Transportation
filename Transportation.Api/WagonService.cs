@@ -135,8 +135,8 @@ namespace Transportation.Api
 					wagonSettlement.Code = wagonSettlement.WagonID + "_" + wagonSettlement.CustomerID;
 					wagon.WagonSetlements.Add(wagonSettlement);
 					
-					Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == wagonSettlement.CustomerID);
-					customer.NeedUpdatePayment = true;
+					//Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == wagonSettlement.CustomerID);
+					//customer.NeedUpdatePayment = true;
 				}
                 ClarityDB.Instance.SaveChanges();
             }

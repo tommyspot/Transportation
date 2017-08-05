@@ -20,15 +20,19 @@
           <span class="hidden-xs">Xóa xe</span>
         </button>
       </div>
-      <div class="col-sm-3">
-        <input class="form-control" type="text" data-ng-model="searchText" placeholder="Tìm kiếm nhanh" />
+      <div class="col-sm-3 search-text-box">
+        <div class="form-group has-feedback">
+          <input class="form-control" type="text" data-ng-model="viewModel.searchText" placeholder="Tìm kiếm nhanh" />
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                data-ng-click="viewModel.clearSearchText()"></span>
+        </div>
       </div>
     </div>
 
     <div class="row">
       <div class="col-sm-12">
         <div class="table-responsive">
-          <table class="table table-hover table-bordered">
+          <table class="table table-bordered">
             <thead>
               <tr>
                 <th class="checkbox-width text-center">
@@ -41,26 +45,29 @@
                 <th class="col-sm-2 text-center">Tải trọng</th>
                 <th class="col-sm-2 text-center">Còn lưu hành</th>
                 <th class="edit-column-width text-center">Sửa</th>
+                <th class="detail-column-width text-center">Xem</th>
               </tr>
             </thead>
             <tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="7">
+                <td class="text-center" colspan="8">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
-              <tr data-ng-if="!viewModel.isLoading" class="pointer" data-ng-repeat="truck in viewModel.getTruckListOnPage()"
-                  data-ng-click="viewModel.$location.path('/ql-toa-hang/xe/' + truck.id)">
+              <tr data-ng-if="!viewModel.isLoading" data-ng-repeat="truckViewModel in viewModel.getTruckListOnPage()">
                 <td class="text-center" data-ng-click="$event.stopPropagation();">
-                  <input id="truck-{{$index}}" type="checkbox" data-ng-model="truck.isChecked" />
+                  <input id="truck-{{$index}}" type="checkbox" data-ng-model="truckViewModel.isChecked" />
                 </td>
-                <td>{{truck.licensePlate}}</td>
-                <td class="text-center">{{truck.yearOfManufacture}}</td>
-                <td>{{truck.brand}}</td>
-                <td>{{truck.weight}} tấn</td>
-                <td>{{viewModel.checkStatusTruck(truck)}}</td>
-                <td class="text-center edit-column" data-ng-click="viewModel.goToTruckEditForm($event, truck.id)">
+                <td>{{truckViewModel.licensePlate}}</td>
+                <td class="text-center">{{truckViewModel.yearOfManufacture}}</td>
+                <td>{{truckViewModel.brand}}</td>
+                <td>{{truckViewModel.weight}}</td>
+                <td>{{truckViewModel.hasUsing}}</td>
+                <td class="text-center edit-column" data-ng-click="viewModel.goToTruckEditForm($event, truckViewModel.id)">
                   <span class="glyphicon glyphicon-pencil"></span>
+                </td>
+                <td class="text-center detail-column" data-ng-click="viewModel.$location.path('/ql-toa-hang/xe/' + truckViewModel.id)">
+                  <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                 </td>
               </tr>
             </tbody>

@@ -14,13 +14,16 @@ module Clarity.Controller {
     public currentEmployee: Model.EmployeeModel;
 
     public employeeList: Array<Model.EmployeeModel>;
-    public employeeListTmp: Array<Model.EmployeeModel>;
+    public employeeListView: Array<Model.EmployeeViewModel>;
+    public employeeListViewTmp: Array<Model.EmployeeViewModel>;
+
     public numOfPages: number;
     public currentPage: number;
     public pageSize: number;
     public isCheckedAll: boolean;
     public titles: Array<String>;
     public isLoading: boolean;
+    public searchText: string;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -34,12 +37,13 @@ module Clarity.Controller {
       $scope.viewModel = this;
 
       this.pageSize = 10;
+      this.searchText = '';
       this.initEmployee();
 
       var self = this;
-      $scope.$watch('searchText', function (value) {
-        if (self.employeeListTmp && self.employeeListTmp.length > 0) {
-          self.employeeList = $filter('filter')(self.employeeListTmp, value);
+      $scope.$watch('viewModel.searchText', function (value) {
+        if (self.employeeListViewTmp && self.employeeListViewTmp.length > 0) {
+          self.employeeListView = $filter('filter')(self.employeeListViewTmp, value);
           self.initPagination();
         }
       });
@@ -49,50 +53,65 @@ module Clarity.Controller {
     initEmployee() {
       var employeeId = this.$routeParams.employee_id;
       if (employeeId) {
-        if (this.$location.path() === '/ql-toa-hang/nhan-vien/' + employeeId) {
-          this.employeeService.getById(employeeId, (data) => {
-            this.currentEmployee = data;
-          }, null);
-        } else if (this.$location.path() === '/ql-toa-hang/nhan-vien/sua/' + employeeId) {
-          if (this.currentEmployee == null) {
-            this.employeeService.getById(employeeId, (data) => {
-							this.currentEmployee = data;
-            }, null);
-          }
-        }
+        this.initCurrentEmployee(employeeId);
       } else {
         if (this.$location.path() === '/ql-toa-hang/nhan-vien/tao') {
           this.currentEmployee = new Model.EmployeeModel();
         } else if (this.$location.path() === '/ql-toa-hang/nhan-vien') {
-          this.isLoading = true;
           this.initEmployeeList();
         }
       }
     }
 
+    initCurrentEmployee(employeeId: number) {
+      if (this.currentEmployee == null) {
+        this.$rootScope.showSpinner();
+
+        this.employeeService.getById(employeeId, (data: Model.EmployeeModel) => {
+          this.currentEmployee = data;
+          this.$rootScope.hideSpinner();
+        }, null);
+      }
+    }
+
     initEmployeeList() {
+      this.isLoading = true;
       this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
         this.employeeList = results;
         this.employeeList.sort(function (a: any, b: any) {
           return b.id - a.id;
         });
-        this.employeeListTmp = this.employeeList;
+        this.mapToEmployeeListView();
+        this.employeeListViewTmp = this.employeeListView;
         this.initPagination();
         this.isLoading = false;
       }, null);
     }
 
+    mapToEmployeeListView() {
+      this.employeeListView = this.employeeList.map((employee: Model.EmployeeModel) => {
+        const employeeView = new Model.EmployeeViewModel();
+        employeeView.id = employee.id;
+        employeeView.fullName = employee.fullName;
+        employeeView.mobile = employee.mobile;
+        employeeView.title = employee.title;
+        employeeView.startDate = employee.startDate;
+        employeeView.status = employee.isDeleted ? 'Không còn làm việc' : 'Còn làm việc';
+        return employeeView;
+      });
+    }
+
     initPagination() {
       this.currentPage = 1;
-      this.numOfPages = this.employeeList.length % this.pageSize === 0 ?
-        this.employeeList.length / this.pageSize : Math.floor(this.employeeList.length / this.pageSize) + 1;
+      this.numOfPages = this.employeeListView.length % this.pageSize === 0 ?
+        this.employeeListView.length / this.pageSize : Math.floor(this.employeeListView.length / this.pageSize) + 1;
     }
 
     getEmployeeListOnPage() {
-      if (this.employeeList && this.employeeList.length > 0) {
+      if (this.employeeListView && this.employeeListView.length > 0) {
         var startIndex = this.pageSize * (this.currentPage - 1);
         var endIndex = startIndex + this.pageSize;
-        return this.employeeList.slice(startIndex, endIndex);
+        return this.employeeListView.slice(startIndex, endIndex);
       }
     }
 
@@ -113,6 +132,7 @@ module Clarity.Controller {
         this.goToPage(this.currentPage);
       }
     }
+
     goToNextPage() {
       if (this.currentPage < this.numOfPages) {
         this.currentPage++;
@@ -131,12 +151,12 @@ module Clarity.Controller {
     removeEmployees() {
       var confirmDialog = this.$window.confirm('Bạn có muốn xóa những nhân viên được chọn?');
       if (confirmDialog) {
-        for (let i = 0; i < this.employeeList.length; i++) {
-          var employee = this.employeeList[i];
+        for (let i = 0; i < this.employeeListView.length; i++) {
+          var employee = this.employeeListView[i];
           if (employee.isChecked) {
             this.employeeService.deleteEntity(employee, (data) => {
               this.initEmployeeList();
-            }, () => { });
+            }, null);
           }
         }
       }
@@ -173,9 +193,9 @@ module Clarity.Controller {
       this.$location.path(`/ql-toa-hang/nhan-vien/sua/${employeeId}`);
     }
 
-		checkStatusEmployee(employee) {
-			return employee.isDeleted ? 'Không còn làm việc' : 'Còn làm việc';
-		}
+    clearSearchText() {
+      this.searchText = '';
+    }
 
 	}
 }

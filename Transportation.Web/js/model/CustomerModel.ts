@@ -7,13 +7,22 @@ module Clarity.Model {
 		public totalPay: number;
 		public totalDebt: number;
 
-		public totalOwnedFormatted: string;
-		public totalPayFormatted: string;
-		public totalDebtFormatted: string;
-
 		public type: string;
 		public phoneNo: string;
-		public code: string;
-		public isChecked: boolean;
-	}
+    public code: string;
+
+    public totalOwnedFormatted: string;
+    public totalPayFormatted: string;
+    public totalDebtFormatted: string;
+  }
+
+  export class CustomerViewModel extends Model.BaseModel {
+    public code: string;
+    public fullName: string;
+    public phoneNo: string;
+    public totalOwned: string;
+    public totalPay: string;
+    public totalDebt: string;
+    public isChecked: boolean;
+  }
 }

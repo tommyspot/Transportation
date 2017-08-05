@@ -5,7 +5,8 @@ module Clarity.Helper {
 		public authenticationService: Clarity.Service.AuthenticationService;
 
     constructor(private $http: ng.IHttpService,
-      private $cookieStore: ng.ICookieStoreService) {
+      private $cookieStore: ng.ICookieStoreService,
+      private $filter: ng.IFilterService) {
 			this.authenticationService = new Clarity.Service.AuthenticationService($http, $cookieStore);
 		};
 
@@ -173,17 +174,21 @@ module Clarity.Helper {
       return new Date(year, month, day);
     }
 
-    formatCurrency(object: Object, propertyName: string, formattedPropertyName: string) {
+    formatCurrency(value: number) {
+      return this.$filter('currency')(value, '', 0).trim();
+    }
+
+    onCurrencyPropertyChanged(object: Object, propertyName: string, formattedPropertyName: string) {
       if (object[formattedPropertyName] && object[formattedPropertyName] != '') {
-        object[propertyName] = parseInt(object[formattedPropertyName].replace(/,/g, ''));
-        object[formattedPropertyName] = object[propertyName].toLocaleString();
+        object[propertyName] = parseInt(object[formattedPropertyName].replace(/\./g, ''));
+        object[formattedPropertyName] = this.formatCurrency(object[propertyName]);
       }
     }
 
-    initFormattedProperty(object: Object, propertyNames: Array<string>, formatSuffix: string) {
+    initCurrencyFormattedProperty(object: Object, propertyNames: Array<string>, formatSuffix: string) {
       propertyNames.forEach((property: string) => {
         if (object.hasOwnProperty(property)) {
-          object[`${property}${formatSuffix}`] = object[property].toLocaleString();
+          object[`${property}${formatSuffix}`] = this.formatCurrency(object[property]);
         } 
       });
     }
@@ -196,6 +201,15 @@ module Clarity.Helper {
         return filterObjects && filterObjects.length > 0 ? filterObjects[0][propertyName] : '';
       }
       return '';
+    }
+
+    getObjectById(objectList: Array<any>, id: number) {
+      if (objectList && objectList.length > 0) {
+        objectList.forEach((obj: any) => {
+          if (obj.id == id) return obj;
+        });
+      }
+      return null;
     }
 
   }

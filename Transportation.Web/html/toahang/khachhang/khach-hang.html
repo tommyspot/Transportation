@@ -1,6 +1,6 @@
 ﻿<div id="customerList" class="bootstrap view-page">
 	<div class="container">
-		<div class="row action-row">
+		<div class="row">
 			<div class="col-sm-9">
 				<span>
 					<label for="numOfCustomers">Hiển thị</label>
@@ -20,10 +20,20 @@
 					<span class="hidden-xs">Xóa khách hàng</span>
 				</button>
 			</div>
-			<div class="col-sm-3">
-				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Tìm kiếm nhanh" />
-			</div>
+      <div class="col-sm-3 search-text-box">
+        <div class="form-group has-feedback">
+          <input class="form-control" type="text" data-ng-model="viewModel.searchText" placeholder="Tìm kiếm nhanh" />
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                data-ng-click="viewModel.clearSearchText()"></span>
+        </div>
+      </div>
 		</div>
+
+    <div class="row margin-bottom-15" data-ng-if="viewModel.errorMessage !== ''">
+      <div class="col-sm-12">
+        <span class="required-field">{{viewModel.errorMessage}}</span>
+      </div>
+    </div>
 
 		<div class="row">
 			<div class="col-sm-12">
@@ -42,27 +52,30 @@
 								<th class="main-width-column text-center">Tổng trả</th>
 								<th class="main-width-column text-center">Còn nợ lại</th>
                 <th class="edit-column-width text-center">Sửa</th>
+                <th class="detail-column-width text-center">Xem</th>
 							</tr>
 						</thead>
 						<tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="8">
+                <td class="text-center" colspan="9">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
-							<tr data-ng-if="!viewModel.isLoading" class="pointer" data-ng-repeat="customer in viewModel.getCustomerListOnPage()"
-									data-ng-click="viewModel.$location.path('/ql-toa-hang/khach-hang/' + customer.id)">
+							<tr data-ng-if="!viewModel.isLoading" data-ng-repeat="customerViewModel in viewModel.getCustomerListOnPage()">
 								<td class="text-center" data-ng-click="$event.stopPropagation();">
-									<input id="customer-{{$index}}" type="checkbox" data-ng-model="customer.isChecked" />
+									<input id="customer-{{$index}}" type="checkbox" data-ng-model="customerViewModel.isChecked" />
 								</td>
-								<td>{{customer.code}}</td>
-								<td>{{customer.fullName}}</td>
-								<td>{{customer.phoneNo}}</td>
-								<td class="text-right">{{customer.totalOwned | currency: "" : 0}}</td>
-								<td class="text-right">{{customer.totalPay | currency: "" : 0}}</td>
-								<td class="text-right">{{customer.totalDebt | currency: "" : 0}}</td>
-                <td class="text-center edit-column" data-ng-click="viewModel.goToCustomerEditForm($event, customer.id)">
+								<td>{{customerViewModel.code}}</td>
+								<td>{{customerViewModel.fullName}}</td>
+								<td>{{customerViewModel.phoneNo}}</td>
+								<td class="text-right">{{customerViewModel.totalOwned}}</td>
+								<td class="text-right">{{customerViewModel.totalPay}}</td>
+								<td class="text-right">{{customerViewModel.totalDebt}}</td>
+                <td class="text-center edit-column" data-ng-click="viewModel.goToCustomerEditForm($event, customerViewModel.id)">
                   <span class="glyphicon glyphicon-pencil"></span>
+                </td>
+                <td class="text-center detail-column" data-ng-click="viewModel.$location.path('/ql-toa-hang/khach-hang/' + customerViewModel.id)">
+                  <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                 </td>
 							</tr>
 						</tbody>

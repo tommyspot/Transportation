@@ -24,7 +24,7 @@
         </div>
         <label for="totalAmount" class="col-sm-2 control-label">Tổng phí</label>
         <div class="col-sm-4 text-right">
-          {{viewModel.currentWagonSettlement.quantity * viewModel.currentWagonSettlement.unitPrice | currency: "" : 0}}
+          <b>{{viewModel.currentWagonSettlement.quantity * viewModel.currentWagonSettlement.unitPrice + viewModel.currentWagonSettlement.phiPhatSinh | currency: "" : 0}}</b>
         </div>
       </div>
       <div class="form-group">
@@ -32,9 +32,9 @@
         <div class="col-sm-4">
           <input id="wagonId" name="wagonId" class="form-control" type="text" value={{viewModel.getWagonCode(viewModel.currentWagonSettlement.wagonId)}} disabled>
         </div>
-        <label for="payment" class="col-sm-2 control-label">Đã thanh toán</label>
+        <label for="payment" class="col-sm-2 control-label">Phí phát sinh</label>
         <div class="col-sm-4 text-right">
-          {{viewModel.currentWagonSettlement.payment | currency: "" : 0}}
+          {{viewModel.currentWagonSettlement.phiPhatSinh | currency: "" : 0}}
         </div>
       </div>
       <div class="form-group">
@@ -42,15 +42,25 @@
         <div class="col-sm-4">
           <input id="destination" name="destination" class="form-control" type="text" value={{viewModel.currentWagonSettlement.destination}} disabled>
         </div>
-        <label for="paymentRemain" class="col-sm-2 control-label">Còn lại</label>
+        <label for="payment" class="col-sm-2 control-label">Đã thanh toán</label>
         <div class="col-sm-4 text-right">
-          {{viewModel.currentWagonSettlement.paymentRemain | currency: "" : 0}}
+          {{viewModel.currentWagonSettlement.payment | currency: "" : 0}}
         </div>
       </div>
       <div class="form-group">
         <label for="quantity" class="col-sm-2 control-label">Số lượng</label>
         <div class="col-sm-4">
           <input id="quantity" name="quantity" class="form-control" type="text" value={{viewModel.currentWagonSettlement.quantity}} disabled>
+        </div>
+        <label for="paymentRemain" class="col-sm-2 control-label">Còn lại</label>
+        <div class="col-sm-4 text-right">
+          <b>{{viewModel.currentWagonSettlement.paymentRemain | currency: "" : 0}}</b>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="unit" class="col-sm-2 control-label">Đơn vị tính</label>
+        <div class="col-sm-4">
+          <input id="unit" name="unit" class="form-control" type="text" data-ng-model="viewModel.currentWagonSettlement.unit" disabled>
         </div>
         <label for="paymentDate" class="col-sm-2 control-label">Ngày giao dịch</label>
         <div class="col-sm-4">
@@ -60,21 +70,15 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="unit" class="col-sm-2 control-label">Đơn vị tính</label>
+        <label for="unitPrice" class="col-sm-2 control-label">Đơn giá</label>
         <div class="col-sm-4">
-          <input id="unit" name="unit" class="form-control" type="text" data-ng-model="viewModel.currentWagonSettlement.unit" disabled>
+          <input id="unitPrice" name="unitPrice" class="form-control" type="text" data-ng-model="viewModel.currentWagonSettlement.unitPriceFormatted" disabled>
         </div>
         <label for="newPayment" class="col-sm-2 control-label">Thanh toán mới</label>
         <div class="col-sm-4">
           <input id="newPayment" name="newPayment" class="form-control text-right" type="text" maxlength="15" data-ng-model="viewModel.currentWagonSettlement.newPaymentFormatted"
-                 data-ng-change="viewModel.updateNewPayment()" max={{viewModel.currentWagonSettlement.paymentRemain}} validator-max/>
-          <span class="required-field validate-error" data-ng-if="wagonSettlementForm.newPayment.$error.maxValue">(<b>Thanh toán mới</b> phải nhỏ hơn <b>Còn lại</b>)</span>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="unitPrice" class="col-sm-2 control-label">Đơn giá</label>
-        <div class="col-sm-4">
-          <input id="unitPrice" name="unitPrice" class="form-control" type="text" data-ng-model="viewModel.currentWagonSettlement.unitPriceFormatted" disabled>
+                 data-ng-change="viewModel.updateNewPayment()" max={{viewModel.currentWagonSettlement.paymentRemain}} validator-max />
+          <span class="required-field validate-error" data-ng-if="wagonSettlementForm.newPayment.$error.maxValue"><b>Thanh toán mới</b> phải nhỏ hơn <b>Còn lại</b></span>
         </div>
       </div>
       
