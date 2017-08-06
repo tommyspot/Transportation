@@ -40,18 +40,19 @@
                          data-ng-change="viewModel.selectAllWagonsOnPage()"/>
                 </th>
                 <th class="text-center">Mã toa hàng</th>
+                <th class="main-width-column text-center">Ngày TT</th>
                 <th class="main-width-column text-center">Ngày đi</th>
                 <th class="main-width-column text-center">Ngày đến</th>
                 <th class="main-width-column text-center">Nơi đi</th>
                 <th class="main-width-column text-center">Nơi đến</th>
-                <th class="col-sm-2 text-center">Tổng tiền hàng</th>
+                <th class="main-width-column text-center">Tổng tiền hàng</th>
                 <th class="edit-column-width text-center">Sửa</th>
                 <th class="detail-column-width text-center">Xem</th>
               </tr>
             </thead>
             <tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="9">
+                <td class="text-center" colspan="10">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
@@ -60,6 +61,7 @@
                   <input id="wagon-{{$index}}" type="checkbox" data-ng-model="wagonViewModel.isChecked" />
                 </td>
                 <td>{{::wagonViewModel.code}}</td>
+                <td class="text-center">{{::wagonViewModel.paymentDate}}</td>
                 <td class="text-center">{{::wagonViewModel.departDate}}</td>
                 <td class="text-center">{{::wagonViewModel.returnDate}}</td>
                 <td>{{::wagonViewModel.departure}}</td>

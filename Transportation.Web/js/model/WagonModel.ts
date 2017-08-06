@@ -48,6 +48,7 @@ module Clarity.Model {
 
   export class WagonViewModel extends Model.BaseModel {
     public code: string;
+    public paymentDate: string;
     public departDate: string;
     public returnDate: string;
     public departure: string;

@@ -15,20 +15,30 @@
         <div class="col-sm-12">
           <div class="row">
             <div class="col-sm-4">
-              <p><span class="bold-text">Ngày đi:</span> <span>{{::viewModel.currentWagon.departDate}}</span></p>
+              <p><span class="bold-text">Ngày thanh toán:</span> <span>{{::viewModel.currentWagon.paymentDate}}</span></p>
             </div>
             <div class="col-sm-4">
-              <p><span class="bold-text">Ngày về:</span> <span>{{::viewModel.currentWagon.returnDate}}</span></p>
+              <p><span class="bold-text">Nơi thanh toán:</span> <span>{{::viewModel.currentWagon.paymentPlace}}</span></p>
             </div>
             <div class="col-sm-4">
             </div>
           </div>
           <div class="row">
             <div class="col-sm-4">
-              <p><span class="bold-text">Số xe:</span> <span>{{::viewModel.getLicensePlate(viewModel.currentWagon.truckId)}}</span></p>
+              <p><span class="bold-text">Ngày đi:</span> <span>{{::viewModel.currentWagon.departDate}}</span></p>
             </div>
             <div class="col-sm-4">
-              <p><span class="bold-text">Lái xe:</span> <span>{{::viewModel.getEmployeeName(viewModel.currentWagon.employeeId)}}</span></p>
+              <p><span class="bold-text">Ngày đến:</span> <span>{{::viewModel.currentWagon.returnDate}}</span></p>
+            </div>
+            <div class="col-sm-4">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <p><span class="bold-text">Số xe:</span> <span>{{viewModel.getLicensePlate(viewModel.currentWagon.truckId)}}</span></p>
+            </div>
+            <div class="col-sm-4">
+              <p><span class="bold-text">Tài xế:</span> <span>{{viewModel.getEmployeeName(viewModel.currentWagon.employeeId)}}</span></p>
             </div>
           </div>
           <div class="row">

@@ -175,6 +175,19 @@ namespace Transportation.Api
             for (int i = 0; i < customers.Count; i++)
             {
                 var customer = customers[i];
+                // init [TotalOwned, TotalPay, TotalDebt]
+                customer.TotalOwned = 0;
+                customer.TotalPay = 0;
+                customer.TotalDebt = 0;
+
+                var wagonSettlements = ClarityDB.Instance.WagonSettlements.Where(x => x.CustomerID == customer.ID);
+                foreach (WagonSettlement wagonSettlement in wagonSettlements)
+                {
+                    customer.TotalOwned += wagonSettlement.Quantity * wagonSettlement.UnitPrice + wagonSettlement.PhiPhatSinh;
+                    customer.TotalPay += wagonSettlement.Payment;
+                    customer.TotalDebt += wagonSettlement.PaymentRemain;
+                }
+                // add to row
                 dt.Rows.Add(new object[] { i + 1 , customer.Code, customer.FullName , customer.PhoneNo,
                     customer.TotalOwned, customer.TotalPay, customer.TotalDebt, customer.Type });
             }

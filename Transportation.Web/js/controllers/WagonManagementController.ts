@@ -115,6 +115,7 @@ module Clarity.Controller {
         const wagonView = new Model.WagonViewModel();
         wagonView.id = wagon.id;
         wagonView.code = wagon.code;
+        wagonView.paymentDate = wagon.paymentDate;
         wagonView.departDate = wagon.departDate;
         wagonView.returnDate = wagon.returnDate;
         wagonView.departure = wagon.departure;
