@@ -273,6 +273,7 @@ namespace Transportation.Api
             dt.Columns.Add("Thành tiền", typeof(double));
             dt.Columns.Add("Đã thanh toán", typeof(double));
             dt.Columns.Add("Còn lại", typeof(double));
+            dt.Columns.Add("Nợ", typeof(string));
 
             //Filter data by from/to date
             List<WagonSettlement> wagonSettlements = ClarityDB.Instance.WagonSettlements.ToList();
@@ -292,10 +293,13 @@ namespace Transportation.Api
             for (int i = 0; i < filteredWagonSettlements.Count; i++)
             {
                 var wagonSettlement = filteredWagonSettlements[i];
-                dt.Rows.Add(new object[] { i + 1 , wagonSettlement.WagonID, wagonSettlement.Code , wagonSettlement.Customer.FullName, wagonSettlement.Quantity,
+                string wagonCode = ClarityDB.Instance.Wagons.Where(x => x.ID == wagonSettlement.WagonID).FirstOrDefault().Code;
+
+                dt.Rows.Add(new object[] { i + 1 , wagonCode, wagonSettlement.Code , wagonSettlement.Customer.FullName, wagonSettlement.Quantity,
                                            wagonSettlement.PaymentPlace, wagonSettlement.PaymentDate, wagonSettlement.Destination,
-                                            wagonSettlement.LyDoPhatSinh, wagonSettlement.PhiPhatSinh, wagonSettlement.Unit, wagonSettlement.UnitPrice,
-                                           wagonSettlement.Quantity * wagonSettlement.UnitPrice, wagonSettlement.Payment, wagonSettlement.PaymentRemain});
+                                           wagonSettlement.LyDoPhatSinh, wagonSettlement.PhiPhatSinh, wagonSettlement.Unit, wagonSettlement.UnitPrice,
+                                           wagonSettlement.Quantity * wagonSettlement.UnitPrice, wagonSettlement.Payment, wagonSettlement.PaymentRemain,
+                                           wagonSettlement.PaymentStatus});
             }
 
             return dt;

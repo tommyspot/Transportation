@@ -5720,6 +5720,19 @@ div.bootstrap {
     background-color: #f5f5f5; }
   #ng-app .table-bordered {
     border: none; }
+  #ng-app #table-toahang input {
+    padding: 6px; }
+  #ng-app #table-toahang select {
+    padding: 0; }
+  #ng-app #table-toahang td {
+    padding: 12px 8px; }
+  #ng-app #table-toahang .delete-td {
+    cursor: pointer; }
+    #ng-app #table-toahang .delete-td .glyphicon-trash {
+      font-size: 18px;
+      vertical-align: middle; }
+    #ng-app #table-toahang .delete-td:hover {
+      color: #C0392B; }
   #ng-app .search-text-box .has-feedback .form-control-feedback {
     color: #CCCCCC;
     pointer-events: visible;
@@ -5964,6 +5977,8 @@ div.bootstrap {
     outline: none; }
   #ng-app .bold-text {
     font-weight: bold; }
+  #ng-app .none-bg {
+    background-color: #ffffff; }
   #ng-app .margin-bottom-20 {
     margin-bottom: 20px; }
   #ng-app .margin-bottom-15 {

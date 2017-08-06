@@ -218,6 +218,27 @@ div.bootstrap {
     border: none;
   }
 
+  #table-toahang{
+    input{
+      padding: 6px;
+    }
+    select{
+      padding: 0;
+    }
+    td{
+      padding: 12px 8px;
+    }
+    .delete-td{
+      cursor: pointer;
+      .glyphicon-trash{
+        font-size: 18px;
+        vertical-align: middle;
+      }
+      &:hover{
+        color: $transport-color-2;
+      }
+    }
+  }
   /*SEARCH TEXT BOX*/
   .search-text-box{
     .has-feedback{
@@ -628,6 +649,10 @@ div.bootstrap {
 
   .bold-text {
     font-weight: bold;
+  }
+
+  .none-bg{
+    background-color: #ffffff;
   }
 
   .margin-bottom-20 {

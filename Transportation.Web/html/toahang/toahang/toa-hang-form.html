@@ -28,7 +28,7 @@
         <div class="col-sm-3">
           <div class="form-group">
             <label for="paymentDate">Ngày thanh toán <span class="required-symbol">*</span></label>
-            <span class="required-field" ng-if="wagonForm.paymentDate.$touched && wagonForm.paymentDate.$invalid">(Ngày thanh toán phải được nhập)</span>
+            <span class="required-field" ng-if="wagonForm.paymentDate.$touched && wagonForm.paymentDate.$invalid">(Ngày TT phải được nhập)</span>
             <datepicker class="date-picker" date-format="dd/MM/yyyy">
               <input id="paymentDate" class="form-control" name="paymentDate" type="text" ng-model="viewModel.currentWagon.paymentDate" required>
             </datepicker>
@@ -37,7 +37,7 @@
         <div class="col-sm-3">
           <div class="form-group">
             <label for="paymentPlace">Nơi thanh toán <span class="required-symbol">*</span></label>
-            <span class="required-field" ng-if="wagonForm.paymentPlace.$touched && wagonForm.paymentPlace.$invalid">(Nơi thanh toán phải được nhập)</span>
+            <span class="required-field" ng-if="wagonForm.paymentPlace.$touched && wagonForm.paymentPlace.$invalid">(Nơi TT phải được nhập)</span>
             <select id="paymentPlace" name="paymentPlace" class="form-control" ng-model="viewModel.currentWagon.paymentPlace" required>
               <option value="" data-placeholder="true">--Chọn nơi thanh toán--</option>
               <option value="Công ty">Công ty</option>
@@ -73,7 +73,8 @@
         <div class="col-sm-3">
           <div class="form-group">
             <label for="truckId">Số xe <span class="required-symbol">*</span></label>
-            <select ui-select2 id="truckId" class="form-control ui-select-2" data-ng-model="viewModel.currentWagon.truckId"
+            <span class="required-field" ng-if="wagonForm.truckId.$touched && wagonForm.truckId.$invalid">(Số xe phải được nhập)</span>
+            <select ui-select2 id="truckId" name="truckId" class="form-control ui-select-2" data-ng-model="viewModel.currentWagon.truckId"
                     data-ng-change="viewModel.updateWagonCode()">
               <option value="">--Chọn số xe --</option>
               <option data-ng-repeat="truck in viewModel.truckList" value="{{truck.id}}">{{truck.licensePlate}}</option>
@@ -83,7 +84,8 @@
         <div class="col-sm-3">
           <div class="form-group">
             <label for="employeeId">Tài xế <span class="required-symbol">*</span></label>
-            <select ui-select2 id="employeeId" class="form-control ui-select-2" data-ng-model="viewModel.currentWagon.employeeId">
+            <span class="required-field" ng-if="wagonForm.employeeId.$touched && wagonForm.employeeId.$invalid">(Tài xế phải được nhập)</span>
+            <select ui-select2 id="employeeId" name="employeeId" class="form-control ui-select-2" data-ng-model="viewModel.currentWagon.employeeId">
               <option value="">--Chọn tài xế--</option>
               <option data-ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
             </select>
@@ -92,13 +94,15 @@
         <div class="col-sm-3">
           <div class="form-group">
             <label for="departure">Nơi đi <span class="required-symbol">*</span></label>
-            <input id="departure" name="departure" class="form-control" type="text" ng-model="viewModel.currentWagon.departure" required />
+            <span class="required-field" ng-if="wagonForm.departure.$touched && wagonForm.departure.$invalid">(Nơi đi phải được nhập)</span>
+            <input id="departure" name="departure" class="form-control" type="text" data-ng-model="viewModel.currentWagon.departure" required />
           </div>
         </div>
         <div class="col-sm-3">
           <div class="form-group">
             <label for="destination">Nơi đến <span class="required-symbol">*</span></label>
-            <input id="destination" name="destination" class="form-control" type="text" ng-model="viewModel.currentWagon.destination" required />
+            <span class="required-field" ng-if="wagonForm.destination.$touched && wagonForm.destination.$invalid">(Nơi đến phải được nhập)</span>
+            <input id="destination" name="destination" class="form-control" type="text" data-ng-model="viewModel.currentWagon.destination" required />
           </div>
         </div>
       </div>
@@ -115,7 +119,7 @@
       <div class="row margin-top-15">
         <div class="col-sm-12">
           <div class="table-responsive">
-            <table class="table table-hover table-bordered">
+            <table id="table-toahang" class="table table-hover table-bordered">
               <thead>
                 <tr>
                   <th class="stt-width-min align-center">STT</th>
@@ -133,33 +137,33 @@
               </thead>
               <tbody>
                 <tr data-ng-repeat="wagonSettlement in viewModel.currentWagon.wagonSettlements">
-                  <td class="align-center align-middle td-padding-decrease">{{$index + 1}}</td>
-                  <td class="td-padding-decrease">
+                  <td class="align-center align-middle">{{$index + 1}}</td>
+                  <td>
                     <select ui-select2 id="customerId" class="form-control ui-select-2" data-ng-model="wagonSettlement.customerId" required>
                       <option value="">--Chọn khách hàng--</option>
-                      <option ng-repeat="customer in viewModel.customerList" value="{{customer.id}}">{{customer.fullName}}</option>
+                      <option data-ng-repeat="customer in viewModel.customerList" value="{{customer.id}}">{{customer.fullName}}</option>
                     </select>
                   </td>
-                  <td class="align-center td-padding-decrease">
-                    <input class="form-control" type="number" min="1" data-ng-model="wagonSettlement.quantity"
+                  <td class="align-center">
+                    <input class="form-control text-right" type="number" min="1" data-ng-model="wagonSettlement.quantity"
                            data-ng-change="viewModel.calculateTotalAmountWagonSettlements()" />
                   </td>
                   <td class="align-center td-padding-decrease">
-                    <select id="unit" class="form-control select-padding-decrease" data-ng-model="wagonSettlement.unit">
+                    <select id="unit" class="form-control" data-ng-model="wagonSettlement.unit">
                       <option value="Thùng">Thùng</option>
                       <option value="Bao">Bao</option>
                       <option value="Chuyến">Chuyến</option>
                     </select>
                   </td>
-                  <td class="align-center td-padding-decrease">
+                  <td class="align-center">
                     <input class="form-control" type="text" data-ng-model="wagonSettlement.destination" />
                   </td>
-                  <td class="align-center td-padding-decrease">
-                    <input id="unitPrice" name="unitPrice" class="form-control" type="text" maxlength="15" data-ng-model="wagonSettlement.unitPriceFormatted"
+                  <td class="align-center">
+                    <input id="unitPrice" name="unitPrice" class="form-control text-right" type="text" maxlength="15" data-ng-model="wagonSettlement.unitPriceFormatted"
                            data-ng-change="viewModel.onChangeWagonSettlement(wagonSettlement, 'unitPrice', 'unitPriceFormatted')" />
                   </td>
-                  <td class="align-center td-padding-decrease">
-                    <select id="unit" class="form-control select-padding-decrease" data-ng-model="wagonSettlement.lyDoPhatSinh">
+                  <td class="align-center">
+                    <select id="unit" class="form-control" data-ng-model="wagonSettlement.lyDoPhatSinh">
                       <option value="Phụ thu">Phụ thu</option>
                       <option value="Phí Phà">Phí Phà</option>
                       <option value="Tăng bo">Tăng bo</option>
@@ -167,19 +171,17 @@
                       <option value="Khác">Khác</option>
                     </select>
                   </td>
-                  <td class="align-center td-padding-decrease">
-                    <input id="phiPhatSinh" name="phiPhatSinh" class="form-control" type="text" maxlength="15" data-ng-model="wagonSettlement.phiPhatSinhFormatted"
+                  <td class="align-center">
+                    <input id="phiPhatSinh" name="phiPhatSinh" class="form-control text-right" type="text" maxlength="15" data-ng-model="wagonSettlement.phiPhatSinhFormatted"
                            data-ng-change="viewModel.formatCurrency(wagonSettlement, 'phiPhatSinh', 'phiPhatSinhFormatted')" />
                   </td>
-                  <td class="text-right align-middle td-padding-decrease">{{wagonSettlement.quantity * wagonSettlement.unitPrice | currency: "" : 0 }}</td>
-                  <td class="align-center td-padding-decrease">
-                    <input id="payment" name="payment" class="form-control" type="text" maxlength="15" data-ng-model="wagonSettlement.paymentFormatted"
+                  <td class="text-right align-middle">{{wagonSettlement.quantity * wagonSettlement.unitPrice | currency: "" : 0 }}</td>
+                  <td class="align-center">
+                    <input id="payment" name="payment" class="form-control text-right" type="text" maxlength="15" data-ng-model="wagonSettlement.paymentFormatted"
                            data-ng-change="viewModel.onChangeWagonSettlement(wagonSettlement, 'payment', 'paymentFormatted')" />
                   </td>
-                  <td class="align-center td-padding-decrease">
-                    <button type="button" class="btn btn-default" data-ng-click="viewModel.deleteWagonSettlement($index)">
-                      <span class="glyphicon glyphicon-trash"></span>
-                    </button>
+                  <td class="align-center delete-td" data-ng-click="viewModel.deleteWagonSettlement($index)">
+                    <span class="glyphicon glyphicon-trash"></span>
                   </td>
                 </tr>
               </tbody>
@@ -198,7 +200,7 @@
             </tr>
             <!--CHI-->
             <tr>
-              <td class="align-center align-middle bold-text" rowspan="6">Chi</td>
+              <td class="align-center align-middle bold-text none-bg" rowspan="6">Chi</td>
               <td class="align-center align-middle"><label class="no-bold" for="costOfTruck">Phí xe</label></td>
               <td class="align-center">
                 <input id="costOfTruck" name="costOfTruck" class="form-control text-right" type="text" maxlength="15" data-ng-model="viewModel.currentWagon.costOfTruckFormatted"

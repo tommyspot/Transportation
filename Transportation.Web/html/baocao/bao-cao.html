@@ -67,10 +67,10 @@
                   </div>
                 </div>
                 <div class="col-sm-8">
-                  <button class="btn btn-default download-btn from-to-date" data-ng-click="viewModel.viewWagon()"
+                  <!--<button class="btn btn-default download-btn from-to-date" data-ng-click="viewModel.viewWagon()"
                           data-ng-disabled="viewModel.wagonReport.fromDate == null || viewModel.wagonReport.toDate == null">
                     Xem <i data-ng-if="viewModel.isViewLoading" class="fa fa-spinner fa-pulse"></i>
-                  </button>
+                  </button>-->
                   <button class="btn btn-default download-btn from-to-date" data-ng-click="viewModel.exportWagon()"
                           data-ng-disabled="viewModel.wagonReport.fromDate == null || viewModel.wagonReport.toDate == null">
                     Tải về <i data-ng-if="viewModel.isExportLoading" class="fa fa-spinner fa-pulse"></i>
@@ -78,7 +78,7 @@
                 </div>
               </div>
 
-              <div class="row" data-ng-if="viewModel.wagonReport != null && viewModel.wagonReport.data != null">
+              <!--<div class="row" data-ng-if="viewModel.wagonReport != null && viewModel.wagonReport.data != null">
                 <div class="col-sm-12 table-responsive" data-ng-if="viewModel.wagonReport.data.length > 0">
                   <table class="table table-bordered">
                     <thead>
@@ -93,8 +93,6 @@
                         <td class="align-center hidden-xs">{{wagonReportData.totalAmount | currency: "" : 0}}</td>
                         <td class="align-center">To be confirmed....</td>
                         <td class="align-center hidden-xs">Thành tiền - Tổng chi phí</td>
-                        <!--<td class="align-center">{{wagonReportData.totalPayment | currency: "" : 0}}</td>
-                        <td class="align-center hidden-xs">{{wagonReportData.profit | currency: "" : 0}}</td>-->
                       </tr>
                     </tbody>
                   </table>
@@ -103,7 +101,7 @@
                 <div class="col-sm-12 no-data" data-ng-if="viewModel.wagonReport.data.length ==0">
                   <h5>Không có dữ liệu</h5>
                 </div>
-              </div>
+              </div>-->
             </div>
 
             <!--TAB 5-->
@@ -126,10 +124,10 @@
                   </div>
                 </div>
                 <div class="col-sm-8">
-                  <button class="btn btn-default download-btn from-to-date" data-ng-click="viewModel.viewWagonSettlement()"
+                  <!--<button class="btn btn-default download-btn from-to-date" data-ng-click="viewModel.viewWagonSettlement()"
                           data-ng-disabled="viewModel.wagonSettlementReport.fromDate == null || viewModel.wagonSettlementReport.toDate == null">
                     Xem <i data-ng-if="viewModel.isViewLoading" class="fa fa-spinner fa-pulse"></i>
-                  </button>
+                  </button>-->
                   <button class="btn btn-default download-btn from-to-date" data-ng-click="viewModel.exportWagonSettlement()"
                           data-ng-disabled="viewModel.wagonSettlementReport.fromDate == null || viewModel.wagonSettlementReport.toDate == null">
                     Tải về <i data-ng-if="viewModel.isExportLoading" class="fa fa-spinner fa-pulse"></i>
@@ -137,7 +135,7 @@
                 </div>
               </div>
 
-              <div class="row" data-ng-if="viewModel.wagonSettlementReport != null && viewModel.wagonSettlementReport.data != null">
+              <!--<div class="row" data-ng-if="viewModel.wagonSettlementReport != null && viewModel.wagonSettlementReport.data != null">
                 <div class="col-sm-12 table-responsive" data-ng-if="viewModel.wagonSettlementReport.data.length > 0">
                   <table class="table table-bordered">
                     <thead>
@@ -160,7 +158,7 @@
                 <div class="col-sm-12 no-data" data-ng-if="viewModel.wagonSettlementReport.data.length ==0">
                   <h5>Không có dữ liệu</h5>
                 </div>
-              </div>
+              </div>-->
             </div>
           </div>
         </form>
