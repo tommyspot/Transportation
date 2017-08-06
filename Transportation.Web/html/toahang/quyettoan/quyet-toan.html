@@ -45,13 +45,13 @@
                 </td>
               </tr>
               <tr data-ng-if="!viewModel.isLoading" data-ng-repeat="wagonSettlementViewModel in viewModel.getWagonSettlementListOnPage()">
-								<td>{{wagonSettlementViewModel.wagonCode}}</td>
-								<td>{{wagonSettlementViewModel.customerName}}</td>
-                <td class="text-right">{{wagonSettlementViewModel.totalAmount}}</td>
-                <td class="text-right">{{wagonSettlementViewModel.phiPhatSinh}}</td>
-                <td class="text-right">{{wagonSettlementViewModel.payment}}</td>
-								<td class="text-right">{{wagonSettlementViewModel.paymentRemain}}</td>
-								<td>{{wagonSettlementViewModel.paymentStatus}}</td>
+								<td>{{::wagonSettlementViewModel.wagonCode}}</td>
+								<td>{{::wagonSettlementViewModel.customerName}}</td>
+                <td class="text-right">{{::wagonSettlementViewModel.totalAmount}}</td>
+                <td class="text-right">{{::wagonSettlementViewModel.phiPhatSinh}}</td>
+                <td class="text-right">{{::wagonSettlementViewModel.payment}}</td>
+								<td class="text-right">{{::wagonSettlementViewModel.paymentRemain}}</td>
+								<td>{{::wagonSettlementViewModel.paymentStatus}}</td>
                 <td class="text-center edit-column" data-ng-click="viewModel.goToWagonSettlementEditForm($event, wagonSettlementViewModel.id)">
                   <span class="glyphicon glyphicon-pencil"></span>
                 </td>

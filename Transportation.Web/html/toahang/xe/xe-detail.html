@@ -3,7 +3,7 @@
     <div class="form-detail">
       <div class="row">
         <div class="col-sm-12">
-          <h2 class="text-center">XE - {{viewModel.currentTruck.licensePlate}}</h2>
+          <h2 class="text-center">XE - {{::viewModel.currentTruck.licensePlate}}</h2>
         </div>
       </div>
       <div class="row margin-top-20">
@@ -11,7 +11,7 @@
           <p class="bold-text">Năm sản xuất:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentTruck.yearOfManufacture}}</p>
+          <p>{{::viewModel.currentTruck.yearOfManufacture}}</p>
         </div>
       </div>
       <div class="row">
@@ -19,7 +19,7 @@
           <p class="bold-text">Nhãn hiệu:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentTruck.brand}}</p>
+          <p>{{::viewModel.currentTruck.brand}}</p>
         </div>
       </div>
       <div class="row">
@@ -27,7 +27,7 @@
           <p class="bold-text">Tải trọng:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentTruck.weight}} tấn</p>
+          <p>{{::viewModel.currentTruck.weight}} tấn</p>
         </div>
       </div>
       <div class="row">
@@ -35,7 +35,7 @@
           <p class="bold-text">Số khung:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentTruck.vin}}</p>
+          <p>{{::viewModel.currentTruck.vin}}</p>
         </div>
       </div>
       <div class="row">
@@ -43,7 +43,7 @@
           <p class="bold-text">Số máy:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentTruck.engineNo}}</p>
+          <p>{{::viewModel.currentTruck.engineNo}}</p>
         </div>
       </div>
       <div class="row">
@@ -59,7 +59,7 @@
           <p class="bold-text">Tiền thanh toán hàng tháng:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentTruck.monthlyPayment | currency: "" : 0}}</p>
+          <p>{{::viewModel.currentTruck.monthlyPayment | currency: "" : 0}}</p>
         </div>
       </div>
       <div class="row">
@@ -67,7 +67,7 @@
           <p class="bold-text">Ngày mua:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentTruck.buyingDate}}</p>
+          <p>{{::viewModel.currentTruck.buyingDate}}</p>
         </div>
       </div>
       <div class="row">
@@ -75,7 +75,7 @@
           <p class="bold-text">Ngày lưu hành:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentTruck.startUsingDate}}</p>
+          <p>{{::viewModel.currentTruck.startUsingDate}}</p>
         </div>
       </div>
       <div class="row">
@@ -83,7 +83,7 @@
           <p class="bold-text">Bảo hiểm đến:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentTruck.insuranceDate}}</p>
+          <p>{{::viewModel.currentTruck.insuranceDate}}</p>
         </div>
       </div>
       <div class="row">
@@ -91,7 +91,7 @@
           <p class="bold-text">Ngày đăng kiểm gần nhất:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentTruck.checkDate}}</p>
+          <p>{{::viewModel.currentTruck.checkDate}}</p>
         </div>
       </div>
       <div class="row">
@@ -99,7 +99,7 @@
           <p class="bold-text">Cổ phần:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentTruck.stock}}%</p>
+          <p>{{::viewModel.currentTruck.stock}}%</p>
         </div>
       </div>
     </div>

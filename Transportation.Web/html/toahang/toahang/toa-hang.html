@@ -59,12 +59,12 @@
                 <td class="text-center" data-ng-click="$event.stopPropagation();">
                   <input id="wagon-{{$index}}" type="checkbox" data-ng-model="wagonViewModel.isChecked" />
                 </td>
-                <td>{{wagonViewModel.code}}</td>
-                <td class="text-center">{{wagonViewModel.departDate}}</td>
-                <td class="text-center">{{wagonViewModel.returnDate}}</td>
-                <td>{{wagonViewModel.departure}}</td>
-                <td>{{wagonViewModel.destination}}</td>
-                <td class="text-right">{{wagonViewModel.totalAmount}}</td>
+                <td>{{::wagonViewModel.code}}</td>
+                <td class="text-center">{{::wagonViewModel.departDate}}</td>
+                <td class="text-center">{{::wagonViewModel.returnDate}}</td>
+                <td>{{::wagonViewModel.departure}}</td>
+                <td>{{::wagonViewModel.destination}}</td>
+                <td class="text-right">{{::wagonViewModel.totalAmount}}</td>
                 <td class="text-center edit-column" data-ng-click="viewModel.goToWagonEditForm($event, wagonViewModel.id)">
                   <span class="glyphicon glyphicon-pencil"></span>
                 </td>

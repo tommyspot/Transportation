@@ -129,9 +129,11 @@ module Clarity.Controller {
 
     refreshWagonSettlementListView() {
       if (this.$location.path() === '/ql-toa-hang/quyet-toan') {
-        this.mapToWagonSettlementListView();
-        this.wagonSettlementListViewTmp = this.wagonSettlementListView;
-        this.initPagination();
+        if (this.wagonSettlementList) {
+          this.mapToWagonSettlementListView();
+          this.wagonSettlementListViewTmp = this.wagonSettlementListView;
+          this.initPagination();
+        }
       }
     }
 

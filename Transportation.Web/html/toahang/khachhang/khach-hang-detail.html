@@ -3,14 +3,14 @@
 
     <div class="row margin-bottom-15" data-ng-if="viewModel.errorMessage !== ''">
       <div class="col-sm-12">
-        <span class="required-field">{{viewModel.errorMessage}}</span>
+        <span class="required-field">{{::viewModel.errorMessage}}</span>
       </div>
     </div>
 
     <div class="form-detail">
       <div class="row">
         <div class="col-sm-12">
-          <h2 class="text-center">KHÁCH HÀNG - {{viewModel.currentCustomer.fullName}}</h2>
+          <h2 class="text-center">KHÁCH HÀNG - {{::viewModel.currentCustomer.fullName}}</h2>
         </div>
       </div>
       <div class="row margin-top-20">
@@ -18,7 +18,7 @@
           <p class="bold-text">Số điện thoại:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentCustomer.phoneNo}}</p>
+          <p>{{::viewModel.currentCustomer.phoneNo}}</p>
         </div>
       </div>
       <div class="row">
@@ -26,7 +26,7 @@
           <p class="bold-text">Xếp loại:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentCustomer.type}}</p>
+          <p>{{::viewModel.currentCustomer.type}}</p>
         </div>
       </div>
       <div class="row">
@@ -34,7 +34,7 @@
           <p class="bold-text">Số phát sinh:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentCustomer.totalOwned | currency: "" : 0}}</p>
+          <p>{{::viewModel.currentCustomer.totalOwned | currency: "" : 0}}</p>
         </div>
       </div>
       <div class="row">
@@ -42,7 +42,7 @@
           <p class="bold-text">Tổng trả:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentCustomer.totalPay | currency: "" : 0}}</p>
+          <p>{{::viewModel.currentCustomer.totalPay | currency: "" : 0}}</p>
         </div>
       </div>
       <div class="row">
@@ -50,7 +50,7 @@
           <p class="bold-text">Còn nợ lại:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentCustomer.totalDebt | currency: "" : 0}}</p>
+          <p>{{::viewModel.currentCustomer.totalDebt | currency: "" : 0}}</p>
         </div>
       </div>
     </div>

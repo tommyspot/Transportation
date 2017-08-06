@@ -58,11 +58,11 @@
                 <td class="text-center" data-ng-click="$event.stopPropagation();">
                   <input id="truck-{{$index}}" type="checkbox" data-ng-model="truckViewModel.isChecked" />
                 </td>
-                <td>{{truckViewModel.licensePlate}}</td>
-                <td class="text-center">{{truckViewModel.yearOfManufacture}}</td>
-                <td>{{truckViewModel.brand}}</td>
-                <td>{{truckViewModel.weight}}</td>
-                <td>{{truckViewModel.hasUsing}}</td>
+                <td>{{::truckViewModel.licensePlate}}</td>
+                <td class="text-center">{{::truckViewModel.yearOfManufacture}}</td>
+                <td>{{::truckViewModel.brand}}</td>
+                <td>{{::truckViewModel.weight}}</td>
+                <td>{{::truckViewModel.hasUsing}}</td>
                 <td class="text-center edit-column" data-ng-click="viewModel.goToTruckEditForm($event, truckViewModel.id)">
                   <span class="glyphicon glyphicon-pencil"></span>
                 </td>

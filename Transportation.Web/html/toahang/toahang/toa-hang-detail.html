@@ -3,7 +3,7 @@
     <div class="form-detail">
       <div class="row">
         <div class="col-sm-12">
-          <h2 class="text-center">TOA HÀNG {{viewModel.currentWagon.code}}</h2>
+          <h2 class="text-center">TOA HÀNG {{::viewModel.currentWagon.code}}</h2>
         </div>
       </div>
       <div class="row">
@@ -15,28 +15,28 @@
         <div class="col-sm-12">
           <div class="row">
             <div class="col-sm-4">
-              <p><span class="bold-text">Ngày đi:</span> <span>{{viewModel.currentWagon.departDate}}</span></p>
+              <p><span class="bold-text">Ngày đi:</span> <span>{{::viewModel.currentWagon.departDate}}</span></p>
             </div>
             <div class="col-sm-4">
-              <p><span class="bold-text">Ngày về:</span> <span>{{viewModel.currentWagon.returnDate}}</span></p>
+              <p><span class="bold-text">Ngày về:</span> <span>{{::viewModel.currentWagon.returnDate}}</span></p>
             </div>
             <div class="col-sm-4">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <p><span class="bold-text">Số xe:</span> <span>{{viewModel.getLicensePlate(viewModel.currentWagon.truckId)}}</span></p>
-            </div>
-            <div class="col-sm-4">
-              <p><span class="bold-text">Lái xe:</span> <span>{{viewModel.getEmployeeName(viewModel.currentWagon.employeeId)}}</span></p>
             </div>
           </div>
           <div class="row">
             <div class="col-sm-4">
-              <p><span class="bold-text">Nơi đi:</span> <span>{{viewModel.currentWagon.departure}}</span></p>
+              <p><span class="bold-text">Số xe:</span> <span>{{::viewModel.getLicensePlate(viewModel.currentWagon.truckId)}}</span></p>
             </div>
             <div class="col-sm-4">
-              <p><span class="bold-text">Nơi đến:</span> <span>{{viewModel.currentWagon.destination}}</span></p>
+              <p><span class="bold-text">Lái xe:</span> <span>{{::viewModel.getEmployeeName(viewModel.currentWagon.employeeId)}}</span></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <p><span class="bold-text">Nơi đi:</span> <span>{{::viewModel.currentWagon.departure}}</span></p>
+            </div>
+            <div class="col-sm-4">
+              <p><span class="bold-text">Nơi đến:</span> <span>{{::viewModel.currentWagon.destination}}</span></p>
             </div>
           </div>
           <hr />
@@ -54,34 +54,34 @@
               <p><span class="bold-text">Tên khách hàng:</span> <span>{{viewModel.getCustomerName(wagonSettlement.customerId)}}</span></p>
             </div>
             <div class="col-sm-4">
-              <p><span class="bold-text">Số lượng:</span> <span>{{wagonSettlement.quantity | currency: "" : 0}}</span></p>
+              <p><span class="bold-text">Số lượng:</span> <span>{{::wagonSettlement.quantity | currency: "" : 0}}</span></p>
             </div>
             <div class="col-sm-4">
-              <p><span class="bold-text">Đơn vị tính:</span> <span>{{wagonSettlement.unit}}</span></p>
+              <p><span class="bold-text">Đơn vị tính:</span> <span>{{::wagonSettlement.unit}}</span></p>
             </div>
             <div class="col-sm-4">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <p><span class="bold-text">Nơi đến:</span> <span>{{wagonSettlement.destination}}</span></p>
-            </div>
-            <div class="col-sm-4">
-              <p><span class="bold-text">Đơn giá:</span> <span>{{wagonSettlement.unitPrice | currency: "" : 0}}</span></p>
-            </div>
-            <div class="col-sm-4">
-              <p><span class="bold-text">Thành tiền:</span> <span>{{wagonSettlement.quantity * wagonSettlement.unitPrice | currency: "" : 0  }}</span></p>
             </div>
           </div>
           <div class="row">
             <div class="col-sm-4">
-              <p><span class="bold-text">Phát sinh:</span> <span>{{wagonSettlement.lyDoPhatSinh}}</span></p>
+              <p><span class="bold-text">Nơi đến:</span> <span>{{::wagonSettlement.destination}}</span></p>
             </div>
             <div class="col-sm-4">
-              <p><span class="bold-text">Phí phát sinh:</span> <span>{{wagonSettlement.phiPhatSinh | currency: "" : 0}}</span></p>
+              <p><span class="bold-text">Đơn giá:</span> <span>{{::wagonSettlement.unitPrice | currency: "" : 0}}</span></p>
             </div>
             <div class="col-sm-4">
-              <p><span class="bold-text">Thanh toán:</span> <span class="bold-text">{{wagonSettlement.payment | currency: "" : 0}}</span></p>
+              <p><span class="bold-text">Thành tiền:</span> <span>{{::(wagonSettlement.quantity * wagonSettlement.unitPrice) | currency: "" : 0  }}</span></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <p><span class="bold-text">Phát sinh:</span> <span>{{::wagonSettlement.lyDoPhatSinh}}</span></p>
+            </div>
+            <div class="col-sm-4">
+              <p><span class="bold-text">Phí phát sinh:</span> <span>{{::wagonSettlement.phiPhatSinh | currency: "" : 0}}</span></p>
+            </div>
+            <div class="col-sm-4">
+              <p><span class="bold-text">Thanh toán:</span> <span class="bold-text">{{::wagonSettlement.payment | currency: "" : 0}}</span></p>
             </div>
           </div>
           <hr />
@@ -96,26 +96,26 @@
         <div class="col-sm-12">
           <div class="row">
             <div class="col-sm-4">
-              <p><span class="bold-text">Phí xe:</span> <span>{{viewModel.currentWagon.costOfTruck | currency: "" : 0}}</span></p>
+              <p><span class="bold-text">Phí xe:</span> <span>{{::viewModel.currentWagon.costOfTruck | currency: "" : 0}}</span></p>
             </div>
             <div class="col-sm-4">
-              <p><span class="bold-text">Điện thoai + Dịch vụ:</span> <span>{{viewModel.currentWagon.costOfService | currency: "" : 0}}</span></p>
+              <p><span class="bold-text">Điện thoai + Dịch vụ:</span> <span>{{::viewModel.currentWagon.costOfService | currency: "" : 0}}</span></p>
             </div>
             <div class="col-sm-4">
-              <p><span class="bold-text">Tăng bo xe:</span> <span>{{viewModel.currentWagon.costOfTangBoXe | currency: "" : 0}}</span></p>
+              <p><span class="bold-text">Tăng bo xe:</span> <span>{{::viewModel.currentWagon.costOfTangBoXe | currency: "" : 0}}</span></p>
             </div>
           </div>
           <div class="row">
             <div class="col-sm-4">
-              <p><span class="bold-text">Biên bản phạt:</span> <span>{{viewModel.currentWagon.costOfPenalty | currency: "" : 0}}</span></p>
+              <p><span class="bold-text">Biên bản phạt:</span> <span>{{::viewModel.currentWagon.costOfPenalty | currency: "" : 0}}</span></p>
             </div>
             <div class="col-sm-4">
-              <p><span class="bold-text">Diễn giải phụ:</span> <span>{{viewModel.currentWagon.costOfExtra | currency: "" : 0}}</span></p>
+              <p><span class="bold-text">Diễn giải phụ:</span> <span>{{::viewModel.currentWagon.costOfExtra | currency: "" : 0}}</span></p>
             </div>
             <div class="col-sm-4">
               <p><span class="bold-text">CỘNG CHI:</span> <span class="bold-text">
-                {{ viewModel.currentWagon.costOfTruck + viewModel.currentWagon.costOfService + viewModel.currentWagon.costOfTangBoXe +
-                viewModel.currentWagon.costOfPenalty + viewModel.currentWagon.costOfExtra | currency: "" : 0}}</span></p>
+                {{ ::(viewModel.currentWagon.costOfTruck + viewModel.currentWagon.costOfService + viewModel.currentWagon.costOfTangBoXe +
+                viewModel.currentWagon.costOfPenalty + viewModel.currentWagon.costOfExtra) | currency: "" : 0}}</span></p>
             </div>
           </div>
           <hr />
@@ -130,35 +130,35 @@
         <div class="col-sm-12">
           <div class="row">
             <div class="col-sm-4">
-              <p><span class="bold-text">Tiền xe:</span> <span>{{viewModel.currentWagon.paymentOfTruck | currency: "" : 0}}</span></p>
+              <p><span class="bold-text">Tiền xe:</span> <span>{{::viewModel.currentWagon.paymentOfTruck | currency: "" : 0}}</span></p>
             </div>
             <div class="col-sm-4">
-              <p><span class="bold-text">Sửa xe:</span> <span>{{viewModel.currentWagon.paymentOfRepairing | currency: "" : 0}}</span></p>
+              <p><span class="bold-text">Sửa xe:</span> <span>{{::viewModel.currentWagon.paymentOfRepairing | currency: "" : 0}}</span></p>
             </div>
             <div class="col-sm-4">
-              <p><span class="bold-text">Tiền dầu:</span> <span>{{viewModel.currentWagon.paymentOfOil | currency: "" : 0}}</span></p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <p><span class="bold-text">Lượng:</span> <span>{{viewModel.currentWagon.paymentOfLuong | currency: "" : 0}}</span></p>
-            </div>
-            <div class="col-sm-4">
-              <p><span class="bold-text">Dịch vụ:</span> <span>{{viewModel.currentWagon.paymentOfService | currency: "" : 0}}</span></p>
-            </div>
-            <div class="col-sm-4">
-              <p><span class="bold-text">Hàng về:</span> <span>{{viewModel.currentWagon.paymentOfHangVe | currency: "" : 0}}</span></p>
+              <p><span class="bold-text">Tiền dầu:</span> <span>{{::viewModel.currentWagon.paymentOfOil | currency: "" : 0}}</span></p>
             </div>
           </div>
           <div class="row">
             <div class="col-sm-4">
-              <p><span class="bold-text">Trích 10%:</span> <span>{{viewModel.currentWagon.paymentOf10Percent | currency: "" : 0}}</span></p>
+              <p><span class="bold-text">Lượng:</span> <span>{{::viewModel.currentWagon.paymentOfLuong | currency: "" : 0}}</span></p>
+            </div>
+            <div class="col-sm-4">
+              <p><span class="bold-text">Dịch vụ:</span> <span>{{::viewModel.currentWagon.paymentOfService | currency: "" : 0}}</span></p>
+            </div>
+            <div class="col-sm-4">
+              <p><span class="bold-text">Hàng về:</span> <span>{{::viewModel.currentWagon.paymentOfHangVe | currency: "" : 0}}</span></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <p><span class="bold-text">Trích 10%:</span> <span>{{::viewModel.currentWagon.paymentOf10Percent | currency: "" : 0}}</span></p>
             </div>
             <div class="col-sm-4">
               <p><span class="bold-text">CỘNG:</span> <span class="bold-text">
-              {{viewModel.currentWagon.paymentOfTruck + viewModel.currentWagon.paymentOfRepairing + viewModel.currentWagon.paymentOfOil +
+              {{::(viewModel.currentWagon.paymentOfTruck + viewModel.currentWagon.paymentOfRepairing + viewModel.currentWagon.paymentOfOil +
                 viewModel.currentWagon.paymentOfLuong + viewModel.currentWagon.paymentOfService + viewModel.currentWagon.paymentOfHangVe +
-                viewModel.currentWagon.paymentOf10Percent | currency: "" : 0}}</span></p>
+                viewModel.currentWagon.paymentOf10Percent) | currency: "" : 0}}</span></p>
             </div>
           </div>
         </div>

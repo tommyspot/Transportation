@@ -65,12 +65,12 @@
 								<td class="text-center" data-ng-click="$event.stopPropagation();">
 									<input id="customer-{{$index}}" type="checkbox" data-ng-model="customerViewModel.isChecked" />
 								</td>
-								<td>{{customerViewModel.code}}</td>
-								<td>{{customerViewModel.fullName}}</td>
-								<td>{{customerViewModel.phoneNo}}</td>
-								<td class="text-right">{{customerViewModel.totalOwned}}</td>
-								<td class="text-right">{{customerViewModel.totalPay}}</td>
-								<td class="text-right">{{customerViewModel.totalDebt}}</td>
+								<td>{{::customerViewModel.code}}</td>
+								<td>{{::customerViewModel.fullName}}</td>
+								<td>{{::customerViewModel.phoneNo}}</td>
+								<td class="text-right">{{::customerViewModel.totalOwned}}</td>
+								<td class="text-right">{{::customerViewModel.totalPay}}</td>
+								<td class="text-right">{{::customerViewModel.totalDebt}}</td>
                 <td class="text-center edit-column" data-ng-click="viewModel.goToCustomerEditForm($event, customerViewModel.id)">
                   <span class="glyphicon glyphicon-pencil"></span>
                 </td>
