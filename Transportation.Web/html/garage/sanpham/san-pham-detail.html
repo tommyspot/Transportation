@@ -3,7 +3,7 @@
     <div class="form-detail">
       <div class="row">
         <div class="col-sm-12">
-          <h2 class="text-center">SẢN PHẨM - {{viewModel.currentProduct.id}}</h2>
+          <h2 class="text-center">SẢN PHẨM - {{::viewModel.currentProduct.id}}</h2>
         </div>
       </div>
       <div class="row margin-top-20">
@@ -11,7 +11,7 @@
           <p class="bold-text">Tên sản phẩm:</p>
         </div>
         <div class="col-sm-10">
-          <p>{{viewModel.currentProduct.name}}</p>
+          <p>{{::viewModel.currentProduct.name}}</p>
         </div>
       </div>
       <div class="row">
@@ -19,7 +19,7 @@
           <p class="bold-text">Xuất xứ:</p>
         </div>
         <div class="col-sm-10">
-          <p>{{viewModel.currentProduct.origin}}</p>
+          <p>{{::viewModel.currentProduct.origin}}</p>
         </div>
       </div>
     </div>

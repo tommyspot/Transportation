@@ -17,4 +17,14 @@ module Clarity.Model {
     public numOfRemain: number;
     public profit: number;
   }
+
+  export class ProductInfoViewModel extends Model.BaseModel {
+    public name: string;
+    public sumOfInput: string;
+    public sumOfInputTotalAmount: string;
+    public sumOfSale: string;
+    public sumOfSaleTotalAmount: string;
+    public numOfRemain: string;
+    public profit: string;
+  }
 }

@@ -8,11 +8,18 @@ module Clarity.Model {
     public date: string;
     public productInputs: Array<ProductInputModel>;
     public totalAmount: number;
-    public isChecked: boolean;
 
     constructor() {
       super();
       this.productInputs = new Array<ProductInputModel>();
     }
+  }
+
+  export class InputOrderViewModel extends Model.BaseModel {
+    public vendor: string;
+    public date: string;
+    public numOfProducts: number;
+    public totalAmount: string;
+    public isChecked: boolean;
   }
 }

@@ -5102,6 +5102,13 @@ div.bootstrap {
     background-color: #ffffff; }
   #ng-app .table > tbody > tr:nth-child(even) {
     background-color: #f5f5f5; }
+  #ng-app .table .delete-td {
+    cursor: pointer;
+    vertical-align: middle; }
+    #ng-app .table .delete-td .glyphicon-trash {
+      font-size: 18px; }
+    #ng-app .table .delete-td:hover {
+      color: #C0392B; }
   #ng-app .table-bordered {
     border: none; }
   #ng-app #table-toahang input {
@@ -5110,13 +5117,6 @@ div.bootstrap {
     padding: 0; }
   #ng-app #table-toahang td {
     padding: 12px 8px; }
-  #ng-app #table-toahang .delete-td {
-    cursor: pointer; }
-    #ng-app #table-toahang .delete-td .glyphicon-trash {
-      font-size: 18px;
-      vertical-align: middle; }
-    #ng-app #table-toahang .delete-td:hover {
-      color: #C0392B; }
   #ng-app .search-text-box .has-feedback .form-control-feedback {
     color: #CCCCCC;
     pointer-events: visible;
@@ -5375,6 +5375,8 @@ div.bootstrap {
     margin-left: 40px; }
   #ng-app .margin-top-7 {
     margin-top: 7px; }
+  #ng-app .font-16 {
+    font-size: 16px; }
   #ng-app .right-align {
     text-align: right; }
   #ng-app .pointer {
@@ -5389,12 +5391,12 @@ div.bootstrap {
   #ng-app .sort-asc-ico {
     font-size: 20px;
     position: absolute;
-    top: 14px;
+    top: 16px;
     color: #C0392B; }
   #ng-app .sort-desc-ico {
     font-size: 20px;
     position: absolute;
-    top: 4px;
+    top: 8px;
     color: #C0392B; }
   #ng-app .main-btn {
     background-color: #C0392B;
@@ -5421,6 +5423,8 @@ div.bootstrap {
     width: 50px; }
   #ng-app .main-width-column {
     width: 120px; }
+  #ng-app .main-width-long-column {
+    width: 160px; }
   #ng-app .select-padding-decrease {
     padding: 2px; }
   #ng-app .td-padding-decrease {

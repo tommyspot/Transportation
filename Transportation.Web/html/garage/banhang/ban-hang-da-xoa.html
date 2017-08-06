@@ -12,9 +12,13 @@
 					</select>
 				</span>
 			</div>
-			<div class="col-sm-3">
-				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Tìm kiếm nhanh" />
-			</div>
+      <div class="col-sm-3 search-text-box">
+        <div class="form-group has-feedback">
+          <input class="form-control" type="text" data-ng-model="viewModel.searchText" placeholder="Tìm kiếm nhanh" />
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                data-ng-click="viewModel.clearSearchText()"></span>
+        </div>
+      </div>
 		</div>
 
 		<div class="row">
@@ -23,13 +27,13 @@
 					<table class="table table-hover table-bordered">
 						<thead>
 							<tr>
-								<th class="text-center">STT</th>
-								<th class="text-center">Số xe </th>
+								<th class="stt-width text-center">STT</th>
+								<th class="col-sm-2 text-center">Số xe </th>
 								<th class="text-center">Tên khách hàng</th>
-                <th class="text-center">Thành tiền</th>
-                <th class="text-center">Giảm giá (%)</th>
-                <th class="text-center">Ngày bán</th>
-                <th class="text-center">Phục hồi</th>
+                <th class="col-sm-2 text-center">Thành tiền</th>
+                <th class="col-sm-1 text-center">Giảm giá</th>
+                <th class="col-sm-2 text-center">Ngày bán</th>
+                <th class="col-sm-1 text-center">Phục hồi</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -38,14 +42,14 @@
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
-							<tr data-ng-if="!viewModel.isLoading" class="pointer" data-ng-repeat="order in viewModel.getOrderListOnPage()">
+							<tr data-ng-if="!viewModel.isLoading" data-ng-repeat="orderViewModel in viewModel.getOrderListOnPage()">
 								<td class="text-center">{{$index + 1}}</td>
-								<td>{{order.licensePlate}}</td>
-								<td>{{order.customerName}}</td>
-                <td class="text-right">{{order.totalAmount | currency: "" : 0}}</td>
-                <td class="text-right">{{order.saleOff}}</td>
-                <td class="text-center">{{order.date}}</td>
-                <td class="text-center hover"><i class="fa fa-undo" data-ng-click="viewModel.restoreOrder(order)"></i></td>
+								<td>{{::orderViewModel.licensePlate}}</td>
+								<td>{{::orderViewModel.customerName}}</td>
+                <td class="text-right">{{::orderViewModel.totalAmount}}</td>
+                <td class="text-right">{{::orderViewModel.saleOff}}</td>
+                <td class="text-center">{{::orderViewModel.date}}</td>
+                <td class="text-center hover" data-ng-click="viewModel.restoreOrder(orderViewModel)"><i class="fa fa-undo"></i></td>
 							</tr>
 						</tbody>
 					</table>

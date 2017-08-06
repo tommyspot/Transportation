@@ -12,7 +12,6 @@ module Clarity.Model {
     public totalAmount: number;
     public note: string;
     public status: boolean;
-    public isChecked: boolean;
 
     constructor() {
       super();
@@ -21,12 +20,23 @@ module Clarity.Model {
     }
   }
 
-    export class OrderDetailModel extends Model.BaseModel {
-      public orderId: number;
-      public productId: number;
-      public price: number;
-      public quantity: number;
-      public unit: string;
-      public priceFormatted: string;
-    }
+  export class OrderDetailModel extends Model.BaseModel {
+    public orderId: number;
+    public productId: number;
+    public price: number;
+    public quantity: number;
+    public maxQuantity: number;  // no map
+    public unit: string;
+    public priceFormatted: string;
+  }
+
+  export class OrderViewModel extends Model.BaseModel {
+    public licensePlate: string;
+    public customerName: string;
+    public date: string;
+    public saleOff: string;
+    public totalAmount: string;
+    public status: boolean;
+    public isChecked: boolean;
+  }
 }

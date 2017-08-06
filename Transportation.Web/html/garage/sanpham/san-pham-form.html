@@ -1,5 +1,13 @@
 ﻿<div id="productFormSection" class="bootstrap form">
 	<div class="container">
+
+    <div class="row">
+      <div class="col-sm-12">
+        <span class="required-field" data-ng-if="viewModel.errorMessage != ''">
+          {{::viewModel.errorMessage}}
+        </span>
+      </div>
+    </div>
 		<form name="productForm" class="form-horizontal">
       <div class="form-group margin-top-20">
         <label for="name" class="col-sm-2 control-label">Tên sản phẩm <span class="required-symbol">*</span></label>
@@ -9,10 +17,6 @@
         <div class="col-sm-4 validate-error">
           <span class="required-field" data-ng-if="productForm.name.$touched && productForm.name.$invalid">
             Tên sản phẩm phải được nhập</span>
-
-          <span class="required-field" data-ng-if="viewModel.errorMessage != ''">
-            {{viewModel.errorMessage}}
-          </span>
         </div>
       </div>
       <div class="form-group">

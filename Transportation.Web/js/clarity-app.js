@@ -357,7 +357,10 @@ clarityApp.directive('validatorMax', function ($filter) {
         }
 
         // it is invalid
-        var newValue = $filter('currency')(parseInt(modelValue.replace(/\./g, '')), '', 0).trim();
+        var newValue = typeof modelValue === 'number' ?
+          modelValue.toString() :
+          $filter('currency')(parseInt(modelValue.replace(/\./g, '')), '', 0).trim();
+
         ctrl.$setViewValue(newValue);
         ctrl.$render();
         return false;

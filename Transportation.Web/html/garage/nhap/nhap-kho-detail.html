@@ -3,7 +3,7 @@
     <div class="form-detail">
       <div class="row">
         <div class="col-sm-12">
-          <h2 class="text-center">NHẬP KHO - {{viewModel.currentInputOrder.id}}</h2>
+          <h2 class="text-center">NHẬP KHO - {{::viewModel.currentInputOrder.id}}</h2>
         </div>
       </div>
       <div class="row margin-top-20">
@@ -11,7 +11,7 @@
           <p class="bold-text">Nhà cung cấp:</p>
         </div>
         <div class="col-sm-10">
-          <p>{{viewModel.currentInputOrder.vendor}}</p>
+          <p>{{::viewModel.currentInputOrder.vendor}}</p>
         </div>
       </div>
       <div class="row">
@@ -19,7 +19,7 @@
           <p class="bold-text">Ngày:</p>
         </div>
         <div class="col-sm-10">
-          <p>{{viewModel.currentInputOrder.date}}</p>
+          <p>{{::viewModel.currentInputOrder.date}}</p>
         </div>
       </div>
       <div class="row">
@@ -27,7 +27,7 @@
           <p class="bold-text">Tổng thành tiền:</p>
         </div>
         <div class="col-sm-10">
-          <p class="bold-text">{{viewModel.currentInputOrder.totalAmount | currency: "" : 0}}</p>
+          <p class="bold-text">{{::viewModel.currentInputOrder.totalAmount | currency: "" : 0}}</p>
         </div>
       </div>
 
@@ -47,10 +47,10 @@
             <tr data-ng-repeat="productInput in viewModel.currentInputOrder.productInputs">
               <td class="align-center">{{$index + 1}}</td>
               <td class="align-center">{{viewModel.getProductById(productInput.productId).name}}</td>
-              <td class="align-center">{{productInput.quantity}}</td>
-              <td class="align-center">{{productInput.inputPrice | currency: "" : 0}}</td>
-              <td class="align-center">{{productInput.inputPrice * productInput.quantity | currency: "" : 0}}</td>
-              <td class="align-center">{{productInput.salePrice | currency: "" : 0}}</td>
+              <td class="align-center">{{::productInput.quantity}}</td>
+              <td class="align-center">{{::productInput.inputPrice | currency: "" : 0}}</td>
+              <td class="align-center">{{::(productInput.inputPrice * productInput.quantity) | currency: "" : 0}}</td>
+              <td class="align-center">{{::productInput.salePrice | currency: "" : 0}}</td>
             </tr>
           </tbody>
         </table>
@@ -74,7 +74,6 @@
           </button>
         </div>
       </div>
-
     </div>
   </div>
 </div>

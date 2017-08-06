@@ -20,9 +20,13 @@
 					<span class="hidden-xs">Xóa sản phẩm</span>
 				</button>
 			</div>
-			<div class="col-sm-3">
-				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Tìm kiếm nhanh" />
-			</div>
+      <div class="col-sm-3 search-text-box">
+        <div class="form-group has-feedback">
+          <input class="form-control" type="text" data-ng-model="viewModel.searchText" placeholder="Tìm kiếm nhanh" />
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                data-ng-click="viewModel.clearSearchText()"></span>
+        </div>
+      </div>
 		</div>
 
 		<div class="row">
@@ -38,23 +42,26 @@
 								<th class="text-center">Tên sản phẩm</th>
 								<th class="col-sm-4 text-center">Xuất xứ</th>
                 <th class="edit-column-width text-center">Sửa</th>
+                <th class="detail-column-width text-center">Xem</th>
 							</tr>
 						</thead>
 						<tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="4">
+                <td class="text-center" colspan="5">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
-							<tr data-ng-if="!viewModel.isLoading" class="pointer" data-ng-repeat="product in viewModel.getProductListOnPage()"
-									data-ng-click="viewModel.$location.path('/ql-garage/san-pham/' + product.id)">
+							<tr data-ng-if="!viewModel.isLoading" data-ng-repeat="product in viewModel.getProductListOnPage()">
 								<td class="text-center" data-ng-click="$event.stopPropagation();">
 									<input id="product-{{$index}}" type="checkbox" data-ng-model="product.isChecked" />
 								</td>
-								<td>{{product.name}}</td>
-								<td>{{product.origin}}</td>
+								<td>{{::product.name}}</td>
+								<td>{{::product.origin}}</td>
                 <td class="text-center edit-column" data-ng-click="viewModel.goToProductEditForm($event, product.id)">
                   <span class="glyphicon glyphicon-pencil"></span>
+                </td>
+                <td class="text-center detail-column" data-ng-click="viewModel.$location.path('/ql-garage/san-pham/' + product.id)">
+                  <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                 </td>
 							</tr>
 						</tbody>

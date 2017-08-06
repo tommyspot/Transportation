@@ -1,4 +1,4 @@
-/// <reference path="../../lib/angular/angular.d.ts" />
+﻿/// <reference path="../../lib/angular/angular.d.ts" />
 /// <reference path="../../lib/angular/angular-cookies.d.ts" />
 /// <reference path="IController.ts" />
 /// <reference path="../services/AuthenticationService.ts" />
@@ -10,17 +10,21 @@ module Clarity.Controller {
 	import helper = Clarity.Helper;
 
   export class ProductInfoManagementController {
-    public currentProductInfo: Model.ProductInfoModel;
+    public mainHelper: helper.MainHelper;
     public productService: service.ProductService;
     public exportService: service.ExportService;
+
+    public currentProductInfo: Model.ProductInfoModel;
     public productInfoList: Array<Model.ProductInfoModel>;
-    public productInfoListTmp: Array<Model.ProductInfoModel>;
+    public productInfoListView: Array<Model.ProductInfoViewModel>;
+    public productInfoListViewTmp: Array<Model.ProductInfoViewModel>;
 
     public numOfPages: number;
     public currentPage: number;
     public pageSize: number;
     public isLoading: boolean;
     public isExportLoading: boolean;
+    public searchText: string;
 
     public sortingCurrentPropertyName: string;
     public sortingIsReverse: boolean;
@@ -31,19 +35,22 @@ module Clarity.Controller {
       private $location: ng.ILocationService,
       private $window: ng.IWindowService,
       private $filter: ng.IFilterService,
+      private $cookieStore: ng.ICookieStoreService,
       private $routeParams: any) {
 
+      this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
       this.productService = new service.ProductService($http);
       this.exportService = new service.ExportService($http);
       $scope.viewModel = this;
 
       this.pageSize = 10;
+      this.searchText = '';
       this.initProduct();
 
       var self = this;
-      $scope.$watch('searchText', function (value) {
-        if (self.productInfoListTmp && self.productInfoListTmp.length > 0) {
-          self.productInfoList = $filter('filter')(self.productInfoListTmp, value);
+      $scope.$watch('viewModel.searchText', function (value) {
+        if (self.productInfoListViewTmp && self.productInfoListViewTmp.length > 0) {
+          self.productInfoListView = $filter('filter')(self.productInfoListViewTmp, value);
           self.initPagination();
         }
       });
@@ -60,23 +67,37 @@ module Clarity.Controller {
       this.productService.getAllProductInfo((results: Array<Model.ProductInfoModel>) => {
         this.productInfoList = results;
         this.orderBy('name');
-        this.productInfoListTmp = this.productInfoList;
         this.initPagination();
         this.isLoading = false;
       }, null);
     }
 
+    mapToProductInfoListView() {
+      this.productInfoListView = this.productInfoList.map((productInfo: Model.ProductInfoModel) => {
+        const productInfoView = new Model.ProductInfoViewModel();
+        productInfoView.id = productInfo.id;
+        productInfoView.name = productInfo.name;
+        productInfoView.sumOfInput = this.mainHelper.formatCurrency(productInfo.sumOfInput);
+        productInfoView.sumOfSale = this.mainHelper.formatCurrency(productInfo.sumOfSale);
+        productInfoView.numOfRemain = this.mainHelper.formatCurrency(productInfo.numOfRemain);
+        productInfoView.sumOfInputTotalAmount = this.mainHelper.formatCurrency(productInfo.sumOfInputTotalAmount);
+        productInfoView.sumOfSaleTotalAmount = this.mainHelper.formatCurrency(productInfo.sumOfSaleTotalAmount);
+        productInfoView.profit = this.mainHelper.formatCurrency(productInfo.profit);
+        return productInfoView;
+      });
+    }
+
     initPagination() {
       this.currentPage = 1;
-      this.numOfPages = this.productInfoList.length % this.pageSize === 0 ?
-        this.productInfoList.length / this.pageSize : Math.floor(this.productInfoList.length / this.pageSize) + 1;
+      this.numOfPages = this.productInfoListView.length % this.pageSize === 0 ?
+        this.productInfoListView.length / this.pageSize : Math.floor(this.productInfoListView.length / this.pageSize) + 1;
     }
 
     getProductInfoListOnPage() {
-      if (this.productInfoList && this.productInfoList.length > 0) {
+      if (this.productInfoListView && this.productInfoListView.length > 0) {
         var startIndex = this.pageSize * (this.currentPage - 1);
         var endIndex = startIndex + this.pageSize;
-        return this.productInfoList.slice(startIndex, endIndex);
+        return this.productInfoListView.slice(startIndex, endIndex);
       }
     }
 
@@ -108,6 +129,10 @@ module Clarity.Controller {
       this.sortingIsReverse = propertyName && propertyName === this.sortingCurrentPropertyName ? !this.sortingIsReverse : false;
       this.sortingCurrentPropertyName = propertyName;
       this.productInfoList = this.$filter('orderBy')(this.productInfoList, this.sortingCurrentPropertyName, this.sortingIsReverse);
+
+      this.clearSearchText();
+      this.mapToProductInfoListView();
+      this.productInfoListViewTmp = this.productInfoListView;
     }
 
     exportReport() {
@@ -120,5 +145,12 @@ module Clarity.Controller {
         this.isExportLoading = false;
       });
     }
+
+    clearSearchText() {
+      if (this.searchText != '') {
+        this.searchText = '';
+      }
+    }
+
 	}
 }

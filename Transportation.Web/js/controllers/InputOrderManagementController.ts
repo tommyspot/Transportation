@@ -18,16 +18,19 @@ module Clarity.Controller {
     public mainHelper: helper.MainHelper;
 
     public inputOrderList: Array<Model.InputOrderModel>;
+    public inputOrderListView: Array<Model.InputOrderViewModel>;
+    public inputOrderListViewTmp: Array<Model.InputOrderViewModel>;
+
     public productList: Array<Model.ProductModel>;
     public productNameList: Array<string>;
-
-    public inputOrderListTmp: Array<Model.InputOrderModel>;
+    
     public numOfPages: number;
     public currentPage: number;
     public pageSize: number;
     public isCheckedAll: boolean;
     public isLoading: boolean;
     public todayFormat: string;
+    public searchText: string;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -44,12 +47,13 @@ module Clarity.Controller {
       $scope.viewModel = this;
 
       this.pageSize = 10;
+      this.searchText = '';
       this.initInputOrder();
 
       var self = this;
-      $scope.$watch('searchText', function (value) {
-        if (self.inputOrderListTmp && self.inputOrderListTmp.length > 0) {
-          self.inputOrderList = $filter('filter')(self.inputOrderListTmp, value);
+      $scope.$watch('viewModel.searchText', function (value) {
+        if (self.inputOrderListViewTmp && self.inputOrderListViewTmp.length > 0) {
+          self.inputOrderListView = $filter('filter')(self.inputOrderListViewTmp, value);
           self.initPagination();
         }
       });
@@ -58,20 +62,7 @@ module Clarity.Controller {
     initInputOrder() {
       var inputOrderId = this.$routeParams.input_order_id;
       if (inputOrderId) {
-        if (this.$location.path() === '/ql-garage/nhap-kho/' + inputOrderId) {
-          this.inputOrderService.getById(inputOrderId, (data) => {
-            this.currentInputOrder = data;
-            this.initProductList();
-          }, null);
-        } else if (this.$location.path() === '/ql-garage/nhap-kho/sua/' + inputOrderId) {
-          if (this.currentInputOrder == null) {
-            this.inputOrderService.getById(inputOrderId, (data) => {
-              this.currentInputOrder = data;
-              this.initFormatPriceForProductInputs(this.currentInputOrder);
-              this.initProductList();
-            }, null);
-          }
-        }
+        this.initCurrentInputOrder(inputOrderId);
       } else {
         if (this.$location.path() === '/ql-garage/nhap-kho/tao') {
           this.initProductList();
@@ -85,16 +76,39 @@ module Clarity.Controller {
       }
     }
 
+    initCurrentInputOrder(inputOrderId: number) {
+      if (this.currentInputOrder == null) {
+        this.inputOrderService.getById(inputOrderId, (data) => {
+          this.currentInputOrder = data;
+          this.initFormatPriceForProductInputs(this.currentInputOrder);
+          this.initProductList();
+        }, null);
+      }
+    }
+
     initInputOrderList() {
       this.inputOrderService.getAll((results: Array<Model.InputOrderModel>) => {
         this.inputOrderList = results;
         this.inputOrderList.sort(function (a: any, b: any) {
           return b.id - a.id;
         });
-        this.inputOrderListTmp = this.inputOrderList;
+        this.mapToInputOrderListView();
+        this.inputOrderListViewTmp = this.inputOrderListView;
         this.initPagination();
         this.isLoading = false;
       }, null);
+    }
+
+    mapToInputOrderListView() {
+      this.inputOrderListView = this.inputOrderList.map((inputOrder: Model.InputOrderModel) => {
+        const inputOrderView = new Model.InputOrderViewModel();
+        inputOrderView.id = inputOrder.id;
+        inputOrderView.vendor = inputOrder.vendor;
+        inputOrderView.numOfProducts = inputOrder.productInputs ? inputOrder.productInputs.length : 0;
+        inputOrderView.totalAmount = this.mainHelper.formatCurrency(inputOrder.totalAmount);
+        inputOrderView.date = inputOrder.date;
+        return inputOrderView;
+      });
     }
 
     initProductList() {
@@ -117,15 +131,15 @@ module Clarity.Controller {
 
     initPagination() {
       this.currentPage = 1;
-      this.numOfPages = this.inputOrderList.length % this.pageSize === 0 ?
-        this.inputOrderList.length / this.pageSize : Math.floor(this.inputOrderList.length / this.pageSize) + 1;
+      this.numOfPages = this.inputOrderListView.length % this.pageSize === 0 ?
+        this.inputOrderListView.length / this.pageSize : Math.floor(this.inputOrderListView.length / this.pageSize) + 1;
     }
 
     getInputOrderListOnPage() {
-      if (this.inputOrderList && this.inputOrderList.length > 0) {
+      if (this.inputOrderListView && this.inputOrderListView.length > 0) {
         var startIndex = this.pageSize * (this.currentPage - 1);
         var endIndex = startIndex + this.pageSize;
-        return this.inputOrderList.slice(startIndex, endIndex);
+        return this.inputOrderListView.slice(startIndex, endIndex);
       }
     }
 
@@ -164,8 +178,8 @@ module Clarity.Controller {
     removeOrders() {
       var confirmDialog = this.$window.confirm('Bạn có muốn xóa những kho hàng được chọn?');
       if (confirmDialog) {
-        for (let i = 0; i < this.inputOrderList.length; i++) {
-          var product = this.inputOrderList[i];
+        for (let i = 0; i < this.inputOrderListView.length; i++) {
+          var product = this.inputOrderListView[i];
           if (product.isChecked) {
             this.inputOrderService.deleteEntity(product, (data) => {
               this.initInputOrderList();
@@ -241,6 +255,10 @@ module Clarity.Controller {
       if (propertyName === 'inputPrice') {
         this.updateTotalAmount();
       }
+    }
+
+    clearSearchText() {
+      this.searchText = '';
     }
 
 	}

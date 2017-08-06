@@ -24,9 +24,13 @@
           <span class="hidden-xs">Đơn hàng đã xóa</span>
         </button>
 			</div>
-			<div class="col-sm-3">
-				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Tìm kiếm nhanh" />
-			</div>
+      <div class="col-sm-3 search-text-box">
+        <div class="form-group has-feedback">
+          <input class="form-control" type="text" data-ng-model="viewModel.searchText" placeholder="Tìm kiếm nhanh" />
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                data-ng-click="viewModel.clearSearchText()"></span>
+        </div>
+      </div>
 		</div>
 
 		<div class="row">
@@ -35,38 +39,41 @@
 					<table class="table table-hover table-bordered">
 						<thead>
 							<tr>
-								<th class="align-center">
-									<input id="checkAllProducts" type="checkbox" data-ng-model="viewModel.isCheckedAll"
+								<th class="checkbox-width align-center">
+									<input id="checkAllOrders" type="checkbox" data-ng-model="viewModel.isCheckedAll"
 												 data-ng-change="viewModel.selectAllProductsOnPage()" />
 								</th>
-								<th class="col-sm-2 text-center">Số xe </th>
+								<th class="col-sm-2 text-center">Số xe</th>
 								<th class="text-center">Tên khách hàng</th>
                 <th class="col-sm-2 text-center">Thành tiền</th>
                 <th class="col-sm-1 text-center">Giảm giá</th>
                 <th class="col-sm-2 text-center">Ngày bán</th>
                 <th class="edit-column-width  text-center">In</th>
                 <th class="edit-column-width text-center">Sửa</th>
+                <th class="detail-column-width text-center">Xem</th>
 							</tr>
 						</thead>
 						<tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="8">
+                <td class="text-center" colspan="9">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
-							<tr data-ng-if="!viewModel.isLoading" class="pointer" data-ng-repeat="order in viewModel.getOrderListOnPage()"
-									data-ng-click="viewModel.$location.path('/ql-garage/ban-hang/' + order.id)">
+							<tr data-ng-if="!viewModel.isLoading" data-ng-repeat="orderViewModel in viewModel.getOrderListOnPage()">
 								<td class="text-center" data-ng-click="$event.stopPropagation();">
-									<input id="order-{{$index}}" type="checkbox" data-ng-model="order.isChecked" />
+									<input id="order-{{$index}}" type="checkbox" data-ng-model="orderViewModel.isChecked" />
 								</td>
-								<td>{{order.licensePlate}}</td>
-								<td>{{order.customerName}}</td>
-                <td class="text-right">{{order.totalAmount | currency: "" : 0}}</td>
-                <td class="text-right">{{order.saleOff}}%</td>
-                <td class="text-center">{{order.date}}</td>
-                <td class="text-center hover" data-ng-click="viewModel.goToOrderPrintPage($event, order)"><i class="fa fa-print"></i></td>
-                <td class="text-center edit-column" data-ng-click="viewModel.goToOrderEditForm($event, order.id)">
+								<td>{{::orderViewModel.licensePlate}}</td>
+								<td>{{::orderViewModel.customerName}}</td>
+                <td class="text-right">{{::orderViewModel.totalAmount}}</td>
+                <td class="text-right">{{::orderViewModel.saleOff}}</td>
+                <td class="text-center">{{::orderViewModel.date}}</td>
+                <td class="text-center hover" data-ng-click="viewModel.goToOrderPrintPage($event, orderViewModel)"><i class="fa fa-print font-16"></i></td>
+                <td class="text-center edit-column" data-ng-click="viewModel.goToOrderEditForm($event, orderViewModel.id)">
                   <span class="glyphicon glyphicon-pencil"></span>
+                </td>
+                <td class="text-center detail-column" data-ng-click="viewModel.$location.path('/ql-garage/ban-hang/' + orderViewModel.id)">
+                  <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                 </td>
 							</tr>
 						</tbody>

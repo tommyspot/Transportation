@@ -3,7 +3,7 @@
     <div class="form-detail">
       <div class="row">
         <div class="col-sm-12">
-          <h2 class="text-center">BÁN HÀNG - {{viewModel.currentOrder.id}}</h2>
+          <h2 class="text-center">BÁN HÀNG - {{::viewModel.currentOrder.id}}</h2>
         </div>
       </div>
       <div class="row margin-top-20">
@@ -11,7 +11,7 @@
           <p class="bold-text">Tên khách hàng:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentOrder.customerName}}</p>
+          <p>{{::viewModel.currentOrder.customerName}}</p>
         </div>
       </div>
       <div class="row">
@@ -19,7 +19,7 @@
           <p class="bold-text">Số xe:</p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentOrder.licensePlate}}</p>
+          <p>{{::viewModel.currentOrder.licensePlate}}</p>
         </div>
       </div>
       <div class="row">
@@ -27,7 +27,7 @@
           <p class="bold-text">Địa chỉ: </p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentOrder.address}}</p>
+          <p>{{::viewModel.currentOrder.address}}</p>
         </div>
       </div>
       <div class="row">
@@ -35,7 +35,7 @@
           <p class="bold-text">Ngày bán: </p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentOrder.date}}</p>
+          <p>{{::viewModel.currentOrder.date}}</p>
         </div>
       </div>
       <div class="row">
@@ -43,7 +43,7 @@
           <p class="bold-text">Tổng thành tiền: </p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentOrder.totalAmount | currency: "" : 0}}</p>
+          <p>{{::viewModel.currentOrder.totalAmount | currency: "" : 0}}</p>
         </div>
       </div>
       <div class="row">
@@ -51,7 +51,7 @@
           <p class="bold-text">Giảm giá: </p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentOrder.saleOff}}%</p>
+          <p>{{::viewModel.currentOrder.saleOff}}%</p>
         </div>
       </div>
       <div class="row">
@@ -67,7 +67,7 @@
           <p class="bold-text">Mô tả: </p>
         </div>
         <div class="col-sm-9">
-          <p>{{viewModel.currentOrder.note}}</p>
+          <p>{{::viewModel.currentOrder.note}}</p>
         </div>
       </div>
       
@@ -88,9 +88,9 @@
                 <tr data-ng-repeat="orderDetail in viewModel.currentOrder.orderDetails">
                   <td class="text-center">{{$index + 1}}</td>
                   <td class="text-center">{{viewModel.getProductById(orderDetail.productId).name}}</td>
-                  <td class="text-center hidden-xs">{{orderDetail.quantity}}</td>
-                  <td class="text-center hidden-xs">{{orderDetail.price | currency: "" : 0}}</td>
-                  <td class="text-center">{{orderDetail.price * orderDetail.quantity | currency: "" : 0}}</td>
+                  <td class="text-center hidden-xs">{{::orderDetail.quantity}}</td>
+                  <td class="text-center hidden-xs">{{::orderDetail.price | currency: "" : 0}}</td>
+                  <td class="text-center">{{::(orderDetail.price * orderDetail.quantity) | currency: "" : 0}}</td>
                 </tr>
               </tbody>
             </table>

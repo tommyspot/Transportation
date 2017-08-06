@@ -19,10 +19,12 @@ module Clarity.Controller {
     public mainHelper: helper.MainHelper;
 
     public orderList: Array<Model.OrderModel>;
+    public orderListView: Array<Model.OrderViewModel>;
+    public orderListViewTmp: Array<Model.OrderViewModel>;
+
     public inventoryViewList: Array<Model.InventoryViewModel>;
     public productList: Array<Model.ProductModel>;
 
-    public productInputListTmp: Array<Model.OrderModel>;
     public numOfPages: number;
     public currentPage: number;
     public pageSize: number;
@@ -31,6 +33,7 @@ module Clarity.Controller {
     public todayFormat: string;
     public currentDay: Date;
     public originOrderDetails: Array<Model.OrderDetailModel>;
+    public searchText: string;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -48,12 +51,13 @@ module Clarity.Controller {
       $scope.viewModel = this;
 
       this.pageSize = 10;
+      this.searchText = '';
       this.initOrder();
 
       var self = this;
-      $scope.$watch('searchText', function (value) {
-        if (self.productInputListTmp && self.productInputListTmp.length > 0) {
-          self.orderList = $filter('filter')(self.productInputListTmp, value);
+      $scope.$watch('viewModel.searchText', function (value) {
+        if (self.orderListViewTmp && self.orderListViewTmp.length > 0) {
+          self.orderListView = $filter('filter')(self.orderListViewTmp, value);
           self.initPagination();
         }
       });
@@ -87,37 +91,50 @@ module Clarity.Controller {
           this.currentOrder.totalAmount = 0;
           this.initInventoryViewList();
         } else if (this.$location.path() === '/ql-garage/ban-hang') {
-          this.isLoading = true;
           this.initOrderList();
         } else if (this.$location.path() === '/ql-garage/ban-hang/da-xoa') {
-          this.isLoading = true;
           this.initDeletedOrderList();
         }
       }
     }
 
     initOrderList() {
+      this.isLoading = true;
       this.orderService.getAll((results: Array<Model.OrderModel>) => {
-        this.orderList = results;
-        this.orderList.sort(function (a: any, b: any) {
-          return b.id - a.id;
-        });
-        this.productInputListTmp = this.orderList;
-        this.initPagination();
-        this.isLoading = false;
+        this.initOrderListAfterCallAsync(results);
       }, null);
     }
 
     initDeletedOrderList() {
+      this.isLoading = true;
       this.orderService.getAllDeletedOrders((results: Array<Model.OrderModel>) => {
-        this.orderList = results;
-        this.orderList.sort(function (a: any, b: any) {
-          return b.id - a.id;
-        });
-        this.productInputListTmp = this.orderList;
-        this.initPagination();
-        this.isLoading = false;
+        this.initOrderListAfterCallAsync(results);
       }, null);
+    }
+
+    initOrderListAfterCallAsync(results: Array<Model.OrderModel>) {
+      this.orderList = results;
+      this.orderList.sort(function (a: any, b: any) {
+        return b.id - a.id;
+      });
+      this.mapToOrderListView();
+      this.orderListViewTmp = this.orderListView;
+      this.initPagination();
+      this.isLoading = false;
+    }
+
+    mapToOrderListView() {
+      this.orderListView = this.orderList.map((order: Model.OrderModel) => {
+        const orderView = new Model.OrderViewModel();
+        orderView.id = order.id;
+        orderView.licensePlate = order.licensePlate;
+        orderView.customerName = order.customerName;
+        orderView.totalAmount = this.mainHelper.formatCurrency(order.totalAmount);
+        orderView.saleOff = order.saleOff.toString() + '%';
+        orderView.date = order.date;
+        orderView.status = order.status;
+        return orderView;
+      });
     }
 
     initInventoryViewList() {
@@ -135,8 +152,9 @@ module Clarity.Controller {
             inventoryView.quantity = inventory.quantity;
             this.inventoryViewList.push(inventoryView);
           });
+          // init max quantity for order detail
+          this.initMaxQuantityForOrderDetails(this.currentOrder);
         }, null);
-
       }, null);
     }
 
@@ -149,22 +167,30 @@ module Clarity.Controller {
     initFormatPriceForOrderDetails(order: Model.OrderModel) {
       if (order && order.orderDetails && order.orderDetails.length > 0) {
         for (var orderDetail of order.orderDetails) {
-          orderDetail.priceFormatted = orderDetail.price != 0 ? orderDetail.price.toLocaleString() : '';
+          orderDetail.priceFormatted = this.mainHelper.formatCurrency(orderDetail.price);
+        }
+      }
+    }
+
+    initMaxQuantityForOrderDetails(order: Model.OrderModel) {
+      if (order && order.orderDetails && order.orderDetails.length > 0) {
+        for (var orderDetail of order.orderDetails) {
+          orderDetail.maxQuantity = this.getInventoryViewByProductId(orderDetail.productId).quantity;
         }
       }
     }
 
     initPagination() {
       this.currentPage = 1;
-      this.numOfPages = this.orderList.length % this.pageSize === 0 ?
-        this.orderList.length / this.pageSize : Math.floor(this.orderList.length / this.pageSize) + 1;
+      this.numOfPages = this.orderListView.length % this.pageSize === 0 ?
+        this.orderListView.length / this.pageSize : Math.floor(this.orderListView.length / this.pageSize) + 1;
     }
 
     getOrderListOnPage() {
-      if (this.orderList && this.orderList.length > 0) {
+      if (this.orderListView && this.orderListView.length > 0) {
         var startIndex = this.pageSize * (this.currentPage - 1);
         var endIndex = startIndex + this.pageSize;
-        return this.orderList.slice(startIndex, endIndex);
+        return this.orderListView.slice(startIndex, endIndex);
       }
     }
 
@@ -203,8 +229,8 @@ module Clarity.Controller {
     removeOrders() {
       var confirmDialog = this.$window.confirm('Bạn có muốn xóa những đơn hàng được chọn?');
       if (confirmDialog) {
-        for (let i = 0; i < this.orderList.length; i++) {
-          var order = this.orderList[i];
+        for (let i = 0; i < this.orderListView.length; i++) {
+          var order = this.orderListView[i];
           if (order.isChecked) {
             order.status = false;
             this.orderService.changeOrderStatus(order, (data) => {
@@ -225,9 +251,9 @@ module Clarity.Controller {
       }
     }
 
-    restoreOrder(order: Model.OrderModel) {
-      order.status = true;
-      this.orderService.changeOrderStatus(order, (data) => {
+    restoreOrder(orderViewModel: Model.OrderViewModel) {
+      orderViewModel.status = true;
+      this.orderService.changeOrderStatus(orderViewModel, (data) => {
         this.initDeletedOrderList();
       }, null);
     }
@@ -258,9 +284,9 @@ module Clarity.Controller {
       this.$location.path('/ql-garage/ban-hang/da-xoa');
     }
 
-    goToOrderPrintPage(event: Event, order: Model.OrderModel) {
+    goToOrderPrintPage(event: Event, orderViewModel: Model.OrderViewModel) {
       event.stopPropagation();
-      this.$window.open('#/ql-garage/ban-hang/in/' + order.id);
+      this.$window.open('#/ql-garage/ban-hang/in/' + orderViewModel.id);
     }
 
     addOrderDetail() {
@@ -297,14 +323,25 @@ module Clarity.Controller {
     }
 
     onInventoryViewChanged(orderDetail: Model.OrderDetailModel, index: number) {
-      const originOrderDetail = this.originOrderDetails && this.originOrderDetails[index];
-      if (this.originOrderDetails == null || (originOrderDetail && orderDetail.productId != originOrderDetail.productId)) {
+      if (this.shouldOrderDetailSetDefault(orderDetail, index)) {
         orderDetail.price = this.getInventoryViewByProductId(orderDetail.productId).latestPrice;
-        orderDetail.priceFormatted = orderDetail.price != 0 ? orderDetail.price.toLocaleString() : '';
+        orderDetail.priceFormatted = this.mainHelper.formatCurrency(orderDetail.price);
         orderDetail.quantity = 1;
+        orderDetail.maxQuantity = this.getInventoryViewByProductId(orderDetail.productId).quantity;
         this.updateTotalAmount();
         this.updateNote();
       }
+    }
+
+    shouldOrderDetailSetDefault(orderDetail: Model.OrderDetailModel, index: number) {
+      if (this.originOrderDetails == null)  // Add new
+        return true;
+
+      const originOrderDetail = this.originOrderDetails && this.originOrderDetails[index];
+      if (originOrderDetail == null)  // Edit screen: add new a detail order
+        return true;
+
+      return false;
     }
 
     onQuantityOrderDetailChanged() {
@@ -335,6 +372,10 @@ module Clarity.Controller {
       this.mainHelper.onCurrencyPropertyChanged(orderDetail, 'price', `price${formatSuffix}`);
       this.updateTotalAmount();
       this.updateNote();
+    }
+
+    clearSearchText() {
+      this.searchText = '';
     }
 	}
 }

@@ -212,6 +212,17 @@ div.bootstrap {
         background-color: #f5f5f5;
       }
     }
+  
+    .delete-td{
+      cursor: pointer;
+      vertical-align: middle;
+      .glyphicon-trash{
+        font-size: 18px;
+      }
+      &:hover{
+        color: $transport-color-2;
+      }
+    }
   }
 
   .table-bordered {
@@ -227,16 +238,6 @@ div.bootstrap {
     }
     td{
       padding: 12px 8px;
-    }
-    .delete-td{
-      cursor: pointer;
-      .glyphicon-trash{
-        font-size: 18px;
-        vertical-align: middle;
-      }
-      &:hover{
-        color: $transport-color-2;
-      }
     }
   }
   /*SEARCH TEXT BOX*/
@@ -679,6 +680,10 @@ div.bootstrap {
     margin-top: 7px;
   }
 
+  .font-16{
+    font-size: 16px;
+  }
+
   .right-align {
     text-align: right;
   }
@@ -703,13 +708,14 @@ div.bootstrap {
   .sort-asc-ico{
     font-size: 20px;
     position: absolute;
-    top: 14px;
+    top: 16px;
     color: $transport-color-2;
   }
+  
   .sort-desc-ico{
     font-size: 20px;
     position: absolute;
-    top: 4px;
+    top: 8px;
     color: $transport-color-2;
   }
 
@@ -756,6 +762,10 @@ div.bootstrap {
 
   .main-width-column{
     width: 120px;
+  }
+
+  .main-width-long-column{
+    width: 160px;
   }
 
   .select-padding-decrease{

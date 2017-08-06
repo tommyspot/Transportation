@@ -82,7 +82,7 @@
                                 click-activation="true" data="viewModel.productNameList" required></autocomplete>
                 </td>
                 <td class="text-center">
-                  <input class="form-control" type="number" min="1" data-ng-model="productInput.quantity"
+                  <input class="form-control text-right" type="number" min="1" data-ng-model="productInput.quantity"
                           data-ng-change="viewModel.updateTotalAmount()" required />
                 </td>
                 <td>
@@ -94,10 +94,8 @@
                   <input class="form-control text-right" type="text" maxlength="15" data-ng-model="productInput.salePriceFormatted"
                           data-ng-change="viewModel.formatCurrency(productInput, 'salePrice')" />
                 </td>
-                <td class="text-center">
-                  <button type="button" class="btn btn-default" data-ng-click="viewModel.deleteProductInput($index)">
-                    <span class="glyphicon glyphicon-trash"></span> <span>Xóa</span>
-                  </button>
+                <td class="text-center delete-td" data-ng-click="viewModel.deleteProductInput($index)">
+                  <span class="glyphicon glyphicon-trash"></span>
                 </td>
               </tr>
             </tbody>

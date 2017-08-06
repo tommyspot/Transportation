@@ -17,9 +17,13 @@
           &nbsp;<i data-ng-if="viewModel.isExportLoading" class="fa fa-spinner fa-pulse"></i>
         </button>
 			</div>
-			<div class="col-sm-3">
-				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Tìm kiếm nhanh" />
-			</div>
+      <div class="col-sm-3 search-text-box">
+        <div class="form-group has-feedback">
+          <input class="form-control" type="text" data-ng-model="viewModel.searchText" placeholder="Tìm kiếm nhanh" />
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                data-ng-click="viewModel.clearSearchText()"></span>
+        </div>
+      </div>
 		</div>
 
 		<div class="row">
@@ -29,31 +33,32 @@
 						<thead>
 							<tr>
                 <th class="stt-width text-center">STT</th>
-								<th class="col-sm-2 text-center pointer" data-ng-click="viewModel.orderBy('name')">Tên sản phẩm &nbsp;
+								<th class="text-center pointer" data-ng-click="viewModel.orderBy('name')">Tên sản phẩm &nbsp;
                   <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'name'" aria-hidden="true"
                      data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}" ></i>
                 </th>
-								<th class="col-sm-1 text-center pointer" data-ng-click="viewModel.orderBy('sumOfInput')">SL nhập &nbsp;
+                <th class="main-width-column text-center pointer" data-ng-click="viewModel.orderBy('sumOfInput')">SL nhập &nbsp;
                   <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'sumOfInput'" aria-hidden="true"
                      data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}"></i>
                 </th>
-                <th class="col-sm-2 text-center pointer" data-ng-click="viewModel.orderBy('sumOfInputTotalAmount')">Tổng giá trị nhập &nbsp;
-                  <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'sumOfInputTotalAmount'" aria-hidden="true"
-                     data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}"></i>
-                </th>
-                <th class="col-sm-1 text-center pointer" data-ng-click="viewModel.orderBy('sumOfSale')">SL bán &nbsp;
+                <th class="main-width-column text-center pointer" data-ng-click="viewModel.orderBy('sumOfSale')">SL bán &nbsp;
                   <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'sumOfSale'" aria-hidden="true"
                      data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}"></i>
                 </th>
-                <th class="col-sm-2 text-center pointer" data-ng-click="viewModel.orderBy('sumOfSaleTotalAmount')">Tổng giá trị bán &nbsp;
-                  <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'sumOfSaleTotalAmount'" aria-hidden="true"
-                     data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}"></i>
-                </th>
-                <th class="text-center pointer" data-ng-click="viewModel.orderBy('numOfRemain')">SL hiện tại &nbsp;
+
+                <th class="main-width-column text-center pointer" data-ng-click="viewModel.orderBy('numOfRemain')">SL hiện tại &nbsp;
                   <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'numOfRemain'" aria-hidden="true"
                      data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}"></i>
                 </th>
-                <th class="col-sm-2 text-center pointer" data-ng-click="viewModel.orderBy('profit')">Lợi nhuận ước tính &nbsp;
+                <th class="main-width-long-column text-center pointer" data-ng-click="viewModel.orderBy('sumOfInputTotalAmount')">Tổng GT nhập &nbsp;
+                  <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'sumOfInputTotalAmount'" aria-hidden="true"
+                     data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}"></i>
+                </th>
+                <th class="main-width-long-column text-center pointer" data-ng-click="viewModel.orderBy('sumOfSaleTotalAmount')">Tổng GT bán &nbsp;
+                  <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'sumOfSaleTotalAmount'" aria-hidden="true"
+                     data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}"></i>
+                </th>
+                <th class="main-width-long-column text-center pointer" data-ng-click="viewModel.orderBy('profit')">LN ước tính &nbsp;
                   <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'profit'" aria-hidden="true"
                      data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}"></i>
                 </th>
@@ -67,13 +72,13 @@
               </tr>
 							<tr data-ng-if="!viewModel.isLoading" data-ng-repeat="productInfo in viewModel.getProductInfoListOnPage()">
 								<td class="text-center">{{$index + 1}}</td>
-								<td>{{productInfo.name}}</td>
-								<td class="text-right">{{productInfo.sumOfInput | currency: "" : 0}}</td>
-                <td class="text-right">{{productInfo.sumOfInputTotalAmount | currency: "" : 0}}</td>
-                <td class="text-right">{{productInfo.sumOfSale | currency: "" : 0}}</td>
-                <td class="text-right">{{productInfo.sumOfSaleTotalAmount | currency: "" : 0}}</td>
-                <td class="text-right">{{productInfo.numOfRemain | currency: "" : 0}}</td>
-                <td class="text-right">{{productInfo.profit | currency: "" : 0}}</td>
+								<td>{{::productInfo.name}}</td>
+                <td class="text-right">{{::productInfo.sumOfInput}}</td>
+                <td class="text-right">{{::productInfo.sumOfSale}}</td>
+                <td class="text-right">{{::productInfo.numOfRemain}}</td>
+                <td class="text-right">{{::productInfo.sumOfInputTotalAmount}}</td>
+                <td class="text-right">{{::productInfo.sumOfSaleTotalAmount}}</td>
+                <td class="text-right">{{::productInfo.profit}}</td>
 							</tr>
 						</tbody>
 					</table>

@@ -15,12 +15,14 @@ module Clarity.Controller {
 
     public productList: Array<Model.ProductModel>;
     public productListTmp: Array<Model.ProductModel>;
+
     public numOfPages: number;
     public currentPage: number;
     public pageSize: number;
     public isCheckedAll: boolean;
     public isLoading: boolean;
     public errorMessage: string;
+    public searchText: string;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -28,6 +30,7 @@ module Clarity.Controller {
       private $location: ng.ILocationService,
       private $window: ng.IWindowService,
       private $filter: ng.IFilterService,
+      private $timeout: ng.ITimeoutService,
       private $routeParams: any) {
 
       this.productService = new service.ProductService($http);
@@ -35,10 +38,11 @@ module Clarity.Controller {
 
       this.pageSize = 10;
       this.errorMessage = '';
+      this.searchText = '';
       this.initProduct();
 
       var self = this;
-      $scope.$watch('searchText', function (value) {
+      $scope.$watch('viewModel.searchText', function (value) {
         if (self.productListTmp && self.productListTmp.length > 0) {
           self.productList = $filter('filter')(self.productListTmp, value);
           self.initPagination();
@@ -49,17 +53,7 @@ module Clarity.Controller {
     initProduct() {
       var productId = this.$routeParams.product_id;
       if (productId) {
-        if (this.$location.path() === '/ql-garage/san-pham/' + productId) {
-          this.productService.getById(productId, (data) => {
-            this.currentProduct = data;
-          }, null);
-        } else if (this.$location.path() === '/ql-garage/san-pham/sua/' + productId) {
-          if (this.currentProduct == null) {
-            this.productService.getById(productId, (data) => {
-              this.currentProduct = data;
-            }, null);
-          }
-        }
+        this.initCurrentProduct(productId);
       } else {
         if (this.$location.path() === '/ql-garage/san-pham/tao') {
           this.currentProduct = new Model.ProductModel();
@@ -80,6 +74,14 @@ module Clarity.Controller {
         this.initPagination();
         this.isLoading = false;
       }, null);
+    }
+
+    initCurrentProduct(productId: number) {
+      if (this.currentProduct == null) {
+        this.productService.getById(productId, (data) => {
+          this.currentProduct = data;
+        }, null);
+      }
     }
 
     initPagination() {
@@ -157,6 +159,9 @@ module Clarity.Controller {
           this.$location.path('/ql-garage/san-pham');
         }, (error) => {
           this.errorMessage = error.message;
+          this.$timeout(() => {
+            this.errorMessage = '';
+          }, 8000);
         });
     }
 
@@ -173,6 +178,10 @@ module Clarity.Controller {
     goToProductEditForm(event: Event, productId: number) {
       event.stopPropagation();
       this.$location.path(`/ql-garage/san-pham/sua/${productId}`);
+    }
+
+    clearSearchText() {
+      this.searchText = '';
     }
 	}
 }

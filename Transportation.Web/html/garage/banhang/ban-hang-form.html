@@ -42,12 +42,14 @@
           <input id="customerName" name="customerName" class="form-control" type="text" data-ng-model="viewModel.currentOrder.customerName">
         </div>
       </div>
+      
       <div class="form-group">
         <label for="address" class="col-sm-2 control-label">Địa chỉ</label>
         <div class="col-sm-4">
           <input id="address" name="address" class="form-control" type="text" data-ng-model="viewModel.currentOrder.address">
         </div>
       </div>
+      
       <div class="form-group">
         <label for="date" class="col-sm-2 control-label">Ngày</label>
         <div class="col-sm-4">
@@ -56,6 +58,7 @@
           </datepicker>
         </div>
       </div>
+      
       <div class="form-group">
         <label for="note" class="col-sm-2 control-label">Mô tả</label>
         <div class="col-sm-4">
@@ -97,9 +100,12 @@
                       <option data-ng-repeat="inventory in viewModel.inventoryViewList" value="{{inventory.productId}}">{{inventory.productName}} [{{inventory.quantity}}]</option>
                     </select>
                   </td>
-                  <td class="text-center">
-                    <input class="form-control" type="number" min="1" data-ng-model="orderDetail.quantity"
-                           data-ng-change="viewModel.onQuantityOrderDetailChanged()" required/>
+                  <td class="text-center" data-ng-class="{'has-error': orderDetail.maxQuantity && orderForm['quantity-' + $index].$error.maxValue}">
+                    <input class="form-control text-right" name="quantity-{{$index}}" type="number" min="1" max={{orderDetail.maxQuantity}}
+                           data-ng-model="orderDetail.quantity" data-ng-change="viewModel.onQuantityOrderDetailChanged()" validator-max required/>
+                    <span class="required-field" data-ng-if="orderDetail.maxQuantity && orderForm['quantity-' + $index].$error.maxValue">
+                      SL &lt; {{orderDetail.maxQuantity}}
+                    </span>
                   </td>
                   <td>
                     <input class="form-control text-right" type="text" maxlength="15" data-ng-model="orderDetail.priceFormatted"
@@ -109,10 +115,8 @@
                     <input class="form-control" type="text" data-ng-model="orderDetail.unit" />
                   </td>
                   <td class="text-right align-middle">{{orderDetail.price * orderDetail.quantity | currency: "" : 0}}</td>
-                  <td class="text-center">
-                    <button type="button" class="btn btn-default" data-ng-click="viewModel.deleteOrderDetail($index)">
-                      <span class="glyphicon glyphicon-trash"></span> <span>Xóa</span>
-                    </button>
+                  <td class="text-center delete-td" data-ng-click="viewModel.deleteOrderDetail($index)">
+                    <span class="glyphicon glyphicon-trash"></span>
                   </td>
                 </tr>
               </tbody>
@@ -120,54 +124,56 @@
           </div>
         </div>
       </div>
-		</form>
+		
+      <div class="row">
+        <div class="col-sm-2 col-sm-offset-8 margin-top-7">
+          <strong>Tổng thành tiền</strong>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-control text-right disabled">{{viewModel.currentOrder.totalAmount | currency: "" : 0}}</div>
+        </div>
+      </div>
+      
+      <div class="row margin-top-15">
+        <div class="col-sm-2 col-sm-offset-8 margin-top-7">
+          <label for="saleOff">Giảm giá (% < 100)</label>
+        </div>
+        <div class="col-sm-2">
+          <input id="saleOff" class="form-control text-right" name="saleOff" type="number" min="0" max="100" data-ng-model="viewModel.currentOrder.saleOff">
+        </div>
+      </div>
+      
+      <div class="row margin-top-15">
+        <div class="col-sm-2 col-sm-offset-8 margin-top-7">
+          <strong>Phải trả</strong>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-control text-right disabled">{{viewModel.currentOrder.totalAmount*(100-viewModel.currentOrder.saleOff)/100 | currency: "" : 0}}</div>
+        </div>
+      </div>
 
-    <div class="row">
-      <div class="col-sm-2 col-sm-offset-8 margin-top-7">
-        <strong>Tổng thành tiền</strong>
-      </div>
-      <div class="col-sm-2">
-        <div class="form-control text-right disabled">{{viewModel.currentOrder.totalAmount | currency: "" : 0}}</div>
-      </div>
-    </div>
-    <div class="row margin-top-15">
-      <div class="col-sm-2 col-sm-offset-8 margin-top-7">
-        <label for="saleOff">Giảm giá (% < 100)</label>
-      </div>
-      <div class="col-sm-2">
-        <input id="saleOff" class="form-control text-right" name="saleOff" type="number" min="0" max="100" ng-model="viewModel.currentOrder.saleOff">
-      </div>
-    </div>
-    <div class="row margin-top-15">
-      <div class="col-sm-2 col-sm-offset-8 margin-top-7">
-        <strong>Phải trả</strong>
-      </div>
-      <div class="col-sm-2">
-        <div class="form-control text-right disabled">{{viewModel.currentOrder.totalAmount*(100-viewModel.currentOrder.saleOff)/100 | currency: "" : 0}}</div>
-      </div>
-    </div>
+      <div class="form-group">
+        <div class="col-sm-12">
+          <button type="submit" form="orderForm" class="btn btn-default" data-ng-class="{'main-btn': !orderForm.$invalid}"
+                  data-ng-if="viewModel.$location.path() === '/ql-garage/ban-hang/tao'"
+                  data-ng-click="viewModel.createOrder(viewModel.currentOrder)" data-ng-disabled="orderForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Lưu</span>
+          </button>
 
-    <div class="form-group">
-      <div class="col-sm-12">
-        <button type="submit" form="orderForm" class="btn btn-default" data-ng-class="{'main-btn': !orderForm.$invalid}"
-                data-ng-if="viewModel.$location.path() === '/ql-garage/ban-hang/tao'"
-                data-ng-click="viewModel.createOrder(viewModel.currentOrder)" data-ng-disabled="orderForm.$invalid">
-          <span class="glyphicon glyphicon-ok"></span>
-          <span>Lưu</span>
-        </button>
+          <button type="submit" form="orderForm" class="btn btn-default" data-ng-class="{'main-btn': !orderForm.$invalid}"
+                  data-ng-if="viewModel.$location.path() === '/ql-garage/ban-hang/sua/' + viewModel.currentOrder.id"
+                  data-ng-click="viewModel.updateOrder(viewModel.currentOrder)" data-ng-disabled="orderForm.$invalid">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>Cập nhật</span>
+          </button>
 
-        <button type="submit" form="orderForm" class="btn btn-default" data-ng-class="{'main-btn': !orderForm.$invalid}"
-            data-ng-if="viewModel.$location.path() === '/ql-garage/ban-hang/sua/' + viewModel.currentOrder.id"
-            data-ng-click="viewModel.updateOrder(viewModel.currentOrder)" data-ng-disabled="orderForm.$invalid">
-          <span class="glyphicon glyphicon-ok"></span>
-          <span>Cập nhật</span>
-        </button>
-
-        <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-garage/ban-hang')">
-          <span class="glyphicon glyphicon-remove"></span>
-          <span>Hủy</span>
-        </button>
+          <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-garage/ban-hang')">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span>Hủy</span>
+          </button>
+        </div>
       </div>
-    </div>
+    </form>
 	</div>
 </div>

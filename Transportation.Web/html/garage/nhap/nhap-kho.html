@@ -20,9 +20,13 @@
 					<span class="hidden-xs">Xóa</span>
 				</button>
 			</div>
-			<div class="col-sm-3">
-				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Tìm kiếm nhanh" />
-			</div>
+      <div class="col-sm-3 search-text-box">
+        <div class="form-group has-feedback">
+          <input class="form-control" type="text" data-ng-model="viewModel.searchText" placeholder="Tìm kiếm nhanh" />
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                data-ng-click="viewModel.clearSearchText()"></span>
+        </div>
+      </div>
 		</div>
 
 		<div class="row">
@@ -40,25 +44,28 @@
                 <th class="col-sm-2 text-center">Thành tiền</th>
                 <th class="col-sm-2 text-center">Ngày nhập hàng</th>
                 <th class="edit-column-width text-center">Sửa</th>
+                <th class="detail-column-width text-center">Xem</th>
 							</tr>
 						</thead>
 						<tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="6">
+                <td class="text-center" colspan="7">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
-							<tr data-ng-if="!viewModel.isLoading" class="pointer" data-ng-repeat="inputOrder in viewModel.getInputOrderListOnPage()"
-									data-ng-click="viewModel.$location.path('/ql-garage/nhap-kho/' + inputOrder.id)">
+							<tr data-ng-if="!viewModel.isLoading" data-ng-repeat="inputOrderViewModel in viewModel.getInputOrderListOnPage()">
 								<td class="text-center" data-ng-click="$event.stopPropagation();">
-									<input id="order-{{$index}}" type="checkbox" data-ng-model="inputOrder.isChecked" />
+									<input id="order-{{$index}}" type="checkbox" data-ng-model="inputOrderViewModel.isChecked" />
 								</td>
-								<td>{{inputOrder.vendor}}</td>
-                <td class="text-right">{{inputOrder.productInputs.length | currency: "" : 0}}</td>
-                <td class="text-right">{{inputOrder.totalAmount | currency: "" : 0}}</td>
-                <td class="text-center">{{inputOrder.date}}</td>
-                <td class="text-center edit-column" data-ng-click="viewModel.goToInputOrderEditForm($event, inputOrder.id)">
+								<td>{{::inputOrderViewModel.vendor}}</td>
+                <td class="text-right">{{::inputOrderViewModel.numOfProducts}}</td>
+                <td class="text-right">{{::inputOrderViewModel.totalAmount}}</td>
+                <td class="text-center">{{::inputOrderViewModel.date}}</td>
+                <td class="text-center edit-column" data-ng-click="viewModel.goToInputOrderEditForm($event, inputOrderViewModel.id)">
                   <span class="glyphicon glyphicon-pencil"></span>
+                </td>
+                <td class="text-center detail-column" data-ng-click="viewModel.$location.path('/ql-garage/nhap-kho/' + inputOrderViewModel.id)">
+                  <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                 </td>
 							</tr>
 						</tbody>
