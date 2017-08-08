@@ -827,6 +827,46 @@ div.bootstrap {
     margin-bottom: 15px;
   }
 
+  .report-row{
+    margin: 0;
+    text-align: center;
+    padding: 12px;
+    border: 1px solid #ddd;
+
+    label{
+      line-height: 34px;
+      margin-right: 4px;
+      margin-bottom: 0;
+    }
+
+    .garage-report-datepicker{
+      width: 150px;
+      margin-right: 4px;
+      float: none;
+      display: inline-block;
+
+      input {
+        display: inline-block;
+        width: 150px;
+      }
+  }
+
+
+  }
+  .report-btn{
+    border: none;
+    background-color: $transport-color-1;
+    height: 34px;
+    margin-top: 0 !important;
+    width: 90px;
+    color: white;
+
+    &:hover{
+      opacity: 0.8;
+    }
+  }
+
+
   .required-symbol {
     color: $transport-color-2;
   }

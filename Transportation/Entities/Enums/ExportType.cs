@@ -13,6 +13,7 @@ namespace Transportation
         Customer,
         OrderCustomer,
         Wagon,
-        WagonSettlement
+        WagonSettlement,
+        GarageOrder
     }
 }

@@ -9,6 +9,6 @@ module Clarity.Model {
     OrderCustomer,
     Wagon,
     WagonSettlement,
-    ProductInfo
+    GarageOrder
   }
 }

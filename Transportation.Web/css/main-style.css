@@ -5457,6 +5457,32 @@ div.bootstrap {
     line-height: 34px; }
   #ng-app .paging {
     margin-bottom: 15px; }
+  #ng-app .report-row {
+    margin: 0;
+    text-align: center;
+    padding: 12px;
+    border: 1px solid #ddd; }
+    #ng-app .report-row label {
+      line-height: 34px;
+      margin-right: 4px;
+      margin-bottom: 0; }
+    #ng-app .report-row .garage-report-datepicker {
+      width: 150px;
+      margin-right: 4px;
+      float: none;
+      display: inline-block; }
+      #ng-app .report-row .garage-report-datepicker input {
+        display: inline-block;
+        width: 150px; }
+  #ng-app .report-btn {
+    border: none;
+    background-color: #34495E;
+    height: 34px;
+    margin-top: 0 !important;
+    width: 90px;
+    color: white; }
+    #ng-app .report-btn:hover {
+      opacity: 0.8; }
   #ng-app .required-symbol {
     color: #C0392B; }
   #ng-app .required-field {

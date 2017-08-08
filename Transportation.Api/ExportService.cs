@@ -60,6 +60,13 @@ namespace Transportation.Api
                     dt = BuildDataTableForWagonSettlement(fromDate, toDate);
                     fileName = "Baocao_QuyetToan_" + DateTime.Now.ToString(formatStringDate);
                 }
+                else if (json.Value<int>("type") == (int)ExportType.GarageOrder)
+                {
+                    DateTime fromDate = DateTime.ParseExact(json.Value<string>("fromDate"), formatDate, CultureInfo.InvariantCulture);
+                    DateTime toDate = DateTime.ParseExact(json.Value<string>("toDate"), formatDate, CultureInfo.InvariantCulture);
+                    dt = BuildDataTableForGarageOrder(fromDate, toDate);
+                    fileName = "Baocao_Garage_DonHang_" + DateTime.Now.ToString(formatStringDate);
+                }
 
                 string fileNamePath = saveExcelFile(dt, fileName);
                 return new RestApiResult { Json = JObject.Parse(string.Format("{{ fileName: '{0}'}}", fileNamePath)) };
@@ -300,6 +307,47 @@ namespace Transportation.Api
                                            wagonSettlement.LyDoPhatSinh, wagonSettlement.PhiPhatSinh, wagonSettlement.Unit, wagonSettlement.UnitPrice,
                                            wagonSettlement.Quantity * wagonSettlement.UnitPrice, wagonSettlement.Payment, wagonSettlement.PaymentRemain,
                                            wagonSettlement.PaymentStatus});
+            }
+
+            return dt;
+        }
+
+        private DataTable BuildDataTableForGarageOrder(DateTime fromDate, DateTime toDate)
+        {
+            DataTable dt = new DataTable();
+            dt.TableName = "QuyetToan_" + DateTime.Now.ToString(formatStringDate);
+
+            //Add table headers going cell by cell.
+            dt.Columns.Add("STT", typeof(int));
+            dt.Columns.Add("Số xe", typeof(string));
+            dt.Columns.Add("Tên khách hàng", typeof(string));
+            dt.Columns.Add("Địa chỉ", typeof(string));
+            dt.Columns.Add("Ngày bán", typeof(string));
+            dt.Columns.Add("Thành tiền", typeof(double));
+            dt.Columns.Add("Giảm giá", typeof(string));
+            dt.Columns.Add("Mô tả", typeof(string));
+
+            //Filter data by from/to date
+            List<Order> orders = ClarityDB.Instance.Orders.ToList();
+            List<Order> filteredOrders = new List<Order>();
+            foreach (Order order in orders)
+            {
+                if (order.Date != null)
+                {
+                    DateTime date = DateTime.ParseExact(order.Date, formatDate, CultureInfo.InvariantCulture);
+                    if (DateTime.Compare(date, fromDate) >= 0 && DateTime.Compare(date, toDate) <= 0)
+                    {
+                        filteredOrders.Add(order);
+                    }
+                }
+            }
+
+            //Binding data
+            for (int i = 0; i < filteredOrders.Count; i++)
+            {
+                var order = filteredOrders[i];
+                dt.Rows.Add(new object[] { i + 1 , order.LicensePlate , order.CustomerName, order.Address,
+                                           order.Date, order.TotalAmount, order.SaleOff.ToString() + '%', order.Note});
             }
 
             return dt;

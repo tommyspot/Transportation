@@ -7,17 +7,18 @@ declare var VERSION_NUMBER;
 
 module Clarity.Controller {
 	import service = Clarity.Service;
-	import helper = Clarity.Helper;
+  import helper = Clarity.Helper;
 
   const formatSuffix = 'Formatted';
 
   export class OrderManagementController {
-    public currentOrder: Model.OrderModel;
+    public exportService: service.ExportService;
     public orderService: service.OrderService;
     public inventoryService: service.InventoryService;
     public productService: service.ProductService;
     public mainHelper: helper.MainHelper;
 
+    public currentOrder: Model.OrderModel;
     public orderList: Array<Model.OrderModel>;
     public orderListView: Array<Model.OrderViewModel>;
     public orderListViewTmp: Array<Model.OrderViewModel>;
@@ -35,6 +36,10 @@ module Clarity.Controller {
     public originOrderDetails: Array<Model.OrderDetailModel>;
     public searchText: string;
 
+    public fromDate: string;
+    public toDate: string;
+    public isExportLoading: boolean;
+
     constructor(private $scope,
       private $rootScope: IRootScope,
       private $http: ng.IHttpService,
@@ -44,6 +49,7 @@ module Clarity.Controller {
       private $cookieStore: ng.ICookieStoreService,
       private $routeParams: any) {
 
+      this.exportService = new service.ExportService($http);
       this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
       this.orderService = new service.OrderService($http);
       this.inventoryService = new service.InventoryService($http);
@@ -376,6 +382,22 @@ module Clarity.Controller {
 
     clearSearchText() {
       this.searchText = '';
+    }
+
+    exportOrder() {
+      this.isExportLoading = true;
+      let jsonObject = {
+        type: Model.ExportType.GarageOrder,
+        fromDate: this.fromDate,
+        toDate: this.toDate
+      }
+
+      this.exportService.exportToExcel(jsonObject, (data) => {
+        this.isExportLoading = false;
+        window.location.href = '/output/' + data['fileName'];
+      }, () => {
+        this.isExportLoading = false;
+      });
     }
 	}
 }

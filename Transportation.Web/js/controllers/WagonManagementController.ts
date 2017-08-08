@@ -250,7 +250,7 @@ module Clarity.Controller {
     updateWagonSettlementPayment(wagonSettlement: Model.WagonSettlementModel) {
       if (wagonSettlement && wagonSettlement.payment && wagonSettlement.unitPrice && wagonSettlement.quantity) {
         const totalAmount = wagonSettlement.quantity * wagonSettlement.unitPrice;
-        wagonSettlement.paymentRemain = totalAmount - wagonSettlement.payment;
+        wagonSettlement.paymentRemain = (totalAmount + wagonSettlement.phiPhatSinh) - wagonSettlement.payment;
         wagonSettlement.paymentStatus = wagonSettlement.paymentRemain == 0 ? 'Không nợ' : 'Nợ';
       }
 		}
@@ -307,9 +307,10 @@ module Clarity.Controller {
       return this.mainHelper.getPropertyValue(this.customerList, 'id', customerId, 'fullName');
     }
 
+    // wagonCode = NgayThanhToan_SoXe
     updateWagonCode() {
-      if (this.currentWagon.departDate && this.currentWagon.truckId) {
-        this.currentWagon.code = this.currentWagon.departDate.replace(/\//g, '') + '_' +
+      if (this.currentWagon.paymentDate && this.currentWagon.truckId) {
+        this.currentWagon.code = this.currentWagon.paymentDate.replace(/\//g, '') + '_' +
           this.mainHelper.getPropertyValue(this.truckList, 'id', this.currentWagon.truckId.toString(), 'licensePlate');
       }
     }

@@ -30,7 +30,8 @@
             <label for="paymentDate">Ngày thanh toán <span class="required-symbol">*</span></label>
             <span class="required-field" ng-if="wagonForm.paymentDate.$touched && wagonForm.paymentDate.$invalid">(Ngày TT phải được nhập)</span>
             <datepicker class="date-picker" date-format="dd/MM/yyyy">
-              <input id="paymentDate" class="form-control" name="paymentDate" type="text" ng-model="viewModel.currentWagon.paymentDate" required>
+              <input id="paymentDate" class="form-control" name="paymentDate" type="text" data-ng-model="viewModel.currentWagon.paymentDate"
+                data-ng-change="viewModel.updateWagonCode()" required>
             </datepicker>
           </div>
         </div>
@@ -38,7 +39,7 @@
           <div class="form-group">
             <label for="paymentPlace">Nơi thanh toán <span class="required-symbol">*</span></label>
             <span class="required-field" ng-if="wagonForm.paymentPlace.$touched && wagonForm.paymentPlace.$invalid">(Nơi TT phải được nhập)</span>
-            <select id="paymentPlace" name="paymentPlace" class="form-control" ng-model="viewModel.currentWagon.paymentPlace" required>
+            <select id="paymentPlace" name="paymentPlace" class="form-control" data-ng-model="viewModel.currentWagon.paymentPlace" required>
               <option value="" data-placeholder="true">--Chọn nơi thanh toán--</option>
               <option value="Công ty">Công ty</option>
               <option value="Mỹ Tường">Mỹ Tường</option>
@@ -53,8 +54,7 @@
             <label for="departDate">Ngày đi <span class="required-symbol">*</span></label>
             <span class="required-field" ng-if="wagonForm.departDate.$touched && wagonForm.departDate.$invalid">(Ngày đi phải được nhập)</span>
             <datepicker class="date-picker" date-format="dd/MM/yyyy">
-              <input id="departDate" class="form-control" name="departDate" type="text" ng-model="viewModel.currentWagon.departDate"
-                     data-ng-change="viewModel.updateWagonCode()" required>
+              <input id="departDate" class="form-control" name="departDate" type="text" data-ng-model="viewModel.currentWagon.departDate" required>
             </datepicker>
           </div>
         </div>
@@ -63,7 +63,7 @@
             <label for="returnDate">Ngày đến <span class="required-symbol">*</span></label>
             <span class="required-field" ng-if="wagonForm.returnDate.$touched && wagonForm.returnDate.$invalid">(Ngày đến phải được nhập)</span>
             <datepicker class="date-picker" date-format="dd/MM/yyyy">
-              <input id="returnDate" class="form-control" name="returnDate" type="text" ng-model="viewModel.currentWagon.returnDate" required>
+              <input id="returnDate" class="form-control" name="returnDate" type="text" data-ng-model="viewModel.currentWagon.returnDate" required>
             </datepicker>
           </div>
         </div>
