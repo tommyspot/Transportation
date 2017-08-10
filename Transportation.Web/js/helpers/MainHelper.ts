@@ -177,7 +177,7 @@ module Clarity.Helper {
     formatCurrency(value: number) {
       if (value)
         return this.$filter('currency')(value, '', 0).trim();
-      return '';
+      return '0';
     }
 
     onCurrencyPropertyChanged(object: Object, propertyName: string, formattedPropertyName: string) {

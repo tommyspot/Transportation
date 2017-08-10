@@ -173,7 +173,7 @@
                   </td>
                   <td class="align-center">
                     <input id="phiPhatSinh" name="phiPhatSinh" class="form-control text-right" type="text" maxlength="15" data-ng-model="wagonSettlement.phiPhatSinhFormatted"
-                           data-ng-change="viewModel.formatCurrency(wagonSettlement, 'phiPhatSinh', 'phiPhatSinhFormatted')" />
+                           data-ng-change="viewModel.onChangeWagonSettlement(wagonSettlement, 'phiPhatSinh', 'phiPhatSinhFormatted')" />
                   </td>
                   <td class="text-right align-middle">{{wagonSettlement.quantity * wagonSettlement.unitPrice | currency: "" : 0 }}</td>
                   <td class="align-center">

@@ -231,6 +231,7 @@ namespace Transportation.Api
             dt.Columns.Add("Dịch vụ", typeof(double));
             dt.Columns.Add("Hàng về", typeof(double));
             dt.Columns.Add("Trích 10%", typeof(double));
+            dt.Columns.Add("Tổng tiền hàng", typeof(double));
 
             //Filter data by from/to date
             List<Wagon> wagons = ClarityDB.Instance.Wagons.ToList();
@@ -248,12 +249,17 @@ namespace Transportation.Api
             for (int i = 0; i < filteredWagons.Count; i++)
             {
                 var wagon = filteredWagons[i];
+                double totalAmount = 0;
+                foreach (WagonSettlement wagonSettlement in wagon.WagonSetlements) {
+                    totalAmount += wagonSettlement.Quantity * wagonSettlement.UnitPrice;
+                }
+
                 dt.Rows.Add(new object[] { i + 1 , wagon.Code, wagon.PaymentDate , wagon.PaymentPlace, wagon.DepartDate,
                                            wagon.ReturnDate, wagon.Departure, wagon.Destination, wagon.Truck.LicensePlate, wagon.Employee.FullName,
                                            wagon.CostOfTruck, wagon.CostOfService, wagon.CostOfTangBoXe,
                                            wagon.CostOfPenalty, wagon.TextOfExtra, wagon.CostOfExtra, 
                                            wagon.PaymentOfTruck, wagon.PaymentOfRepairing, wagon.PaymentOfOil, wagon.PaymentOfLuong,
-                                           wagon.PaymentOfService, wagon.PaymentOfHangVe, wagon.PaymentOf10Percent });
+                                           wagon.PaymentOfService, wagon.PaymentOfHangVe, wagon.PaymentOf10Percent, totalAmount });
             }
 
             return dt;

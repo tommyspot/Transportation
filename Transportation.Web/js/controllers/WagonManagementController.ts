@@ -248,12 +248,13 @@ module Clarity.Controller {
     }
 
     updateWagonSettlementPayment(wagonSettlement: Model.WagonSettlementModel) {
-      if (wagonSettlement && wagonSettlement.payment && wagonSettlement.unitPrice && wagonSettlement.quantity) {
+      if (wagonSettlement && wagonSettlement.unitPrice && wagonSettlement.quantity) {
         const totalAmount = wagonSettlement.quantity * wagonSettlement.unitPrice;
-        wagonSettlement.paymentRemain = (totalAmount + wagonSettlement.phiPhatSinh) - wagonSettlement.payment;
+        wagonSettlement.paymentRemain = (totalAmount + (wagonSettlement.phiPhatSinh ? wagonSettlement.phiPhatSinh : 0))
+          - (wagonSettlement.payment ? wagonSettlement.payment : 0);
         wagonSettlement.paymentStatus = wagonSettlement.paymentRemain == 0 ? 'Không nợ' : 'Nợ';
       }
-		}
+    }
 
 		initFormattedCurrencyForWagon() {
       if (this.currentWagon) {
