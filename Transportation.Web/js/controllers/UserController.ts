@@ -9,42 +9,46 @@ module Clarity.Controller {
 	import service = Clarity.Service;
 	import helper = Clarity.Helper;
 
-	export class UserController {
+  export class UserController {
+    public mainHelper: helper.MainHelper;
+    public userService: service.UserService;
+
 		public currentUser: Model.UserModel;
-		public userService: service.UserService;
-		public userList: Array<Model.UserModel>;
-		public roleList: Array<Model.RoleModel>;
-		public userListTmp: Array<Model.UserModel>;
-		public roles: Array<string>;
-		public Eroles: Array<string>;
+    public userList: Array<Model.UserModel>;
+    public userListView: Array<Model.UserViewModel>;
+    public userListViewTmp: Array<Model.UserViewModel>;
+
 		public numOfPages: number;
 		public currentPage: number;
 		public pageSize: number;
 		public isCheckedAll: boolean;
-		public mainHelper: helper.MainHelper;
+    public isLoading: boolean;
+    public searchText: string;
+    public errorMessage: string;
 
 		constructor(private $scope,
 			public $rootScope: IRootScope,
 			private $http: ng.IHttpService,
 			public $location: ng.ILocationService,
 			public $window: ng.IWindowService,
-			public $filter: ng.IFilterService,
+      public $filter: ng.IFilterService,
+      public $timeout: ng.ITimeoutService,
 			private $routeParams: any,
-			private $cookieStore: ng.ICookieStoreService) {
+      private $cookieStore: ng.ICookieStoreService) {
 
+      this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
 			this.userService = new service.UserService($http);
-			$scope.viewModel = this;
-			this.pageSize = 5;
-			this.roles = ['Admin', 'Quyết toán', 'Toa hàng', 'Đơn hàng'];
-			this.Eroles = ['Super', 'WagonSettlement', 'Wagon', 'CustomerOrder'];
-			this.roleList = this.getRoleList();
+      $scope.viewModel = this;
+
+      this.pageSize = 10;
+      this.searchText = '';
+      this.errorMessage = '';
 			this.initUser();
-			this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
 
 			var self = this;
-			$scope.$watch('searchText', function (value) {
-				if (self.userListTmp && self.userListTmp.length > 0) {
-					self.userList = $filter('filter')(self.userListTmp, value);
+			$scope.$watch('viewModel.searchText', function (value) {
+        if (self.userListViewTmp && self.userListViewTmp.length > 0) {
+          self.userListView = $filter('filter')(self.userListViewTmp, value);
 					self.initPagination();
 				}
 			});
@@ -53,50 +57,65 @@ module Clarity.Controller {
 		initUser() {
 			var userId = this.$routeParams.user_id;
 			if (userId) {
-				if (this.$location.path() === '/ql-dang-nhap/' + userId) {
-					this.userService.getById(userId, (data) => {
-						this.currentUser = data;
-					}, null);
-				} else if (this.$location.path() === '/ql-dang-nhap/sua/' + userId) {
-					if (this.currentUser == null) {
-						this.userService.getById(userId, (data) => {
-							this.currentUser = data;
-							this.currentUser.isEdited = true;
-						}, null);
-					}
-				}
+        this.initCurrentUser(userId);
 			} else {
 				if (this.$location.path() === '/ql-dang-nhap/tao') {
 					this.currentUser = new Model.UserModel();
-
 				} else if (this.$location.path() === '/ql-dang-nhap') {
 					this.initUserList();
 				}
 			}
 		}
 
-		initUserList() {
+    initUserList() {
+      this.isLoading = true;
 			this.userService.getAll((results: Array<Model.UserModel>) => {
 				this.userList = results;
-				this.userList.sort(function (a: any, b: any) {
-					return a.id - b.id;
-				});
-				this.userListTmp = this.userList;
-				this.initPagination();
+				this.userList.sort((a: any, b: any) => {
+					return b.id - a.id;
+        });
+
+        this.mapToUserListView();
+				this.userListViewTmp = this.userListView;
+        this.initPagination();
+        this.isLoading = false;
 			}, null);
-		}
+    }
+
+    initCurrentUser(userId: number) {
+      if (this.currentUser == null) {
+        this.userService.getById(userId, (data) => {
+          this.currentUser = data;
+          this.currentUser.repeatPassword = this.currentUser.password; 
+        }, null);
+      }
+    }
+
+    mapToUserListView() {
+      this.userListView = this.userList.map((user: Model.UserModel) => {
+        const userView = new Model.UserViewModel();
+        userView.id = user.id;
+        userView.firstName = user.firstName;
+        userView.lastName = user.lastName;
+        userView.username = user.username;
+        userView.password = user.password;
+        userView.repeatPassword = user.password;
+        userView.role = this.getRoleName(user.role);
+        return userView;
+      });
+    }
 
 		initPagination() {
 			this.currentPage = 1;
-			this.numOfPages = this.userList.length % this.pageSize === 0 ?
-				this.userList.length / this.pageSize : Math.floor(this.userList.length / this.pageSize) + 1;
+			this.numOfPages = this.userListView.length % this.pageSize === 0 ?
+        this.userListView.length / this.pageSize : Math.floor(this.userListView.length / this.pageSize) + 1;
 		}
 
 		getUserListOnPage() {
-			if (this.userList && this.userList.length > 0) {
+      if (this.userListView && this.userListView.length > 0) {
 				var startIndex = this.pageSize * (this.currentPage - 1);
 				var endIndex = startIndex + this.pageSize;
-				return this.userList.slice(startIndex, endIndex);
+        return this.userListView.slice(startIndex, endIndex);
 			}
 		}
 
@@ -133,21 +152,21 @@ module Clarity.Controller {
 		}
 
 		removeUsers() {
-			var confirmDialog = this.$window.confirm('Bạn có muốn xóa tài khoản?');
+			var confirmDialog = this.$window.confirm('Bạn có muốn xóa những tài khoản được chọn?');
 			if (confirmDialog) {
-				for (let i = 0; i < this.userList.length; i++) {
-					var user = this.userList[i];
+        for (let i = 0; i < this.userListView.length; i++) {
+          const user = this.userListView[i];
 					if (user.isChecked) {
 						this.userService.deleteEntity(user, (data) => {
 							this.initUserList();
-						}, () => { });
+						}, null);
 					}
 				}
 			}
 		}
 
 		removeUserInDetail(user: Model.UserModel) {
-			var confirmDialog = this.$window.confirm('Bạn có muốn xóa tài khoản?');
+			var confirmDialog = this.$window.confirm('Bạn có muốn xóa tài khoản này?');
 			if (confirmDialog) {
 				this.userService.deleteEntity(user, (data) => {
 					this.$location.path('/ql-dang-nhap');
@@ -160,8 +179,12 @@ module Clarity.Controller {
 				this.userService.create(user,
 					(data) => {
 						this.$location.path('/ql-dang-nhap');
-					},
-					() => { });
+          }, (error) => {
+            this.errorMessage = error;
+            this.$timeout(() => {
+              this.errorMessage = '';
+            }, 2000);
+          });
 			} else {
 				var confirmDialog = this.$window.confirm('Mật khẩu và Nhập lại mật khẩu phải giống nhau');
 			}
@@ -179,33 +202,22 @@ module Clarity.Controller {
 
 		goToUserForm() {
 			this.$location.path('/ql-dang-nhap/tao');
-		}
+    }
 
-		checkStatusUser(user) {
-			return user.isDeleted ? 'Không' : 'Có';
-		}
+    goToUserEditForm(event: Event, userId: number) {
+      event.stopPropagation();
+      this.$location.path(`/ql-dang-nhap/sua/${userId}`);
+    }
 
-		getRoleList() {
-			var roleList = new Array<Model.RoleModel>();
+    getRoleName(role: number) {
+      const availableRoles = ['Admin', "Quản lý toa hàng", "Quản lý garage", "Quản lý báo cáo"];
+      if (role >= availableRoles.length) return '';
+      return availableRoles[role];
+    }
 
-			for (var i = 0; i < this.roles.length; i++){
-				var role = new Model.RoleModel();
-				role.id = i;
-				role.Ename = this.Eroles[i];
-				role.name = this.roles[i];
-				roleList.push(role);
-			}
-			return roleList;
-		}
-
-		getVNRoleName(name) {
-			for (var i = 0; i < this.Eroles.length; i++) {
-				if (this.Eroles[i] == name) {
-					return this.roles[i];
-				}
-			}
-			return '';
-		}
+    clearSearchText() {
+      this.searchText = '';
+    }
 
 	}
 }

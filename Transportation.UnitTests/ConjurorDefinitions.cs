@@ -22,7 +22,7 @@ public class ConjurerDefinitions
                 x.Password = passwordHash.CreatePasswordHash("Password", x.Salt);
                 x.FirstName = "First Name";
                 x.LastName = "Last Name";
-                x.Role = Role.Normal;
+                x.Role = Role.Admin;
                 x.CreatedDate = DateTime.Now;
             });
 

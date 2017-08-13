@@ -13,16 +13,20 @@
 				</span>
 				<button type="button" class="btn btn-default" data-ng-click="viewModel.goToUserForm()">
 					<span class="glyphicon glyphicon-plus"></span>
-					<span class="hidden-xs">Tạo tài khoản đăng nhập mới</span>
+					<span class="hidden-xs">Tạo tài khoản mới</span>
 				</button>
 				<button type="button" class="btn btn-default" data-ng-click="viewModel.removeUsers()">
 					<span class="glyphicon glyphicon-trash"></span>
 					<span class="hidden-xs">Xóa tài khoản</span>
 				</button>
 			</div>
-			<div class="col-sm-3">
-				<input class="form-control" type="text" data-ng-model="searchText" placeholder="Tìm Kiếm" />
-			</div>
+      <div class="col-sm-3 search-text-box">
+        <div class="form-group has-feedback">
+          <input class="form-control" type="text" data-ng-model="viewModel.searchText" placeholder="Tìm kiếm nhanh" />
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                data-ng-click="viewModel.clearSearchText()"></span>
+        </div>
+      </div>
 		</div>
 
 		<div class="row">
@@ -31,24 +35,38 @@
 					<table class="table table-hover table-bordered">
 						<thead>
 							<tr>
-								<th class="align-center">
+								<th class="checkbox-width text-center">
 									<input id="checkAllTrucks" type="checkbox" data-ng-model="viewModel.isCheckedAll"
 												 data-ng-change="viewModel.selectAllUsersOnPage()" />
-								</th>
-								<th class="align-center hidden-xs">Mã Tài Khoản</th>
-								<th class="align-center">Tên Tài Khoản</th>
-								<th class="align-center hidden-xs">Chức vụ</th>
+								</th>      
+								<th class="text-center">Họ</th>
+                <th class="text-center">Tên</th>
+								<th class="text-center">Tài Khoản</th>
+								<th class="col-sm-2 text-center">Chức vụ</th>
+                <th class="edit-column-width text-center">Sửa</th>
+                <th class="detail-column-width text-center">Xem</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="pointer" data-ng-repeat="user in viewModel.userList"
-									data-ng-click="viewModel.$location.path('/ql-dang-nhap/' + user.id)">
-								<td class="align-center" data-ng-click="$event.stopPropagation();">
-									<input id="user-{{$index}}" type="checkbox" data-ng-model="user.isChecked" />
+              <tr data-ng-if="viewModel.isLoading">
+                <td class="text-center" colspan="7">
+                  <i class="fa fa-spinner fa-spin"></i>
+                </td>
+              </tr>
+							<tr data-ng-if="!viewModel.isLoading" data-ng-repeat="userViewModel in viewModel.userListView">
+								<td class="text-center" data-ng-click="$event.stopPropagation();">
+									<input id="user-{{$index}}" type="checkbox" data-ng-model="userViewModel.isChecked" />
 								</td>
-								<td class="align-center hidden-xs">{{user.id}}</td>
-								<td class="align-center">{{user.username}}</td>
-								<td class="align-center hidden-xs">{{viewModel.getVNRoleName(user.role)}}</td>
+								<td>{{::userViewModel.firstName}}</td>
+                <td>{{::userViewModel.lastName}}</td>
+								<td>{{::userViewModel.username}}</td>
+								<td>{{::userViewModel.role}}</td>
+                <td class="text-center edit-column" data-ng-click="viewModel.goToUserEditForm($event, userViewModel.id)">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </td>
+                <td class="text-center detail-column" data-ng-click="viewModel.$location.path('/ql-dang-nhap/' + userViewModel.id)">
+                  <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                </td>
 							</tr>
 						</tbody>
 					</table>

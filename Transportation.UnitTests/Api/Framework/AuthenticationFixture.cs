@@ -128,7 +128,7 @@ namespace Transportation.UnitTests.Api.Framework
         [Test]
         public void IsAuthenticated_WithClassAuthenticateAndDoesNotHavePermission_ReturnsFalse()
         {
-            user.Role = Role.Normal;
+            user.Role = Role.Admin;
             HttpContext.Current.User = new GenericPrincipal(
                 new FormsIdentity(new FormsAuthenticationTicket(user.UserName, false, 1)),
                 new string[0]
@@ -178,7 +178,7 @@ namespace Transportation.UnitTests.Api.Framework
         [Test]
         public void IsAuthenticated_WithMethodAuthenticateAndUserRoleIsAccountOwner_ReturnsTrue()
         {
-            user.Role = Role.AccountOwner;
+            user.Role = Role.Admin;
             HttpContext.Current.User = new GenericPrincipal(
                 new FormsIdentity(new FormsAuthenticationTicket(user.UserName, false, 1)),
                 new string[0]
@@ -191,7 +191,7 @@ namespace Transportation.UnitTests.Api.Framework
         [Test]
         public void IsAuthenticated_WithMethodAuthenticateNormalAndUserRoleIsSuper_ReturnsTrue()
         {
-            user.Role = Role.Super;
+            user.Role = Role.Admin;
             HttpContext.Current.User = new GenericPrincipal(
                 new FormsIdentity(new FormsAuthenticationTicket(user.UserName, false, 1)),
                 new string[0]
@@ -204,7 +204,7 @@ namespace Transportation.UnitTests.Api.Framework
         [Test]
         public void IsAuthenticated_WithMethodAuthenticateAccountOwnerAndUserRoleIsSuper_ReturnsFalse()
         {
-            user.Role = Role.Super;
+            user.Role = Role.Admin;
             HttpContext.Current.User = new GenericPrincipal(
                 new FormsIdentity(new FormsAuthenticationTicket(user.UserName, false, 1)),
                 new string[0]
@@ -218,7 +218,7 @@ namespace Transportation.UnitTests.Api.Framework
         [Test]
         public void IsAuthenticated_WithMethodAuthenticateSuperAndUserRoleIsNormal_ReturnsFalse()
         {
-            user.Role = Role.Normal;
+            user.Role = Role.Admin;
             HttpContext.Current.User = new GenericPrincipal(
                 new FormsIdentity(new FormsAuthenticationTicket(user.UserName, false, 1)),
                 new string[0]
@@ -231,7 +231,7 @@ namespace Transportation.UnitTests.Api.Framework
         [Test]
         public void IsAuthenticated_WithMethodAuthenticateSuperAndUserRoleIsSuper_ReturnsTrue()
         {
-            user.Role = Role.Super;
+            user.Role = Role.Admin;
             HttpContext.Current.User = new GenericPrincipal(
                 new FormsIdentity(new FormsAuthenticationTicket(user.UserName, false, 1)),
                 new string[0]
@@ -244,7 +244,7 @@ namespace Transportation.UnitTests.Api.Framework
         [Test]
         public void IsAuthenticated_WithMethodAuthenticateSuperAndUserRoleIsAccountOwner_ReturnsTrue()
         {
-            user.Role = Role.AccountOwner;
+            user.Role = Role.Admin;
             HttpContext.Current.User = new GenericPrincipal(
                 new FormsIdentity(new FormsAuthenticationTicket(user.UserName, false, 1)),
                 new string[0]
@@ -307,7 +307,7 @@ namespace Transportation.UnitTests.Api.Framework
             }
         }
 
-        [Authenticate(Role = Role.Normal)]        
+        [Authenticate(Role = Role.Admin)]        
         private class ClassAuthenticateRouteAndHasPermission
         {
             [Route(HttpVerb.Post, "/test")]
@@ -317,7 +317,7 @@ namespace Transportation.UnitTests.Api.Framework
             }
         }
 
-        [Authenticate(Role = Role.Super)]
+        [Authenticate(Role = Role.Admin)]
         private class ClassAuthenticateRouteAndHasSuperPermission
         {
             [Route(HttpVerb.Post, "/test")]
@@ -327,7 +327,7 @@ namespace Transportation.UnitTests.Api.Framework
             }
         }
 
-        [Authenticate(Role = Role.AccountOwner)]
+        [Authenticate(Role = Role.Admin)]
         private class ClassAuthenticateRouteAndHasAccountOwnerPermission
         {
             [Route(HttpVerb.Post, "/test")]
@@ -339,7 +339,7 @@ namespace Transportation.UnitTests.Api.Framework
        
         private class MethodAuthenticateRouteAndHasPermission
         {
-            [Authenticate(Role = Role.Normal)]
+            [Authenticate(Role = Role.Admin)]
             [Route(HttpVerb.Post, "/test")]
             public RestApiResult Test()
             {
@@ -349,7 +349,7 @@ namespace Transportation.UnitTests.Api.Framework
 
         private class MethodAuthenticateRouteAndHasAccountOwnerPermission
         {
-            [Authenticate(Role = Role.AccountOwner)]
+            [Authenticate(Role = Role.Admin)]
             [Route(HttpVerb.Post, "/test")]
             public RestApiResult Test()
             {

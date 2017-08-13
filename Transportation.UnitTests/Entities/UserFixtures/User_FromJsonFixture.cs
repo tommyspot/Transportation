@@ -20,7 +20,7 @@ namespace Transportation.UnitTests.Core.UserFixtures
         {
             user = Presto.Create<User>(x => {
                 x.ID = 10; 
-                x.Role = Role.PartnerAccount; 
+                x.Role = Role.Admin; 
                 x.UserName = "user1"; 
                 x.LastName = "Pan"; 
                 x.FirstName = "Peter"; 
@@ -70,7 +70,7 @@ namespace Transportation.UnitTests.Core.UserFixtures
             JToken role = JToken.Parse(@"'ABC'");
             json.SelectToken("role").Replace(role);
             var result = User.FromJson(json);
-            Assert.AreEqual(Role.Normal, result.Role);
+            Assert.AreEqual(Role.Admin, result.Role);
         }
     }
 }

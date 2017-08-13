@@ -34,7 +34,7 @@ namespace Transportation.Api.Framework
 
                 if (!ticket.Expired && user != null)
                 {
-                    if (user.Role == Role.AccountOwner || user.Role == Role.SystemAdmin)
+                    if (user.Role == Role.Admin)
                     {
                         return true;
                     }
@@ -77,7 +77,8 @@ namespace Transportation.Api.Framework
                         {
                             return 1;
                         }
-                        else if (value == Role.Normal && user.Role == Role.Super || user.Role == Role.PartnerAccount)
+                        // else if (value == Role.Normal && user.Role == Role.Super || user.Role == Role.PartnerAccount)
+                        else if (user.Role == Role.Admin)
                         {
                             return 1;
                         }

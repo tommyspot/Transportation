@@ -10,7 +10,9 @@ module Clarity.Controller {
 	import helper = Clarity.Helper;
 
 	export class MainController {
-		public mainHelper: helper.MainHelper;
+    public mainHelper: helper.MainHelper;
+    public authenticateService: service.AuthenticationService;
+
 		constructor(private $scope,
 			public $rootScope: IRootScope,
 			private $http: ng.IHttpService,
@@ -21,6 +23,7 @@ module Clarity.Controller {
 
       $scope.viewModel = this;
       this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
+      this.authenticateService = new service.AuthenticationService($http, $cookieStore);
     }
 
     goToWagonsManagement() {
@@ -73,6 +76,22 @@ module Clarity.Controller {
 
     goToReportGarageManagement() {
       this.$location.path('/ql-garage/quan-ly');
+    }
+
+    isAdminRole() {
+      return this.authenticateService.getUserRole() == 0;
+    }
+
+    hasWagonManagementPermission() {
+      return this.isAdminRole() || this.authenticateService.getUserRole() == 1;
+    }
+
+    hasGarageManagementPermission() {
+      return this.isAdminRole() || this.authenticateService.getUserRole() == 2;
+    }
+
+    hasReportManagementPermission() {
+      return this.isAdminRole() || this.authenticateService.getUserRole() == 3;
     }
 	}
 }

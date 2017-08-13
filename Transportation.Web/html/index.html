@@ -2,22 +2,25 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
-        <div class="manage-box long-box" data-ng-click="viewModel.goToWagonsManagement()">
+        <div class="manage-box long-box" data-ng-if="viewModel.hasWagonManagementPermission()"
+             data-ng-click="viewModel.goToWagonsManagement()">
           <span class="glyphicon glyphicon-list-alt icon" aria-hidden="true"></span>
           <h4>QUẢN LÝ TOA HÀNG</h4>
         </div>
 
-        <div class="manage-box long-box garage-box" data-ng-click="viewModel.goToGarageManagement()">
+        <div class="manage-box long-box garage-box" data-ng-if="viewModel.hasGarageManagementPermission()"
+             data-ng-click="viewModel.goToGarageManagement()">
           <span class="glyphicon glyphicon-cog icon" aria-hidden="true"></span>
           <h4>QUẢN LÝ GARAGE</h4>
         </div>
 
-        <div class="manage-box qlbc-box no-margin-right" data-ng-click="viewModel.goToReportManagement()">
+        <div class="manage-box qlbc-box no-margin-right" data-ng-if="viewModel.hasReportManagementPermission()"
+             data-ng-click="viewModel.goToReportManagement()">
           <i class="fa fa-file-excel-o icon" aria-hidden="true"></i>
           <h4>QUẢN LÝ BÁO CÁO</h4>
         </div>
 
-        <div class="manage-box long-box qldn-box no-margin-right" data-ng-click="viewModel.goToUserManagement()" data-ng-if="viewModel.mainHelper.isUserHasGreaterOrEqualPermission('Super')">
+        <div class="manage-box long-box qldn-box no-margin-right" data-ng-click="viewModel.goToUserManagement()" data-ng-if="viewModel.isAdminRole()">
           <span class="glyphicon glyphicon-user icon" aria-hidden="true"></span>
           <h4>QUẢN LÝ ĐĂNG NHẬP</h4>
         </div>

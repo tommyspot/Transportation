@@ -26,24 +26,24 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
     controller: 'LoginController',
     access: 'public'
   })
-
+  // DANG NHAP
   .when('/ql-dang-nhap', {
-    templateUrl: '/html/user.html' + '?v=' + VERSION_NUMBER,
+    templateUrl: '/html/dangnhap/user.html' + '?v=' + VERSION_NUMBER,
     controller: 'UserController',
     access: 'authorized'
   })
   .when('/ql-dang-nhap/tao', {
-    templateUrl: '/html/user-form.html' + '?v=' + VERSION_NUMBER,
+    templateUrl: '/html/dangnhap/user-form.html' + '?v=' + VERSION_NUMBER,
     controller: 'UserController',
     access: 'authorized'
   })
   .when('/ql-dang-nhap/:user_id', {
-    templateUrl: '/html/user-detail.html' + '?v=' + VERSION_NUMBER,
+    templateUrl: '/html/dangnhap/user-detail.html' + '?v=' + VERSION_NUMBER,
     controller: 'UserController',
     access: 'authorized'
   })
   .when('/ql-dang-nhap/sua/:user_id', {
-    templateUrl: '/html/user-form.html' + '?v=' + VERSION_NUMBER,
+    templateUrl: '/html/dangnhap/user-form.html' + '?v=' + VERSION_NUMBER,
     controller: 'UserController',
     access: 'authorized'
   })
@@ -533,6 +533,7 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
           var productDetailPattern = /\/ql-garage\/san-pham\/(\d*)$/g;
           var productInputDetailPattern = /\/ql-garage\/nhap-kho\/(\d*)$/g;
           var orderPattern = /\/ql-garage\/ban-hang\/(\d*)$/g;
+          var userDetailPattern = /\/ql-dang-nhap\/(\d*)$/g;
 
           var truckEditorPattern = /\/ql-toa-hang\/xe\/sua\/(\d*)$/g;
           var employeeEditorPattern = /\/ql-toa-hang\/nhan-vien\/sua\/(\d*)$/g;
@@ -543,6 +544,7 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
           var productEditorPattern = /\/ql-garage\/san-pham\/sua\/(\d*)$/g;
           var productInputEditorPattern = /\/ql-garage\/nhap-kho\/sua\/(\d*)$/g;
           var orderEditorPattern = /\/ql-garage\/ban-hang\/sua\/(\d*)$/g;
+          var userEditorPattern = /\/ql-dang-nhap\/sua\/(\d*)$/g;
 
           if (truckDetailPattern.test(nav) || truckEditorPattern.test(nav) ||
             employeeDetailPattern.test(nav) || employeeEditorPattern.test(nav) ||
@@ -551,7 +553,8 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
             wagonSettlementDetailPattern.test(nav) || wagonSettlementEditorPattern.test(nav) ||
             productDetailPattern.test(nav) || productEditorPattern.test(nav) ||
             productInputDetailPattern.test(nav) || productInputEditorPattern.test(nav) ||
-            orderPattern.test(nav) || orderEditorPattern.test(nav)) {
+            orderPattern.test(nav) || orderEditorPattern.test(nav) || 
+            userDetailPattern.test(nav) || userEditorPattern.test(nav)) {
             var pieces = nav.split('/');
             breadCrumb.name = pieces[pieces.length - 1];
           }

@@ -1,0 +1,53 @@
+﻿<div id="userInfo" class="bootstrap">
+  <div class="container">
+    <div class="form-detail">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2 class="text-center">USER - {{::viewModel.currentUser.username}}</h2>
+        </div>
+      </div>
+      <div class="row margin-top-20">
+        <div class="col-sm-2">
+          <p class="bold-text">Tên:</p>
+        </div>
+        <div class="col-sm-10">
+          <p>{{::viewModel.currentUser.firstName}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <p class="bold-text">Họ:</p>
+        </div>
+        <div class="col-sm-10">
+          <p>{{::viewModel.currentUser.lastName}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <p class="bold-text">Chức vụ:</p>
+        </div>
+        <div class="col-sm-10">
+          <p>{{::viewModel.getRoleName(viewModel.currentUser.role)}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row margin-bottom-20">
+      <div class="col-sm-12">
+        <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-dang-nhap')">
+          <span class="glyphicon glyphicon-arrow-left"></span>
+          <span>Quay lại</span>
+        </button>
+        <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-dang-nhap/sua/' + viewModel.currentUser.id)">
+          <span class="glyphicon glyphicon-pencil"></span>
+          <span>Sửa tài khoản</span>
+        </button>
+        <button class="btn btn-default" data-ng-click="viewModel.removeUserInDetail(viewModel.currentUser)">
+          <span class="glyphicon glyphicon-trash"></span>
+          <span>Xóa tài khoản</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

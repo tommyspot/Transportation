@@ -150,23 +150,6 @@ module Clarity.Helper {
       return date;
     }
 
-		isUserHasGreaterOrEqualPermission(checkUserRole) {
-      var userRole = this.authenticationService.getUserRole();
-			if (userRole == checkUserRole) {
-				return true;
-			}
-      //if (userRole == checkUserRole) {
-      //  return true;
-      //} else if (userRole === this.userRolesModel.Super && (checkUserRole === this.userRolesModel.Normal)) {
-      //  return true;
-      //} else if (userRole == this.userRolesModel.AccountOwner && (checkUserRole != this.userRolesModel.PartnerAccount)) {
-      //  return true;
-      //} else if (userRole == this.userRolesModel.PartnerAccount) {
-      //  return true;
-      //}
-      return false;
-    }
-
     formatStringToDateTime(date: string) {
       var day = parseInt(date.split('/')[0]);
       var month = parseInt(date.split('/')[1]) - 1;
@@ -215,5 +198,4 @@ module Clarity.Helper {
     }
 
   }
-
 }

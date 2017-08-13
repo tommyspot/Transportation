@@ -69,41 +69,5 @@ module Clarity.Service {
       var currentUser = this.cookieStore.get('user');
       return currentUser ? currentUser.role : '';
     }
-
-    generatePointOfInterval(currentServerInterval: number) {
-      var ret = [];
-      var basicPointOfInterval = [0, 15 * 60 * 1000, 30 * 60 * 1000, 45 * 60 * 1000]
-      var currDate = new Date();
-      var currInterval = currDate.getMinutes() * 60 * 1000 + currDate.getSeconds() * 1000;
-
-      var matchedInterval = Math.abs(currInterval - currentServerInterval);
-
-      if (matchedInterval >= basicPointOfInterval[0] && matchedInterval < basicPointOfInterval[1]) {
-        ret.push(matchedInterval + (15 * 60 * 1000 * 0));
-        ret.push(matchedInterval + (15 * 60 * 1000 * 1));
-        ret.push(matchedInterval + (15 * 60 * 1000 * 2));
-        ret.push(matchedInterval + (15 * 60 * 1000 * 3));
-      }
-      else if (matchedInterval >= basicPointOfInterval[1] && matchedInterval < basicPointOfInterval[2]) {
-        ret.push(matchedInterval + (15 * 60 * 1000 * (-1)));
-        ret.push(matchedInterval + (15 * 60 * 1000 * 0));
-        ret.push(matchedInterval + (15 * 60 * 1000 * 1));
-        ret.push(matchedInterval + (15 * 60 * 1000 * 2));
-      }
-      else if (matchedInterval >= basicPointOfInterval[2] && matchedInterval < basicPointOfInterval[3]) {
-        ret.push(matchedInterval + (15 * 60 * 1000 * (-2)));
-        ret.push(matchedInterval + (15 * 60 * 1000 * (-1)));
-        ret.push(matchedInterval + (15 * 60 * 1000 * 0));
-        ret.push(matchedInterval + (15 * 60 * 1000 * 1));
-      }
-      else {
-        ret.push(matchedInterval + (15 * 60 * 1000 * (-3)));
-        ret.push(matchedInterval + (15 * 60 * 1000 * (-2)));
-        ret.push(matchedInterval + (15 * 60 * 1000 * (-1)));
-        ret.push(matchedInterval + (15 * 60 * 1000 * 0));
-      }
-
-      return ret;
-    }
   }
 }

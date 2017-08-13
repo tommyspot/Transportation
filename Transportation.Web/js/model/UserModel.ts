@@ -8,19 +8,16 @@ module Clarity.Model {
     public username: string;
     public password: string;
 		public repeatPassword: string;
-    public terminalId: number;
-    public locationId: number;
-    public numberOfCounter: number;
-    public shift: number;
-    public userLogId: number;
-    public loginTime: string;
-    public role: string;
-		public isChecked: boolean;
-		public isEdited: boolean;
+    public role: number;
   }
 
-  export class RoleModel extends Model.BaseModel {
-    public name: string;
-		public Ename: string;
+  export class UserViewModel extends Model.BaseModel {
+    public firstName: string;
+    public lastName: string;
+    public username: string;
+    public password: string;
+    public repeatPassword: string;
+    public role: string;
+    public isChecked: boolean;
   }
 }

@@ -8,13 +8,9 @@ namespace Transportation
 {
     public enum Role
     {
-        Normal,
-        AccountOwner,
-        SystemAdmin,
-        Super,
-        PartnerAccount,
-		Wagon,
-		WagonSettlement,
-		CustomerOrder
+        Admin,
+		WagonManagement,
+        GarageManagement,
+        ReportManagement,
 	}
 }

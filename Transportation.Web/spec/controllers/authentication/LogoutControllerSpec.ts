@@ -67,32 +67,31 @@ module Clarity.Spec {
       });
     });
 
-    describe('.updateUserLog', function () {
-      var user: Model.UserModel;
+    //describe('.updateUserLog', function () {
+    //  var user: Model.UserModel;
 
-      beforeEach(function () {
-        user = new Model.UserModel();
-        user.userLogId = 0;
-      });
-      //it('get user log needs to update', function () {
-      //  spyOn(logoutController.userLogService, 'getById');
+    //  beforeEach(function () {
+    //    user = new Model.UserModel();
+    //    user.userLogId = 0;
+    //  });
+    //  it('get user log needs to update', function () {
+    //    spyOn(logoutController.userLogService, 'getById');
 
-      //  logoutController.updateUserLog(user);
-      //  expect(logoutController.userLogService.getById).toHaveBeenCalled();
-      //});
+    //    logoutController.updateUserLog(user);
+    //    expect(logoutController.userLogService.getById).toHaveBeenCalled();
+    //  });
 
-      //it('get GPS position', function () {
-      //  httpBackend
-      //    .when('GET', '/api/userlog/0')
-      //    .respond({ id: 0, interviewerId: '9999-Test' });
-      //  spyOn(navigator.geolocation, 'getCurrentPosition');
+    //  it('get GPS position', function () {
+    //    httpBackend
+    //      .when('GET', '/api/userlog/0')
+    //      .respond({ id: 0, interviewerId: '9999-Test' });
+    //    spyOn(navigator.geolocation, 'getCurrentPosition');
 
-      //  logoutController.updateUserLog(user);
-      //  httpBackend.flush();
-      //  expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalled();
-      //});
-
-    });
+    //    logoutController.updateUserLog(user);
+    //    httpBackend.flush();
+    //    expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalled();
+    //  });
+    //});
 
   });
 }
