@@ -180,10 +180,10 @@ module Clarity.Controller {
 					(data) => {
 						this.$location.path('/ql-dang-nhap');
           }, (error) => {
-            this.errorMessage = error;
+            this.errorMessage = 'Tên tài khoản đã tồn tại';
             this.$timeout(() => {
               this.errorMessage = '';
-            }, 2000);
+            }, 8000);
           });
 			} else {
 				var confirmDialog = this.$window.confirm('Mật khẩu và Nhập lại mật khẩu phải giống nhau');

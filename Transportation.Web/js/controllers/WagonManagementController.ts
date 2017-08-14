@@ -120,7 +120,9 @@ module Clarity.Controller {
         wagonView.returnDate = wagon.returnDate;
         wagonView.departure = wagon.departure;
         wagonView.destination = wagon.destination;
-        wagonView.totalAmount = this.$filter('currency')(this.calculateTotalAmountWagonSettlements(wagon), '', 0).trim();
+        const totalPayment = wagon.paymentOfTruck + wagon.paymentOfRepairing + wagon.paymentOfOil + wagon.paymentOfLuong +
+                             wagon.paymentOfService + wagon.paymentOfHangVe + wagon.paymentOf10Percent;
+        wagonView.totalPayment = this.$filter('currency')(totalPayment, '', 0).trim();
         return wagonView;
       });
     }

@@ -239,6 +239,9 @@ div.bootstrap {
     td{
       padding: 12px 8px;
     }
+    .td-padding-decrease{
+      padding: 12px 2px;
+    }
   }
   /*SEARCH TEXT BOX*/
   .search-text-box{
@@ -772,10 +775,6 @@ div.bootstrap {
     padding: 2px;
   }
   
-  .td-padding-decrease{
-    padding: 8px 6px;
-  }
-
   .td-width-date{
     width: 130px;
   }

@@ -122,47 +122,49 @@
             <table id="table-toahang" class="table table-hover table-bordered">
               <thead>
                 <tr>
-                  <th class="stt-width-min align-center">STT</th>
-                  <th class="align-center">Tên KH <span class="required-symbol">*</span></th>
-                  <th class="col-sm-1 align-center">Số lượng</th>
-                  <th class="col-sm-1 align-center">ĐVT</th>
-                  <th class="main-width-column align-center">Nơi đến</th>
-                  <th class="main-width-column align-center">Đơn giá</th>
+                  <th class="stt-width-min text-center">STT</th>
+                  <th class="text-center">Tên KH <span class="required-symbol">*</span></th>
+                  <th class="col-sm-1 text-center">Số lượng</th>
+                  <th class="col-sm-1 text-center">ĐVT</th>
+                  <th class="main-width-column text-center">Nơi đến</th>
+                  <th class="main-width-column text-center">Đơn giá</th>
                   <th class="col-sm-1 align-center">PS</th>
-                  <th class="main-width-column align-center">Phí PS</th>
-                  <th class="main-width-column align-center">Thành tiền</th>
-                  <th class="main-width-column align-center">Thanh toán</th>
-                  <th class="delete-width align-center"></th>
+                  <th class="main-width-column text-center">Phí PS</th>
+                  <th class="main-width-column text-center">Thành tiền</th>
+                  <th class="main-width-column text-center">Thanh toán</th>
+                  <th class="delete-width text-center"></th>
                 </tr>
               </thead>
               <tbody>
                 <tr data-ng-repeat="wagonSettlement in viewModel.currentWagon.wagonSettlements">
-                  <td class="align-center align-middle">{{$index + 1}}</td>
+                  <td class="text-center align-middle">{{$index + 1}}</td>
                   <td>
                     <select ui-select2 id="customerId" class="form-control ui-select-2" data-ng-model="wagonSettlement.customerId" required>
                       <option value="">--Chọn khách hàng--</option>
                       <option data-ng-repeat="customer in viewModel.customerList" value="{{customer.id}}">{{customer.fullName}}</option>
                     </select>
                   </td>
-                  <td class="align-center">
+                  <td class="text-center">
                     <input class="form-control text-right" type="number" min="1" data-ng-model="wagonSettlement.quantity"
                            data-ng-change="viewModel.calculateTotalAmountWagonSettlements()" />
                   </td>
-                  <td class="align-center td-padding-decrease">
+                  <td class="text-center td-padding-decrease">
                     <select id="unit" class="form-control" data-ng-model="wagonSettlement.unit">
-                      <option value="Thùng">Thùng</option>
-                      <option value="Bao">Bao</option>
                       <option value="Chuyến">Chuyến</option>
+                      <option value="Bao lớn">Bao lớn</option>
+                      <option value="Bao nhỏ">Bao nhỏ</option>
+                      <option value="Thùng lớn">Thùng lớn</option>
+                      <option value="Thùng nhỏ">Thùng nhỏ</option>
                     </select>
                   </td>
-                  <td class="align-center">
+                  <td class="text-center">
                     <input class="form-control" type="text" data-ng-model="wagonSettlement.destination" />
                   </td>
-                  <td class="align-center">
+                  <td class="text-center">
                     <input id="unitPrice" name="unitPrice" class="form-control text-right" type="text" maxlength="15" data-ng-model="wagonSettlement.unitPriceFormatted"
                            data-ng-change="viewModel.onChangeWagonSettlement(wagonSettlement, 'unitPrice', 'unitPriceFormatted')" />
                   </td>
-                  <td class="align-center">
+                  <td class="text-center">
                     <select id="unit" class="form-control" data-ng-model="wagonSettlement.lyDoPhatSinh">
                       <option value="Phụ thu">Phụ thu</option>
                       <option value="Phí Phà">Phí Phà</option>
@@ -171,16 +173,16 @@
                       <option value="Khác">Khác</option>
                     </select>
                   </td>
-                  <td class="align-center">
+                  <td class="text-center">
                     <input id="phiPhatSinh" name="phiPhatSinh" class="form-control text-right" type="text" maxlength="15" data-ng-model="wagonSettlement.phiPhatSinhFormatted"
                            data-ng-change="viewModel.onChangeWagonSettlement(wagonSettlement, 'phiPhatSinh', 'phiPhatSinhFormatted')" />
                   </td>
                   <td class="text-right align-middle">{{wagonSettlement.quantity * wagonSettlement.unitPrice | currency: "" : 0 }}</td>
-                  <td class="align-center">
+                  <td class="text-center">
                     <input id="payment" name="payment" class="form-control text-right" type="text" maxlength="15" data-ng-model="wagonSettlement.paymentFormatted"
                            data-ng-change="viewModel.onChangeWagonSettlement(wagonSettlement, 'payment', 'paymentFormatted')" />
                   </td>
-                  <td class="align-center delete-td" data-ng-click="viewModel.deleteWagonSettlement($index)">
+                  <td class="text-center delete-td" data-ng-click="viewModel.deleteWagonSettlement($index)">
                     <span class="glyphicon glyphicon-trash"></span>
                   </td>
                 </tr>

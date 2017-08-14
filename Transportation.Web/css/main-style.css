@@ -5117,6 +5117,8 @@ div.bootstrap {
     padding: 0; }
   #ng-app #table-toahang td {
     padding: 12px 8px; }
+  #ng-app #table-toahang .td-padding-decrease {
+    padding: 12px 2px; }
   #ng-app .search-text-box .has-feedback .form-control-feedback {
     color: #CCCCCC;
     pointer-events: visible;
@@ -5427,8 +5429,6 @@ div.bootstrap {
     width: 160px; }
   #ng-app .select-padding-decrease {
     padding: 2px; }
-  #ng-app .td-padding-decrease {
-    padding: 8px 6px; }
   #ng-app .td-width-date {
     width: 130px; }
   #ng-app .delete-width {

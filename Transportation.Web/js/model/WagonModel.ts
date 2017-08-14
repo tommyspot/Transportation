@@ -53,7 +53,7 @@ module Clarity.Model {
     public returnDate: string;
     public departure: string;
     public destination: string;
-    public totalAmount: string;
+    public totalPayment: string;
     public isChecked: boolean;
   }
 }

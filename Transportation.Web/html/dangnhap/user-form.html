@@ -24,8 +24,10 @@
         </div>
       </div>
 
-      <div class="col-sm-12" data-ng-if="viewModel.errorMessage != null && viewModel.errorMessage != ''">
-        <span>{{viewModel.errorMessage}}</span>
+      <div class="form-group">
+        <div class="col-sm-12" data-ng-if="viewModel.errorMessage != null && viewModel.errorMessage != ''">
+          <span class="required-field">{{viewModel.errorMessage}}</span>
+        </div>
       </div>
 
       <div class="form-group margin-top-20">
