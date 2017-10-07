@@ -57,5 +57,18 @@ namespace Transportation
                 Role = tempRole;
             }
         }
+
+        public void ApplyJsonWithoutPassword(JObject json)
+        {
+            ID = json.Value<long>("id");
+            FirstName = json.Value<string>("firstName");
+            LastName = json.Value<string>("lastName");
+            UserName = json.Value<string>("username");
+            Role tempRole;
+            if (Enum.TryParse<Role>(json.Value<string>("role"), out tempRole))
+            {
+                Role = tempRole;
+            }
+        }
     }
 }

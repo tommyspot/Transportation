@@ -186,6 +186,7 @@
     <Content Include="font\roboto\Roboto-Regular.ttf" />
     <TypeScriptCompile Include="js\controllers\IController.ts" />
     <TypeScriptCompile Include="js\helpers\MainHelper.ts" />
+    <TypeScriptCompile Include="js\model\enum\Role.ts" />
     <TypeScriptCompile Include="js\model\InputOrderModel.ts" />
     <TypeScriptCompile Include="js\model\OrderModel.ts" />
     <TypeScriptCompile Include="js\model\ProductInputModel.ts" />
