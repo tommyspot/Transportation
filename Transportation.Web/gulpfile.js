@@ -54,6 +54,7 @@ var config = {
 , 'js/model/OrderModel.js'
 , 'js/model/InventoryModel.js'
 , 'js/model/InputOrderModel.js'
+, 'js/model/enum/Role.js'
 
 , 'js/services/IService.js'
 , 'js/services/BaseService.js'
