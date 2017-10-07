@@ -50,54 +50,53 @@ namespace Transportation.Api
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = user.ToJson() };
         }
 
-		[Route(HttpVerb.Get, "/user/{id}")]
-		public RestApiResult GetUserByID(long id)
-		{
-			User user = ClarityDB.Instance.Users.FirstOrDefault(x => x.ID == id);
+        [Route(HttpVerb.Get, "/user/{id}")]
+        public RestApiResult GetUserByID(long id)
+        {
+            User user = ClarityDB.Instance.Users.FirstOrDefault(x => x.ID == id);
 
-			if (user == null)
-			{
-				return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
-			}
+            if (user == null)
+            {
+                return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
+            }
 
-			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = user.ToJson() };
-		}
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = user.ToJson() };
+        }
 
-		[Route(HttpVerb.Delete, "/user/{id}")]
-		public RestApiResult Delete(long id)
-		{
-			User user = ClarityDB.Instance.Users.FirstOrDefault(x => x.ID == id);
+        [Route(HttpVerb.Delete, "/user/{id}")]
+        public RestApiResult Delete(long id)
+        {
+            User user = ClarityDB.Instance.Users.FirstOrDefault(x => x.ID == id);
 
-			if (user == null)
-			{
-				return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
-			}
+            if (user == null)
+            {
+                return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
+            }
 
-			ClarityDB.Instance.Users.Remove(user);
-			ClarityDB.Instance.SaveChanges();
+            ClarityDB.Instance.Users.Remove(user);
+            ClarityDB.Instance.SaveChanges();
 
-			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = user.ToJson() };
-		}
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = user.ToJson() };
+        }
 
-		[Route(HttpVerb.Put, "/user/{id}")]
-		public RestApiResult Update(long id, JObject json)
-		{
-			User user = ClarityDB.Instance.Users.FirstOrDefault(x => x.ID == id);
+        [Route(HttpVerb.Put, "/user/{id}")]
+        public RestApiResult Update(long id, JObject json)
+        {
+            User user = ClarityDB.Instance.Users.FirstOrDefault(x => x.ID == id);
 
-			if (user == null)
-			{
-				return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
-			}
+            if (user == null)
+            {
+                return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
+            }
 
-			user.ApplyJson(json);
-			user.Password = passwordHash.CreatePasswordHash(user.Password, user.Salt);
-			user.CreatedDate = DateTime.Now;
-			ClarityDB.Instance.SaveChanges();
+            user.ApplyJsonWithoutPassword(json);
+            this.ApplyPasswordWhenUpdateUser(user, json);
+            ClarityDB.Instance.SaveChanges();
 
-			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
-		}
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
+        }
 
-		private JArray BuildJsonArray(IEnumerable<User> users)
+        private JArray BuildJsonArray(IEnumerable<User> users)
         {
             JArray array = new JArray();
 
@@ -106,6 +105,16 @@ namespace Transportation.Api
                 array.Add(user.ToJson());
             }
             return array;
+        }
+
+        private void ApplyPasswordWhenUpdateUser(User user, JObject json)
+        {
+            string newPassword = json.Value<string>("password");
+            string oldPassword = user.Password;
+            if (newPassword != oldPassword)
+            {
+                user.Password = passwordHash.CreatePasswordHash(newPassword, user.Salt);
+            }
         }
     }
 }
