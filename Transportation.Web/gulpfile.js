@@ -88,6 +88,8 @@ var config = {
 , 'js/controllers/InputOrderManagementController.js'
 , 'js/controllers/ProductInfoManagementController.js'
 
+, 'js/directives/ActionButtonFormDirective.js'
+
   // controllers, services written with TypeScript must be placed before clarity-app.js
   , 'js/clarity-app.js'
   // controllers, services, directives written without TypeScript must be placed after clarity-app.js

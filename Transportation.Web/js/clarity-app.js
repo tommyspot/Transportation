@@ -596,6 +596,8 @@ clarityApp.controller('OrderManagementController', Clarity.Controller.OrderManag
 clarityApp.controller('InputOrderManagementController', Clarity.Controller.InputOrderManagementController);
 clarityApp.controller('ProductInfoManagementController', Clarity.Controller.ProductInfoManagementController);
 
+clarityApp.directive('actionButtonForm', Clarity.Directive.ActionButtonForm.Factory());
+
 clarityApp.filter('filterDate', function () {
   return function (input, filterDate) {
     if (input == null || input.length == 0) {
