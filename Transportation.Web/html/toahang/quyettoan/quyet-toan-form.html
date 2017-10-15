@@ -3,17 +3,15 @@
     <form name="wagonSettlementForm" class="form-horizontal">
       <div class="form-group">
         <div class="col-sm-12">
-          <button class="btn btn-default" data-ng-class="{'main-btn': !wagonSettlementForm.$invalid}"
-                  data-ng-if="viewModel.$location.path() === '/ql-toa-hang/quyet-toan/sua/' + viewModel.currentWagonSettlement.id"
-                  data-ng-click="viewModel.updateWagonSettlement(viewModel.currentWagonSettlement)" data-ng-disabled="wagonSettlementForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Cập nhật</span>
-          </button>
-
-          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/quyet-toan')">
-            <span class="glyphicon glyphicon-remove"></span>
-            <span>Hủy</span>
-          </button>
+          <action-button-form
+              form="wagonSettlementForm"
+              is-save-visible="false"
+              is-save-or-edit-disabled="wagonSettlementForm.$invalid || viewModel.isSubmitting"
+              is-submitting="viewModel.isSubmitting"
+              is-edit-visible="viewModel.$location.path() === '/ql-toa-hang/quyet-toan/sua/' + viewModel.currentWagonSettlement.id"
+              handle-edit="viewModel.updateWagonSettlement(viewModel.currentWagonSettlement)"
+              handle-cancel="viewModel.$location.path('/ql-toa-hang/quyet-toan')"
+          />
         </div>
       </div>
 
@@ -84,17 +82,15 @@
       
       <div class="form-group">
         <div class="col-sm-12">
-          <button class="btn btn-default" data-ng-class="{'main-btn': !wagonSettlementForm.$invalid}"
-              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/quyet-toan/sua/' + viewModel.currentWagonSettlement.id"
-              data-ng-click="viewModel.updateWagonSettlement(viewModel.currentWagonSettlement)" data-ng-disabled="wagonSettlementForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Cập nhật</span>
-          </button>
-
-          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/quyet-toan')">
-            <span class="glyphicon glyphicon-remove"></span>
-            <span>Hủy</span>
-          </button>
+          <action-button-form
+              form="wagonSettlementForm"
+              is-save-visible="false"
+              is-save-or-edit-disabled="wagonSettlementForm.$invalid || viewModel.isSubmitting"
+              is-submitting="viewModel.isSubmitting"
+              is-edit-visible="viewModel.$location.path() === '/ql-toa-hang/quyet-toan/sua/' + viewModel.currentWagonSettlement.id"
+              handle-edit="viewModel.updateWagonSettlement(viewModel.currentWagonSettlement)"
+              handle-cancel="viewModel.$location.path('/ql-toa-hang/quyet-toan')"
+          />
         </div>
       </div>
     </form>

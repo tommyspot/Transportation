@@ -23,6 +23,7 @@ module Clarity.Controller {
     public isLoading: boolean;
     public errorMessage: string;
     public searchText: string;
+    public isSubmitting: boolean;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -154,10 +155,13 @@ module Clarity.Controller {
     }
 
     createProduct(product: Model.ProductModel) {
+      this.isSubmitting = true;
       this.productService.create(product,
         (data) => {
+          this.isSubmitting = false;
           this.$location.path('/ql-garage/san-pham');
         }, (error) => {
+          this.isSubmitting = false;
           this.errorMessage = error.message;
           this.$timeout(() => {
             this.errorMessage = '';
@@ -166,7 +170,9 @@ module Clarity.Controller {
     }
 
     updateProduct(product: Model.ProductModel) {
+      this.isSubmitting = true;
       this.productService.update(product, (data) => {
+        this.isSubmitting = false;
         this.$location.path('/ql-garage/san-pham');
       }, null);
     }

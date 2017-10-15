@@ -113,16 +113,19 @@ namespace Transportation.Api
             dt.Columns.Add("Ngày đăng kiểm gần nhất", typeof(string));
             dt.Columns.Add("Bảo Hiểm Đến", typeof(string));
             dt.Columns.Add("Tài xế chịu trách nhiệm", typeof(string));
+            dt.Columns.Add("Còn lưu hành", typeof(string));
 
             //Binding data
-            List<Truck> trucks = ClarityDB.Instance.Trucks.ToList();
+            List<Truck> trucks = ClarityDB.Instance.Trucks.OrderByDescending(x => x.ID).ToList();
             for (int i = 0; i < trucks.Count; i++)
             {
                 var truck = trucks[i];
                 dt.Rows.Add(new object[] { i + 1 , truck.LicensePlate, truck.YearOfManufacture , truck.Vin, truck.EngineNo,
                                            truck.Brand, truck.Weight, truck.BuyingDate, truck.StartUsingDate,
                                            truck.MonthlyPayment, truck.Stock, truck.CheckDate, truck.InsuranceDate,
-                                           String.IsNullOrEmpty(truck.EmployeeId) ? "" : this.helperService.GetEmployeeName(Convert.ToInt32(truck.EmployeeId))});
+                                           String.IsNullOrEmpty(truck.EmployeeId) ? "" : this.helperService.GetEmployeeName(Convert.ToInt32(truck.EmployeeId)),
+                                           truck.IsDeleted ? "Không" : "Có"
+                });
             }
 
             return dt;
@@ -148,15 +151,18 @@ namespace Transportation.Api
             dt.Columns.Add("Ngày bắt đầu làm việc", typeof(string));
             dt.Columns.Add("Vi phạm", typeof(string));
             dt.Columns.Add("Ghi chú", typeof(string));
+            dt.Columns.Add("Tình trạng", typeof(string));
 
             //Binding data
-            List<Employee> employees = ClarityDB.Instance.Employees.ToList();
+            List<Employee> employees = ClarityDB.Instance.Employees.OrderByDescending(x => x.ID).ToList();
             for (int i = 0; i < employees.Count; i++)
             {
                 var employee = employees[i];
                 dt.Rows.Add(new object[] { i + 1 , employee.FullName, employee.Mobile , employee.CardID, employee.Address, employee.Title,
                                            employee.DriverLicenseRank, employee.DriverLicenseAddress, employee.DriverLicenseID, employee.DriverLicenseDate,
-                                           employee.DriverLicenseExpirationDate, employee.StartDate, employee.Violation, employee.Notes });
+                                           employee.DriverLicenseExpirationDate, employee.StartDate, employee.Violation, employee.Notes,
+                                           employee.IsDeleted ? "Không còn làm việc" : "Còn làm việc"
+                });
             }
 
             return dt;
@@ -178,7 +184,7 @@ namespace Transportation.Api
             dt.Columns.Add("Xếp loại", typeof(string));
 
             //Binding data
-            List<Customer> customers = ClarityDB.Instance.Customers.ToList();
+            List<Customer> customers = ClarityDB.Instance.Customers.OrderByDescending(x => x.ID).ToList();
             for (int i = 0; i < customers.Count; i++)
             {
                 var customer = customers[i];
@@ -234,7 +240,7 @@ namespace Transportation.Api
             dt.Columns.Add("Tổng tiền hàng", typeof(double));
 
             //Filter data by from/to date
-            List<Wagon> wagons = ClarityDB.Instance.Wagons.ToList();
+            List<Wagon> wagons = ClarityDB.Instance.Wagons.OrderByDescending(x => x.ID).ToList();
             List<Wagon> filteredWagons = new List<Wagon>();
             foreach (Wagon wagon in wagons)
             {
@@ -289,7 +295,7 @@ namespace Transportation.Api
             dt.Columns.Add("Nợ", typeof(string));
 
             //Filter data by from/to date
-            List<WagonSettlement> wagonSettlements = ClarityDB.Instance.WagonSettlements.ToList();
+            List<WagonSettlement> wagonSettlements = ClarityDB.Instance.WagonSettlements.OrderByDescending(x => x.ID).ToList();
             List<WagonSettlement> filteredWagonSettlements = new List<WagonSettlement>();
             foreach (WagonSettlement wagonSettlement in wagonSettlements)
             {
@@ -334,7 +340,7 @@ namespace Transportation.Api
             dt.Columns.Add("Mô tả", typeof(string));
 
             //Filter data by from/to date
-            List<Order> orders = ClarityDB.Instance.Orders.ToList();
+            List<Order> orders = ClarityDB.Instance.Orders.OrderByDescending(x => x.ID).ToList();
             List<Order> filteredOrders = new List<Order>();
             foreach (Order order in orders)
             {

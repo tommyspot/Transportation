@@ -3,24 +3,16 @@
 		<form name="customerForm" class="form-horizontal">
       <div class="form-group">
         <div class="col-sm-12">
-          <button class="btn btn-default" data-ng-class="{'main-btn': !customerForm.$invalid}"
-              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/khach-hang/tao'"
-              data-ng-click="viewModel.createCustomer(viewModel.currentCustomer)" data-ng-disabled="customerForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Lưu</span>
-          </button>
-
-          <button class="btn btn-default" data-ng-class="{'main-btn': !customerForm.$invalid}"
-              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/khach-hang/sua/' + viewModel.currentCustomer.id"
-              data-ng-click="viewModel.updateCustomer(viewModel.currentCustomer)" data-ng-disabled="customerForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Cập nhật</span>
-          </button>
-
-          <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-toa-hang/khach-hang')">
-            <span class="glyphicon glyphicon-remove"></span>
-            <span>Hủy</span>
-          </button>
+          <action-button-form
+              form="customerForm"
+              is-save-visible="viewModel.$location.path() === '/ql-toa-hang/khach-hang/tao'"
+              handle-save="viewModel.createCustomer(viewModel.currentCustomer)"
+              is-save-or-edit-disabled="customerForm.$invalid || viewModel.isSubmitting"
+              is-submitting="viewModel.isSubmitting"
+              is-edit-visible="viewModel.$location.path() === '/ql-toa-hang/khach-hang/sua/' + viewModel.currentCustomer.id"
+              handle-edit="viewModel.updateCustomer(viewModel.currentCustomer)"
+              handle-cancel="viewModel.$location.path('/ql-toa-hang/khach-hang')"
+          />
         </div>
       </div>
 
@@ -80,24 +72,16 @@
 
       <div class="form-group">
         <div class="col-sm-12">
-          <button class="btn btn-default" data-ng-class="{'main-btn': !customerForm.$invalid}"
-                  data-ng-if="viewModel.$location.path() === '/ql-toa-hang/khach-hang/tao'"
-                  data-ng-click="viewModel.createCustomer(viewModel.currentCustomer)" data-ng-disabled="customerForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Lưu</span>
-          </button>
-
-          <button class="btn btn-default" data-ng-class="{'main-btn': !customerForm.$invalid}"
-                  data-ng-if="viewModel.$location.path() === '/ql-toa-hang/khach-hang/sua/' + viewModel.currentCustomer.id"
-                  data-ng-click="viewModel.updateCustomer(viewModel.currentCustomer)" data-ng-disabled="customerForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Cập nhật</span>
-          </button>
-
-          <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-toa-hang/khach-hang')">
-            <span class="glyphicon glyphicon-remove"></span>
-            <span>Hủy</span>
-          </button>
+          <action-button-form
+              form="customerForm"
+              is-save-visible="viewModel.$location.path() === '/ql-toa-hang/khach-hang/tao'"
+              handle-save="viewModel.createCustomer(viewModel.currentCustomer)"
+              is-save-or-edit-disabled="customerForm.$invalid || viewModel.isSubmitting"
+              is-submitting="viewModel.isSubmitting"
+              is-edit-visible="viewModel.$location.path() === '/ql-toa-hang/khach-hang/sua/' + viewModel.currentCustomer.id"
+              handle-edit="viewModel.updateCustomer(viewModel.currentCustomer)"
+              handle-cancel="viewModel.$location.path('/ql-toa-hang/khach-hang')"
+          />
         </div>
       </div>
 		</form>

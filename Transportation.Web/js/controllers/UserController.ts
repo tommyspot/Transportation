@@ -26,6 +26,7 @@ module Clarity.Controller {
     public isLoading: boolean;
     public searchText: string;
     public errorMessage: string;
+    public isSubmitting: boolean;
 
     constructor(private $scope,
       public $rootScope: IRootScope,
@@ -186,15 +187,17 @@ module Clarity.Controller {
 
     createUser(user: Model.UserModel) {
       if (user.password == user.repeatPassword) {
-        this.userService.create(user,
-          (data) => {
-            this.$location.path('/ql-dang-nhap');
-          }, (error) => {
-            this.errorMessage = 'Tên tài khoản đã tồn tại';
-            this.$timeout(() => {
-              this.errorMessage = '';
-            }, 8000);
-          });
+        this.isSubmitting = true;
+        this.userService.create(user, (data) => {
+          this.isSubmitting = false;
+          this.$location.path('/ql-dang-nhap');
+        }, (error) => {
+          this.isSubmitting = false;
+          this.errorMessage = 'Tên tài khoản đã tồn tại';
+          this.$timeout(() => {
+            this.errorMessage = '';
+          }, 8000);
+        });
       } else {
         var confirmDialog = this.$window.confirm('Mật khẩu và Nhập lại mật khẩu phải giống nhau');
       }
@@ -202,7 +205,9 @@ module Clarity.Controller {
 
     updateUser(user: Model.UserModel) {
       if (user.password == user.repeatPassword) {
+        this.isSubmitting = true;
         this.userService.update(user, (data) => {
+          this.isSubmitting = false;
           this.$location.path('/ql-dang-nhap');
         }, null);
       } else {

@@ -3,24 +3,16 @@
     <form name="wagonForm">
       <div class="row">
         <div class="col-sm-12">
-          <button class="btn btn-default" data-ng-class="{'main-btn': !wagonForm.$invalid}"
-                  data-ng-if="viewModel.$location.path() === '/ql-toa-hang/toa-hang/tao'"
-                  data-ng-click="viewModel.createWagon(viewModel.currentWagon)" data-ng-disabled="wagonForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Lưu</span>
-          </button>
-
-          <button class="btn btn-default" data-ng-class="{'main-btn': !wagonForm.$invalid}"
-                  data-ng-if="viewModel.$location.path() === '/ql-toa-hang/toa-hang/sua/' + viewModel.currentWagon.id"
-                  data-ng-click="viewModel.updateWagon(viewModel.currentWagon)" data-ng-disabled="wagonForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Cập nhật</span>
-          </button>
-
-          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/toa-hang')">
-            <span class="glyphicon glyphicon-remove"></span>
-            <span>Hủy</span>
-          </button>
+          <action-button-form
+              form="wagonForm"
+              is-save-visible="viewModel.$location.path() === '/ql-toa-hang/toa-hang/tao'"
+              handle-save="viewModel.createWagon(viewModel.currentWagon)"
+              is-save-or-edit-disabled="wagonForm.$invalid || viewModel.isSubmitting"
+              is-submitting="viewModel.isSubmitting"
+              is-edit-visible="viewModel.$location.path() === '/ql-toa-hang/toa-hang/sua/' + viewModel.currentWagon.id"
+              handle-edit="viewModel.updateWagon(viewModel.currentWagon)"
+              handle-cancel="viewModel.$location.path('/ql-toa-hang/toa-hang')"
+          />
         </div>
       </div>
 
@@ -318,24 +310,16 @@
 
     <div class="row margin-bottom-15">
       <div class="col-sm-12">
-        <button class="btn btn-default" data-ng-class="{'main-btn': !wagonForm.$invalid}"
-            data-ng-if="viewModel.$location.path() === '/ql-toa-hang/toa-hang/tao'"
-            data-ng-click="viewModel.createWagon(viewModel.currentWagon)" data-ng-disabled="wagonForm.$invalid">
-          <span class="glyphicon glyphicon-ok"></span>
-          <span>Lưu</span>
-        </button>
-
-        <button class="btn btn-default" data-ng-class="{'main-btn': !wagonForm.$invalid}"
-            data-ng-if="viewModel.$location.path() === '/ql-toa-hang/toa-hang/sua/' + viewModel.currentWagon.id"
-            data-ng-click="viewModel.updateWagon(viewModel.currentWagon)" data-ng-disabled="wagonForm.$invalid">
-          <span class="glyphicon glyphicon-ok"></span>
-          <span>Cập nhật</span>
-        </button>
-
-        <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-toa-hang/toa-hang')">
-          <span class="glyphicon glyphicon-remove"></span>
-          <span>Hủy</span>
-        </button>
+        <action-button-form
+            form="wagonForm"
+            is-save-visible="viewModel.$location.path() === '/ql-toa-hang/toa-hang/tao'"
+            handle-save="viewModel.createWagon(viewModel.currentWagon)"
+            is-save-or-edit-disabled="wagonForm.$invalid || viewModel.isSubmitting"
+            is-submitting="viewModel.isSubmitting"
+            is-edit-visible="viewModel.$location.path() === '/ql-toa-hang/toa-hang/sua/' + viewModel.currentWagon.id"
+            handle-edit="viewModel.updateWagon(viewModel.currentWagon)"
+            handle-cancel="viewModel.$location.path('/ql-toa-hang/toa-hang')"
+        />
       </div>
     </div>
   </div>

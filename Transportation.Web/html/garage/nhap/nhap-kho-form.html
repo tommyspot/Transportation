@@ -3,24 +3,16 @@
     <form name="inputOrderForm" class="form-horizontal">
       <div class="form-group">
         <div class="col-sm-12">
-          <button class="btn btn-default" data-ng-class="{'main-btn': !inputOrderForm.$invalid}"
-                  data-ng-if="viewModel.$location.path() === '/ql-garage/nhap-kho/tao'"
-                  data-ng-click="viewModel.createInputOrder(viewModel.currentInputOrder)" data-ng-disabled="inputOrderForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Lưu</span>
-          </button>
-
-          <button class="btn btn-default positive-btn" data-ng-class="{'main-btn': !inputOrderForm.$invalid}"
-                  data-ng-if="viewModel.$location.path() === '/ql-garage/nhap-kho/sua/' + viewModel.currentInputOrder.id"
-                  data-ng-click="viewModel.updateInputOrder(viewModel.currentInputOrder)" data-ng-disabled="inputOrderForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Cập nhật</span>
-          </button>
-
-          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/nhap-kho')">
-            <span class="glyphicon glyphicon-remove"></span>
-            <span>Hủy</span>
-          </button>
+          <action-button-form
+              form="inputOrderForm"
+              is-save-visible="viewModel.$location.path() === '/ql-garage/nhap-kho/tao'"
+              handle-save="viewModel.createInputOrder(viewModel.currentInputOrder)"
+              is-save-or-edit-disabled="inputOrderForm.$invalid || viewModel.isSubmitting"
+              is-submitting="viewModel.isSubmitting"
+              is-edit-visible="viewModel.$location.path() === '/ql-garage/nhap-kho/sua/' + viewModel.currentInputOrder.id"
+              handle-edit="viewModel.updateInputOrder(viewModel.currentInputOrder)"
+              handle-cancel="viewModel.$location.path('/ql-garage/nhap-kho')"
+          />
         </div>
       </div>
       <div class="form-group margin-top-20">
@@ -105,24 +97,16 @@
 
       <div class="form-group margin-top-20">
         <div class="col-sm-12">
-          <button class="btn btn-default" data-ng-class="{'main-btn': !inputOrderForm.$invalid}"
-                  data-ng-if="viewModel.$location.path() === '/ql-garage/nhap-kho/tao'"
-                  data-ng-click="viewModel.createInputOrder(viewModel.currentInputOrder)" data-ng-disabled="inputOrderForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Lưu</span>
-          </button>
-
-          <button class="btn btn-default positive-btn" data-ng-class="{'main-btn': !inputOrderForm.$invalid}"
-                  data-ng-if="viewModel.$location.path() === '/ql-garage/nhap-kho/sua/' + viewModel.currentInputOrder.id"
-                  data-ng-click="viewModel.updateInputOrder(viewModel.currentInputOrder)" data-ng-disabled="inputOrderForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Cập nhật</span>
-          </button>
-
-          <button class="btn btn-default negative-btn" data-ng-click="viewModel.$location.path('/ql-garage/nhap-kho')">
-            <span class="glyphicon glyphicon-remove"></span>
-            <span>Hủy</span>
-          </button>
+          <action-button-form
+              form="inputOrderForm"
+              is-save-visible="viewModel.$location.path() === '/ql-garage/nhap-kho/tao'"
+              handle-save="viewModel.createInputOrder(viewModel.currentInputOrder)"
+              is-save-or-edit-disabled="inputOrderForm.$invalid || viewModel.isSubmitting"
+              is-submitting="viewModel.isSubmitting"
+              is-edit-visible="viewModel.$location.path() === '/ql-garage/nhap-kho/sua/' + viewModel.currentInputOrder.id"
+              handle-edit="viewModel.updateInputOrder(viewModel.currentInputOrder)"
+              handle-cancel="viewModel.$location.path('/ql-garage/nhap-kho')"
+          />
         </div>
       </div>
     </form>
