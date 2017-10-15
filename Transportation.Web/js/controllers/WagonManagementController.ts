@@ -35,6 +35,7 @@ module Clarity.Controller {
     public isLoading: boolean;
     public totalAmountWagonSettlements: number;
     public searchText: string;
+    public isSubmitting: boolean;
 
     constructor(private $scope,
       public $rootScope: IRootScope,
@@ -216,13 +217,17 @@ module Clarity.Controller {
     }
 
     createWagon(wagon: Model.WagonModel) {
+      this.isSubmitting = true;
       this.wagonService.create(wagon, (data) => {
+        this.isSubmitting = false;
         this.$location.path('/ql-toa-hang/toa-hang');
       }, null);
     }
 
     updateWagon(wagon: Model.WagonModel) {
+      this.isSubmitting = true;
       this.wagonService.update(wagon, (data) => {
+        this.isSubmitting = false;
         this.$location.path('/ql-toa-hang/toa-hang');
       }, null);
     }

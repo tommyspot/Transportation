@@ -31,6 +31,7 @@ module Clarity.Controller {
     public isLoading: boolean;
     public todayFormat: string;
     public searchText: string;
+    public isSubmitting: boolean;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -199,14 +200,18 @@ module Clarity.Controller {
     }
 
     createInputOrder(inputOrder: Model.InputOrderModel) {
+      this.isSubmitting = true;
       this.inputOrderService.create(inputOrder,
         (data) => {
+          this.isSubmitting = false;
           this.$location.path('/ql-garage/nhap-kho');
         }, null);
     }
 
     updateInputOrder(inputOrder: Model.InputOrderModel) {
+      this.isSubmitting = true;
       this.inputOrderService.update(inputOrder, (data) => {
+        this.isSubmitting = false;
         this.$location.path('/ql-garage/nhap-kho');
       }, null);
     }

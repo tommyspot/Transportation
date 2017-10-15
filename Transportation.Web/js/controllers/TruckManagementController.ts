@@ -28,6 +28,7 @@ module Clarity.Controller {
 		public isCheckedAll: boolean;
     public isLoading: boolean;
     public searchText: string;
+    public isSubmitting: boolean;
 
 		constructor(private $scope,
 			public $rootScope: IRootScope,
@@ -186,15 +187,19 @@ module Clarity.Controller {
 			}
 		}
 
-		createTruck(truck: Model.TruckModel) {
+    createTruck(truck: Model.TruckModel) {
+      this.isSubmitting = true;
 			this.truckService.create(truck,
-				(data) => {
-					this.$location.path('/ql-toa-hang/xe');
+        (data) => {
+          this.isSubmitting = false;
+          this.$location.path('/ql-toa-hang/xe');
 				}, null);
 		}
 
-		updateTruck(truck: Model.TruckModel) {
-			this.truckService.update(truck, (data) => {
+    updateTruck(truck: Model.TruckModel) {
+      this.isSubmitting = true;
+      this.truckService.update(truck, (data) => {
+        this.isSubmitting = false;
 				this.$location.path('/ql-toa-hang/xe');
 			}, null);
 		}

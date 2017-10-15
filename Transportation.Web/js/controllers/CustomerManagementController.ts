@@ -29,6 +29,7 @@ module Clarity.Controller {
     public isLoading: boolean;
     public searchText: string;
     public errorMessage: string;
+    public isSubmitting: boolean;
 
     constructor(private $scope,
       public $rootScope: IRootScope,
@@ -195,13 +196,17 @@ module Clarity.Controller {
     }
 
     createCustomer(customer: Model.CustomerModel) {
+      this.isSubmitting = true;
       this.customerService.create(customer, (data) => {
+        this.isSubmitting = false;
         this.$location.path('/ql-toa-hang/khach-hang');
       }, null);
     }
 
-		updateCustomer(customer: Model.CustomerModel) {
+    updateCustomer(customer: Model.CustomerModel) {
+      this.isSubmitting = true;
       this.customerService.update(customer, (data) => {
+        this.isSubmitting = false;
         this.$location.path('/ql-toa-hang/khach-hang');
       }, null);
     }

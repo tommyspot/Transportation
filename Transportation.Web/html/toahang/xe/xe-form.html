@@ -3,22 +3,16 @@
 		<form name="truckForm" class="form-horizontal">
       <div class="form-group">
         <div class="col-sm-12">
-          <button class="btn btn-default" data-ng-class="{'main-btn': !truckForm.$invalid}"
-              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/xe/tao'"
-              data-ng-click="viewModel.createTruck(viewModel.currentTruck)" data-ng-disabled="truckForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Lưu</span>
-          </button>
-          <button class="btn btn-default" data-ng-class="{'main-btn': !truckForm.$invalid}"
-              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/xe/sua/' + viewModel.currentTruck.id"
-              data-ng-click="viewModel.updateTruck(viewModel.currentTruck)" data-ng-disabled="truckForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Cập nhật</span>
-          </button>
-          <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-toa-hang/xe')">
-            <span class="glyphicon glyphicon-remove"></span>
-            <span>Hủy</span>
-          </button>
+          <action-button-form
+              form="truckForm"
+              is-save-visible="viewModel.$location.path() === '/ql-toa-hang/xe/tao'"
+              handle-save="viewModel.createTruck(viewModel.currentTruck)"
+              is-save-or-edit-disabled="truckForm.$invalid || viewModel.isSubmitting"
+              is-submitting="viewModel.isSubmitting"
+              is-edit-visible="viewModel.$location.path() === '/ql-toa-hang/xe/sua/' + viewModel.currentTruck.id"
+              handle-edit="viewModel.updateTruck(viewModel.currentTruck)"
+              handle-cancel="viewModel.$location.path('/ql-toa-hang/xe')"
+          />
         </div>
       </div>
 
@@ -138,22 +132,14 @@
 
       <div class="form-group margin-top-20">
         <div class="col-sm-12">
-          <button class="btn btn-default" data-ng-class="{'main-btn': !truckForm.$invalid}"
-              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/xe/tao'"
-              data-ng-click="viewModel.createTruck(viewModel.currentTruck)" data-ng-disabled="truckForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Lưu</span>
-          </button>
-          <button class="btn btn-default" data-ng-class="{'main-btn': !truckForm.$invalid}"
-              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/xe/sua/' + viewModel.currentTruck.id"
-              data-ng-click="viewModel.updateTruck(viewModel.currentTruck)" data-ng-disabled="truckForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Cập nhật</span>
-          </button>
-          <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-toa-hang/xe')">
-            <span class="glyphicon glyphicon-remove"></span>
-            <span>Hủy</span>
-          </button>
+          <action-button-form form="truckForm"
+            is-save-visible="viewModel.$location.path() === '/ql-toa-hang/xe/tao'"
+            handle-save="viewModel.createTruck(viewModel.currentTruck)"
+            is-save-or-edit-disabled="truckForm.$invalid || viewModel.isSubmitting"
+            is-submitting="viewModel.isSubmitting"
+            is-edit-visible="viewModel.$location.path() === '/ql-toa-hang/xe/sua/' + viewModel.currentTruck.id"
+            handle-edit="viewModel.updateTruck(viewModel.currentTruck)"
+            handle-cancel="viewModel.$location.path('/ql-toa-hang/xe')" />
         </div>
       </div>
 		</form>

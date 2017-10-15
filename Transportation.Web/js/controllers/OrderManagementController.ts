@@ -39,6 +39,7 @@ module Clarity.Controller {
     public fromDate: string;
     public toDate: string;
     public isExportLoading: boolean;
+    public isSubmitting: boolean;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -265,14 +266,17 @@ module Clarity.Controller {
     }
 
     createOrder(order: Model.OrderModel) {
-      this.orderService.create(order,
-        (data) => {
-          this.$location.path('/ql-garage/ban-hang');
-        }, null);
+      this.isSubmitting = true;
+      this.orderService.create(order, (data) => {
+        this.isSubmitting = false;
+        this.$location.path('/ql-garage/ban-hang');
+      }, null);
     }
 
     updateOrder(product: Model.OrderModel) {
+      this.isSubmitting = true;
       this.orderService.update(product, (data) => {
+        this.isSubmitting = false;
         this.$location.path('/ql-garage/ban-hang');
       }, null);
     }

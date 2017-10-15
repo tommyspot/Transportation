@@ -185,6 +185,7 @@
     <TypeScriptCompile Include="js\controllers\authentication\LogoutController.ts" />
     <Content Include="font\roboto\Roboto-Regular.ttf" />
     <TypeScriptCompile Include="js\controllers\IController.ts" />
+    <TypeScriptCompile Include="js\directives\ActionButtonFormDirective.ts" />
     <TypeScriptCompile Include="js\helpers\MainHelper.ts" />
     <TypeScriptCompile Include="js\model\enum\Role.ts" />
     <TypeScriptCompile Include="js\model\InputOrderModel.ts" />
@@ -218,6 +219,7 @@
     <TypeScriptCompile Include="js\services\EmployeeService.ts" />
     <TypeScriptCompile Include="lib\angular\angular-cookies.d.ts" />
     <TypeScriptCompile Include="js\services\UserService.ts" />
+    <Content Include="js\directives\templates\actionButtonForm.html" />
     <Content Include="js\services\IService.ts" />
     <Content Include="lib\angular-spec\angular-mocks.d.ts" />
     <Content Include="lib\angular-spec\angular-mocks.js" />
@@ -388,6 +390,7 @@
     <Content Include="template\ToaHang_Report_Template.xlsx" />
     <None Include="Properties\PublishProfiles\hostvn_duyenhai.pubxml" />
     <None Include="Properties\PublishProfiles\Transportation.pubxml" />
+    <None Include="Properties\PublishProfiles\VanTaiDuyenHai.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Transportation.Api\Transportation.Api.csproj">

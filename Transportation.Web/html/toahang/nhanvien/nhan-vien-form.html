@@ -3,24 +3,15 @@
 		<form name="employeeForm" class="form-horizontal">
       <div class="form-group">
         <div class="col-sm-12">
-          <button class="btn btn-default" data-ng-class="{'main-btn': !employeeForm.$invalid}"
-              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/tao'"
-              data-ng-click="viewModel.createEmployee(viewModel.currentEmployee)" data-ng-disabled="employeeForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Lưu</span>
-          </button>
-
-          <button class="btn btn-default" data-ng-class="{'main-btn': !employeeForm.$invalid}"
-              data-ng-if="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/sua/' + viewModel.currentEmployee.id"
-              data-ng-click="viewModel.updateEmployee(viewModel.currentEmployee)" data-ng-disabled="employeeForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Cập nhật</span>
-          </button>
-
-          <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien')">
-            <span class="glyphicon glyphicon-remove"></span>
-            <span>Hủy</span>
-          </button>
+          <action-button-form
+              form="employeeForm"
+              is-save-visible="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/tao'"
+              handle-save="viewModel.createEmployee(viewModel.currentEmployee)"
+              is-save-or-edit-disabled="employeeForm.$invalid || viewModel.isSubmitting"
+              is-submitting="viewModel.isSubmitting"
+              is-edit-visible="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/sua/' + viewModel.currentEmployee.id"
+              handle-edit="viewModel.updateEmployee(viewModel.currentEmployee)"
+              handle-cancel="viewModel.$location.path('/ql-toa-hang/nhan-vien')" />
         </div>
       </div>
 
@@ -138,24 +129,15 @@
 
       <div class="form-group margin-top-20">
         <div class="col-sm-12">
-          <button class="btn btn-default" data-ng-class="{'main-btn': !employeeForm.$invalid}"
-                  data-ng-if="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/tao'"
-                  data-ng-click="viewModel.createEmployee(viewModel.currentEmployee)" data-ng-disabled="employeeForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Lưu</span>
-          </button>
-
-          <button class="btn btn-default" data-ng-class="{'main-btn': !employeeForm.$invalid}"
-                  data-ng-if="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/sua/' + viewModel.currentEmployee.id"
-                  data-ng-click="viewModel.updateEmployee(viewModel.currentEmployee)" data-ng-disabled="employeeForm.$invalid">
-            <span class="glyphicon glyphicon-ok"></span>
-            <span>Cập nhật</span>
-          </button>
-
-          <button class="btn btn-default" data-ng-click="viewModel.$location.path('/ql-toa-hang/nhan-vien')">
-            <span class="glyphicon glyphicon-remove"></span>
-            <span>Hủy</span>
-          </button>
+          <action-button-form
+              form="employeeForm"
+              is-save-visible="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/tao'"
+              handle-save="viewModel.createEmployee(viewModel.currentEmployee)"
+              is-save-or-edit-disabled="employeeForm.$invalid || viewModel.isSubmitting"
+              is-submitting="viewModel.isSubmitting"
+              is-edit-visible="viewModel.$location.path() === '/ql-toa-hang/nhan-vien/sua/' + viewModel.currentEmployee.id"
+              handle-edit="viewModel.updateEmployee(viewModel.currentEmployee)"
+              handle-cancel="viewModel.$location.path('/ql-toa-hang/nhan-vien')" />
         </div>
       </div>
 		</form>

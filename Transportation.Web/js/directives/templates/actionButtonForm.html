@@ -1,0 +1,21 @@
+﻿  <button class="btn btn-default btn-fw" data-ng-class="{'main-btn': !viewModel.form.$invalid}"
+      data-ng-if="viewModel.isSaveVisible" data-ng-click="viewModel.handleSave()"
+      data-ng-disabled="viewModel.isSaveOrEditDisabled">
+    <span data-ng-if="!viewModel.isSubmitting">
+      <i class="fa fa-check" aria-hidden="true"></i> <span>Lưu</span>
+    </span>
+    <i data-ng-if="viewModel.isSubmitting" class="fa fa-spinner fa-pulse"></i>
+  </button>
+  <button class="btn btn-default btn-fw-lg" data-ng-class="{'main-btn': !viewModel.form.$invalid}"
+      data-ng-if="viewModel.isEditVisible" data-ng-click="viewModel.handleEdit()"
+      data-ng-disabled="viewModel.isSaveOrEditDisabled">
+    <span data-ng-if="!viewModel.viewModel.isSubmitting">
+      <i class="fa fa-check" aria-hidden="true"></i> <span>Cập nhật</span>
+    </span>
+    <i data-ng-if="viewModel.isSubmitting" class="fa fa-spinner fa-pulse"></i>
+  </button>
+  <button class="btn btn-default btn-fw" data-ng-click="viewModel.handleCancel()">
+    <i class="fa fa-remove" aria-hidden="true"></i>
+    <span>Hủy</span>
+  </button>
+

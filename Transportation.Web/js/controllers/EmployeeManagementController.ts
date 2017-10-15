@@ -24,6 +24,7 @@ module Clarity.Controller {
     public titles: Array<String>;
     public isLoading: boolean;
     public searchText: string;
+    public isSubmitting: boolean;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -172,14 +173,18 @@ module Clarity.Controller {
     }
 
     createEmployee(employee: Model.EmployeeModel) {
+      this.isSubmitting = true;
       this.employeeService.create(employee,
         (data) => {
+          this.isSubmitting = false;
           this.$location.path('/ql-toa-hang/nhan-vien');
         }, null);
     }
 
     updateEmployee(employee: Model.EmployeeModel) {
+      this.isSubmitting = true;
       this.employeeService.update(employee, (data) => {
+        this.isSubmitting = false;
         this.$location.path('/ql-toa-hang/nhan-vien');
       }, null);
     }

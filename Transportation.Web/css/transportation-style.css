@@ -6148,3 +6148,14 @@ div.bootstrap {
     font-size: 30px; }
   #ng-app #reportSection .no-data {
     text-align: center; }
+  #ng-app .btn-fw, #ng-app .btn-fw-lg {
+    width: 64px;
+    padding: 6px; }
+    #ng-app .btn-fw:disabled, #ng-app .btn-fw-lg:disabled {
+      background-color: #dddddd;
+      border-color: #adadad; }
+      #ng-app .btn-fw:disabled .fa-spinner, #ng-app .btn-fw-lg:disabled .fa-spinner {
+        color: #34495E;
+        font-size: 16px; }
+  #ng-app .btn-fw-lg {
+    width: 90px; }

@@ -865,7 +865,6 @@ div.bootstrap {
     }
   }
 
-
   .required-symbol {
     color: $transport-color-2;
   }
@@ -945,4 +944,25 @@ div.bootstrap {
       text-align: center;
     }
   }
+
+  .btn-fw{
+    width: 64px;
+    padding: 6px;
+    
+    &:disabled{
+      background-color: $transport-color-3;
+      border-color: #adadad;
+
+      .fa-spinner{
+        color: $transport-color-1;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .btn-fw-lg{
+    width: 90px;
+    @extend .btn-fw;
+  }
+
 }
