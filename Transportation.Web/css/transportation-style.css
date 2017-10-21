@@ -6043,6 +6043,8 @@ div.bootstrap {
     width: 120px; }
   #ng-app .main-width-long-column {
     width: 160px; }
+  #ng-app .main-width-very-long-column {
+    width: 180px; }
   #ng-app .select-padding-decrease {
     padding: 2px; }
   #ng-app .td-width-date {

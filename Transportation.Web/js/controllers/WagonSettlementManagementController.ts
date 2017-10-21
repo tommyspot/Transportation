@@ -118,6 +118,7 @@ module Clarity.Controller {
         const wagonSettlementView = new Model.WagonSettlementViewModel();
         wagonSettlementView.id = wagonSettlement.id;
         wagonSettlementView.wagonCode = this.getWagonCode(wagonSettlement.wagonId);
+        wagonSettlementView.departDate = this.getDepartDate(wagonSettlement.wagonId);
         wagonSettlementView.customerName = this.getCustomerName(wagonSettlement.customerId);
         wagonSettlementView.totalAmount = this.mainHelper.formatCurrency(wagonSettlement.quantity * wagonSettlement.unitPrice + wagonSettlement.phiPhatSinh);
         wagonSettlementView.phiPhatSinh = this.mainHelper.formatCurrency(wagonSettlement.phiPhatSinh);
@@ -218,6 +219,12 @@ module Clarity.Controller {
     getWagonCode(wagonId: number): string {
       if (wagonId) {
         return this.mainHelper.getPropertyValue(this.wagonList, 'id', wagonId.toString(), 'code');
+      }
+    }
+
+    getDepartDate(wagonId: number): string {
+      if (wagonId) {
+        return this.mainHelper.getPropertyValue(this.wagonList, 'id', wagonId.toString(), 'departDate');
       }
     }
 

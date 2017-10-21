@@ -27,8 +27,9 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-								<th class="col-sm-2 text-center">Mã toa hàng</th>
+								<th class="main-width-very-long-column text-center">Mã toa hàng</th>
 								<th class="text-center">Tên khách hàng</th>
+                <th class="main-width-column text-center">Ngày đi</th>
                 <th class="main-width-column text-center">Tổng phí</th>
                 <th class="main-width-column text-center">Phí PS</th>
                 <th class="main-width-column text-center">Đã thanh toán</th>
@@ -47,6 +48,7 @@
               <tr data-ng-if="!viewModel.isLoading" data-ng-repeat="wagonSettlementViewModel in viewModel.getWagonSettlementListOnPage()">
 								<td>{{::wagonSettlementViewModel.wagonCode}}</td>
 								<td>{{::wagonSettlementViewModel.customerName}}</td>
+                <td class="text-center">{{::wagonSettlementViewModel.departDate}}</td>
                 <td class="text-right">{{::wagonSettlementViewModel.totalAmount}}</td>
                 <td class="text-right">{{::wagonSettlementViewModel.phiPhatSinh}}</td>
                 <td class="text-right">{{::wagonSettlementViewModel.payment}}</td>
