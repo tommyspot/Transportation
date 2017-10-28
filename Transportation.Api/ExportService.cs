@@ -300,7 +300,7 @@ namespace Transportation.Api
             List<WagonSettlement> filteredWagonSettlements = new List<WagonSettlement>();
             foreach (WagonSettlement wagonSettlement in wagonSettlements)
             {
-                if (wagonSettlement.PaymentDate != null) {
+                if (!String.IsNullOrEmpty(wagonSettlement.PaymentDate)) {
                     DateTime paymentDate = DateTime.ParseExact(wagonSettlement.PaymentDate, formatDate, CultureInfo.InvariantCulture);
                     if (DateTime.Compare(paymentDate, fromDate) >= 0 && DateTime.Compare(paymentDate, toDate) <= 0)
                     {
@@ -345,7 +345,7 @@ namespace Transportation.Api
             List<Order> filteredOrders = new List<Order>();
             foreach (Order order in orders)
             {
-                if (order.Date != null)
+                if (!String.IsNullOrEmpty(order.Date))
                 {
                     DateTime date = DateTime.ParseExact(order.Date, formatDate, CultureInfo.InvariantCulture);
                     if (DateTime.Compare(date, fromDate) >= 0 && DateTime.Compare(date, toDate) <= 0)
