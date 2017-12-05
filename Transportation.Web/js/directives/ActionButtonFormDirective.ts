@@ -17,6 +17,11 @@ module Clarity.Directive {
   export class ActionButtonForm implements ng.IDirective {
     templateUrl = 'js/directives/templates/actionButtonForm.html' + '?v=' + VERSION_NUMBER;
     restrict = 'E';
+    /***
+    @ Used to pass a string value into the directive.
+    = Used to create a two-way binding to an object that is passed into the directive.
+    & Allows an external function to be passed into the directive and invoked.
+    ***/
     public scope = {
       form: '=',
       isSaveVisible: '=',

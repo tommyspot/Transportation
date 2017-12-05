@@ -5070,6 +5070,9 @@ div.bootstrap {
       height: 54px; }
   #ng-app .pagination {
     margin: 0; }
+    #ng-app .pagination .total-page span:hover, #ng-app .pagination .total-page span:active {
+      background-color: transparent;
+      cursor: default; }
   #ng-app .pagination > .active > a,
   #ng-app .pagination > .active > a:hover,
   #ng-app .pagination > .active > a:focus,
@@ -5119,12 +5122,14 @@ div.bootstrap {
     padding: 12px 8px; }
   #ng-app #table-toahang .td-padding-decrease {
     padding: 12px 2px; }
-  #ng-app .search-text-box .has-feedback .form-control-feedback {
-    color: #CCCCCC;
-    pointer-events: visible;
-    cursor: pointer; }
-    #ng-app .search-text-box .has-feedback .form-control-feedback:hover {
-      color: #C0392B; }
+  #ng-app .search-text-box .has-feedback {
+    margin-bottom: 0; }
+    #ng-app .search-text-box .has-feedback .form-control-feedback {
+      color: #CCCCCC;
+      pointer-events: visible;
+      cursor: pointer; }
+      #ng-app .search-text-box .has-feedback .form-control-feedback:hover {
+        color: #C0392B; }
   #ng-app .breadcrumb-trail {
     list-style: none;
     overflow: hidden;

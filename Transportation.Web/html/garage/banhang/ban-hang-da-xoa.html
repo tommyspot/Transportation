@@ -57,30 +57,7 @@
 			</div>
 		</div>
 
-		<div class="row">
-			<div class="col-sm-12">
-				<nav aria-label="navigation" data-ng-if="viewModel.numOfPages > 0">
-					<ul class="pagination">
-						<li class="pointer" ng-class="{'disabled': viewModel.currentPage === 1}" data-ng-click="viewModel.goToPreviousPage()">
-							<a aria-label="Previous">
-								<span aria-hidden="true">&laquo;</span>
-							</a>
-						</li>
-
-						<li class="pointer" data-ng-repeat="pageIndex in viewModel.getNumberPage() track by $index"
-								data-ng-click="viewModel.goToPage($index + 1)" ng-class="{'active': $index + 1 === viewModel.currentPage}">
-							<span>{{$index + 1}}</span>
-						</li>
-
-						<li class="pointer" ng-class="{'disabled': viewModel.currentPage >= viewModel.numOfPages}" data-ng-click="viewModel.goToNextPage()">
-							<a aria-label="Next">
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav>
-			</div>
-		</div>
+    <custom-pagination num-of-pages="viewModel.numOfPages" current-page="viewModel.currentPage" />
 
 	</div>
 </div>

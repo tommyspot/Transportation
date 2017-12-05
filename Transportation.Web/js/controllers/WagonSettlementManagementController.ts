@@ -182,30 +182,6 @@ module Clarity.Controller {
       }
     }
 
-    getNumberPage() {
-      if (this.numOfPages > 0) {
-        return new Array(this.numOfPages);
-      }
-      return new Array(0);
-    }
-
-    goToPage(pageIndex: number) {
-      this.currentPage = pageIndex;
-    }
-
-    goToPreviousPage() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-        this.goToPage(this.currentPage);
-      }
-    }
-    goToNextPage() {
-      if (this.currentPage < this.numOfPages) {
-        this.currentPage++;
-        this.goToPage(this.currentPage);
-      }
-    }
-
 		updateNewPayment() {
       this.mainHelper.onCurrencyPropertyChanged(this.currentWagonSettlement, 'newPayment', `newPayment${formatSuffix}`);
     }

@@ -374,11 +374,11 @@ namespace Transportation.Api
             dt.Columns.Add("STT", typeof(int));
             dt.Columns.Add("Tên sản phẩm", typeof(string));
             dt.Columns.Add("SL nhập", typeof(int));
-            dt.Columns.Add("Tổng giá trị nhâp", typeof(int));
+            dt.Columns.Add("Tổng giá trị nhâp", typeof(double));
             dt.Columns.Add("SL bán", typeof(int));
-            dt.Columns.Add("Tổng giá trị bán", typeof(int));
+            dt.Columns.Add("Tổng giá trị bán", typeof(double));
             dt.Columns.Add("SL hiện tại", typeof(int));
-            dt.Columns.Add("Lợi nhuận ước tính", typeof(int));
+            dt.Columns.Add("Lợi nhuận ước tính", typeof(double));
 
             //Binding data
             int index = 1;

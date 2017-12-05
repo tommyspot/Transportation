@@ -597,6 +597,7 @@ clarityApp.controller('InputOrderManagementController', Clarity.Controller.Input
 clarityApp.controller('ProductInfoManagementController', Clarity.Controller.ProductInfoManagementController);
 
 clarityApp.directive('actionButtonForm', Clarity.Directive.ActionButtonForm.Factory());
+clarityApp.directive('customPagination', Clarity.Directive.CustomPagination.Factory());
 
 clarityApp.filter('filterDate', function () {
   return function (input, filterDate) {
