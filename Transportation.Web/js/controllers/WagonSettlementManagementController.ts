@@ -118,6 +118,7 @@ module Clarity.Controller {
         const wagonSettlementView = new Model.WagonSettlementViewModel();
         wagonSettlementView.id = wagonSettlement.id;
         wagonSettlementView.wagonCode = this.getWagonCode(wagonSettlement.wagonId);
+        wagonSettlementView.departDate = this.getDepartDate(wagonSettlement.wagonId);
         wagonSettlementView.customerName = this.getCustomerName(wagonSettlement.customerId);
         wagonSettlementView.totalAmount = this.mainHelper.formatCurrency(wagonSettlement.quantity * wagonSettlement.unitPrice + wagonSettlement.phiPhatSinh);
         wagonSettlementView.phiPhatSinh = this.mainHelper.formatCurrency(wagonSettlement.phiPhatSinh);
@@ -181,30 +182,6 @@ module Clarity.Controller {
       }
     }
 
-    getNumberPage() {
-      if (this.numOfPages > 0) {
-        return new Array(this.numOfPages);
-      }
-      return new Array(0);
-    }
-
-    goToPage(pageIndex: number) {
-      this.currentPage = pageIndex;
-    }
-
-    goToPreviousPage() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-        this.goToPage(this.currentPage);
-      }
-    }
-    goToNextPage() {
-      if (this.currentPage < this.numOfPages) {
-        this.currentPage++;
-        this.goToPage(this.currentPage);
-      }
-    }
-
 		updateNewPayment() {
       this.mainHelper.onCurrencyPropertyChanged(this.currentWagonSettlement, 'newPayment', `newPayment${formatSuffix}`);
     }
@@ -218,6 +195,12 @@ module Clarity.Controller {
     getWagonCode(wagonId: number): string {
       if (wagonId) {
         return this.mainHelper.getPropertyValue(this.wagonList, 'id', wagonId.toString(), 'code');
+      }
+    }
+
+    getDepartDate(wagonId: number): string {
+      if (wagonId) {
+        return this.mainHelper.getPropertyValue(this.wagonList, 'id', wagonId.toString(), 'departDate');
       }
     }
 

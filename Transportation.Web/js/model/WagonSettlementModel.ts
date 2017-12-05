@@ -31,6 +31,7 @@ module Clarity.Model {
   export class WagonSettlementViewModel extends Model.BaseModel {
     public wagonCode: string;
     public customerName: string;
+    public departDate: string;
     public totalAmount: string; // quantity*unitPrice + phiPhatSinh = (payment + paymentRemain) + phiPhatSinh
     public phiPhatSinh: string;
     public payment: string;

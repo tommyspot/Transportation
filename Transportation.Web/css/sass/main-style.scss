@@ -159,6 +159,15 @@ div.bootstrap {
   /*PAGING*/
   .pagination{
     margin: 0;
+
+    .total-page{
+      span{
+        &:hover, &:active{
+          background-color: transparent;
+          cursor: default;
+        }
+      }
+    }
   }
   .pagination > .active > a,
   .pagination > .active > a:hover,
@@ -246,6 +255,8 @@ div.bootstrap {
   /*SEARCH TEXT BOX*/
   .search-text-box{
     .has-feedback{
+      margin-bottom: 0;
+
       .form-control-feedback{
         color: #CCCCCC;
         pointer-events: visible;
@@ -769,6 +780,10 @@ div.bootstrap {
 
   .main-width-long-column{
     width: 160px;
+  }
+
+  .main-width-very-long-column{
+    width: 180px;
   }
 
   .select-padding-decrease{

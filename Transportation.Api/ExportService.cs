@@ -281,6 +281,7 @@ namespace Transportation.Api
             dt.Columns.Add("Mã toa hàng", typeof(string));
             dt.Columns.Add("Mã quyết toán", typeof(string));
             dt.Columns.Add("Khách hàng", typeof(string));
+            dt.Columns.Add("Ngày đi", typeof(string));
             dt.Columns.Add("Số lượng", typeof(double));
             dt.Columns.Add("Nơi thanh toán", typeof(string));
             dt.Columns.Add("Ngày thanh toán", typeof(string));
@@ -299,7 +300,7 @@ namespace Transportation.Api
             List<WagonSettlement> filteredWagonSettlements = new List<WagonSettlement>();
             foreach (WagonSettlement wagonSettlement in wagonSettlements)
             {
-                if (wagonSettlement.PaymentDate != null) {
+                if (!String.IsNullOrEmpty(wagonSettlement.PaymentDate)) {
                     DateTime paymentDate = DateTime.ParseExact(wagonSettlement.PaymentDate, formatDate, CultureInfo.InvariantCulture);
                     if (DateTime.Compare(paymentDate, fromDate) >= 0 && DateTime.Compare(paymentDate, toDate) <= 0)
                     {
@@ -314,8 +315,8 @@ namespace Transportation.Api
                 var wagonSettlement = filteredWagonSettlements[i];
                 string wagonCode = ClarityDB.Instance.Wagons.Where(x => x.ID == wagonSettlement.WagonID).FirstOrDefault().Code;
 
-                dt.Rows.Add(new object[] { i + 1 , wagonCode, wagonSettlement.Code , wagonSettlement.Customer.FullName, wagonSettlement.Quantity,
-                                           wagonSettlement.PaymentPlace, wagonSettlement.PaymentDate, wagonSettlement.Destination,
+                dt.Rows.Add(new object[] { i + 1 , wagonCode, wagonSettlement.Code , wagonSettlement.Customer.FullName, wagonSettlement.Wagon.DepartDate,
+                                           wagonSettlement.Quantity,wagonSettlement.PaymentPlace, wagonSettlement.PaymentDate, wagonSettlement.Destination,
                                            wagonSettlement.LyDoPhatSinh, wagonSettlement.PhiPhatSinh, wagonSettlement.Unit, wagonSettlement.UnitPrice,
                                            wagonSettlement.Quantity * wagonSettlement.UnitPrice, wagonSettlement.Payment, wagonSettlement.PaymentRemain,
                                            wagonSettlement.PaymentStatus});
@@ -344,7 +345,7 @@ namespace Transportation.Api
             List<Order> filteredOrders = new List<Order>();
             foreach (Order order in orders)
             {
-                if (order.Date != null)
+                if (!String.IsNullOrEmpty(order.Date))
                 {
                     DateTime date = DateTime.ParseExact(order.Date, formatDate, CultureInfo.InvariantCulture);
                     if (DateTime.Compare(date, fromDate) >= 0 && DateTime.Compare(date, toDate) <= 0)
@@ -373,11 +374,11 @@ namespace Transportation.Api
             dt.Columns.Add("STT", typeof(int));
             dt.Columns.Add("Tên sản phẩm", typeof(string));
             dt.Columns.Add("SL nhập", typeof(int));
-            dt.Columns.Add("Tổng giá trị nhâp", typeof(int));
+            dt.Columns.Add("Tổng giá trị nhâp", typeof(double));
             dt.Columns.Add("SL bán", typeof(int));
-            dt.Columns.Add("Tổng giá trị bán", typeof(int));
+            dt.Columns.Add("Tổng giá trị bán", typeof(double));
             dt.Columns.Add("SL hiện tại", typeof(int));
-            dt.Columns.Add("Lợi nhuận ước tính", typeof(int));
+            dt.Columns.Add("Lợi nhuận ước tính", typeof(double));
 
             //Binding data
             int index = 1;
