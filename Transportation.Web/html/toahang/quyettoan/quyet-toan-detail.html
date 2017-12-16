@@ -16,6 +16,22 @@
       </div>
       <div class="row">
         <div class="col-sm-2">
+          <p class="bold-text">Ngày đi:</p>
+        </div>
+        <div class="col-sm-10">
+          <p><b>{{viewModel.getDepartDate(viewModel.currentWagonSettlement.wagonId)}}</b></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <p class="bold-text">Khách phát sinh:</p>
+        </div>
+        <div class="col-sm-10">
+          <p><b>{{viewModel.getPaymentDate(viewModel.currentWagonSettlement.wagonId)}}</b></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
           <p class="bold-text">Đơn vị tính:</p>
         </div>
         <div class="col-sm-10">

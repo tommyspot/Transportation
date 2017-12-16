@@ -281,6 +281,7 @@ namespace Transportation.Api
             dt.Columns.Add("Mã toa hàng", typeof(string));
             dt.Columns.Add("Mã quyết toán", typeof(string));
             dt.Columns.Add("Khách hàng", typeof(string));
+            dt.Columns.Add("Ngày phát sinh", typeof(string));   // ToaHang's NgayThanhToan
             dt.Columns.Add("Ngày đi", typeof(string));
             dt.Columns.Add("Số lượng", typeof(double));
             dt.Columns.Add("Nơi thanh toán", typeof(string));
@@ -313,13 +314,12 @@ namespace Transportation.Api
             for (int i = 0; i < filteredWagonSettlements.Count; i++)
             {
                 var wagonSettlement = filteredWagonSettlements[i];
-                string wagonCode = ClarityDB.Instance.Wagons.Where(x => x.ID == wagonSettlement.WagonID).FirstOrDefault().Code;
 
-                dt.Rows.Add(new object[] { i + 1 , wagonCode, wagonSettlement.Code , wagonSettlement.Customer.FullName, wagonSettlement.Wagon.DepartDate,
-                                           wagonSettlement.Quantity,wagonSettlement.PaymentPlace, wagonSettlement.PaymentDate, wagonSettlement.Destination,
-                                           wagonSettlement.LyDoPhatSinh, wagonSettlement.PhiPhatSinh, wagonSettlement.Unit, wagonSettlement.UnitPrice,
-                                           wagonSettlement.Quantity * wagonSettlement.UnitPrice, wagonSettlement.Payment, wagonSettlement.PaymentRemain,
-                                           wagonSettlement.PaymentStatus});
+                dt.Rows.Add(new object[] { i + 1 , wagonSettlement.Wagon.Code, wagonSettlement.Code , wagonSettlement.Customer.FullName, wagonSettlement.Wagon.PaymentDate,
+                                           wagonSettlement.Wagon.DepartDate, wagonSettlement.Quantity,wagonSettlement.PaymentPlace, wagonSettlement.PaymentDate,
+                                           wagonSettlement.Destination, wagonSettlement.LyDoPhatSinh, wagonSettlement.PhiPhatSinh, wagonSettlement.Unit,
+                                           wagonSettlement.UnitPrice, wagonSettlement.Quantity * wagonSettlement.UnitPrice, wagonSettlement.Payment,
+                                           wagonSettlement.PaymentRemain, wagonSettlement.PaymentStatus});
             }
 
             return dt;

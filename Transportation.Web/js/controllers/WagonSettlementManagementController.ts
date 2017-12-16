@@ -204,6 +204,12 @@ module Clarity.Controller {
       }
     }
 
+    getPaymentDate(wagonId: number): string {
+      if (wagonId) {
+        return this.mainHelper.getPropertyValue(this.wagonList, 'id', wagonId.toString(), 'paymentDate');
+      }
+    }
+
     goToWagonSettlementEditForm(event: Event, wagonSettlementId: number) {
       event.stopPropagation();
       this.$location.path('/ql-toa-hang/quyet-toan/sua/' + wagonSettlementId);
