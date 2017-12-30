@@ -5,11 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Data;
-using System.Data.Entity.Validation;
 using Newtonsoft.Json;
 
 namespace Transportation.Api
@@ -115,27 +111,6 @@ namespace Transportation.Api
             }
 
             wagonSettlement.ApplyJson(json);
-			var newPayment  = json.Value<long>("newPayment");
-			if (newPayment > 0 && !String.IsNullOrEmpty(wagonSettlement.PaymentDate))
-			{
-				wagonSettlement.Payment += newPayment;
-				wagonSettlement.PaymentRemain -= newPayment;
-                if (wagonSettlement.PaymentRemain == 0)
-                {
-                    wagonSettlement.PaymentStatus = "Không Nợ";
-                }
-
-                Payment payment = new Payment();
-				payment.PaymentDate = wagonSettlement.PaymentDate;
-				payment.PaymentAmount = newPayment;
-				payment.WagonSettlementCode = wagonSettlement.Code;
-				payment.CreatedDate = DateTime.Now;
-				ClarityDB.Instance.Payments.Add(payment);
-
-				//Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == wagonSettlement.CustomerID);
-				//customer.NeedUpdatePayment = true;
-			}
-
 			ClarityDB.Instance.SaveChanges();
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json};
         }

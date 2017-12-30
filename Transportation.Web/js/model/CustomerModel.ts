@@ -5,7 +5,11 @@ module Clarity.Model {
 		public fullName: string;
 		public totalOwned: number;
 		public totalPay: number;
-		public totalDebt: number;
+    public totalDebt: number;
+
+    public newPayment: number;
+    public paymentMonth: number;
+    public paymentYear: number;
 
 		public type: string;
 		public phoneNo: string;
@@ -14,6 +18,7 @@ module Clarity.Model {
     public totalOwnedFormatted: string;
     public totalPayFormatted: string;
     public totalDebtFormatted: string;
+    public newPaymentFormatted: string;
   }
 
   export class CustomerViewModel extends Model.BaseModel {

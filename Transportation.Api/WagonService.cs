@@ -130,6 +130,7 @@ namespace Transportation.Api
 				foreach (JObject wagonSettlementJson in wagonSettlementJsons)
 				{
 					WagonSettlement wagonSettlement = WagonSettlement.FromJson(wagonSettlementJson);
+                    wagonSettlement.ID = 0; // prevent wrong order of WagonSettlements in Wagon
                     wagonSettlement.CreatedDate = DateTime.Now;
                     wagonSettlement.PaymentDate = wagon.PaymentDate;
 					wagonSettlement.WagonID = wagonID;
@@ -152,6 +153,7 @@ namespace Transportation.Api
             foreach(WagonSettlement wagonSettlement in wagonSettlements) {
                 ClarityDB.Instance.WagonSettlements.Remove(wagonSettlement);
             }
+            ClarityDB.Instance.SaveChanges();
         }
 
         private JArray BuildJsonArray(IEnumerable<Wagon> wagons)

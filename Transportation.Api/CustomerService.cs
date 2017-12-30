@@ -2,12 +2,8 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Data;
 
 namespace Transportation.Api
@@ -34,76 +30,126 @@ namespace Transportation.Api
             }
 
             Customer customer = Customer.FromJson(json);
-			customer.CreatedDate = DateTime.Now;
-			customer.Code = customer.FullName.Replace(" ", "") + "_" + customer.PhoneNo;
+            customer.CreatedDate = DateTime.Now;
 
-			ClarityDB.Instance.Customers.Add(customer);
+            ClarityDB.Instance.Customers.Add(customer);
             ClarityDB.Instance.SaveChanges();
 
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = customer.ToJson() };
         }
 
-		[Route(HttpVerb.Get, "/customers/{id}")]
-		public RestApiResult GetCustomerByID(long id)
-		{
-			Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == id);
+        [Route(HttpVerb.Get, "/customers/{id}")]
+        public RestApiResult GetCustomerByID(long id)
+        {
+            Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == id);
 
-			if (customer == null)
-			{
-				return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
-			}
+            if (customer == null)
+            {
+                return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
+            }
 
-			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonCustomer(customer) };
-		}
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonCustomer(customer) };
+        }
 
-		[Route(HttpVerb.Delete, "/customers/{id}")]
-		public RestApiResult Delete(long id)
-		{
-			Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == id);
+        [Route(HttpVerb.Delete, "/customers/{id}")]
+        public RestApiResult Delete(long id)
+        {
+            Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == id);
 
-			if (customer == null)
-			{
-				return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
-			}
+            if (customer == null)
+            {
+                return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
+            }
 
-			ClarityDB.Instance.Customers.Remove(customer);
-			ClarityDB.Instance.SaveChanges();
+            ClarityDB.Instance.Customers.Remove(customer);
+            ClarityDB.Instance.SaveChanges();
 
-			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = customer.ToJson() };
-		}
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = customer.ToJson() };
+        }
 
-		[Route(HttpVerb.Put, "/customers/{id}")]
-		public RestApiResult Update(long id, JObject json)
-		{
-			Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == id);
+        [Route(HttpVerb.Put, "/customers/{id}")]
+        public RestApiResult Update(long id, JObject json)
+        {
+            Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == id);
 
-			if (customer == null)
-			{
-				return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
-			}
+            if (customer == null)
+            {
+                return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
+            }
 
-			customer.ApplyJson(json);
-			customer.Code = customer.FullName.Replace(" ", "") + "_" + customer.PhoneNo;
-			ClarityDB.Instance.SaveChanges();
+            customer.ApplyJson(json);
+            ClarityDB.Instance.SaveChanges();
+            // Add new payment for Customer
+            AddNewPayment(id, json);
 
-			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
-		}
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
+        }
+
+        [Route(HttpVerb.Post, "/customers/fastPayment/{id}")]
+        public RestApiResult ProccessFastPayment(long id)
+        {
+            Customer customer = ClarityDB.Instance.Customers.FirstOrDefault(x => x.ID == id);
+
+            if (customer == null)
+            {
+                return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
+            }
+
+            long totalOwned = GetTotalOwnedByCustomerID(id);
+            long totalPay = GetTotalPaymentByCustomerID(id);
+            long totalDebt = totalOwned - totalPay;
+
+            if (totalDebt <= 0) {
+                string errorJson = "{ 'message': 'Khách hàng không còn nợ' }";
+                return new RestApiResult { StatusCode = HttpStatusCode.Conflict, Json = JObject.Parse(errorJson) };
+            }
+
+            JObject json = new JObject();
+            json["newPayment"] = totalDebt;
+            json["paymentMonth"] = DateTime.Now.Month;
+            json["paymentYear"] = DateTime.Now.Year;
+            AddNewPayment(id, json);
+
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
+        }
+
+        private void AddNewPayment(long cusomerId, JObject json)
+        {
+            long newPayment = json.Value<long>("newPayment");
+            if (newPayment > 0) {
+                Payment payment = new Payment();
+                payment.CustomerID = cusomerId;
+                payment.CreatedDate = DateTime.Now;
+                payment.PaymentMonth = json.Value<int>("paymentMonth");
+                payment.PaymentYear = json.Value<int>("paymentYear");
+                payment.PaymentAmount = newPayment;
+                ClarityDB.Instance.Payments.Add(payment);
+            }
+            ClarityDB.Instance.SaveChanges();
+        }
 
         private JObject BuildJsonCustomer(Customer customer)
         {
-            customer.TotalOwned = 0;
-            customer.TotalPay = 0;
-            customer.TotalDebt = 0;
-
-            var wagonSettlements = ClarityDB.Instance.WagonSettlements.Where(x => x.CustomerID == customer.ID);
-            foreach (WagonSettlement wagonSettlement in wagonSettlements)
-            {
-                customer.TotalOwned += wagonSettlement.Quantity * wagonSettlement.UnitPrice + wagonSettlement.PhiPhatSinh;
-                customer.TotalPay += wagonSettlement.Payment;
-                customer.TotalDebt += wagonSettlement.PaymentRemain;
-            }
-
+            customer.TotalOwned = GetTotalOwnedByCustomerID(customer.ID);
+            customer.TotalPay = GetTotalPaymentByCustomerID(customer.ID);
+            customer.TotalDebt = customer.TotalOwned - customer.TotalPay;
             return customer.ToJson();
+        }
+
+        private long GetTotalOwnedByCustomerID(long id)
+        {
+            var wagonSettlements = ClarityDB.Instance.WagonSettlements.Where(x => x.CustomerID == id);
+            return wagonSettlements.Count() > 0 ? wagonSettlements.Sum(x => x.Quantity * x.UnitPrice + x.PhiPhatSinh) : 0;
+        }
+        private long GetTotalPaymentByCustomerID(long id)
+        {
+            // Get from WagonSettlement
+            var wagonSettlements = ClarityDB.Instance.WagonSettlements.Where(x => x.CustomerID == id);
+            long totalPaymentFromWagonSettlement = wagonSettlements.Count() > 0 ? wagonSettlements.Sum(x => x.Payment) : 0;
+            // Get from Payment
+            var payments = ClarityDB.Instance.Payments.Where(x => x.CustomerID == id);
+            long totalPaymentFromPayment = payments.Count() > 0 ? payments.Sum(x => x.PaymentAmount) : 0;
+            return (totalPaymentFromWagonSettlement + totalPaymentFromPayment);
         }
 
         private JArray BuildJsonArrayCustomer(IEnumerable<Customer> customers)

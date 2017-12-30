@@ -29,6 +29,7 @@ module Clarity.Controller {
     public isLoading: boolean;
     public searchText: string;
     public errorMessage: string;
+    public months: Array<number>;
     public isSubmitting: boolean;
 
     constructor(private $scope,
@@ -49,6 +50,7 @@ module Clarity.Controller {
       this.pageSize = 10;
       this.searchText = '';
       this.errorMessage = '';
+      this.months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
       this.initCustomer();
 
 			var self = this;
@@ -60,9 +62,14 @@ module Clarity.Controller {
       });
     }
 
-		initCustomer() {
+    isEditMode() {
       var customerId = this.$routeParams.customer_id;
-      if (customerId) {
+      return !!customerId;
+    };
+
+		initCustomer() {
+      if (this.isEditMode()) {
+        var customerId = this.$routeParams.customer_id;
         this.initCurrentCustomer(customerId);
       } else {
         if (this.$location.path() === '/ql-toa-hang/khach-hang/tao') {
@@ -78,6 +85,8 @@ module Clarity.Controller {
         this.$rootScope.showSpinner();
         this.customerService.getById(customerId, (data) => {
           this.currentCustomer = data;
+          this.currentCustomer.paymentMonth = (new Date()).getMonth() + 1;
+          this.currentCustomer.paymentYear = (new Date()).getFullYear();
           this.mainHelper.initCurrencyFormattedProperty(this.currentCustomer,
             ['totalOwned', 'totalPay', 'totalDebt'], formatSuffix);
           this.$rootScope.hideSpinner();
@@ -195,8 +204,27 @@ module Clarity.Controller {
       this.$location.path(`/ql-toa-hang/khach-hang/sua/${customerId}`);
     }
 
+    proccessFastPayment(event: Event, customerId: number) {
+      event.stopPropagation();
+      var confirmDialog = this.$window.confirm('Bạn có muốn thanh toán nhanh cho khách hàng này?');
+      if (confirmDialog) {
+        this.customerService.proccessFastPayment(customerId, (data) => {
+          this.initCustomerList();
+        }, (error) => {
+          this.errorMessage = 'Thanh toán nhanh lỗi!';
+          this.$timeout(() => {
+            this.errorMessage = '';
+          }, 8000);
+        });
+      }
+    }
+
     clearSearchText() {
       this.searchText = '';
+    }
+
+    updateNewPayment() {
+      this.mainHelper.onCurrencyPropertyChanged(this.currentCustomer, 'newPayment', `newPayment${formatSuffix}`);
     }
 
 	}

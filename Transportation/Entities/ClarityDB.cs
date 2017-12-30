@@ -40,15 +40,16 @@ namespace Transportation
         {
             this.Set<T>().Add(entity);
         }
-
+        // LOGIN
         public virtual IDbSet<User> Users { get; set; }
+        // TOA HANG
         public virtual IDbSet<Employee> Employees { get; set; }
 		public virtual IDbSet<Truck> Trucks { get; set; }
 		public virtual IDbSet<Customer> Customers { get; set; }
 		public virtual IDbSet<Wagon> Wagons { get; set; }
         public virtual IDbSet<WagonSettlement> WagonSettlements { get; set; }
 		public virtual IDbSet<Payment> Payments { get; set; }
-        //GARAGE
+        // GARAGE
         public virtual IDbSet<Product> Products { get; set; }
         public virtual IDbSet<ProductInput> ProductInputs { get; set; }
         public virtual IDbSet<Inventory> Inventories { get; set; }
@@ -79,6 +80,11 @@ namespace Transportation
             modelBuilder.Entity<WagonSettlement>()
                 .HasRequired(x => x.Wagon)
                 .WithMany(x => x.WagonSetlements)
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<Payment>()
+                .HasRequired(x => x.Customer)
+                .WithMany(x => x.Payments)
                 .WillCascadeOnDelete();
 
             modelBuilder.Entity<ProductInput>()
