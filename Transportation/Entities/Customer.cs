@@ -1,32 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using System.Data;
+using System.Collections.ObjectModel;
 
 namespace Transportation
 {
     public class Customer : Entity
     {
+        public DateTime CreatedDate { get; set; }
         [Required]
 		public string FullName { get; set; }
 		[Required]
-		public string PhoneNo { get; set; }
+        public virtual Collection<Payment> Payments { get; set; }
+        public string PhoneNo { get; set; }
         public string Code { get; set; }
         public string Type { get; set; }
+        public string EmployeeId { get; set; }
         [NotMapped]
         public long TotalOwned { get; set; }
         [NotMapped]
         public long TotalPay { get; set; }
         [NotMapped]
         public long TotalDebt { get; set; }
-		public DateTime CreatedDate { get; set; }
 
         public Customer() {
+            Payments = new Collection<Payment>();
         }
 
         public JObject ToJson()
@@ -40,7 +39,9 @@ namespace Transportation
 			json["phoneNo"] = PhoneNo;
 			json["type"] = Type;
 			json["code"] = Code;
-			return json;
+            json["employeeId"] = EmployeeId;
+            json["payments"] = BuildJsonArray(Payments);
+            return json;
         }
 
         public static Customer FromJson(JObject json)
@@ -59,7 +60,20 @@ namespace Transportation
             TotalDebt = json.Value<long>("totalDebt");
 			PhoneNo = json.Value<string>("phoneNo");
 			Type = json.Value<string>("type");
-			Code = json.Value<string>("code");
-		}
+            Code = FullName.Replace(" ", "") + "_" + PhoneNo;
+            EmployeeId = json.Value<string>("employeeId");
+        }
+
+        private JArray BuildJsonArray(Collection<Payment> payments)
+        {
+            JArray jsons = new JArray();
+
+            foreach (Payment payment in payments)
+            {
+                jsons.Add(payment.ToJson());
+            }
+
+            return jsons;
+        }
     }
 }

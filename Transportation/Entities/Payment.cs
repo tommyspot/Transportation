@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using System.Data;
 
 namespace Transportation
 {
     public class Payment : Entity
     {
-		public string PaymentDate { get; set; }
-		public long PaymentAmount { get; set; }
-
-		[Required]
-		public string WagonSettlementCode { get; set; }
-		public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
+        [Required]
+        public long CustomerID { get; set; }
+        public virtual Customer Customer { get; set; }
+        public int PaymentMonth { get; set; }
+        public int PaymentYear { get; set; }
+        public long PaymentAmount { get; set; }
 
 		public Payment(){}
 
@@ -25,10 +20,10 @@ namespace Transportation
         {
             JObject json = new JObject();
             json["id"] = ID;
-            json["paymentDate"] = PaymentDate;
+            json["customerID"] = CustomerID;
+            json["paymentMonth"] = PaymentMonth;
+            json["paymentYear"] = PaymentYear;
             json["paymentAmount"] = PaymentAmount;
-            json["wagonSettlementID"] = WagonSettlementCode;
-           
 			return json;
         }
 
@@ -36,18 +31,16 @@ namespace Transportation
         {
             Payment payment = new Payment();
 			payment.ApplyJson(json);
-
             return payment;
         }
 
         public void ApplyJson(JObject json)
         {
             ID = json.Value<long>("id");
-
-			PaymentDate = json.Value<string>("paymentDate");
-			PaymentAmount = json.Value<long>("paymentAmount");
-			WagonSettlementCode = json.Value<string>("wagonSettlementID");
-            
+            CustomerID = json.Value<long>("customerID");
+            PaymentMonth = json.Value<int>("paymentMonth");
+            PaymentYear = json.Value<int>("paymentYear");
+            PaymentAmount = json.Value<long>("paymentAmount");
         }
     }
 }

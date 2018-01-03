@@ -137,21 +137,21 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
     access: 'authorized'
   })
   // QUYET TOAN
-  .when('/ql-toa-hang/quyet-toan', {
-    templateUrl: '/html/toahang/quyettoan/quyet-toan.html' + '?v=' + VERSION_NUMBER,
-    controller: 'WagonSettlementManagementController',
-    access: 'authorized'
-  })
-  .when('/ql-toa-hang/quyet-toan/:wagonSettlement_id', {
-    templateUrl: '/html/toahang/quyettoan/quyet-toan-detail.html' + '?v=' + VERSION_NUMBER,
-    controller: 'WagonSettlementManagementController',
-    access: 'authorized'
-  })
-  .when('/ql-toa-hang/quyet-toan/sua/:wagonSettlement_id', {
-    templateUrl: '/html/toahang/quyettoan/quyet-toan-form.html' + '?v=' + VERSION_NUMBER,
-    controller: 'WagonSettlementManagementController',
-    access: 'authorized'
-  })
+  //.when('/ql-toa-hang/quyet-toan', {
+  //  templateUrl: '/html/toahang/quyettoan/quyet-toan.html' + '?v=' + VERSION_NUMBER,
+  //  controller: 'WagonSettlementManagementController',
+  //  access: 'authorized'
+  //})
+  //.when('/ql-toa-hang/quyet-toan/:wagonSettlement_id', {
+  //  templateUrl: '/html/toahang/quyettoan/quyet-toan-detail.html' + '?v=' + VERSION_NUMBER,
+  //  controller: 'WagonSettlementManagementController',
+  //  access: 'authorized'
+  //})
+  //.when('/ql-toa-hang/quyet-toan/sua/:wagonSettlement_id', {
+  //  templateUrl: '/html/toahang/quyettoan/quyet-toan-form.html' + '?v=' + VERSION_NUMBER,
+  //  controller: 'WagonSettlementManagementController',
+  //  access: 'authorized'
+  //})
 
   .when('/ql-bao-cao', {
     templateUrl: '/html/baocao/bao-cao.html' + '?v=' + VERSION_NUMBER,

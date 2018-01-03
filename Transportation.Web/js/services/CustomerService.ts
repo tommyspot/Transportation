@@ -9,5 +9,11 @@ module Clarity.Service {
       super($http);
       this.url = '/api/customers';
     }
+
+    proccessFastPayment(id: number, successCallback: Function, errorCallback: Function) {
+      this.http.post(`${this.url}/fastPayment/${id}`, null)
+        .success((data) => { this.doCallback(successCallback, data); })
+        .error((data, status) => { this.doCallback(errorCallback, data, status) });
+    }
   }
 }

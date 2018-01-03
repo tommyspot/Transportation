@@ -17,7 +17,7 @@ namespace Transportation.Api
         public HelperService helperService;
         const string formatDate = "dd/MM/yyyy";
         const string formatStringDate = "dd-MM-yyyy";
-
+        const string underline = "_";
 
         public ExportService()
         {
@@ -182,29 +182,46 @@ namespace Transportation.Api
             dt.Columns.Add("Tổng trả", typeof(double));
             dt.Columns.Add("Còn nợ lại", typeof(double));
             dt.Columns.Add("Xếp loại", typeof(string));
+            dt.Columns.Add("Nhân viên thu nợ", typeof(string));
+
+            // Build meta data for PhiPhatSinh/Payment for each month
+            var periods = GetPeriods();
+            foreach (string period in periods) {
+                dt.Columns.Add("Phát sinh - Tháng " + period, typeof(double));
+                dt.Columns.Add("Thanh toán - Tháng " + period, typeof(double));
+            }
 
             //Binding data
             List<Customer> customers = ClarityDB.Instance.Customers.OrderByDescending(x => x.ID).ToList();
             for (int i = 0; i < customers.Count; i++)
             {
                 var customer = customers[i];
-                // init [TotalOwned, TotalPay, TotalDebt]
-                customer.TotalOwned = 0;
-                customer.TotalPay = 0;
-                customer.TotalDebt = 0;
-
-                var wagonSettlements = ClarityDB.Instance.WagonSettlements.Where(x => x.CustomerID == customer.ID);
-                foreach (WagonSettlement wagonSettlement in wagonSettlements)
-                {
-                    customer.TotalOwned += wagonSettlement.Quantity * wagonSettlement.UnitPrice + wagonSettlement.PhiPhatSinh;
-                    customer.TotalPay += wagonSettlement.Payment;
-                    customer.TotalDebt += wagonSettlement.PaymentRemain;
-                }
+                customer.TotalOwned = GetTotalOwnedByCustomerID(customer.ID);
+                customer.TotalPay = GetTotalPaymentByCustomerID(customer.ID);
+                customer.TotalDebt = customer.TotalOwned - customer.TotalPay;
                 // add to row
-                dt.Rows.Add(new object[] { i + 1 , customer.Code, customer.FullName , customer.PhoneNo,
-                    customer.TotalOwned, customer.TotalPay, customer.TotalDebt, customer.Type });
+                DataRow dataRow = dt.NewRow();
+                dataRow[0] = i + 1;
+                dataRow[1] = customer.Code;
+                dataRow[2] = customer.FullName;
+                dataRow[3] = customer.PhoneNo;
+                dataRow[4] = customer.TotalOwned;
+                dataRow[5] = customer.TotalPay;
+                dataRow[6] = customer.TotalDebt;
+                dataRow[7] = customer.Type;
+                dataRow[8] = String.IsNullOrEmpty(customer.EmployeeId)
+                    ? ""
+                    : this.helperService.GetEmployeeName(Convert.ToInt32(customer.EmployeeId));
+                // Build data for PhiPhatSinh/Payment for each month
+                int step = 0;
+                foreach(string period in periods)
+                {
+                    dataRow[9 + step] = GetPhiPhatSinhByCustomerIDInPeriod(customer.ID, period);    // Calculate Phi Phat Sinh
+                    dataRow[10 + step] = GetPaymentByCustomerIDInPeriod(customer.ID, period);        // Calculate Thanh Toan
+                    step += 2;
+                }
+                dt.Rows.Add(dataRow);
             }
-
             return dt;
         }
 
@@ -281,6 +298,7 @@ namespace Transportation.Api
             dt.Columns.Add("Mã toa hàng", typeof(string));
             dt.Columns.Add("Mã quyết toán", typeof(string));
             dt.Columns.Add("Khách hàng", typeof(string));
+            dt.Columns.Add("Ngày phát sinh", typeof(string));   // ToaHang's NgayThanhToan
             dt.Columns.Add("Ngày đi", typeof(string));
             dt.Columns.Add("Số lượng", typeof(double));
             dt.Columns.Add("Nơi thanh toán", typeof(string));
@@ -313,13 +331,12 @@ namespace Transportation.Api
             for (int i = 0; i < filteredWagonSettlements.Count; i++)
             {
                 var wagonSettlement = filteredWagonSettlements[i];
-                string wagonCode = ClarityDB.Instance.Wagons.Where(x => x.ID == wagonSettlement.WagonID).FirstOrDefault().Code;
 
-                dt.Rows.Add(new object[] { i + 1 , wagonCode, wagonSettlement.Code , wagonSettlement.Customer.FullName, wagonSettlement.Wagon.DepartDate,
-                                           wagonSettlement.Quantity,wagonSettlement.PaymentPlace, wagonSettlement.PaymentDate, wagonSettlement.Destination,
-                                           wagonSettlement.LyDoPhatSinh, wagonSettlement.PhiPhatSinh, wagonSettlement.Unit, wagonSettlement.UnitPrice,
-                                           wagonSettlement.Quantity * wagonSettlement.UnitPrice, wagonSettlement.Payment, wagonSettlement.PaymentRemain,
-                                           wagonSettlement.PaymentStatus});
+                dt.Rows.Add(new object[] { i + 1 , wagonSettlement.Wagon.Code, wagonSettlement.Code , wagonSettlement.Customer.FullName, wagonSettlement.Wagon.PaymentDate,
+                                           wagonSettlement.Wagon.DepartDate, wagonSettlement.Quantity,wagonSettlement.PaymentPlace, wagonSettlement.PaymentDate,
+                                           wagonSettlement.Destination, wagonSettlement.LyDoPhatSinh, wagonSettlement.PhiPhatSinh, wagonSettlement.Unit,
+                                           wagonSettlement.UnitPrice, wagonSettlement.Quantity * wagonSettlement.UnitPrice, wagonSettlement.Payment,
+                                           wagonSettlement.PaymentRemain, wagonSettlement.PaymentStatus});
             }
 
             return dt;
@@ -423,5 +440,108 @@ namespace Transportation.Api
             return string.Format("{0}/{1}.xlsx", folderName, fileName);
         }
 
+        // Ultil function
+        private long GetTotalOwnedByCustomerID(long id)
+        {
+            var wagonSettlements = ClarityDB.Instance.WagonSettlements.Where(x => x.CustomerID == id);
+            return wagonSettlements.Count() > 0 ? wagonSettlements.Sum(x => x.Quantity * x.UnitPrice + x.PhiPhatSinh) : 0;
+        }
+        private long GetTotalPaymentByCustomerID(long id)
+        {
+            // Get from WagonSettlement
+            var wagonSettlements = ClarityDB.Instance.WagonSettlements.Where(x => x.CustomerID == id);
+            long totalPaymentFromWagonSettlement = wagonSettlements.Count() > 0 ? wagonSettlements.Sum(x => x.Payment) : 0;
+            // Get from Payment
+            var payments = ClarityDB.Instance.Payments.Where(x => x.CustomerID == id);
+            long totalPaymentFromPayment = payments.Count() > 0 ? payments.Sum(x => x.PaymentAmount) : 0;
+            return (totalPaymentFromWagonSettlement + totalPaymentFromPayment);
+        }
+        private List<string> GetPeriods()
+        {
+            // From WagonSettlements
+            var periodsFromWagonSettlements = new List<string>();
+            var paymentDates = ClarityDB.Instance.WagonSettlements
+                .Select(x => x.PaymentDate)
+                .Distinct();
+            foreach (string paymentDate in paymentDates) {
+                DateTime date = ConvertToDate(paymentDate);
+                periodsFromWagonSettlements.Add(date.Month + underline + date.Year);    // Ex: 12_2017
+            }
+            periodsFromWagonSettlements = periodsFromWagonSettlements.Distinct().ToList();
+
+            // From WagonSettlements
+            var periodsFromPayments = ClarityDB.Instance.Payments
+                .Select(x => x.PaymentMonth + underline + x.PaymentYear)
+                .Distinct().ToList();
+
+            return periodsFromWagonSettlements.Union(periodsFromPayments)
+                .OrderByDescending(x => x.Split(underline.ToCharArray()).Last())
+                .ThenByDescending(x => x.Split(underline.ToCharArray()).First())
+                .ToList();
+        }
+
+        private double GetPhiPhatSinhByCustomerIDInPeriod(long customerId, string period)
+        {
+            string month = period.Split(underline.ToCharArray()).FirstOrDefault();
+            string year = period.Split(underline.ToCharArray()).LastOrDefault();
+            if (String.IsNullOrEmpty(month) || String.IsNullOrEmpty(year))
+            {
+                return 0;
+            }
+
+            var wagonSettlements = ClarityDB.Instance.WagonSettlements.Where(x => x.CustomerID == customerId);
+            double result = 0;
+            foreach(WagonSettlement wagonSettlement in wagonSettlements)
+            {
+                DateTime paymentDate = ConvertToDate(wagonSettlement.PaymentDate);
+                if(paymentDate.Month == Convert.ToInt32(month.Trim()) && paymentDate.Year == Convert.ToInt32(year.Trim()))
+                {
+                    result += wagonSettlement.Quantity * wagonSettlement.UnitPrice + wagonSettlement.PhiPhatSinh;
+                }
+            }
+
+            return result;
+        }
+
+        private double GetPaymentByCustomerIDInPeriod(long customerId, string period)
+        {
+            string month = period.Split(underline.ToCharArray()).FirstOrDefault();
+            string year = period.Split(underline.ToCharArray()).LastOrDefault();
+            if (String.IsNullOrEmpty(month) || String.IsNullOrEmpty(year))
+            {
+                return 0;
+            }
+            // For WagonSettlement
+            var wagonSettlements = ClarityDB.Instance.WagonSettlements.Where(x => x.CustomerID == customerId);
+            double result = 0;
+            foreach (WagonSettlement wagonSettlement in wagonSettlements)
+            {
+                DateTime paymentDate = ConvertToDate(wagonSettlement.PaymentDate);
+                if (paymentDate.Month == ConvertToValue(month) && paymentDate.Year == ConvertToValue(year))
+                {
+                    result += wagonSettlement.Payment;
+                }
+            }
+            // For Payments
+            var payments = ClarityDB.Instance.Payments.Where(x => x.CustomerID == customerId);
+            foreach (Payment payment in payments)
+            {
+                if (payment.PaymentMonth == ConvertToValue(month) && payment.PaymentYear == ConvertToValue(year))
+                {
+                    result += payment.PaymentAmount;
+                }
+            }
+
+            return result;
+        }
+        private DateTime ConvertToDate(string date)
+        {
+            return DateTime.ParseExact(date, formatDate, CultureInfo.InvariantCulture);
+        }
+
+        private int ConvertToValue(string data)
+        {
+            return Convert.ToInt32(data.Trim());
+        }
     }
 }

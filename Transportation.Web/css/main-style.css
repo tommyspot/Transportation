@@ -5316,13 +5316,13 @@ div.bootstrap {
   #ng-app #mainPage .manage-box.xe-box, #ng-app #qlToaHangPage .manage-box.xe-box, #ng-app #qlGarage .manage-box.xe-box {
     background-color: #2C3E50; }
   #ng-app #mainPage .manage-box.nv-box, #ng-app #qlToaHangPage .manage-box.nv-box, #ng-app #qlGarage .manage-box.nv-box {
-    background-color: #95a5a6; }
-  #ng-app #mainPage .manage-box.kh-box, #ng-app #qlToaHangPage .manage-box.kh-box, #ng-app #qlGarage .manage-box.kh-box {
     background-color: #16a085; }
+  #ng-app #mainPage .manage-box.kh-box, #ng-app #qlToaHangPage .manage-box.kh-box, #ng-app #qlGarage .manage-box.kh-box {
+    background-color: #e74c3c; }
   #ng-app #mainPage .manage-box.th-box, #ng-app #qlToaHangPage .manage-box.th-box, #ng-app #qlGarage .manage-box.th-box {
     background-color: #f1c40f; }
   #ng-app #mainPage .manage-box.qt-box, #ng-app #qlToaHangPage .manage-box.qt-box, #ng-app #qlGarage .manage-box.qt-box {
-    background-color: #e74c3c; }
+    background-color: #95a5a6; }
   #ng-app #mainPage .manage-box.dhkh-box, #ng-app #qlToaHangPage .manage-box.dhkh-box, #ng-app #qlGarage .manage-box.dhkh-box {
     background-color: #2ecc71; }
   #ng-app #mainPage .manage-box.qldn-box, #ng-app #qlToaHangPage .manage-box.qldn-box, #ng-app #qlGarage .manage-box.qldn-box {
@@ -5442,6 +5442,8 @@ div.bootstrap {
     width: 50px; }
   #ng-app .edit-column-width, #ng-app .detail-column-width {
     width: 60px; }
+  #ng-app .payment-column-width {
+    width: 90px; }
   #ng-app .detail-column {
     cursor: pointer; }
     #ng-app .detail-column i {
@@ -5452,6 +5454,17 @@ div.bootstrap {
     cursor: pointer; }
     #ng-app .edit-column:hover {
       color: #C0392B; }
+  #ng-app .payment-column {
+    cursor: pointer; }
+    #ng-app .payment-column i {
+      color: #ea001b; }
+    #ng-app .payment-column:hover i {
+      color: #f79f1a; }
+  #ng-app .payment-column--disable {
+    cursor: none;
+    pointer-events: none; }
+    #ng-app .payment-column--disable i {
+      color: #dddddd; }
   #ng-app .padding-right-8 {
     padding-right: 8px; }
   #ng-app .no-bold {
@@ -5550,3 +5563,5 @@ div.bootstrap {
         font-size: 16px; }
   #ng-app .btn-fw-lg {
     width: 90px; }
+  #ng-app .line-height-form {
+    line-height: 34px; }

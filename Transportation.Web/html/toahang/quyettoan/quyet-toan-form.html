@@ -20,9 +20,9 @@
         <div class="col-sm-4">
           <input id="customerId" name="customerId" class="form-control" type="text" value={{viewModel.getCustomerName(viewModel.currentWagonSettlement.customerId)}} disabled>
         </div>
-        <label for="totalAmount" class="col-sm-2 control-label">Tổng phí</label>
-        <div class="col-sm-4 text-right">
-          <b>{{viewModel.currentWagonSettlement.quantity * viewModel.currentWagonSettlement.unitPrice + viewModel.currentWagonSettlement.phiPhatSinh | currency: "" : 0}}</b>
+        <label for="unitPrice" class="col-sm-2 control-label">Đơn giá</label>
+        <div class="col-sm-4 text-right line-height-form">
+          {{viewModel.currentWagonSettlement.unitPrice | currency: "" : 0}}
         </div>
       </div>
       <div class="form-group">
@@ -30,9 +30,29 @@
         <div class="col-sm-4">
           <input id="wagonId" name="wagonId" class="form-control" type="text" value={{viewModel.getWagonCode(viewModel.currentWagonSettlement.wagonId)}} disabled>
         </div>
+        <label for="totalAmount" class="col-sm-2 control-label">Tổng phí</label>
+        <div class="col-sm-4 text-right line-height-form">
+          <b>{{viewModel.currentWagonSettlement.quantity * viewModel.currentWagonSettlement.unitPrice + viewModel.currentWagonSettlement.phiPhatSinh | currency: "" : 0}}</b>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="wagonId" class="col-sm-2 control-label">Ngày đi</label>
+        <div class="col-sm-4">
+          <input id="departDate" name="departDate" class="form-control" type="text" value={{viewModel.getDepartDate(viewModel.currentWagonSettlement.wagonId)}} disabled>
+        </div>
         <label for="payment" class="col-sm-2 control-label">Phí phát sinh</label>
-        <div class="col-sm-4 text-right">
+        <div class="col-sm-4 text-right line-height-form">
           {{viewModel.currentWagonSettlement.phiPhatSinh | currency: "" : 0}}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="payment" class="col-sm-2 control-label">Ngày phát sinh</label>
+        <div class="col-sm-4">
+          <input id="wagonPaymenDate" name="wagonPaymenDate" class="form-control" type="text" value={{viewModel.getPaymentDate(viewModel.currentWagonSettlement.wagonId)}} disabled>
+        </div>
+        <label for="payment" class="col-sm-2 control-label">Đã thanh toán</label>
+        <div class="col-sm-4 text-right line-height-form">
+          {{viewModel.currentWagonSettlement.payment | currency: "" : 0}}
         </div>
       </div>
       <div class="form-group">
@@ -40,18 +60,8 @@
         <div class="col-sm-4">
           <input id="destination" name="destination" class="form-control" type="text" value={{viewModel.currentWagonSettlement.destination}} disabled>
         </div>
-        <label for="payment" class="col-sm-2 control-label">Đã thanh toán</label>
-        <div class="col-sm-4 text-right">
-          {{viewModel.currentWagonSettlement.payment | currency: "" : 0}}
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="quantity" class="col-sm-2 control-label">Số lượng</label>
-        <div class="col-sm-4">
-          <input id="quantity" name="quantity" class="form-control" type="text" value={{viewModel.currentWagonSettlement.quantity}} disabled>
-        </div>
         <label for="paymentRemain" class="col-sm-2 control-label">Còn lại</label>
-        <div class="col-sm-4 text-right">
+        <div class="col-sm-4 text-right line-height-form">
           <b>{{viewModel.currentWagonSettlement.paymentRemain | currency: "" : 0}}</b>
         </div>
       </div>
@@ -68,9 +78,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="unitPrice" class="col-sm-2 control-label">Đơn giá</label>
-        <div class="col-sm-4">
-          <input id="unitPrice" name="unitPrice" class="form-control" type="text" data-ng-model="viewModel.currentWagonSettlement.unitPriceFormatted" disabled>
+        <label for="quantity" class="col-sm-2 control-label">Số lượng</label>
+        <div class="col-sm-4 text-right">
+          {{viewModel.currentWagonSettlement.quantity | currency: "" : 0}}
         </div>
         <label for="newPayment" class="col-sm-2 control-label">Thanh toán mới <span class="required-symbol">*</span></label>
         <div class="col-sm-4">

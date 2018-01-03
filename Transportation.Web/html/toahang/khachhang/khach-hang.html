@@ -51,13 +51,14 @@
 								<th class="main-width-column text-center">Số phát sinh</th>
 								<th class="main-width-column text-center">Tổng trả</th>
 								<th class="main-width-column text-center">Còn nợ lại</th>
+                <th class="payment-column-width text-center">TT nhanh</th>
                 <th class="edit-column-width text-center">Sửa</th>
                 <th class="detail-column-width text-center">Xem</th>
 							</tr>
 						</thead>
 						<tbody>
               <tr data-ng-if="viewModel.isLoading">
-                <td class="text-center" colspan="9">
+                <td class="text-center" colspan="10">
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
@@ -71,6 +72,10 @@
 								<td class="text-right">{{::customerViewModel.totalOwned}}</td>
 								<td class="text-right">{{::customerViewModel.totalPay}}</td>
 								<td class="text-right">{{::customerViewModel.totalDebt}}</td>
+                <td class="text-center payment-column" data-ng-click="viewModel.proccessFastPayment($event, customerViewModel.id)"
+                    data-ng-class="{'payment-column--disable': customerViewModel.totalDebt === '0'}">
+                  <i class="fa fa-credit-card fa-lg" aria-hidden="true"></i>
+                </td>
                 <td class="text-center edit-column" data-ng-click="viewModel.goToCustomerEditForm($event, customerViewModel.id)">
                   <span class="glyphicon glyphicon-pencil"></span>
                 </td>

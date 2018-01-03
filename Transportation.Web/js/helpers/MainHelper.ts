@@ -167,6 +167,8 @@ module Clarity.Helper {
       if (object[formattedPropertyName] && object[formattedPropertyName] != '') {
         object[propertyName] = parseInt(object[formattedPropertyName].replace(/\./g, ''));
         object[formattedPropertyName] = this.formatCurrency(object[propertyName]);
+      } else {
+        object[propertyName] = 0;
       }
     }
 

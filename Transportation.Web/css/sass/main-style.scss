@@ -6,6 +6,8 @@
 $transport-color-1: #34495E;
 $transport-color-2: #C0392B;
 $transport-color-3: #dddddd;
+$payment-color-1: #ea001b;
+$payment-color-2: #f79f1a;
 
 /*Apply Bootstrap Framework*/
 div.bootstrap {
@@ -575,11 +577,11 @@ div.bootstrap {
     }
 
     .manage-box.nv-box {
-      background-color: #95a5a6;
+      background-color: #16a085;
     }
 
     .manage-box.kh-box {
-      background-color: #16a085;
+      background-color: #e74c3c;
     }
 
     .manage-box.th-box {
@@ -587,7 +589,7 @@ div.bootstrap {
     }
 
     .manage-box.qt-box {
-      background-color: #e74c3c;
+      background-color: #95a5a6;
     }
 
     .manage-box.dhkh-box {
@@ -801,6 +803,9 @@ div.bootstrap {
   .edit-column-width, .detail-column-width{
     width: 60px;
   }
+  .payment-column-width{
+    width: 90px;
+  }
 
   .detail-column{
     cursor: pointer;
@@ -816,6 +821,25 @@ div.bootstrap {
     cursor: pointer;
     &:hover{
       color: $transport-color-2;
+    }
+  }
+
+  .payment-column{
+    cursor: pointer;
+    i {
+      color: $payment-color-1;
+    }
+    &:hover{
+      i {
+        color: $payment-color-2;
+      }
+    }
+  }
+  .payment-column--disable{
+    cursor: none;
+    pointer-events: none;
+    i {
+      color: $transport-color-3;
     }
   }
 
@@ -978,6 +1002,10 @@ div.bootstrap {
   .btn-fw-lg{
     width: 90px;
     @extend .btn-fw;
+  }
+
+  .line-height-form{
+    line-height: 34px;
   }
 
 }

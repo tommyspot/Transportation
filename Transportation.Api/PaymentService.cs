@@ -1,15 +1,9 @@
 ﻿using Transportation.Api.Framework;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Data;
-using System.Data.Entity.Validation;
 
 namespace Transportation.Api
 {
@@ -25,17 +19,16 @@ namespace Transportation.Api
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(payments) };
         }
 
-        [Route(HttpVerb.Get, "/payments/{code}")]
-        public RestApiResult GetPaymentsByWagonSettlemnetID(string code)
+        [Route(HttpVerb.Get, "/payments/{id}")]
+        public RestApiResult GetPaymentsByCustomerID(long id)
         {
-			var payments = ClarityDB.Instance.Payments.Where(x => x.WagonSettlementCode == code) ;
+			var payments = ClarityDB.Instance.Payments.Where(x => x.CustomerID == id) ;
 			if (payments == null)
 			{
 				return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
 			}
 			return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(payments) };
         }
-
 
         private JArray BuildJsonArray(IEnumerable<Payment> payments)
         {
