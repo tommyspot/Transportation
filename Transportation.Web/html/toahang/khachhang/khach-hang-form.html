@@ -49,6 +49,15 @@
         </div>
       </div>
       <div class="form-group">
+        <label for="employeeId" class="col-sm-2 control-label">Nhân viên thu nợ</label>
+        <div class="col-sm-4">
+          <select ui-select2 id="employeeId" class="form-control ui-select-2" data-ng-model="viewModel.currentCustomer.employeeId">
+            <option value="">--Chọn nhân viên thu nợ--</option>
+            <option data-ng-repeat="employee in viewModel.employeeList" value="{{employee.id}}">{{employee.fullName}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
         <label for="totalOwned" class="col-sm-2 control-label">Số phát sinh</label>
         <div class="col-sm-4">
           <input id="totalOwned" name="totalOwned" class="form-control text-right" type="text" maxlength="15"
@@ -58,7 +67,7 @@
         <div class="col-sm-4" >
           <input id="newPayment" name="newPayment" class="form-control text-right" type="text" maxlength="15" validator-max
                  data-ng-change="viewModel.updateNewPayment()" data-ng-model="viewModel.currentCustomer.newPaymentFormatted"
-                 max={{viewModel.currentCustomer.totalDebt}} ng-disabled="!viewModel.isEditMode()" ng-required="viewModel.isEditMode()"/>
+                 max={{viewModel.currentCustomer.totalDebt}} ng-disabled="!viewModel.isEditMode()"/>
           <span class="required-field validate-error" data-ng-if="customerForm.newPayment.$error.maxValue">
             <b>Thanh toán</b> phải nhỏ hơn <b>Còn nợ lại</b>
           </span>
@@ -73,7 +82,7 @@
         <label for="paymentMonth" class="col-sm-2 control-label">Tháng</label>
         <div class="col-sm-4">
           <select id="paymentMonth" class="form-control" data-ng-model="viewModel.currentCustomer.paymentMonth"
-                  convert-to-number ng-disabled="!viewModel.isEditMode()" ng-required="viewModel.isEditMode()">
+                  convert-to-number ng-disabled="!viewModel.isEditMode()">
             <option data-ng-repeat="month in viewModel.months" value="{{month}}">{{month}}</option>
           </select>
         </div>
@@ -87,8 +96,7 @@
         <label for="paymentYear" class="col-sm-2 control-label">Năm</label>
         <div class="col-sm-4">
           <input id="paymentYear" name="paymentYear" class="form-control" type="number" pattern="[0-9]{4}"
-                 data-ng-model="viewModel.currentCustomer.paymentYear" ng-disabled="!viewModel.isEditMode()"
-                 ng-required="viewModel.isEditMode()"/>
+                 data-ng-model="viewModel.currentCustomer.paymentYear" ng-disabled="!viewModel.isEditMode()" />
         </div>
       </div>
 

@@ -116,16 +116,18 @@ namespace Transportation.Api
         private void AddNewPayment(long cusomerId, JObject json)
         {
             long newPayment = json.Value<long>("newPayment");
-            if (newPayment > 0) {
+            int? month = json.Value<int?>("paymentMonth");
+            int? year = json.Value<int?>("paymentYear");
+            if (newPayment > 0 && month != null && year != null) {
                 Payment payment = new Payment();
                 payment.CustomerID = cusomerId;
                 payment.CreatedDate = DateTime.Now;
-                payment.PaymentMonth = json.Value<int>("paymentMonth");
-                payment.PaymentYear = json.Value<int>("paymentYear");
+                payment.PaymentMonth = month.Value;
+                payment.PaymentYear = year.Value;
                 payment.PaymentAmount = newPayment;
                 ClarityDB.Instance.Payments.Add(payment);
+                ClarityDB.Instance.SaveChanges();
             }
-            ClarityDB.Instance.SaveChanges();
         }
 
         private JObject BuildJsonCustomer(Customer customer)

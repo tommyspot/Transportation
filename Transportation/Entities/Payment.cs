@@ -24,7 +24,6 @@ namespace Transportation
             json["paymentMonth"] = PaymentMonth;
             json["paymentYear"] = PaymentYear;
             json["paymentAmount"] = PaymentAmount;
-           
 			return json;
         }
 
@@ -32,7 +31,6 @@ namespace Transportation
         {
             Payment payment = new Payment();
 			payment.ApplyJson(json);
-
             return payment;
         }
 

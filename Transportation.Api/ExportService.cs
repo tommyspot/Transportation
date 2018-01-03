@@ -19,7 +19,6 @@ namespace Transportation.Api
         const string formatStringDate = "dd-MM-yyyy";
         const string underline = "_";
 
-
         public ExportService()
         {
             this.helperService = new HelperService();
@@ -183,6 +182,7 @@ namespace Transportation.Api
             dt.Columns.Add("Tổng trả", typeof(double));
             dt.Columns.Add("Còn nợ lại", typeof(double));
             dt.Columns.Add("Xếp loại", typeof(string));
+            dt.Columns.Add("Nhân viên thu nợ", typeof(string));
 
             // Build meta data for PhiPhatSinh/Payment for each month
             var periods = GetPeriods();
@@ -208,13 +208,16 @@ namespace Transportation.Api
                 dataRow[4] = customer.TotalOwned;
                 dataRow[5] = customer.TotalPay;
                 dataRow[6] = customer.TotalDebt;
-                dataRow[7] = customer.Type;               
+                dataRow[7] = customer.Type;
+                dataRow[8] = String.IsNullOrEmpty(customer.EmployeeId)
+                    ? ""
+                    : this.helperService.GetEmployeeName(Convert.ToInt32(customer.EmployeeId));
                 // Build data for PhiPhatSinh/Payment for each month
                 int step = 0;
                 foreach(string period in periods)
                 {
-                    dataRow[8 + step] = GetPhiPhatSinhByCustomerIDInPeriod(customer.ID, period);    // Calculate Phi Phat Sinh
-                    dataRow[9 + step] = GetPaymentByCustomerIDInPeriod(customer.ID, period);        // Calculate Thanh Toan
+                    dataRow[9 + step] = GetPhiPhatSinhByCustomerIDInPeriod(customer.ID, period);    // Calculate Phi Phat Sinh
+                    dataRow[10 + step] = GetPaymentByCustomerIDInPeriod(customer.ID, period);        // Calculate Thanh Toan
                     step += 2;
                 }
                 dt.Rows.Add(dataRow);

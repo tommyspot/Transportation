@@ -16,6 +16,7 @@ namespace Transportation
         public string PhoneNo { get; set; }
         public string Code { get; set; }
         public string Type { get; set; }
+        public string EmployeeId { get; set; }
         [NotMapped]
         public long TotalOwned { get; set; }
         [NotMapped]
@@ -38,6 +39,7 @@ namespace Transportation
 			json["phoneNo"] = PhoneNo;
 			json["type"] = Type;
 			json["code"] = Code;
+            json["employeeId"] = EmployeeId;
             json["payments"] = BuildJsonArray(Payments);
             return json;
         }
@@ -59,6 +61,7 @@ namespace Transportation
 			PhoneNo = json.Value<string>("phoneNo");
 			Type = json.Value<string>("type");
             Code = FullName.Replace(" ", "") + "_" + PhoneNo;
+            EmployeeId = json.Value<string>("employeeId");
         }
 
         private JArray BuildJsonArray(Collection<Payment> payments)

@@ -6,6 +6,7 @@ module Clarity.Model {
 		public totalOwned: number;
 		public totalPay: number;
     public totalDebt: number;
+    public employeeId: string;
 
     public newPayment: number;
     public paymentMonth: number;

@@ -133,6 +133,7 @@ namespace Transportation.Api
                     wagonSettlement.ID = 0; // prevent wrong order of WagonSettlements in Wagon
                     wagonSettlement.CreatedDate = DateTime.Now;
                     wagonSettlement.PaymentDate = wagon.PaymentDate;
+                    wagonSettlement.PaymentPlace = wagon.PaymentPlace;
 					wagonSettlement.WagonID = wagonID;
 					wagonSettlement.Code = wagonSettlement.WagonID + "_" + wagonSettlement.CustomerID;
 					wagon.WagonSetlements.Add(wagonSettlement);

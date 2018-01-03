@@ -6,7 +6,7 @@
 declare var VERSION_NUMBER;
 
 module Clarity.Controller {
-	import service = Clarity.Service;
+  import service = Clarity.Service;
   import helper = Clarity.Helper;
 
   const formatSuffix = 'Formatted';
@@ -17,6 +17,7 @@ module Clarity.Controller {
     public mainHelper: helper.MainHelper;
 
     public currentCustomer: Model.CustomerModel;
+    public employeeList: Array<Model.EmployeeModel>;
     public customerList: Array<Model.CustomerModel>;
     public customerListView: Array<Model.CustomerViewModel>;
     public customerListViewTmp: Array<Model.CustomerViewModel>;
@@ -42,9 +43,9 @@ module Clarity.Controller {
       private $cookieStore: ng.ICookieStoreService,
       private $timeout: ng.ITimeoutService) {
 
-			this.customerService = new service.CustomerService($http);
+      this.customerService = new service.CustomerService($http);
       this.employeeService = new service.EmployeeService($http);
-      this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter); 
+      this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
       $scope.viewModel = this;
 
       this.pageSize = 10;
@@ -53,7 +54,7 @@ module Clarity.Controller {
       this.months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
       this.initCustomer();
 
-			var self = this;
+      var self = this;
       $scope.$watch('viewModel.searchText', function (value) {
         if (self.customerListViewTmp && self.customerListViewTmp.length > 0) {
           self.customerListView = $filter('filter')(self.customerListViewTmp, value);
@@ -67,13 +68,15 @@ module Clarity.Controller {
       return !!customerId;
     };
 
-		initCustomer() {
+    initCustomer() {
       if (this.isEditMode()) {
         var customerId = this.$routeParams.customer_id;
         this.initCurrentCustomer(customerId);
+        this.initEmployeeList();
       } else {
         if (this.$location.path() === '/ql-toa-hang/khach-hang/tao') {
           this.currentCustomer = new Model.CustomerModel();
+          this.initEmployeeList();
         } else if (this.$location.path() === '/ql-toa-hang/khach-hang') {
           this.initCustomerList();
         }
@@ -105,6 +108,12 @@ module Clarity.Controller {
         this.customerListViewTmp = this.customerListView;
         this.initPagination();
         this.isLoading = false;
+      }, null);
+    }
+
+    initEmployeeList() {
+      this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
+        this.employeeList = results;
       }, null);
     }
 
