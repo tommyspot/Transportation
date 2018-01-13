@@ -138,7 +138,7 @@
                   </td>
                   <td class="text-center">
                     <input class="form-control text-right" type="number" min="1" data-ng-model="wagonSettlement.quantity"
-                           data-ng-change="viewModel.calculateTotalAmountWagonSettlements()" />
+                           data-ng-change="viewModel.onChangeWagonSettlement(wagonSettlement)" />
                   </td>
                   <td class="text-center td-padding-decrease">
                     <select id="unit" class="form-control" data-ng-model="wagonSettlement.unit">

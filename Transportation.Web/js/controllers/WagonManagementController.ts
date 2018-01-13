@@ -264,7 +264,9 @@ module Clarity.Controller {
     }
 
     onChangeWagonSettlement(wagonSettlement: Model.WagonSettlementModel, propertyName: string, formattedPropertyName: string) {
-      this.mainHelper.onCurrencyPropertyChanged(wagonSettlement, propertyName, formattedPropertyName);
+      if (propertyName && formattedPropertyName) {
+        this.mainHelper.onCurrencyPropertyChanged(wagonSettlement, propertyName, formattedPropertyName);
+      }
       this.totalAmountWagonSettlements = this.calculateTotalAmountWagonSettlements(this.currentWagon);
       this.updateWagonSettlementPayment(wagonSettlement);
     }
