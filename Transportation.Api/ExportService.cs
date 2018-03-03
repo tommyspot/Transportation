@@ -253,7 +253,7 @@ namespace Transportation.Api
             dt.Columns.Add("Lượng", typeof(double));
             dt.Columns.Add("Dịch vụ", typeof(double));
             dt.Columns.Add("Hàng về", typeof(double));
-            dt.Columns.Add("Trích 10%", typeof(double));
+            dt.Columns.Add("Chênh lệch", typeof(double));
             dt.Columns.Add("Tổng tiền hàng", typeof(double));
 
             //Filter data by from/to date

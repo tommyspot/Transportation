@@ -193,7 +193,7 @@
               <td class="text-right col-sm-3 align-middle bold-text">{{viewModel.totalAmountWagonSettlements | currency: "" : 0 }}</td>
             </tr>
             <!--CHI-->
-            <tr>
+            <!--<tr>
               <td class="align-center align-middle bold-text none-bg" rowspan="6">Chi</td>
               <td class="align-center align-middle"><label class="no-bold" for="costOfTruck">Phí xe</label></td>
               <td class="align-center">
@@ -243,53 +243,54 @@
                 {{viewModel.totalAmountWagonSettlements - (viewModel.currentWagon.costOfTruck + viewModel.currentWagon.costOfService +
                 viewModel.currentWagon.costOfTangBoXe + viewModel.currentWagon.costOfPenalty + viewModel.currentWagon.costOfExtra) | currency: "" : 0}}
               </td>
-            </tr>
+            </tr>-->
+
             <!--THANH TOÁN VỚI CÔNG TY-->
             <tr>
               <td class="align-center align-middle bold-text" rowspan="8">Tiền thanh toán với công ty</td>
-              <td class="align-center align-middle"><label class="no-bold" for="paymentOfTruck">Tiền xe</label></td>
+              <td class="align-middle"><label class="no-bold" for="paymentOfTruck">Tiền xe</label></td>
               <td class="align-center">
                 <input id="paymentOfTruck" name="paymentOfTruck" class="form-control text-right" type="text" maxlength="15" data-ng-model="viewModel.currentWagon.paymentOfTruckFormatted"
                        data-ng-change="viewModel.formatCurrency(viewModel.currentWagon, 'paymentOfTruck', 'paymentOfTruckFormatted')" />
               </td>
             </tr>
             <tr>
-              <td class="align-center align-middle"><label class="no-bold" for="paymentOfRepairing">Sửa xe</label></td>
+              <td class="align-middle"><label class="no-bold" for="paymentOfRepairing">Sửa xe</label></td>
               <td class="align-center">
                 <input id="paymentOfRepairing" name="paymentOfRepairing" class="form-control text-right" type="text" maxlength="15" data-ng-model="viewModel.currentWagon.paymentOfRepairingFormatted"
                        data-ng-change="viewModel.formatCurrency(viewModel.currentWagon, 'paymentOfRepairing', 'paymentOfRepairingFormatted')" />
               </td>
             </tr>
             <tr>
-              <td class="align-center align-middle"><label class="no-bold" for="paymentOfOil">Tiền dầu</label></td>
+              <td class="align-middle"><label class="no-bold" for="paymentOfOil">Tiền dầu</label></td>
               <td class="align-center">
                 <input id="paymentOfOil" name="paymentOfOil" class="form-control text-right" type="text" maxlength="15" data-ng-model="viewModel.currentWagon.paymentOfOilFormatted"
                        data-ng-change="viewModel.formatCurrency(viewModel.currentWagon, 'paymentOfOil', 'paymentOfOilFormatted')" />
               </td>
             </tr>
             <tr>
-              <td class="align-center align-middle"><label class="no-bold" for="paymentOfLuong">Lượng</label></td>
+              <td class="align-middle"><label class="no-bold" for="paymentOfLuong">Lượng</label></td>
               <td class="align-center">
                 <input id="paymentOfLuong" name="paymentOfLuong" class="form-control text-right" type="text" maxlength="15" data-ng-model="viewModel.currentWagon.paymentOfLuongFormatted"
                        data-ng-change="viewModel.formatCurrency(viewModel.currentWagon, 'paymentOfLuong', 'paymentOfLuongFormatted')" />
               </td>
             </tr>
             <tr>
-              <td class="align-center align-middle"><label class="no-bold" for="paymentOfService">Dịch vụ</label></td>
+              <td class="align-middle"><label class="no-bold" for="paymentOfService">Dịch vụ</label></td>
               <td class="align-center">
                 <input id="paymentOfService" name="paymentOfService" class="form-control text-right" type="text" maxlength="15" data-ng-model="viewModel.currentWagon.paymentOfServiceFormatted"
                        data-ng-change="viewModel.formatCurrency(viewModel.currentWagon, 'paymentOfService', 'paymentOfServiceFormatted')">
               </td>
             </tr>
             <tr>
-              <td class="align-center align-middle"><label class="no-bold" for="paymentOfHangVe">Hàng về</label></td>
+              <td class="align-middle"><label class="no-bold" for="paymentOfHangVe">Hàng về</label></td>
               <td class="align-center">
                 <input id="paymentOfHangVe" name="paymentOfHangVe" class="form-control text-right" type="text" maxlength="15" data-ng-model="viewModel.currentWagon.paymentOfHangVeFormatted"
                        data-ng-change="viewModel.formatCurrency(viewModel.currentWagon, 'paymentOfHangVe', 'paymentOfHangVeFormatted')">
               </td>
             </tr>
             <tr>
-              <td class="align-center align-middle"><label class="no-bold" for="paymentOf10Percent">Trích 10%</label></td>
+              <td class="align-middle"><label class="no-bold" for="paymentOf10Percent">Chênh lệch</label></td>
               <td class="align-center">
                 <input id="paymentOf10Percent" name="paymentOf10Percent" class="form-control text-right" type="text" maxlength="15" data-ng-model="viewModel.currentWagon.paymentOf10PercentFormatted"
                        data-ng-change="viewModel.formatCurrency(viewModel.currentWagon, 'paymentOf10Percent', 'paymentOf10PercentFormatted')">
@@ -299,7 +300,7 @@
               <td class="align-center align-middle bold-text">CỘNG</td>
               <td class="text-right bold-text">
                 {{viewModel.currentWagon.paymentOfTruck + viewModel.currentWagon.paymentOfRepairing + viewModel.currentWagon.paymentOfOil +
-                viewModel.currentWagon.paymentOfLuong + viewModel.currentWagon.paymentOfService + viewModel.currentWagon.paymentOfHangVe +
+                viewModel.currentWagon.paymentOfLuong + viewModel.currentWagon.paymentOfService + viewModel.currentWagon.paymentOfHangVe -
                 viewModel.currentWagon.paymentOf10Percent | currency: "" : 0}}
               </td>
             </tr>
