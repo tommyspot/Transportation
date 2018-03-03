@@ -122,7 +122,7 @@ module Clarity.Controller {
         wagonView.departure = wagon.departure;
         wagonView.destination = wagon.destination;
         const totalPayment = wagon.paymentOfTruck + wagon.paymentOfRepairing + wagon.paymentOfOil + wagon.paymentOfLuong +
-                             wagon.paymentOfService + wagon.paymentOfHangVe + wagon.paymentOf10Percent;
+                             wagon.paymentOfService + wagon.paymentOfHangVe - wagon.paymentOf10Percent;
         wagonView.totalPayment = this.$filter('currency')(totalPayment, '', 0).trim();
         return wagonView;
       });
@@ -264,7 +264,9 @@ module Clarity.Controller {
     }
 
     onChangeWagonSettlement(wagonSettlement: Model.WagonSettlementModel, propertyName: string, formattedPropertyName: string) {
-      this.mainHelper.onCurrencyPropertyChanged(wagonSettlement, propertyName, formattedPropertyName);
+      if (propertyName && formattedPropertyName) {
+        this.mainHelper.onCurrencyPropertyChanged(wagonSettlement, propertyName, formattedPropertyName);
+      }
       this.totalAmountWagonSettlements = this.calculateTotalAmountWagonSettlements(this.currentWagon);
       this.updateWagonSettlementPayment(wagonSettlement);
     }
