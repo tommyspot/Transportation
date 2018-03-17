@@ -8,14 +8,16 @@
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="20">20</option>
-            <option value="99999">All</option>
+            <option value="999999">All</option>
           </select>
         </span>
         <button type="button" class="btn btn-default" data-ng-click="viewModel.goToWagonForm()">
           <span class="glyphicon glyphicon-plus"></span>
           <span class="hidden-xs">Tạo toa hàng mới</span>
         </button>
-        <button type="button" class="btn btn-default" data-ng-click="viewModel.removeWagons()">
+        <button type="button" class="btn btn-default"
+                data-ng-click="viewModel.removeWagons()"
+                data-ng-disabled="!viewModel.hasSelectedWagon()">
           <span class="glyphicon glyphicon-trash"></span>
           <span class="hidden-xs">Xóa toa hàng</span>
         </button>
@@ -56,7 +58,7 @@
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
-              <tr data-ng-if="!viewModel.isLoading" data-ng-repeat="wagonViewModel in viewModel.getWagonListOnPage()">
+              <tr data-ng-if="!viewModel.isLoading" data-ng-repeat="wagonViewModel in viewModel.wagonListView">
                 <td class="text-center" data-ng-click="$event.stopPropagation();">
                   <input id="wagon-{{$index}}" type="checkbox" data-ng-model="wagonViewModel.isChecked" />
                 </td>
@@ -80,7 +82,11 @@
       </div>
     </div>
 
-    <custom-pagination num-of-pages="viewModel.numOfPages" current-page="viewModel.currentPage" />
+    <custom-pagination
+      data-ng-if="viewModel.wagonListView.length > 0"
+      num-of-pages="viewModel.numOfPages"
+      current-page="viewModel.currentPage"
+    />
 
   </div>
 </div>

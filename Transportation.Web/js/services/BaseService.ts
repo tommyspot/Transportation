@@ -37,6 +37,18 @@ module Clarity.Service {
         .error((data, status) => { this.doCallback(errorCallback, data, status); });
     }
 
+    getPerPage(pageIndex, pageSize, successCallback: Function, errorCallback: Function) {
+      this.http.get(`${this.url}/page?pageIndex=${pageIndex}&pageSize=${pageSize}`)
+        .success((data) => { this.doCallback(successCallback, data); })
+        .error((data, status) => { this.doCallback(errorCallback, data, status); });
+    }
+
+    getNumOfPages(pageSize, successCallback: Function, errorCallback: Function) {
+      this.http.get(`${this.url}/pageSize/${pageSize}`)
+        .success((data) => { this.doCallback(successCallback, data); })
+        .error((data, status) => { this.doCallback(errorCallback, data, status); });
+    }
+
     create(entity: baseModel, successCallback: Function, errorCallback: Function) {
       this.http.post(this.url, entity)
         .success((data) => { this.doCallback(successCallback, data); })

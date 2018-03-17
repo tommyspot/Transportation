@@ -1,13 +1,13 @@
-﻿<div class="row">
+﻿<div class="row margin-bottom-20">
   <div class="col-sm-12">
     <nav aria-label="navigation" data-ng-if="viewModel.numOfPages > 0">
       <ul class="pagination">
-        <li class="pointer" ng-class="{'disabled': viewModel.currentPage === 1}" data-ng-click="viewModel.goToPage(1)">
+        <li class="pointer" ng-class="{'disabled': viewModel.currentPage === 0}" data-ng-click="viewModel.goToPage(0)">
           <a aria-label="First">
             <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
           </a>
         </li>
-        <li class="pointer" ng-class="{'disabled': viewModel.currentPage === 1}" data-ng-click="viewModel.goToPreviousPage()">
+        <li class="pointer" ng-class="{'disabled': viewModel.currentPage === 0}" data-ng-click="viewModel.goToPreviousPage()">
           <a aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
@@ -15,15 +15,15 @@
         <li class="pointer" data-ng-repeat="pageIndex in viewModel.getDynamicPage() track by $index"
             data-ng-click="viewModel.goToPage(viewModel.getIndexDynamicPage($index))"
             data-ng-class="{'active': viewModel.getIndexDynamicPage($index) === viewModel.currentPage}">
-          <span>{{viewModel.getIndexDynamicPage($index)}}</span>
+          <span>{{viewModel.getIndexDynamicPage($index) + 1}}</span>
         </li>
 
-        <li class="pointer" ng-class="{'disabled': viewModel.currentPage >= viewModel.numOfPages}" data-ng-click="viewModel.goToNextPage()">
+        <li class="pointer" ng-class="{'disabled': viewModel.currentPage >= viewModel.numOfPages - 1}" data-ng-click="viewModel.goToNextPage()">
           <a aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
-        <li class="pointer" ng-class="{'disabled': viewModel.currentPage >= viewModel.numOfPages}" data-ng-click="viewModel.goToPage(viewModel.numOfPages)">
+        <li class="pointer" ng-class="{'disabled': viewModel.currentPage >= viewModel.numOfPages - 1}" data-ng-click="viewModel.goToPage(viewModel.numOfPages - 1)">
           <a aria-label="Last">
             <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
           </a>

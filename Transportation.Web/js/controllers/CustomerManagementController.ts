@@ -20,7 +20,7 @@ module Clarity.Controller {
     public employeeList: Array<Model.EmployeeModel>;
     public customerList: Array<Model.CustomerModel>;
     public customerListView: Array<Model.CustomerViewModel>;
-    public customerListViewTmp: Array<Model.CustomerViewModel>;
+    public customerListViewFilter: Array<Model.CustomerViewModel>;
 
     public numOfPages: number;
     public currentPage: number;
@@ -48,6 +48,7 @@ module Clarity.Controller {
       this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
       $scope.viewModel = this;
 
+      this.currentPage = 0;
       this.pageSize = 10;
       this.searchText = '';
       this.errorMessage = '';
@@ -56,10 +57,21 @@ module Clarity.Controller {
 
       var self = this;
       $scope.$watch('viewModel.searchText', function (value) {
-        if (self.customerListViewTmp && self.customerListViewTmp.length > 0) {
-          self.customerListView = $filter('filter')(self.customerListViewTmp, value);
-          self.initPagination();
+        if (self.customerListViewFilter && self.customerListViewFilter.length > 0) {
+          self.customerListView = $filter('filter')(self.customerListViewFilter, value);
         }
+      });
+
+      $scope.$watch('viewModel.currentPage', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        this.clearSearchText();
+        this.fetchCustomerListPerPage();
+      });
+
+      $scope.$watch('viewModel.pageSize', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        this.clearSearchText();
+        this.initCustomerList();
       });
     }
 
@@ -98,16 +110,24 @@ module Clarity.Controller {
     }
 
     initCustomerList() {
+      this.fetchCustomerListPerPage();
+      this.fetchNumOfPages();
+    }
+
+    fetchCustomerListPerPage() {
       this.isLoading = true;
-      this.customerService.getAll((results: Array<Model.CustomerModel>) => {
+      this.customerService.getPerPage(this.currentPage, this.pageSize, (results: Array<Model.CustomerModel>) => {
         this.customerList = results;
-        this.customerList.sort(function (a: any, b: any) {
-          return b.id - a.id;
-        });
         this.mapToCustomerListView();
-        this.customerListViewTmp = this.customerListView;
-        this.initPagination();
+        this.customerListViewFilter = this.customerListView;
         this.isLoading = false;
+      }, null);
+    }
+
+    fetchNumOfPages() {
+      this.customerService.getNumOfPages(this.pageSize, (results: number) => {
+        this.currentPage = 0;
+        this.numOfPages = parseInt(results['pages']);
       }, null);
     }
 
@@ -133,22 +153,8 @@ module Clarity.Controller {
       });
     }
 
-    initPagination() {
-      this.currentPage = 1;
-      this.numOfPages = this.customerListView.length % this.pageSize === 0 ?
-        this.customerListView.length / this.pageSize : Math.floor(this.customerListView.length / this.pageSize) + 1;
-    }
-
-    getCustomerListOnPage(): Array<Model.CustomerViewModel> {
-      if (this.customerListView && this.customerListView.length > 0) {
-        var startIndex = this.pageSize * (this.currentPage - 1);
-        var endIndex = startIndex + this.pageSize;
-        return this.customerListView.slice(startIndex, endIndex);
-      }
-    }
-
     selectAllCustomersOnPage() {
-      var customerOnPage = this.getCustomerListOnPage();
+      var customerOnPage = this.customerListView;
       for (let index = 0; index < customerOnPage.length; index++) {
         var customer = customerOnPage[index];
         customer.isChecked = this.isCheckedAll;
@@ -236,5 +242,9 @@ module Clarity.Controller {
       this.mainHelper.onCurrencyPropertyChanged(this.currentCustomer, 'newPayment', `newPayment${formatSuffix}`);
     }
 
+    hasSelectedCustomer() {
+      if (!this.customerListView) return false;
+      return this.customerListView.some(customer => customer.isChecked);
+    }
 	}
 }

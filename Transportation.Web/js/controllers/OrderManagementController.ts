@@ -188,14 +188,14 @@ module Clarity.Controller {
     }
 
     initPagination() {
-      this.currentPage = 1;
+      this.currentPage = 0;
       this.numOfPages = this.orderListView.length % this.pageSize === 0 ?
         this.orderListView.length / this.pageSize : Math.floor(this.orderListView.length / this.pageSize) + 1;
     }
 
     getOrderListOnPage() {
       if (this.orderListView && this.orderListView.length > 0) {
-        var startIndex = this.pageSize * (this.currentPage - 1);
+        var startIndex = this.pageSize * (this.currentPage);
         var endIndex = startIndex + this.pageSize;
         return this.orderListView.slice(startIndex, endIndex);
       }

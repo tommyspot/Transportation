@@ -18,7 +18,33 @@ namespace Transportation.Api
         {
             var customers = ClarityDB.Instance.Customers;
 
-            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArrayCustomer(customers) };
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(customers) };
+        }
+
+        [Route(HttpVerb.Get, "/customers/page")]
+        public RestApiResult GetPerPage(string pageIndex, string pageSize)
+        {
+            int index = Int32.Parse(pageIndex);
+            int size = Int32.Parse(pageSize);
+            int startIndex = index * size;
+
+            var customers = ClarityDB.Instance.Customers
+                .OrderByDescending(x => x.ID)
+                .Skip(startIndex)
+                .Take(size);
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(customers) };
+        }
+
+        [Route(HttpVerb.Get, "/customers/pageSize/{pageSize}")]
+        public RestApiResult GetNumberPage(int pageSize)
+        {
+            var allRecords = ClarityDB.Instance.Customers.Count();
+            int numOfPages = allRecords % pageSize == 0
+                ? allRecords / pageSize
+                : allRecords / pageSize + 1;
+
+            JObject json = JObject.Parse(@"{'pages': '" + numOfPages + "'}");
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
         }
 
         [Route(HttpVerb.Post, "/customers")]
@@ -154,7 +180,7 @@ namespace Transportation.Api
             return (totalPaymentFromWagonSettlement + totalPaymentFromPayment);
         }
 
-        private JArray BuildJsonArrayCustomer(IEnumerable<Customer> customers)
+        private JArray BuildJsonArray(IEnumerable<Customer> customers)
         {
             JArray jArray = new JArray();
 

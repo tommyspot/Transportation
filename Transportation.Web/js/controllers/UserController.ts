@@ -117,14 +117,14 @@ module Clarity.Controller {
     }
 
     initPagination() {
-      this.currentPage = 1;
+      this.currentPage = 0;
       this.numOfPages = this.userListView.length % this.pageSize === 0 ?
         this.userListView.length / this.pageSize : Math.floor(this.userListView.length / this.pageSize) + 1;
     }
 
     getUserListOnPage() {
       if (this.userListView && this.userListView.length > 0) {
-        var startIndex = this.pageSize * (this.currentPage - 1);
+        var startIndex = this.pageSize * (this.currentPage);
         var endIndex = startIndex + this.pageSize;
         return this.userListView.slice(startIndex, endIndex);
       }

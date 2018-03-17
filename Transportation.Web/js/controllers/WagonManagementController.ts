@@ -26,7 +26,7 @@ module Clarity.Controller {
     public customerList: Array<Model.CustomerModel>
     public wagonList: Array<Model.WagonModel>;
     public wagonListView: Array<Model.WagonViewModel>;
-    public wagonListViewTmp: Array<Model.WagonViewModel>;
+    public wagonListViewFilter: Array<Model.WagonViewModel>;
 
     public numOfPages: number;
     public currentPage: number;
@@ -53,16 +53,27 @@ module Clarity.Controller {
       this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
       $scope.viewModel = this;
 
+      this.currentPage = 0;
       this.pageSize = 10;
       this.searchText = '';
       this.initWagon();
 
-      var self = this;
-      $scope.$watch('viewModel.searchText', function (value) {
-        if (self.wagonListViewTmp && self.wagonListViewTmp.length > 0) {
-          self.wagonListView = $filter('filter')(self.wagonListViewTmp, value);
-          self.initPagination();
+      $scope.$watch('viewModel.searchText', value => {
+        if (this.wagonListViewFilter && this.wagonListViewFilter.length > 0) {
+          this.wagonListView = $filter('filter')(this.wagonListViewFilter, value);
         }
+      });
+
+      $scope.$watch('viewModel.currentPage', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        this.clearSearchText();
+        this.fetchWagonListPerPage();
+      });
+
+      $scope.$watch('viewModel.pageSize', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        this.clearSearchText();
+        this.initWagonList();
       });
     }
 
@@ -98,16 +109,24 @@ module Clarity.Controller {
     }
 
     initWagonList() {
+      this.fetchWagonListPerPage();
+      this.fetchNumOfPages();
+    }
+
+    fetchWagonListPerPage() {
       this.isLoading = true;
-      this.wagonService.getAll((results: Array<Model.WagonModel>) => {
+      this.wagonService.getPerPage(this.currentPage, this.pageSize, (results: Array<Model.WagonModel>) => {
         this.wagonList = results;
-        this.wagonList.sort(function (a: any, b: any) {
-          return b.id - a.id;
-        });
         this.mapToWagonListView();
-        this.wagonListViewTmp = this.wagonListView;
-        this.initPagination();
+        this.wagonListViewFilter = this.wagonListView;
         this.isLoading = false;
+      }, null);
+    }
+
+    fetchNumOfPages() {
+      this.wagonService.getNumOfPages(this.pageSize, (results: number) => {
+        this.currentPage = 0;
+        this.numOfPages = parseInt(results['pages']);
       }, null);
     }
 
@@ -147,22 +166,8 @@ module Clarity.Controller {
       }, null);
     }
 
-    initPagination() {
-      this.currentPage = 1;
-      this.numOfPages = this.wagonListView.length % this.pageSize === 0 ?
-        this.wagonListView.length / this.pageSize : Math.floor(this.wagonListView.length / this.pageSize) + 1;
-    }
-
-    getWagonListOnPage() {
-      if (this.wagonListView && this.wagonListView.length > 0) {
-        var startIndex = this.pageSize * (this.currentPage - 1);
-        var endIndex = startIndex + this.pageSize;
-        return this.wagonListView.slice(startIndex, endIndex);
-      }
-    }
-
     selectAllWagonsOnPage() {
-      var wagonOnPage = this.getWagonListOnPage();
+      var wagonOnPage = this.wagonListView;
       for (let index = 0; index < wagonOnPage.length; index++) {
         var wagon = wagonOnPage[index];
         wagon.isChecked = this.isCheckedAll;
@@ -305,5 +310,9 @@ module Clarity.Controller {
       this.searchText = '';
     }
 
+    hasSelectedWagon() {
+      if (!this.wagonListView) return false;
+      return this.wagonListView.some(wagon => wagon.isChecked);
+    }
 	}
 }

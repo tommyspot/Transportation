@@ -8,14 +8,16 @@
 						<option value="5">5</option>
 						<option value="10">10</option>
 						<option value="20">20</option>
-						<option value="99999">All</option>
+						<option value="999999">All</option>
 					</select>
 				</span>
 				<button type="button" class="btn btn-default" data-ng-click="viewModel.goToCustomerForm()">
 					<span class="glyphicon glyphicon-plus"></span>
 					<span class="hidden-xs">Tạo khách hàng mới</span>
 				</button>
-				<button type="button" class="btn btn-default" data-ng-click="viewModel.removeCustomers()">
+				<button type="button" class="btn btn-default"
+                data-ng-click="viewModel.removeCustomers()"
+                data-ng-disabled="!viewModel.hasSelectedCustomer()">
 					<span class="glyphicon glyphicon-trash"></span>
 					<span class="hidden-xs">Xóa khách hàng</span>
 				</button>
@@ -62,7 +64,7 @@
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
-							<tr data-ng-if="!viewModel.isLoading" data-ng-repeat="customerViewModel in viewModel.getCustomerListOnPage()">
+							<tr data-ng-if="!viewModel.isLoading" data-ng-repeat="customerViewModel in viewModel.customerListView">
 								<td class="text-center" data-ng-click="$event.stopPropagation();">
 									<input id="customer-{{$index}}" type="checkbox" data-ng-model="customerViewModel.isChecked" />
 								</td>
@@ -89,7 +91,11 @@
 			</div>
 		</div>
 
-    <custom-pagination num-of-pages="viewModel.numOfPages" current-page="viewModel.currentPage" />
+    <custom-pagination
+      data-ng-if="viewModel.customerListView.length > 0"
+      num-of-pages="viewModel.numOfPages"
+      current-page="viewModel.currentPage"
+    />
 
 	</div>
 </div>
