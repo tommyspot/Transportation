@@ -24,6 +24,12 @@ div.bootstrap {
     font-size: 14px;
   }
 
+  .css-grid{
+    display: grid;
+    grid-auto-rows: minmax(210px, auto);
+    grid-gap: 20px;
+  }
+
   .full-page {
     height: 100%;
   }
@@ -145,7 +151,6 @@ div.bootstrap {
         border: none;
         color: white;
         font-size: 16px;
-        padding: 2px 8px;
         outline: none;
 
         &:hover {
@@ -275,8 +280,7 @@ div.bootstrap {
   .breadcrumb-trail {
     list-style: none;
     overflow: hidden;
-    margin-top: 4px;
-    margin-bottom: 20px;
+    margin: 4px 0;
     padding: 0;
     background-color: #ECF0F1;
     border-left: 4px solid $transport-color-1;
@@ -457,8 +461,6 @@ div.bootstrap {
   }
 
   .company-image-section {
-    margin-top: 4px;
-
     .company-image-wrapper {
       padding-left: 2px;
       padding-right: 2px;
@@ -487,84 +489,36 @@ div.bootstrap {
   }
 
   #mainPage, #qlToaHangPage, #qlGarage {
-
+    margin: 20px 0;
     .manage-box {
-      height: 212px;
-      width: 212px;
       background-color: #2980B9;
-      float: left;
-      text-align: center;
-      color: white;
-      margin: 0 20px 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
+      border-radius: 4px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
-      .icon {
-        font-size: 50px;
-        margin-top: 50px;
-        margin-bottom: 10px;
+      .wrapper-content{
+        text-align: center;
+        color: white;
+
+        .icon {
+          font-size: 50px;
+          margin-bottom: 10px;
+        }
       }
-    }
-
-    .manage-box.long-box {
-      width: 444px;
     }
 
     @media (min-width: 768px) {
-      .manage-box {
-        height: 140px;
-        width: 140px;
-
-        h4 {
-          font-size: 14px;
-        }
-
-        .icon {
-          font-size: 40px;
-          margin-top: 30px;
-          margin-bottom: 10px;
-        }
-      }
-
-      .manage-box.long-box {
-        width: 270px;
-      }
-    }
-
-    @media (min-width: 992px) {
-      .manage-box {
-        height: 180px;
-        width: 180px;
-
-        .icon {
-          font-size: 60px;
-          margin-top: 40px;
-          margin-bottom: 10px;
-        }
-      }
-
-      .manage-box.long-box {
-        width: 360px;
+      .css-grid{
+        grid-template-columns: 1fr 1fr;
       }
     }
 
     @media (min-width: 1200px) {
-      .manage-box {
-        width: 220px;
-        height: 200px;
-
-        h4 {
-          font-size: 20px;
-        }
-
-        .icon {
-          font-size: 70px;
-          margin-top: 40px;
-          margin-bottom: 10px;
-        }
-      }
-
-      .manage-box.long-box {
-        width: 440px;
+      .css-grid{
+        grid-template-columns: 1fr 1fr 1fr;
       }
     }
 
@@ -623,6 +577,8 @@ div.bootstrap {
   }
 
   .view-page {
+    margin: 20px 0;
+
     .show-records-per-page {
       width: auto;
       display: inline-block;
@@ -803,6 +759,7 @@ div.bootstrap {
   .edit-column-width, .detail-column-width{
     width: 60px;
   }
+  
   .payment-column-width{
     width: 90px;
   }
@@ -835,6 +792,7 @@ div.bootstrap {
       }
     }
   }
+  
   .payment-column--disable{
     cursor: none;
     pointer-events: none;
@@ -891,6 +849,7 @@ div.bootstrap {
 
 
   }
+  
   .report-btn{
     border: none;
     background-color: $transport-color-1;
