@@ -26,9 +26,11 @@ namespace Transportation.Api.Framework
 
         private static void ParsePath(Dictionary<string, object> dictionary, ApiContext context)
         {
-            if (context.Route.Url.Contains("{id}") || context.Route.Url.Contains("{path}") || context.Route.Url.Contains("{email}")
-                 || context.Route.Url.Contains("{username}") || context.Route.Url.Contains("{code}") || context.Route.Url.Contains("{domainName}")
-                || context.Route.Url.Contains("{secret}") || context.Route.Url.Contains("{folderName}"))
+            if (context.Route.Url.Contains("{id}") 
+                || context.Route.Url.Contains("{path}") || context.Route.Url.Contains("{email}")
+                || context.Route.Url.Contains("{username}") || context.Route.Url.Contains("{code}")
+                || context.Route.Url.Contains("{domainName}") || context.Route.Url.Contains("{secret}")
+                || context.Route.Url.Contains("{folderName}") || context.Route.Url.Contains("{pageSize}"))
             {
                 List<string> requestSegments = RouteResolver.GetSignificantSegments(context.Uri.Segments);
 
@@ -83,6 +85,11 @@ namespace Transportation.Api.Framework
                     {
                         string path = requestSegments[i];
                         dictionary.Add("folderName", path);
+                    }
+                    else if (routeSegments[i] == "{pageSize}")
+                    {
+                        int pageSize = Int32.Parse(requestSegments[i]);
+                        dictionary.Add("pageSize", pageSize);
                     }
                 }
             }

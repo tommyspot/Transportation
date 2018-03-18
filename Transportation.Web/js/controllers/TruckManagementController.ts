@@ -119,14 +119,14 @@ module Clarity.Controller {
     }
 
 		initPagination() {
-			this.currentPage = 1;
+			this.currentPage = 0;
 			this.numOfPages = this.truckListView.length % this.pageSize === 0 ?
         this.truckListView.length / this.pageSize : Math.floor(this.truckListView.length / this.pageSize) + 1;
 		}
 
 		getTruckListOnPage() {
       if (this.truckListView && this.truckListView.length > 0) {
-				var startIndex = this.pageSize * (this.currentPage - 1);
+				var startIndex = this.pageSize * (this.currentPage);
 				var endIndex = startIndex + this.pageSize;
         return this.truckListView.slice(startIndex, endIndex);
 			}

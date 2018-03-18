@@ -86,14 +86,14 @@ module Clarity.Controller {
     }
 
     initPagination() {
-      this.currentPage = 1;
+      this.currentPage = 0;
       this.numOfPages = this.productList.length % this.pageSize === 0 ?
         this.productList.length / this.pageSize : Math.floor(this.productList.length / this.pageSize) + 1;
     }
 
     getProductListOnPage() {
       if (this.productList && this.productList.length > 0) {
-        var startIndex = this.pageSize * (this.currentPage - 1);
+        var startIndex = this.pageSize * (this.currentPage);
         var endIndex = startIndex + this.pageSize;
         return this.productList.slice(startIndex, endIndex);
       }

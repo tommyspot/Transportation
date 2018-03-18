@@ -32,12 +32,12 @@ module Clarity.Directive {
       };
 
       scope.getIndexDynamicPage = (index) => {
-        if (scope.currentPage <= 3)
-          return index + 1; // start 1-5
-        else if (scope.currentPage <= scope.numOfPages - 2)
+        if (scope.currentPage <= 2)
+          return index; // start 1-5
+        else if (scope.currentPage <= scope.numOfPages - 3)
           return index + (scope.currentPage - 2);  // start (currentPage - 2) - (currentPage + 2)
         else
-          return index + (scope.numOfPages - 4); // start (numOfPage - 4) - (numOfPage)
+          return index + (scope.numOfPages - 5); // start (numOfPage - 4) - (numOfPage)
       };
 
       scope.goToPage = (pageIndex: number) => {
@@ -45,14 +45,14 @@ module Clarity.Directive {
       };
 
       scope.goToPreviousPage = () => {
-        if (scope.currentPage > 1) {
+        if (scope.currentPage >= 1) {
           scope.currentPage--;
           scope.goToPage(scope.currentPage);
         }
       };
 
       scope.goToNextPage = () => {
-        if (scope.currentPage < scope.numOfPages) {
+        if (scope.currentPage < scope.numOfPages - 1) {
           scope.currentPage++;
           scope.goToPage(scope.currentPage);
         }

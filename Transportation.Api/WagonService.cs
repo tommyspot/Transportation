@@ -27,6 +27,32 @@ namespace Transportation.Api
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(wagons) };
         }
 
+        [Route(HttpVerb.Get, "/wagons/page")]
+        public RestApiResult GetPerPage(string pageIndex, string pageSize)
+        {
+            int index = Int32.Parse(pageIndex);
+            int size = Int32.Parse(pageSize);
+            int startIndex = index * size;
+
+            var wagons = ClarityDB.Instance.Wagons
+                .OrderByDescending(x => x.ID)
+                .Skip(startIndex)
+                .Take(size);
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(wagons) };
+        }
+
+        [Route(HttpVerb.Get, "/wagons/pageSize/{pageSize}")]
+        public RestApiResult GetNumberPage(int pageSize)
+        {
+            var allRecords = ClarityDB.Instance.Wagons.Count();
+            int numOfPages = allRecords % pageSize == 0
+                ? allRecords / pageSize
+                : allRecords / pageSize + 1;
+
+            JObject json = JObject.Parse(@"{'pages': '" + numOfPages + "'}");
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
+        }
+
         [Route(HttpVerb.Post, "/wagons")]
         public RestApiResult Create(JObject json)
         {
