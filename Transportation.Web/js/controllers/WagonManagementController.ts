@@ -167,11 +167,7 @@ module Clarity.Controller {
     }
 
     selectAllWagonsOnPage() {
-      var wagonOnPage = this.wagonListView;
-      for (let index = 0; index < wagonOnPage.length; index++) {
-        var wagon = wagonOnPage[index];
-        wagon.isChecked = this.isCheckedAll;
-      }
+      this.wagonListView.map(wagon => wagon.isChecked = this.isCheckedAll);
     }
 
     removeWagons() {

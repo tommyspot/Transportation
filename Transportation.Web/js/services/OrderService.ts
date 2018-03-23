@@ -10,8 +10,14 @@ module Clarity.Service {
       this.url = '/api/orders';
     }
 
-    getAllDeletedOrders(successCallback: Function, errorCallback: Function) {
-      this.http.get('/api/deletedOrders')
+    getDeletedOrdersPerPage(pageIndex, pageSize, successCallback: Function, errorCallback: Function) {
+      this.http.get(`/api/deletedOrders/page?pageIndex=${pageIndex}&pageSize=${pageSize}`)
+        .success((data) => { this.doCallback(successCallback, data); })
+        .error((data, status) => { this.doCallback(errorCallback, data, status); });
+    }
+
+    getDeletedOrdersNumOfPages(pageSize, successCallback: Function, errorCallback: Function) {
+      this.http.get(`/api/deletedOrders/pageSize/${pageSize}`)
         .success((data) => { this.doCallback(successCallback, data); })
         .error((data, status) => { this.doCallback(errorCallback, data, status); });
     }

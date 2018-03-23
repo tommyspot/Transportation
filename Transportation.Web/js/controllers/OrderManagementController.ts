@@ -21,7 +21,7 @@ module Clarity.Controller {
     public currentOrder: Model.OrderModel;
     public orderList: Array<Model.OrderModel>;
     public orderListView: Array<Model.OrderViewModel>;
-    public orderListViewTmp: Array<Model.OrderViewModel>;
+    public orderListViewFilter: Array<Model.OrderViewModel>;
 
     public inventoryViewList: Array<Model.InventoryViewModel>;
     public productList: Array<Model.ProductModel>;
@@ -57,15 +57,34 @@ module Clarity.Controller {
       this.productService = new service.ProductService($http);
       $scope.viewModel = this;
 
+      this.currentPage = 0;
       this.pageSize = 10;
       this.searchText = '';
       this.initOrder();
 
-      var self = this;
-      $scope.$watch('viewModel.searchText', function (value) {
-        if (self.orderListViewTmp && self.orderListViewTmp.length > 0) {
-          self.orderListView = $filter('filter')(self.orderListViewTmp, value);
-          self.initPagination();
+      $scope.$watch('viewModel.searchText', value => {
+        if (this.orderListViewFilter && this.orderListViewFilter.length > 0) {
+          this.orderListView = $filter('filter')(this.orderListViewFilter, value);
+        }
+      });
+
+      $scope.$watch('viewModel.currentPage', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        this.clearSearchText();
+        if (this.$location.path() === '/ql-garage/ban-hang') {
+          this.fetchOrderListPerPage();
+        } else if (this.$location.path() === '/ql-garage/ban-hang/da-xoa') {
+          this.fetchDeletedOrderListPerPage();
+        }
+      });
+
+      $scope.$watch('viewModel.pageSize', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        this.clearSearchText();
+        if (this.$location.path() === '/ql-garage/ban-hang') {
+          this.initOrderList();
+        } else if (this.$location.path() === '/ql-garage/ban-hang/da-xoa') {
+          this.initDeletedOrderList();
         }
       });
     }
@@ -106,27 +125,47 @@ module Clarity.Controller {
     }
 
     initOrderList() {
+      this.fetchOrderListPerPage();
+      this.fetchNumOfPages();
+    }
+
+    initDeletedOrderList() {
+      this.fetchDeletedOrderListPerPage();
+      this.fetchDeletedOrderNumOfPages();
+    }
+
+    fetchOrderListPerPage() {
       this.isLoading = true;
-      this.orderService.getAll((results: Array<Model.OrderModel>) => {
+      this.orderService.getPerPage(this.currentPage, this.pageSize, (results: Array<Model.OrderModel>) => {
         this.initOrderListAfterCallAsync(results);
       }, null);
     }
 
-    initDeletedOrderList() {
+    fetchDeletedOrderListPerPage() {
       this.isLoading = true;
-      this.orderService.getAllDeletedOrders((results: Array<Model.OrderModel>) => {
+      this.orderService.getDeletedOrdersPerPage(this.currentPage, this.pageSize, (results: Array<Model.OrderModel>) => {
         this.initOrderListAfterCallAsync(results);
+      }, null);
+    }
+
+    fetchNumOfPages() {
+      this.orderService.getNumOfPages(this.pageSize, (results: number) => {
+        this.currentPage = 0;
+        this.numOfPages = parseInt(results['pages']);
+      }, null);
+    }
+
+    fetchDeletedOrderNumOfPages() {
+      this.orderService.getDeletedOrdersNumOfPages(this.pageSize, (results: number) => {
+        this.currentPage = 0;
+        this.numOfPages = parseInt(results['pages']);
       }, null);
     }
 
     initOrderListAfterCallAsync(results: Array<Model.OrderModel>) {
       this.orderList = results;
-      this.orderList.sort(function (a: any, b: any) {
-        return b.id - a.id;
-      });
       this.mapToOrderListView();
-      this.orderListViewTmp = this.orderListView;
-      this.initPagination();
+      this.orderListViewFilter = this.orderListView;
       this.isLoading = false;
     }
 
@@ -187,26 +226,8 @@ module Clarity.Controller {
       }
     }
 
-    initPagination() {
-      this.currentPage = 0;
-      this.numOfPages = this.orderListView.length % this.pageSize === 0 ?
-        this.orderListView.length / this.pageSize : Math.floor(this.orderListView.length / this.pageSize) + 1;
-    }
-
-    getOrderListOnPage() {
-      if (this.orderListView && this.orderListView.length > 0) {
-        var startIndex = this.pageSize * (this.currentPage);
-        var endIndex = startIndex + this.pageSize;
-        return this.orderListView.slice(startIndex, endIndex);
-      }
-    }
-
     selectAllProductsOnPage() {
-      var employeeOnPage = this.getOrderListOnPage();
-      for (let index = 0; index < employeeOnPage.length; index++) {
-        var employee = employeeOnPage[index];
-        employee.isChecked = this.isCheckedAll;
-      }
+      this.orderListView.map(order => order.isChecked = this.isCheckedAll);
     }
 
     removeOrders() {
@@ -379,5 +400,11 @@ module Clarity.Controller {
         this.isExportLoading = false;
       });
     }
-	}
+
+    hasSelectedOrder() {
+      if (!this.orderListView) return false;
+      return this.orderListView.some(order => order.isChecked);
+    }
+
+  }
 }

@@ -510,13 +510,13 @@ div.bootstrap {
       }
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 736px) {
       .css-grid{
         grid-template-columns: 1fr 1fr;
       }
     }
 
-    @media (min-width: 1200px) {
+    @media (min-width: 1024px) {
       .css-grid{
         grid-template-columns: 1fr 1fr 1fr;
       }

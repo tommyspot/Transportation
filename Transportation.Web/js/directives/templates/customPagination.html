@@ -7,7 +7,7 @@
             <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
           </a>
         </li>
-        <li class="pointer" ng-class="{'disabled': viewModel.currentPage === 0}" data-ng-click="viewModel.goToPreviousPage()">
+        <li class="pointer hidden-xs" ng-class="{'disabled': viewModel.currentPage === 0}" data-ng-click="viewModel.goToPreviousPage()">
           <a aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
@@ -18,7 +18,7 @@
           <span>{{viewModel.getIndexDynamicPage($index) + 1}}</span>
         </li>
 
-        <li class="pointer" ng-class="{'disabled': viewModel.currentPage >= viewModel.numOfPages - 1}" data-ng-click="viewModel.goToNextPage()">
+        <li class="pointer hidden-xs" ng-class="{'disabled': viewModel.currentPage >= viewModel.numOfPages - 1}" data-ng-click="viewModel.goToNextPage()">
           <a aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
@@ -28,7 +28,7 @@
             <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
           </a>
         </li>
-        <li class="total-page"><span>Tổng số trang: <b>{{viewModel.numOfPages}}</b></span></li>
+        <li class="total-page"><span><span class="hidden-xs">Tổng số trang:</span><b>{{viewModel.numOfPages}}</b></span></li>
       </ul>
     </nav>
   </div>

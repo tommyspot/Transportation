@@ -8,14 +8,16 @@
 						<option value="5">5</option>
 						<option value="10">10</option>
 						<option value="20">20</option>
-						<option value="99999">All</option>
+						<option value="999999">All</option>
 					</select>
 				</span>
 				<button type="button" class="btn btn-default" data-ng-click="viewModel.goToProductForm()">
 					<span class="glyphicon glyphicon-plus"></span>
 					<span class="hidden-xs">Tạo sản phẩm mới</span>
 				</button>
-				<button type="button" class="btn btn-default" data-ng-click="viewModel.removeProducts()">
+				<button type="button" class="btn btn-default"
+                data-ng-click="viewModel.removeProducts()"
+                data-ng-disabled="!viewModel.hasSelectedProduct()">
 					<span class="glyphicon glyphicon-trash"></span>
 					<span class="hidden-xs">Xóa sản phẩm</span>
 				</button>
@@ -51,7 +53,7 @@
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
-							<tr data-ng-if="!viewModel.isLoading" data-ng-repeat="product in viewModel.getProductListOnPage()">
+							<tr data-ng-if="!viewModel.isLoading" data-ng-repeat="product in viewModel.productList">
 								<td class="text-center" data-ng-click="$event.stopPropagation();">
 									<input id="product-{{$index}}" type="checkbox" data-ng-model="product.isChecked" />
 								</td>
@@ -70,7 +72,11 @@
 			</div>
 		</div>
 
-    <custom-pagination num-of-pages="viewModel.numOfPages" current-page="viewModel.currentPage" />
+    <custom-pagination
+        data-ng-if="viewModel.productList.length > 0"
+        num-of-pages="viewModel.numOfPages"
+        current-page="viewModel.currentPage"
+    />
 
 	</div>
 </div>

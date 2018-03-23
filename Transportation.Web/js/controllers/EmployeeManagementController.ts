@@ -15,7 +15,7 @@ module Clarity.Controller {
 
     public employeeList: Array<Model.EmployeeModel>;
     public employeeListView: Array<Model.EmployeeViewModel>;
-    public employeeListViewTmp: Array<Model.EmployeeViewModel>;
+    public employeeListViewFilter: Array<Model.EmployeeViewModel>;
 
     public numOfPages: number;
     public currentPage: number;
@@ -37,18 +37,29 @@ module Clarity.Controller {
       this.employeeService = new service.EmployeeService($http);
       $scope.viewModel = this;
 
+      this.currentPage = 0;
       this.pageSize = 10;
       this.searchText = '';
+      this.titles = ['Giám Đốc', 'Trưởng Phòng', 'Phó Phòng', 'Trưởng Chi Nhánh', 'Phó Chi Nhánh', 'Tài Xế', 'Kế Toán'];
       this.initEmployee();
-
-      var self = this;
-      $scope.$watch('viewModel.searchText', function (value) {
-        if (self.employeeListViewTmp && self.employeeListViewTmp.length > 0) {
-          self.employeeListView = $filter('filter')(self.employeeListViewTmp, value);
-          self.initPagination();
+			
+      $scope.$watch('viewModel.searchText', value => {
+        if (this.employeeListViewFilter && this.employeeListViewFilter.length > 0) {
+          this.employeeListView = $filter('filter')(this.employeeListViewFilter, value);
         }
       });
-			this.titles = ['Giám Đốc', 'Trưởng Phòng', 'Phó Phòng', 'Trưởng Chi Nhánh', 'Phó Chi Nhánh', 'Tài Xế', 'Kế Toán'];
+
+      $scope.$watch('viewModel.currentPage', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        this.clearSearchText();
+        this.fetchEmployeeListPerPage();
+      });
+
+      $scope.$watch('viewModel.pageSize', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        this.clearSearchText();
+        this.initEmployeeList();
+      });
     }
 
     initEmployee() {
@@ -76,16 +87,24 @@ module Clarity.Controller {
     }
 
     initEmployeeList() {
+      this.fetchEmployeeListPerPage();
+      this.fetchNumOfPages();
+    }
+
+    fetchEmployeeListPerPage() {
       this.isLoading = true;
-      this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
+      this.employeeService.getPerPage(this.currentPage, this.pageSize, (results: Array<Model.EmployeeModel>) => {
         this.employeeList = results;
-        this.employeeList.sort(function (a: any, b: any) {
-          return b.id - a.id;
-        });
         this.mapToEmployeeListView();
-        this.employeeListViewTmp = this.employeeListView;
-        this.initPagination();
+        this.employeeListViewFilter = this.employeeListView;
         this.isLoading = false;
+      }, null);
+    }
+
+    fetchNumOfPages() {
+      this.employeeService.getNumOfPages(this.pageSize, (results: number) => {
+        this.currentPage = 0;
+        this.numOfPages = parseInt(results['pages']);
       }, null);
     }
 
@@ -102,26 +121,8 @@ module Clarity.Controller {
       });
     }
 
-    initPagination() {
-      this.currentPage = 0;
-      this.numOfPages = this.employeeListView.length % this.pageSize === 0 ?
-        this.employeeListView.length / this.pageSize : Math.floor(this.employeeListView.length / this.pageSize) + 1;
-    }
-
-    getEmployeeListOnPage() {
-      if (this.employeeListView && this.employeeListView.length > 0) {
-        var startIndex = this.pageSize * (this.currentPage);
-        var endIndex = startIndex + this.pageSize;
-        return this.employeeListView.slice(startIndex, endIndex);
-      }
-    }
-
     selectAllEmployeesOnPage() {
-      var employeeOnPage = this.getEmployeeListOnPage();
-      for (let index = 0; index < employeeOnPage.length; index++) {
-        var employee = employeeOnPage[index];
-        employee.isChecked = this.isCheckedAll;
-      }
+      this.employeeListView.map(employee => employee.isChecked = this.isCheckedAll);
     }
 
     removeEmployees() {
@@ -175,6 +176,11 @@ module Clarity.Controller {
 
     clearSearchText() {
       this.searchText = '';
+    }
+
+    hasSelectedEmployee() {
+      if (!this.employeeListView) return false;
+      return this.employeeListView.some(employee => employee.isChecked);
     }
 
 	}
