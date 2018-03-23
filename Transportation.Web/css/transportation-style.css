@@ -5894,10 +5894,10 @@ div.bootstrap {
         #ng-app #mainPage .manage-box .wrapper-content .icon, #ng-app #qlToaHangPage .manage-box .wrapper-content .icon, #ng-app #qlGarage .manage-box .wrapper-content .icon {
           font-size: 50px;
           margin-bottom: 10px; }
-    @media (min-width: 768px) {
+    @media (min-width: 736px) {
       #ng-app #mainPage .css-grid, #ng-app #qlToaHangPage .css-grid, #ng-app #qlGarage .css-grid {
         grid-template-columns: 1fr 1fr; } }
-    @media (min-width: 1200px) {
+    @media (min-width: 1024px) {
       #ng-app #mainPage .css-grid, #ng-app #qlToaHangPage .css-grid, #ng-app #qlGarage .css-grid {
         grid-template-columns: 1fr 1fr 1fr; } }
     #ng-app #mainPage .manage-box.garage-box, #ng-app #qlToaHangPage .manage-box.garage-box, #ng-app #qlGarage .manage-box.garage-box {

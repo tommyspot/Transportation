@@ -10,8 +10,8 @@ module Clarity.Service {
       this.url = '/api/products';
     }
 
-    getAllProductInfo(successCallback: Function, errorCallback: Function) {
-      this.http.get('/api/productInfos')
+    getProductInfoPerPage(pageIndex, pageSize, successCallback: Function, errorCallback: Function) {
+      this.http.get(`/api/productInfos/page?pageIndex=${pageIndex}&pageSize=${pageSize}`)
         .success((data) => { this.doCallback(successCallback, data); })
         .error((data, status) => { this.doCallback(errorCallback, data, status); });
     }

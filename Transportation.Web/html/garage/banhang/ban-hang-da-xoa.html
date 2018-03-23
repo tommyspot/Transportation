@@ -8,7 +8,7 @@
 						<option value="5">5</option>
 						<option value="10">10</option>
 						<option value="20">20</option>
-						<option value="99999">All</option>
+						<option value="999999">All</option>
 					</select>
 				</span>
 			</div>
@@ -42,7 +42,7 @@
                   <i class="fa fa-spinner fa-spin"></i>
                 </td>
               </tr>
-							<tr data-ng-if="!viewModel.isLoading" data-ng-repeat="orderViewModel in viewModel.getOrderListOnPage()">
+							<tr data-ng-if="!viewModel.isLoading" data-ng-repeat="orderViewModel in viewModel.orderListView">
 								<td class="text-center">{{$index + 1}}</td>
 								<td>{{::orderViewModel.licensePlate}}</td>
 								<td>{{::orderViewModel.customerName}}</td>
@@ -57,7 +57,11 @@
 			</div>
 		</div>
 
-    <custom-pagination num-of-pages="viewModel.numOfPages" current-page="viewModel.currentPage" />
+    <custom-pagination
+        data-ng-if="viewModel.orderListView.length > 0"
+        num-of-pages="viewModel.numOfPages"
+        current-page="viewModel.currentPage"
+    />
 
 	</div>
 </div>

@@ -19,7 +19,7 @@ module Clarity.Controller {
 
     public inputOrderList: Array<Model.InputOrderModel>;
     public inputOrderListView: Array<Model.InputOrderViewModel>;
-    public inputOrderListViewTmp: Array<Model.InputOrderViewModel>;
+    public inputOrderListViewFilter: Array<Model.InputOrderViewModel>;
 
     public productList: Array<Model.ProductModel>;
     public productNameList: Array<string>;
@@ -47,16 +47,27 @@ module Clarity.Controller {
       this.productService = new service.ProductService($http);
       $scope.viewModel = this;
 
+      this.currentPage = 0;
       this.pageSize = 10;
       this.searchText = '';
       this.initInputOrder();
 
-      var self = this;
-      $scope.$watch('viewModel.searchText', function (value) {
-        if (self.inputOrderListViewTmp && self.inputOrderListViewTmp.length > 0) {
-          self.inputOrderListView = $filter('filter')(self.inputOrderListViewTmp, value);
-          self.initPagination();
+      $scope.$watch('viewModel.searchText', value => {
+        if (this.inputOrderListViewFilter && this.inputOrderListViewFilter.length > 0) {
+          this.inputOrderListView = $filter('filter')(this.inputOrderListViewFilter, value);
         }
+      });
+
+      $scope.$watch('viewModel.currentPage', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        this.clearSearchText();
+        this.fetchInputOrderListPerPage();
+      });
+
+      $scope.$watch('viewModel.pageSize', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        this.clearSearchText();
+        this.initInputOrderList();
       });
     }
 
@@ -88,15 +99,24 @@ module Clarity.Controller {
     }
 
     initInputOrderList() {
-      this.inputOrderService.getAll((results: Array<Model.InputOrderModel>) => {
+      this.fetchInputOrderListPerPage();
+      this.fetchNumOfPages();
+    }
+
+    fetchInputOrderListPerPage() {
+      this.isLoading = true;
+      this.inputOrderService.getPerPage(this.currentPage, this.pageSize, (results: Array<Model.InputOrderModel>) => {
         this.inputOrderList = results;
-        this.inputOrderList.sort(function (a: any, b: any) {
-          return b.id - a.id;
-        });
         this.mapToInputOrderListView();
-        this.inputOrderListViewTmp = this.inputOrderListView;
-        this.initPagination();
+        this.inputOrderListViewFilter = this.inputOrderListView;
         this.isLoading = false;
+      }, null);
+    }
+
+    fetchNumOfPages() {
+      this.inputOrderService.getNumOfPages(this.pageSize, (results: number) => {
+        this.currentPage = 0;
+        this.numOfPages = parseInt(results['pages']);
       }, null);
     }
 
@@ -130,26 +150,8 @@ module Clarity.Controller {
       }
     }
 
-    initPagination() {
-      this.currentPage = 0;
-      this.numOfPages = this.inputOrderListView.length % this.pageSize === 0 ?
-        this.inputOrderListView.length / this.pageSize : Math.floor(this.inputOrderListView.length / this.pageSize) + 1;
-    }
-
-    getInputOrderListOnPage() {
-      if (this.inputOrderListView && this.inputOrderListView.length > 0) {
-        var startIndex = this.pageSize * (this.currentPage);
-        var endIndex = startIndex + this.pageSize;
-        return this.inputOrderListView.slice(startIndex, endIndex);
-      }
-    }
-
     selectAllInputOrdersOnPage() {
-      var inpuOrderOnPage = this.getInputOrderListOnPage();
-      for (let index = 0; index < inpuOrderOnPage.length; index++) {
-        var inputOrder = inpuOrderOnPage[index];
-        inputOrder.isChecked = this.isCheckedAll;
-      }
+      this.inputOrderListView.map(inputOrder => inputOrder.isChecked = this.isCheckedAll);
     }
 
     removeOrders() {
@@ -240,6 +242,11 @@ module Clarity.Controller {
 
     clearSearchText() {
       this.searchText = '';
+    }
+
+    hasSelectedInputOrder() {
+      if (!this.inputOrderListView) return false;
+      return this.inputOrderListView.some(wagon => wagon.isChecked);
     }
 
 	}

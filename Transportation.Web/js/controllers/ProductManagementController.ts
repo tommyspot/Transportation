@@ -14,7 +14,7 @@ module Clarity.Controller {
     public productService: service.ProductService;
 
     public productList: Array<Model.ProductModel>;
-    public productListTmp: Array<Model.ProductModel>;
+    public productListFilter: Array<Model.ProductModel>;
 
     public numOfPages: number;
     public currentPage: number;
@@ -37,17 +37,28 @@ module Clarity.Controller {
       this.productService = new service.ProductService($http);
       $scope.viewModel = this;
 
+      this.currentPage = 0;
       this.pageSize = 10;
       this.errorMessage = '';
       this.searchText = '';
       this.initProduct();
 
-      var self = this;
-      $scope.$watch('viewModel.searchText', function (value) {
-        if (self.productListTmp && self.productListTmp.length > 0) {
-          self.productList = $filter('filter')(self.productListTmp, value);
-          self.initPagination();
+      $scope.$watch('viewModel.searchText', value => {
+        if (this.productListFilter && this.productListFilter.length > 0) {
+          this.productList = $filter('filter')(this.productListFilter, value);
         }
+      });
+
+      $scope.$watch('viewModel.currentPage', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        this.clearSearchText();
+        this.fetchProductListPerPage();
+      });
+
+      $scope.$watch('viewModel.pageSize', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        this.clearSearchText();
+        this.initProductList();
       });
     }
 
@@ -66,14 +77,23 @@ module Clarity.Controller {
     }
 
     initProductList() {
-      this.productService.getAll((results: Array<Model.ProductModel>) => {
+      this.fetchProductListPerPage();
+      this.fetchNumOfPages();
+    }
+
+    fetchProductListPerPage() {
+      this.isLoading = true;
+      this.productService.getPerPage(this.currentPage, this.pageSize, (results: Array<Model.ProductModel>) => {
         this.productList = results;
-        this.productList.sort(function (a: any, b: any) {
-          return b.id - a.id;
-        });
-        this.productListTmp = this.productList;
-        this.initPagination();
+        this.productListFilter = this.productList;
         this.isLoading = false;
+      }, null);
+    }
+
+    fetchNumOfPages() {
+      this.productService.getNumOfPages(this.pageSize, (results: number) => {
+        this.currentPage = 0;
+        this.numOfPages = parseInt(results['pages']);
       }, null);
     }
 
@@ -85,26 +105,8 @@ module Clarity.Controller {
       }
     }
 
-    initPagination() {
-      this.currentPage = 0;
-      this.numOfPages = this.productList.length % this.pageSize === 0 ?
-        this.productList.length / this.pageSize : Math.floor(this.productList.length / this.pageSize) + 1;
-    }
-
-    getProductListOnPage() {
-      if (this.productList && this.productList.length > 0) {
-        var startIndex = this.pageSize * (this.currentPage);
-        var endIndex = startIndex + this.pageSize;
-        return this.productList.slice(startIndex, endIndex);
-      }
-    }
-
     selectAllProductsOnPage() {
-      var employeeOnPage = this.getProductListOnPage();
-      for (let index = 0; index < employeeOnPage.length; index++) {
-        var employee = employeeOnPage[index];
-        employee.isChecked = this.isCheckedAll;
-      }
+      this.productList.map(product => product.isChecked = this.isCheckedAll);
     }
 
     removeProducts() {
@@ -164,6 +166,11 @@ module Clarity.Controller {
 
     clearSearchText() {
       this.searchText = '';
+    }
+
+    hasSelectedProduct() {
+      if (!this.productList) return false;
+      return this.productList.some(product => product.isChecked);
     }
 	}
 }

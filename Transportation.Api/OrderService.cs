@@ -19,12 +19,36 @@ namespace Transportation.Api
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(orders) };
         }
 
+        [Route(HttpVerb.Get, "/orders/page")]
+        public RestApiResult GetPerPage(string pageIndex, string pageSize)
+        {
+            return this.GetPerPageByStatus(pageIndex, pageSize, true);
+        }
+
+        [Route(HttpVerb.Get, "/orders/pageSize/{pageSize}")]
+        public RestApiResult GetNumberPage(int pageSize)
+        {
+            return this.GetNumberPageByStatus(pageSize, true);
+        }
+
         [Route(HttpVerb.Get, "/deletedOrders")]
         public RestApiResult GetAllDeletedOrders()
         {
             var orders = ClarityDB.Instance.Orders.Where(x => !x.Status);
 
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(orders) };
+        }
+
+        [Route(HttpVerb.Get, "/deletedOrders/page")]
+        public RestApiResult GetDeletedOrdersPerPage(string pageIndex, string pageSize)
+        {
+            return this.GetPerPageByStatus(pageIndex, pageSize, false);
+        }
+
+        [Route(HttpVerb.Get, "/deletedOrders/pageSize/{pageSize}")]
+        public RestApiResult GetDeletedOrdersNumberPage(int pageSize)
+        {
+            return this.GetNumberPageByStatus(pageSize, false);
         }
 
         [Route(HttpVerb.Post, "/orders")]
@@ -177,5 +201,29 @@ namespace Transportation.Api
             return array;
         }
 
+        private RestApiResult GetPerPageByStatus(string pageIndex, string pageSize, bool status)
+        {
+            int index = Int32.Parse(pageIndex);
+            int size = Int32.Parse(pageSize);
+            int startIndex = index * size;
+
+            var orders = ClarityDB.Instance.Orders
+                .Where(x => x.Status == status)
+                .OrderByDescending(x => x.ID)
+                .Skip(startIndex)
+                .Take(size);
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(orders) };
+        }
+
+        private RestApiResult GetNumberPageByStatus(int pageSize, bool status)
+        {
+            var allRecords = ClarityDB.Instance.Orders.Where(x => x.Status == status).Count();
+            int numOfPages = allRecords % pageSize == 0
+                ? allRecords / pageSize
+                : allRecords / pageSize + 1;
+
+            JObject json = JObject.Parse(@"{'pages': '" + numOfPages + "'}");
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
+        }
     }
 }

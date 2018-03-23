@@ -19,34 +19,54 @@ namespace Transportation.Api
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(products) };
         }
 
+        [Route(HttpVerb.Get, "/products/page")]
+        public RestApiResult GetPerPage(string pageIndex, string pageSize)
+        {
+            int index = Int32.Parse(pageIndex);
+            int size = Int32.Parse(pageSize);
+            int startIndex = index * size;
+
+            var products = ClarityDB.Instance.Products
+                .OrderByDescending(x => x.ID)
+                .Skip(startIndex)
+                .Take(size);
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(products) };
+        }
+
+        [Route(HttpVerb.Get, "/products/pageSize/{pageSize}")]
+        public RestApiResult GetNumberPage(int pageSize)
+        {
+            var allRecords = ClarityDB.Instance.Products.Count();
+            int numOfPages = allRecords % pageSize == 0
+                ? allRecords / pageSize
+                : allRecords / pageSize + 1;
+
+            JObject json = JObject.Parse(@"{'pages': '" + numOfPages + "'}");
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
+        }
+
         [Route(HttpVerb.Get, "/productInfos")]
         public RestApiResult GetAllProductInfo()
         {
-            var products = ClarityDB.Instance.Products;
-            var productInfoList = new List<ProductInfo>();
-            foreach (var product in products) {
-                ProductInfo productInfo = new ProductInfo();
-                productInfo.Name = product.Name;
-                productInfo.SumOfInput = ClarityDB.Instance.ProductInputs.Any(x => x.ProductID == product.ID) ?
-                    ClarityDB.Instance.ProductInputs.Where(x => x.ProductID == product.ID).Sum(x => x.Quantity) : 0;
+            var products = ClarityDB.Instance.Products.ToList();
+            var productInfoList = this.MapToProductInfo(products);
 
-                productInfo.SumOfInputTotalAmount = ClarityDB.Instance.ProductInputs.Any(x => x.ProductID == product.ID) ?
-                    ClarityDB.Instance.ProductInputs.Where(x => x.ProductID == product.ID).Sum(x => x.Quantity * x.InputPrice) : 0;
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonProductInfoArray(productInfoList) };
+        }
 
-                productInfo.SumOfSale = ClarityDB.Instance.OrderDetails.Any(x => x.ProductID == product.ID) ?
-                    ClarityDB.Instance.OrderDetails.Where(x => x.ProductID == product.ID).Sum(x => x.Quantity) : 0;
+        [Route(HttpVerb.Get, "/productInfos/page")]
+        public RestApiResult GetProductInfoPerPage(string pageIndex, string pageSize)
+        {
+            int index = Int32.Parse(pageIndex);
+            int size = Int32.Parse(pageSize);
+            int startIndex = index * size;
 
-                productInfo.SumOfSaleTotalAmount = ClarityDB.Instance.OrderDetails.Any(x => x.ProductID == product.ID) ?
-                    ClarityDB.Instance.OrderDetails.Where(x => x.ProductID == product.ID).Sum(x => x.Quantity * x.Price) : 0;
-
-                productInfo.NumOfRemain = ClarityDB.Instance.Inventories.Any(x => x.ProductID == product.ID) ? 
-                    ClarityDB.Instance.Inventories.Where(x => x.ProductID == product.ID).FirstOrDefault().Quantity : 0;
-
-                productInfo.Profit = productInfo.SumOfInput != 0 ?
-                    productInfo.SumOfSaleTotalAmount - (productInfo.SumOfSale * productInfo.SumOfInputTotalAmount / productInfo.SumOfInput) : 0;
-
-                productInfoList.Add(productInfo);
-            }
+            var products = ClarityDB.Instance.Products
+                .OrderByDescending(x => x.ID)
+                .Skip(startIndex)
+                .Take(size)
+                .ToList();
+            var productInfoList = this.MapToProductInfo(products);
 
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonProductInfoArray(productInfoList) };
         }
@@ -149,6 +169,37 @@ namespace Transportation.Api
             }
 
             return array;
+        }
+
+        private List<ProductInfo> MapToProductInfo(List<Product> products)
+        {
+            var productInfoList = new List<ProductInfo>();
+            foreach (var product in products)
+            {
+                ProductInfo productInfo = new ProductInfo();
+                productInfo.Name = product.Name;
+                productInfo.SumOfInput = ClarityDB.Instance.ProductInputs.Any(x => x.ProductID == product.ID) ?
+                    ClarityDB.Instance.ProductInputs.Where(x => x.ProductID == product.ID).Sum(x => x.Quantity) : 0;
+
+                productInfo.SumOfInputTotalAmount = ClarityDB.Instance.ProductInputs.Any(x => x.ProductID == product.ID) ?
+                    ClarityDB.Instance.ProductInputs.Where(x => x.ProductID == product.ID).Sum(x => x.Quantity * x.InputPrice) : 0;
+
+                productInfo.SumOfSale = ClarityDB.Instance.OrderDetails.Any(x => x.ProductID == product.ID) ?
+                    ClarityDB.Instance.OrderDetails.Where(x => x.ProductID == product.ID).Sum(x => x.Quantity) : 0;
+
+                productInfo.SumOfSaleTotalAmount = ClarityDB.Instance.OrderDetails.Any(x => x.ProductID == product.ID) ?
+                    ClarityDB.Instance.OrderDetails.Where(x => x.ProductID == product.ID).Sum(x => x.Quantity * x.Price) : 0;
+
+                productInfo.NumOfRemain = ClarityDB.Instance.Inventories.Any(x => x.ProductID == product.ID) ?
+                    ClarityDB.Instance.Inventories.Where(x => x.ProductID == product.ID).FirstOrDefault().Quantity : 0;
+
+                productInfo.Profit = productInfo.SumOfInput != 0 ?
+                    productInfo.SumOfSaleTotalAmount - (productInfo.SumOfSale * productInfo.SumOfInputTotalAmount / productInfo.SumOfInput) : 0;
+
+                productInfoList.Add(productInfo);
+            }
+
+            return productInfoList;
         }
 
     }

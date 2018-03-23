@@ -154,11 +154,7 @@ module Clarity.Controller {
     }
 
     selectAllCustomersOnPage() {
-      var customerOnPage = this.customerListView;
-      for (let index = 0; index < customerOnPage.length; index++) {
-        var customer = customerOnPage[index];
-        customer.isChecked = this.isCheckedAll;
-      }
+      this.customerListView.map(customer => customer.isChecked = this.isCheckedAll);
     }
 
     removeCustomers() {

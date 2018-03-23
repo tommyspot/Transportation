@@ -19,8 +19,8 @@ module Clarity.Controller {
 		public currentTruck: Model.TruckModel;
 		public employeeList: Array<Model.EmployeeModel>;
     public truckList: Array<Model.TruckModel>;
-    public truckListView: Array<Model.TruckViewModel>;  //show on view page for searching
-    public truckListViewTmp: Array<Model.TruckViewModel>;
+    public truckListView: Array<Model.TruckViewModel>;
+    public truckListViewFilter: Array<Model.TruckViewModel>;
 
 		public numOfPages: number;
 		public currentPage: number;
@@ -44,17 +44,28 @@ module Clarity.Controller {
       this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
       $scope.viewModel = this;
 
+      this.currentPage = 0;
       this.pageSize = 10;
       this.searchText = '';
 			this.initTruck();
 
-			var self = this;
-			$scope.$watch('viewModel.searchText', function (value) {
-				if (self.truckListViewTmp && self.truckListViewTmp.length > 0) {
-					self.truckListView = $filter('filter')(self.truckListViewTmp, value);
-					self.initPagination();
-				}
-			});
+      $scope.$watch('viewModel.searchText', value => {
+        if (this.truckListViewFilter && this.truckListViewFilter.length > 0) {
+          this.truckListView = $filter('filter')(this.truckListViewFilter, value);
+        }
+      });
+
+      $scope.$watch('viewModel.currentPage', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        this.clearSearchText();
+        this.fetchTruckListPerPage();
+      });
+
+      $scope.$watch('viewModel.pageSize', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        this.clearSearchText();
+        this.initTruckList();
+      });
 		}
 
 		initTruck() {
@@ -73,17 +84,25 @@ module Clarity.Controller {
 		}
 
     initTruckList() {
+      this.fetchTruckListPerPage();
+      this.fetchNumOfPages();
+    }
+
+    fetchTruckListPerPage() {
       this.isLoading = true;
-			this.truckService.getAll((results: Array<Model.TruckModel>) => {
-				this.truckList = results;
-				this.truckList.sort(function (a: any, b: any) {
-					return b.id - a.id;
-        });
+      this.truckService.getPerPage(this.currentPage, this.pageSize, (results: Array<Model.TruckModel>) => {
+        this.truckList = results;
         this.mapToTruckListView();
-				this.truckListViewTmp = this.truckListView;
-        this.initPagination();
+        this.truckListViewFilter = this.truckListView;
         this.isLoading = false;
-			}, null);
+      }, null);
+    }
+
+    fetchNumOfPages() {
+      this.truckService.getNumOfPages(this.pageSize, (results: number) => {
+        this.currentPage = 0;
+        this.numOfPages = parseInt(results['pages']);
+      }, null);
     }
 
     initCurrentTruck(truckId: number) {
@@ -118,26 +137,8 @@ module Clarity.Controller {
       });
     }
 
-		initPagination() {
-			this.currentPage = 0;
-			this.numOfPages = this.truckListView.length % this.pageSize === 0 ?
-        this.truckListView.length / this.pageSize : Math.floor(this.truckListView.length / this.pageSize) + 1;
-		}
-
-		getTruckListOnPage() {
-      if (this.truckListView && this.truckListView.length > 0) {
-				var startIndex = this.pageSize * (this.currentPage);
-				var endIndex = startIndex + this.pageSize;
-        return this.truckListView.slice(startIndex, endIndex);
-			}
-		}
-
-		selectAllTrucksOnPage() {
-			var truckOnPage = this.getTruckListOnPage();
-			for (let index = 0; index < truckOnPage.length; index++) {
-				var truck = truckOnPage[index];
-				truck.isChecked = this.isCheckedAll;
-			}
+    selectAllTrucksOnPage() {
+      this.truckListView.map(truck => truck.isChecked = this.isCheckedAll );
 		}
 
 		removeTrucks() {
@@ -199,6 +200,11 @@ module Clarity.Controller {
 
     clearSearchText() {
       this.searchText = '';
+    }
+
+    hasSelectedTruck() {
+      if (!this.truckListView) return false;
+      return this.truckListView.some(truck => truck.isChecked);
     }
 	}
 }
