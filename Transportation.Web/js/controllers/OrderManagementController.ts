@@ -136,9 +136,9 @@ module Clarity.Controller {
 
     fetchOrderListPerPage() {
       this.isLoading = true;
-      this.orderService.getPerPage(this.currentPage, this.pageSize, (results: Array<Model.OrderModel>) => {
+      this.orderService.getPerPage(this.currentPage, this.pageSize, this.searchText, (results: Array<Model.OrderModel>) => {
         this.initOrderListAfterCallAsync(results);
-      }, null);
+      });
     }
 
     fetchDeletedOrderListPerPage() {
@@ -149,10 +149,10 @@ module Clarity.Controller {
     }
 
     fetchNumOfPages() {
-      this.orderService.getNumOfPages(this.pageSize, (results: number) => {
+      this.orderService.getNumOfPages(this.pageSize, this.searchText, (results: number) => {
         this.currentPage = 0;
         this.numOfPages = parseInt(results['pages']);
-      }, null);
+      });
     }
 
     fetchDeletedOrderNumOfPages() {

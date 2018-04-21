@@ -6156,3 +6156,11 @@ div.bootstrap {
     width: 90px; }
   #ng-app .line-height-form {
     line-height: 34px; }
+  #ng-app .col-search {
+    position: relative; }
+    #ng-app .col-search .fa-search {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      opacity: 0.7;
+      font-size: 12px; }

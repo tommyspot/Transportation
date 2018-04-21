@@ -15,7 +15,6 @@ module Clarity.Controller {
 
     public employeeList: Array<Model.EmployeeModel>;
     public employeeListView: Array<Model.EmployeeViewModel>;
-    public employeeListViewFilter: Array<Model.EmployeeViewModel>;
 
     public numOfPages: number;
     public currentPage: number;
@@ -43,15 +42,14 @@ module Clarity.Controller {
       this.titles = ['Giám Đốc', 'Trưởng Phòng', 'Phó Phòng', 'Trưởng Chi Nhánh', 'Phó Chi Nhánh', 'Tài Xế', 'Kế Toán'];
       this.initEmployee();
 			
-      $scope.$watch('viewModel.searchText', value => {
-        if (this.employeeListViewFilter && this.employeeListViewFilter.length > 0) {
-          this.employeeListView = $filter('filter')(this.employeeListViewFilter, value);
-        }
+      $scope.$watch('viewModel.searchText', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        this.currentPage === 0 ? this.fetchEmployeeListPerPage() : (() => { this.currentPage = 0; })();
+        this.fetchNumOfPages();
       });
 
       $scope.$watch('viewModel.currentPage', (newValue, oldValue) => {
         if (newValue === oldValue) return;
-        this.clearSearchText();
         this.fetchEmployeeListPerPage();
       });
 
@@ -87,25 +85,23 @@ module Clarity.Controller {
     }
 
     initEmployeeList() {
+      this.currentPage = 0;
       this.fetchEmployeeListPerPage();
       this.fetchNumOfPages();
     }
 
     fetchEmployeeListPerPage() {
       this.isLoading = true;
-      this.employeeService.getPerPage(this.currentPage, this.pageSize, (results: Array<Model.EmployeeModel>) => {
+      this.employeeService.getPerPage(this.currentPage, this.pageSize, this.searchText, (results: Array<Model.EmployeeModel>) => {
         this.employeeList = results;
         this.mapToEmployeeListView();
-        this.employeeListViewFilter = this.employeeListView;
         this.isLoading = false;
-      }, null);
+      });
     }
-
     fetchNumOfPages() {
-      this.employeeService.getNumOfPages(this.pageSize, (results: number) => {
-        this.currentPage = 0;
+      this.employeeService.getNumOfPages(this.pageSize, this.searchText, (results: number) => {
         this.numOfPages = parseInt(results['pages']);
-      }, null);
+      });
     }
 
     mapToEmployeeListView() {

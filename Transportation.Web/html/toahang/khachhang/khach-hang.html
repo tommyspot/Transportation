@@ -24,7 +24,8 @@
 			</div>
       <div class="col-sm-3 search-text-box">
         <div class="form-group has-feedback">
-          <input class="form-control" type="text" data-ng-model="viewModel.searchText" placeholder="Tìm kiếm nhanh" />
+          <input class="form-control" type="text" data-ng-model="viewModel.searchText"
+                data-ng-model-options="{ updateOn: 'blur' }" placeholder="Tìm kiếm nhanh" />
           <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                 data-ng-click="viewModel.clearSearchText()"></span>
         </div>
@@ -47,9 +48,9 @@
 									<input id="checkAllCustomers" type="checkbox" data-ng-model="viewModel.isCheckedAll"
 												 data-ng-change="viewModel.selectAllCustomersOnPage()" />
 								</th>
-								<th class="text-center">Mã khách hàng</th>
-								<th class="col-sm-2 text-center">Tên khách hàng</th>
-								<th class="main-width-column text-center">SĐT</th>
+								<th class="text-center col-search"><span>Mã khách hàng</span><i class="fa fa-search"></i></th>
+								<th class="col-sm-2 text-center col-search"><span>Tên khách hàng</span><i class="fa fa-search"></i></th>
+								<th class="main-width-column text-center col-search"><span>SĐT</span><i class="fa fa-search"></i></th>
 								<th class="main-width-column text-center">Số phát sinh</th>
 								<th class="main-width-column text-center">Tổng trả</th>
 								<th class="main-width-column text-center">Còn nợ lại</th>

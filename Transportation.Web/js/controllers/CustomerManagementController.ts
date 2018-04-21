@@ -20,7 +20,6 @@ module Clarity.Controller {
     public employeeList: Array<Model.EmployeeModel>;
     public customerList: Array<Model.CustomerModel>;
     public customerListView: Array<Model.CustomerViewModel>;
-    public customerListViewFilter: Array<Model.CustomerViewModel>;
 
     public numOfPages: number;
     public currentPage: number;
@@ -56,15 +55,14 @@ module Clarity.Controller {
       this.initCustomer();
 
       var self = this;
-      $scope.$watch('viewModel.searchText', function (value) {
-        if (self.customerListViewFilter && self.customerListViewFilter.length > 0) {
-          self.customerListView = $filter('filter')(self.customerListViewFilter, value);
-        }
+      $scope.$watch('viewModel.searchText', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        this.currentPage === 0 ? this.fetchCustomerListPerPage() : (() => { this.currentPage = 0; })();
+        this.fetchNumOfPages();
       });
 
       $scope.$watch('viewModel.currentPage', (newValue, oldValue) => {
         if (newValue === oldValue) return;
-        this.clearSearchText();
         this.fetchCustomerListPerPage();
       });
 
@@ -110,29 +108,28 @@ module Clarity.Controller {
     }
 
     initCustomerList() {
+      this.currentPage = 0;
       this.fetchCustomerListPerPage();
       this.fetchNumOfPages();
     }
 
     fetchCustomerListPerPage() {
       this.isLoading = true;
-      this.customerService.getPerPage(this.currentPage, this.pageSize, (results: Array<Model.CustomerModel>) => {
+      this.customerService.getPerPage(this.currentPage, this.pageSize, this.searchText, (results: Array<Model.CustomerModel>) => {
         this.customerList = results;
         this.mapToCustomerListView();
-        this.customerListViewFilter = this.customerListView;
         this.isLoading = false;
-      }, null);
+      });
     }
 
     fetchNumOfPages() {
-      this.customerService.getNumOfPages(this.pageSize, (results: number) => {
-        this.currentPage = 0;
+      this.customerService.getNumOfPages(this.pageSize, this.searchText, (results: number) => {
         this.numOfPages = parseInt(results['pages']);
-      }, null);
+      });
     }
 
     initEmployeeList() {
-      this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
+      this.employeeService.getAllCurtail((results: Array<Model.EmployeeModel>) => {
         this.employeeList = results;
       }, null);
     }

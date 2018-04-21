@@ -24,7 +24,8 @@
       </div>
       <div class="col-sm-3 search-text-box">
         <div class="form-group has-feedback">
-          <input class="form-control" type="text" data-ng-model="viewModel.searchText" placeholder="Tìm kiếm nhanh" />
+          <input class="form-control" type="text" data-ng-model="viewModel.searchText"
+                 data-ng-model-options="{ updateOn: 'blur' }" placeholder="Tìm kiếm nhanh" />
           <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                 data-ng-click="viewModel.clearSearchText()"></span>
         </div>
@@ -41,7 +42,7 @@
 									<input id="checkAllTrucks" type="checkbox" data-ng-model="viewModel.isCheckedAll"
 												 data-ng-change="viewModel.selectAllTrucksOnPage()" />
                 </th>
-                <th class="text-center">Biển số</th>
+                <th class="text-center col-search"><span>Biển số</span><i class="fa fa-search"></i></th>
                 <th class="col-sm-2 text-center">Năm sản xuất</th>
                 <th class="col-sm-2 text-center">Nhãn hiệu</th>
                 <th class="col-sm-2 text-center">Tải trọng</th>
