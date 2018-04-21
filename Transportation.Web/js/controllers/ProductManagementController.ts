@@ -83,18 +83,18 @@ module Clarity.Controller {
 
     fetchProductListPerPage() {
       this.isLoading = true;
-      this.productService.getPerPage(this.currentPage, this.pageSize, (results: Array<Model.ProductModel>) => {
+      this.productService.getPerPage(this.currentPage, this.pageSize, this.searchText, (results: Array<Model.ProductModel>) => {
         this.productList = results;
         this.productListFilter = this.productList;
         this.isLoading = false;
-      }, null);
+      });
     }
 
     fetchNumOfPages() {
-      this.productService.getNumOfPages(this.pageSize, (results: number) => {
+      this.productService.getNumOfPages(this.pageSize, this.searchText, (results: number) => {
         this.currentPage = 0;
         this.numOfPages = parseInt(results['pages']);
-      }, null);
+      });
     }
 
     initCurrentProduct(productId: number) {

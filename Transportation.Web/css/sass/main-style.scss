@@ -967,4 +967,16 @@ div.bootstrap {
     line-height: 34px;
   }
 
+  .col-search{
+    position: relative;
+
+    .fa-search{
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      opacity: 0.7;
+      font-size: 12px;
+    }
+  }
+
 }

@@ -24,27 +24,39 @@ namespace Transportation.Api
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(employees) };
         }
 
+        [Route(HttpVerb.Get, "/employees/curtail")]
+        public RestApiResult GetAllCurtail()
+        {
+            var employees = ClarityDB.Instance.Employees;
+
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArrayCurtail(employees) };
+        }
+
         [Route(HttpVerb.Get, "/employees/page")]
-        public RestApiResult GetPerPage(string pageIndex, string pageSize)
+        public RestApiResult GetPerPage(string pageIndex, string pageSize, string search)
         {
             int index = Int32.Parse(pageIndex);
             int size = Int32.Parse(pageSize);
             int startIndex = index * size;
 
             var employees = ClarityDB.Instance.Employees
+                .Where(x => String.IsNullOrEmpty(search) || x.FullName.IndexOf(search) > -1 || x.Mobile.IndexOf(search) > -1)
                 .OrderByDescending(x => x.ID)
                 .Skip(startIndex)
                 .Take(size);
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(employees) };
         }
 
-        [Route(HttpVerb.Get, "/employees/pageSize/{pageSize}")]
-        public RestApiResult GetNumberPage(int pageSize)
+        [Route(HttpVerb.Get, "/employees/numberOfPages")]
+        public RestApiResult GetNumberPage(string pageSize, string search)
         {
-            var allRecords = ClarityDB.Instance.Employees.Count();
-            int numOfPages = allRecords % pageSize == 0
-                ? allRecords / pageSize
-                : allRecords / pageSize + 1;
+            int size = Int32.Parse(pageSize);
+            var allRecords = ClarityDB.Instance.Employees
+                .Where(x => String.IsNullOrEmpty(search) || x.FullName.IndexOf(search) > -1 || x.Mobile.IndexOf(search) > -1)
+                .Count();
+            int numOfPages = allRecords % size == 0
+                ? allRecords / size
+                : allRecords / size + 1;
 
             JObject json = JObject.Parse(@"{'pages': '" + numOfPages + "'}");
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
@@ -114,7 +126,6 @@ namespace Transportation.Api
 
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json};
         }
-
         private JArray BuildJsonArray(IEnumerable<Employee> employees)
         {
             JArray array = new JArray();
@@ -125,6 +136,18 @@ namespace Transportation.Api
             }
 
             return array;
+        }
+        private JArray BuildJsonArrayCurtail(IEnumerable<Employee> employees)
+        {
+            JArray jArray = new JArray();
+            foreach (Employee employee in employees)
+            {
+                JObject json = new JObject();
+                json["id"] = employee.ID;
+                json["fullName"] = employee.FullName;
+                jArray.Add(json);
+            }
+            return jArray;
         }
 
     }

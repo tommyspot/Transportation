@@ -26,7 +26,6 @@ module Clarity.Controller {
     public customerList: Array<Model.CustomerModel>
     public wagonList: Array<Model.WagonModel>;
     public wagonListView: Array<Model.WagonViewModel>;
-    public wagonListViewFilter: Array<Model.WagonViewModel>;
 
     public numOfPages: number;
     public currentPage: number;
@@ -58,15 +57,14 @@ module Clarity.Controller {
       this.searchText = '';
       this.initWagon();
 
-      $scope.$watch('viewModel.searchText', value => {
-        if (this.wagonListViewFilter && this.wagonListViewFilter.length > 0) {
-          this.wagonListView = $filter('filter')(this.wagonListViewFilter, value);
-        }
+      $scope.$watch('viewModel.searchText', (newValue, oldValue)  => {
+        if (newValue === oldValue) return;
+        this.currentPage === 0 ? this.fetchWagonListPerPage() : (() => { this.currentPage = 0; })();
+        this.fetchNumOfPages();
       });
 
       $scope.$watch('viewModel.currentPage', (newValue, oldValue) => {
         if (newValue === oldValue) return;
-        this.clearSearchText();
         this.fetchWagonListPerPage();
       });
 
@@ -109,25 +107,24 @@ module Clarity.Controller {
     }
 
     initWagonList() {
+      this.currentPage = 0;
       this.fetchWagonListPerPage();
       this.fetchNumOfPages();
     }
 
     fetchWagonListPerPage() {
       this.isLoading = true;
-      this.wagonService.getPerPage(this.currentPage, this.pageSize, (results: Array<Model.WagonModel>) => {
+      this.wagonService.getPerPage(this.currentPage, this.pageSize, this.searchText, (results: Array<Model.WagonModel>) => {
         this.wagonList = results;
         this.mapToWagonListView();
-        this.wagonListViewFilter = this.wagonListView;
         this.isLoading = false;
       }, null);
     }
 
     fetchNumOfPages() {
-      this.wagonService.getNumOfPages(this.pageSize, (results: number) => {
-        this.currentPage = 0;
+      this.wagonService.getNumOfPages(this.pageSize, this.searchText, (results: number) => {
         this.numOfPages = parseInt(results['pages']);
-      }, null);
+      });
     }
 
     mapToWagonListView() {
@@ -148,20 +145,20 @@ module Clarity.Controller {
     }
 
     initTruckList() {
-			this.truckService.getAll((results: Array<Model.TruckModel>) => {
+      this.truckService.getAllCurtail((results: Array<Model.TruckModel>) => {
 				this.$rootScope.truckList = results;
         this.truckList = this.$rootScope.truckList;
 			}, null);
     }
 
     initEmployeeList() {
-      this.employeeService.getAll((results: Array<Model.EmployeeModel>) => {
+      this.employeeService.getAllCurtail((results: Array<Model.EmployeeModel>) => {
         this.employeeList = results;
       }, null);
     }
 
     initCustomerList() {
-      this.customerService.getAll((results: Array<Model.CustomerModel>) => {
+      this.customerService.getAllCurtail((results: Array<Model.CustomerModel>) => {
         this.customerList = results;
       }, null);
     }

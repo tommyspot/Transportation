@@ -21,27 +21,45 @@ namespace Transportation.Api
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(customers) };
         }
 
+        [Route(HttpVerb.Get, "/customers/curtail")]
+        public RestApiResult GetAllCurtail()
+        {
+            var customers = ClarityDB.Instance.Customers;
+
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArrayCurtail(customers) };
+        }
+
         [Route(HttpVerb.Get, "/customers/page")]
-        public RestApiResult GetPerPage(string pageIndex, string pageSize)
+        public RestApiResult GetPerPage(string pageIndex, string pageSize, string search)
         {
             int index = Int32.Parse(pageIndex);
             int size = Int32.Parse(pageSize);
             int startIndex = index * size;
 
             var customers = ClarityDB.Instance.Customers
+                .Where(x => String.IsNullOrEmpty(search)
+                            || x.FullName.IndexOf(search) > -1
+                            || x.PhoneNo.IndexOf(search) > -1
+                            || x.Code.IndexOf(search) > -1)
                 .OrderByDescending(x => x.ID)
                 .Skip(startIndex)
                 .Take(size);
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(customers) };
         }
 
-        [Route(HttpVerb.Get, "/customers/pageSize/{pageSize}")]
-        public RestApiResult GetNumberPage(int pageSize)
+        [Route(HttpVerb.Get, "/customers/numberOfPages")]
+        public RestApiResult GetNumberPage(string pageSize, string search)
         {
-            var allRecords = ClarityDB.Instance.Customers.Count();
-            int numOfPages = allRecords % pageSize == 0
-                ? allRecords / pageSize
-                : allRecords / pageSize + 1;
+            int size = Int32.Parse(pageSize);
+            var allRecords = ClarityDB.Instance.Customers
+                .Where(x => String.IsNullOrEmpty(search)
+                            || x.FullName.IndexOf(search) > -1
+                            || x.PhoneNo.IndexOf(search) > -1
+                            || x.Code.IndexOf(search) > -1)
+                .Count();
+            int numOfPages = allRecords % size == 0
+                ? allRecords / size
+                : allRecords / size + 1;
 
             JObject json = JObject.Parse(@"{'pages': '" + numOfPages + "'}");
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
@@ -192,6 +210,17 @@ namespace Transportation.Api
 
             return jArray;
         }
-
+        private JArray BuildJsonArrayCurtail(IEnumerable<Customer> customers)
+        {
+            JArray jArray = new JArray();
+            foreach (Customer customer in customers)
+            {
+                JObject json = new JObject();
+                json["id"] = customer.ID;
+                json["fullName"] = customer.FullName;
+                jArray.Add(json);
+            }
+            return jArray;
+        }
     }
 }

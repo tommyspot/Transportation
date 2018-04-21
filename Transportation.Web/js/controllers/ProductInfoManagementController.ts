@@ -89,10 +89,10 @@ module Clarity.Controller {
     }
 
     fetchNumOfPages() {
-      this.productService.getNumOfPages(this.pageSize, (results: number) => {
+      this.productService.getNumOfPages(this.pageSize, this.searchText, (results: number) => {
         this.currentPage = 0;
         this.numOfPages = parseInt(results['pages']);
-      }, null);
+      });
     }
 
     mapToProductInfoListView() {

@@ -37,14 +37,22 @@ module Clarity.Service {
         .error((data, status) => { this.doCallback(errorCallback, data, status); });
     }
 
-    getPerPage(pageIndex, pageSize, successCallback: Function, errorCallback: Function) {
-      this.http.get(`${this.url}/page?pageIndex=${pageIndex}&pageSize=${pageSize}`)
+    getAllCurtail(successCallback: Function, errorCallback: Function) {
+      this.http.get(`${this.url}/curtail`)
         .success((data) => { this.doCallback(successCallback, data); })
         .error((data, status) => { this.doCallback(errorCallback, data, status); });
     }
 
-    getNumOfPages(pageSize, successCallback: Function, errorCallback: Function) {
-      this.http.get(`${this.url}/pageSize/${pageSize}`)
+    getPerPage(pageIndex: number, pageSize: number, searchText: string, successCallback: Function, errorCallback?: Function) {
+      const search = searchText ? searchText.trim() : '';
+      this.http.get(`${this.url}/page?pageIndex=${pageIndex}&pageSize=${pageSize}&search=${search}`)
+        .success((data) => { this.doCallback(successCallback, data); })
+        .error((data, status) => { this.doCallback(errorCallback, data, status); });
+    }
+
+    getNumOfPages(pageSize: number, searchText: string, successCallback: Function, errorCallback?: Function) {
+      const search = searchText ? searchText.trim() : '';
+      this.http.get(`${this.url}/numberOfPages?pageSize=${pageSize}&search=${search}`)
         .success((data) => { this.doCallback(successCallback, data); })
         .error((data, status) => { this.doCallback(errorCallback, data, status); });
     }

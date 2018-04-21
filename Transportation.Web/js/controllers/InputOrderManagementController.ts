@@ -105,19 +105,19 @@ module Clarity.Controller {
 
     fetchInputOrderListPerPage() {
       this.isLoading = true;
-      this.inputOrderService.getPerPage(this.currentPage, this.pageSize, (results: Array<Model.InputOrderModel>) => {
+      this.inputOrderService.getPerPage(this.currentPage, this.pageSize, this.searchText, (results: Array<Model.InputOrderModel>) => {
         this.inputOrderList = results;
         this.mapToInputOrderListView();
         this.inputOrderListViewFilter = this.inputOrderListView;
         this.isLoading = false;
-      }, null);
+      });
     }
 
     fetchNumOfPages() {
-      this.inputOrderService.getNumOfPages(this.pageSize, (results: number) => {
+      this.inputOrderService.getNumOfPages(this.pageSize, this.searchText, (results: number) => {
         this.currentPage = 0;
         this.numOfPages = parseInt(results['pages']);
-      }, null);
+      });
     }
 
     mapToInputOrderListView() {
