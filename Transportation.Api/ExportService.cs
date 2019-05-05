@@ -184,12 +184,12 @@ namespace Transportation.Api
             dt.Columns.Add("Xếp loại", typeof(string));
             dt.Columns.Add("Nhân viên thu nợ", typeof(string));
 
-            // Build meta data for PhiPhatSinh/Payment for each month
-            var periods = GetPeriods();
-            foreach (string period in periods) {
-                dt.Columns.Add("Phát sinh - Tháng " + period, typeof(double));
-                dt.Columns.Add("Thanh toán - Tháng " + period, typeof(double));
-            }
+            //// Build meta data for PhiPhatSinh/Payment for each month
+            //var periods = GetPeriods();
+            //foreach (string period in periods) {
+            //    dt.Columns.Add("Phát sinh - Tháng " + period, typeof(double));
+            //    dt.Columns.Add("Thanh toán - Tháng " + period, typeof(double));
+            //}
 
             //Binding data
             List<Customer> customers = ClarityDB.Instance.Customers.OrderByDescending(x => x.ID).ToList();
@@ -212,14 +212,14 @@ namespace Transportation.Api
                 dataRow[8] = String.IsNullOrEmpty(customer.EmployeeId)
                     ? ""
                     : this.helperService.GetEmployeeName(Convert.ToInt32(customer.EmployeeId));
-                // Build data for PhiPhatSinh/Payment for each month
-                int step = 0;
-                foreach(string period in periods)
-                {
-                    dataRow[9 + step] = GetPhiPhatSinhByCustomerIDInPeriod(customer.ID, period);    // Calculate Phi Phat Sinh
-                    dataRow[10 + step] = GetPaymentByCustomerIDInPeriod(customer.ID, period);        // Calculate Thanh Toan
-                    step += 2;
-                }
+                //// Build data for PhiPhatSinh/Payment for each month
+                //int step = 0;
+                //foreach(string period in periods)
+                //{
+                //    dataRow[9 + step] = GetPhiPhatSinhByCustomerIDInPeriod(customer.ID, period);    // Calculate Phi Phat Sinh
+                //    dataRow[10 + step] = GetPaymentByCustomerIDInPeriod(customer.ID, period);        // Calculate Thanh Toan
+                //    step += 2;
+                //}
                 dt.Rows.Add(dataRow);
             }
             return dt;

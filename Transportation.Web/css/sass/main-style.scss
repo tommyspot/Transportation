@@ -3,6 +3,11 @@
   src: url('../../font/roboto/Roboto-Regular.ttf') format('woff2');
 }
 
+@font-face {
+  font-family: Purista;
+  src: url('../../font/purista/Purista-Medium.otf') format('woff2');
+}
+
 $transport-color-1: #34495E;
 $transport-color-2: #C0392B;
 $transport-color-3: #dddddd;
@@ -20,7 +25,7 @@ div.bootstrap {
   body {
     height: 100%;
     margin: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Purista', sans-serif;
     font-size: 14px;
   }
 
@@ -108,7 +113,7 @@ div.bootstrap {
         }
 
         input[type=text], input[type=password] {
-          font-family: 'Roboto', sans-serif;
+          font-family: 'Purista', sans-serif;
           padding: 0 10px;
           width: 100%;
           border: 1px solid #CCC;
@@ -119,7 +124,7 @@ div.bootstrap {
         }
 
         button.submit {
-          font-family: 'Roboto', sans-serif;
+          font-family: 'Purista', sans-serif;
           height: 36px;
           width: 100%;
           background: $transport-color-2;
