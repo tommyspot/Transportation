@@ -87,14 +87,16 @@
           <div class="form-group">
             <label for="departure">Nơi đi <span class="required-symbol">*</span></label>
             <span class="required-field" ng-if="wagonForm.departure.$touched && wagonForm.departure.$invalid">(Nơi đi phải được nhập)</span>
-            <input id="departure" name="departure" class="form-control" type="text" data-ng-model="viewModel.currentWagon.departure" required />
+            <autocomplete attr-inputid="departure" attr-name="departure" data-ng-model="viewModel.currentWagon.departure" attr-placeholder="Nhập để tìm nơi đi..."
+                          click-activation="true" data="viewModel.departureList" required></autocomplete>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="form-group">
             <label for="destination">Nơi đến <span class="required-symbol">*</span></label>
             <span class="required-field" ng-if="wagonForm.destination.$touched && wagonForm.destination.$invalid">(Nơi đến phải được nhập)</span>
-            <input id="destination" name="destination" class="form-control" type="text" data-ng-model="viewModel.currentWagon.destination" required />
+            <autocomplete attr-inputid="destination" attr-name="destination" data-ng-model="viewModel.currentWagon.destination" attr-placeholder="Nhập để tìm nơi đến..."
+                          click-activation="true" data="viewModel.destinationList" required></autocomplete>
           </div>
         </div>
       </div>

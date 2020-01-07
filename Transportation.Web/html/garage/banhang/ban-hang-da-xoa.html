@@ -14,7 +14,8 @@
 			</div>
       <div class="col-sm-3 search-text-box">
         <div class="form-group has-feedback">
-          <input class="form-control" type="text" data-ng-model="viewModel.searchText" placeholder="Tìm kiếm nhanh" />
+          <input class="form-control" type="text" data-ng-model="viewModel.searchText"
+                 data-ng-model-options="{ debounce: 500 }" placeholder="Tìm kiếm nhanh" />
           <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
                 data-ng-click="viewModel.clearSearchText()"></span>
         </div>
@@ -29,7 +30,7 @@
 							<tr>
 								<th class="stt-width text-center">STT</th>
 								<th class="col-sm-2 text-center">Số xe </th>
-								<th class="text-center">Tên khách hàng</th>
+								<th class="text-center">Tên garage</th>
                 <th class="col-sm-2 text-center">Thành tiền</th>
                 <th class="col-sm-1 text-center">Giảm giá</th>
                 <th class="col-sm-2 text-center">Ngày bán</th>

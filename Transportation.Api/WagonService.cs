@@ -151,6 +151,14 @@ namespace Transportation.Api
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonReportDataArray(wagonReportDataList) };
         }
 
+        [Route(HttpVerb.Get, "/allDepartureAndDesination")]
+        public RestApiResult GetAllDepartureAndDesination()
+        {
+            var wagons = ClarityDB.Instance.Wagons;
+
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonData(wagons) };
+        }
+
         private void AddWagonSettlementsFromJson(long wagonID, JObject json) {
             Wagon wagon = ClarityDB.Instance.Wagons.FirstOrDefault(x => x.ID == wagonID);
 
@@ -209,6 +217,16 @@ namespace Transportation.Api
             }
 
             return array;
+        }
+
+        private JObject BuildJsonData(IEnumerable<Wagon> wagons)
+        {
+            JObject json = new JObject();
+            List<string> depatures = wagons.Select(wagon => wagon.Departure).Distinct().ToList();
+            json["departures"] = new JArray(depatures);
+            List<string> destinations = wagons.Select(wagon => wagon.Destination).Distinct().ToList();
+            json["destinations"] = new JArray(destinations);
+            return json;
         }
     }
 }

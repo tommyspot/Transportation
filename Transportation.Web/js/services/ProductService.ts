@@ -10,10 +10,11 @@ module Clarity.Service {
       this.url = '/api/products';
     }
 
-    getProductInfoPerPage(pageIndex, pageSize, successCallback: Function, errorCallback: Function) {
-      this.http.get(`/api/productInfos/page?pageIndex=${pageIndex}&pageSize=${pageSize}`)
-        .success((data) => { this.doCallback(successCallback, data); })
-        .error((data, status) => { this.doCallback(errorCallback, data, status); });
+    getProductInfoPerPage(pageIndex, pageSize, searchText: string, successCallback: Function, errorCallback: Function) {
+        const search = searchText ? searchText.trim() : '';
+        this.http.get(`/api/productInfos/page?pageIndex=${pageIndex}&pageSize=${pageSize}&search=${search}`)
+            .success((data) => { this.doCallback(successCallback, data); })
+            .error((data, status) => { this.doCallback(errorCallback, data, status); });
     }
   }
 }

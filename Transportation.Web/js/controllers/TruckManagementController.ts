@@ -6,25 +6,24 @@
 declare var VERSION_NUMBER;
 
 module Clarity.Controller {
-	import service = Clarity.Service;
-  import helper = Clarity.Helper;
-
-  const formatSuffix = 'Formatted';
+    import service = Clarity.Service;
+    import helper = Clarity.Helper;
+    const formatSuffix = 'Formatted';
 
   export class TruckManagementController {
     public mainHelper: helper.MainHelper;
     public truckService: service.TruckService;
     public employeeService: service.EmployeeService;
 
-		public currentTruck: Model.TruckModel;
-		public employeeList: Array<Model.EmployeeModel>;
+	public currentTruck: Model.TruckModel;
+	public employeeList: Array<Model.EmployeeModel>;
     public truckList: Array<Model.TruckModel>;
     public truckListView: Array<Model.TruckViewModel>;
 
-		public numOfPages: number;
-		public currentPage: number;
-		public pageSize: number;
-		public isCheckedAll: boolean;
+	public numOfPages: number;
+	public currentPage: number;
+	public pageSize: number;
+	public isCheckedAll: boolean;
     public isLoading: boolean;
     public searchText: string;
     public isSubmitting: boolean;

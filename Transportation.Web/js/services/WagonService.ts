@@ -43,5 +43,10 @@ module Clarity.Service {
         });
     }
 
+    getAllDepartureAndDestination(successCallback: Function, errorCallback: Function) {
+      this.http.get('/api/allDepartureAndDesination')
+        .success((data) => { this.doCallback(successCallback, data) })
+        .error((data, status) => { this.doCallback(errorCallback, data, status); });
+    }
   }
 }

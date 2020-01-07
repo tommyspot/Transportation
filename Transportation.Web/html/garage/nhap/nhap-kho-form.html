@@ -74,7 +74,7 @@
                                 click-activation="true" data="viewModel.productNameList" required></autocomplete>
                 </td>
                 <td class="text-center">
-                  <input class="form-control text-right" type="number" min="1" data-ng-model="productInput.quantity"
+                  <input class="form-control text-right" type="number" step="0.01" data-ng-model="productInput.quantity"
                           data-ng-change="viewModel.updateTotalAmount()" required />
                 </td>
                 <td>
