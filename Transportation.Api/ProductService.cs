@@ -206,6 +206,5 @@ namespace Transportation.Api
 
             return productInfoList;
         }
-
     }
 }

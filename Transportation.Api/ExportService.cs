@@ -357,6 +357,7 @@ namespace Transportation.Api
             dt.Columns.Add("Thành tiền", typeof(double));
             dt.Columns.Add("Giảm giá", typeof(string));
             dt.Columns.Add("Mô tả", typeof(string));
+            dt.Columns.Add("Đơn vị tính", typeof(string));
 
             //Filter data by from/to date
             List<Order> orders = ClarityDB.Instance.Orders.OrderByDescending(x => x.ID).ToList();
@@ -378,7 +379,7 @@ namespace Transportation.Api
             {
                 var order = filteredOrders[i];
                 dt.Rows.Add(new object[] { i + 1 , order.LicensePlate , order.CustomerName, order.Address,
-                                           order.Date, order.TotalAmount, order.SaleOff.ToString() + '%', order.Note});
+                                           order.Date, order.TotalAmount, order.SaleOff.ToString() + '%', order.Note, order.Unit});
             }
 
             return dt;

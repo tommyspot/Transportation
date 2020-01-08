@@ -26,7 +26,6 @@ module Clarity.Model {
     public price: number;
     public quantity: number;
     public maxQuantity: number;  // no map
-    public unit: string;
     public priceFormatted: string;
   }
 
@@ -37,6 +36,7 @@ module Clarity.Model {
     public saleOff: string;
     public totalAmount: string;
     public status: boolean;
+    public unit: string;
     public isChecked: boolean;
   }
 }

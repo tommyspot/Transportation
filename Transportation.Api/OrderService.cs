@@ -151,7 +151,7 @@ namespace Transportation.Api
             }
         }
 
-        private void updateInventory(long productID, long soldQuantity) {
+        private void updateInventory(long productID, double soldQuantity) {
             Inventory inventory = ClarityDB.Instance.Inventories.FirstOrDefault(x => x.ProductID == productID);
             inventory.Quantity -= soldQuantity;
         }

@@ -59,6 +59,8 @@ namespace Transportation
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            // Fix migrate DB with Model
+            Database.SetInitializer<ClarityDB>(null);
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 

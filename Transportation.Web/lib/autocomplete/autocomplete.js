@@ -253,7 +253,7 @@ app.directive('autocomplete', function() {
             id="{{ attrs.inputid }}"\
             name="{{ attrs.name }}"\
             ng-required="{{ autocompleteRequired }}" />\
-          <ul ng-if="!noAutoSort" ng-show="completing && (suggestions | filter:searchFilter).length > 0">\
+          <ul ng-if="!noAutoSort" ng-show="completing && (suggestions | filter:searchFilter).length > 0" style="max-height: 220px; overflow: auto;">\
             <li\
               suggestion\
               ng-repeat="suggestion in suggestions | filter:searchFilter | orderBy:\'toString()\' track by $index"\
@@ -263,7 +263,7 @@ app.directive('autocomplete', function() {
               ng-click="select(suggestion)"\
               ng-bind-html="suggestion | highlight:searchParam"></li>\
           </ul>\
-          <ul ng-if="noAutoSort" ng-show="completing && (suggestions | filter:searchFilter).length > 0">\
+          <ul ng-if="noAutoSort" ng-show="completing && (suggestions | filter:searchFilter).length > 0" style="max-height: 220px; overflow: auto;">\
             <li\
               suggestion\
               ng-repeat="suggestion in suggestions | filter:searchFilter track by $index"\

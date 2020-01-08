@@ -12,9 +12,7 @@ namespace Transportation
         public virtual Order Order { get; set; }
         public long ProductID { get; set; }
         public long Price { get; set; }
-        public long Quantity { get; set; }
-        public string Unit { get; set; }
-
+        public double Quantity { get; set; }
         public OrderDetail() {
         }
 
@@ -26,7 +24,6 @@ namespace Transportation
             json["productId"] = ProductID;
             json["price"] = Price;
             json["quantity"] = Quantity;
-            json["unit"] = Unit;
             return json;
         }
 
@@ -43,8 +40,7 @@ namespace Transportation
             OrderID = json.Value<long>("orderId");
             ProductID = json.Value<long>("productId");
             Price = json.Value<long>("price");
-            Quantity = json.Value <long>("quantity");
-            Unit = json.Value<string>("unit");
+            Quantity = json.Value <double>("quantity");
         }
     }
 }

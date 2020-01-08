@@ -33,7 +33,6 @@ module Clarity.Controller {
     public currentDay: Date;
     public originOrderDetails: Array<Model.OrderDetailModel>;
     public searchText: string;
-    public units: Array<String>;
 
     public fromDate: string;
     public toDate: string;
@@ -59,7 +58,6 @@ module Clarity.Controller {
       this.currentPage = 0;
       this.pageSize = 10;
       this.searchText = '';
-      this.units = ['Công', 'Bán'];
       this.initOrder();
 
       $scope.$watch('viewModel.searchText', (newValue, oldValue) => {
