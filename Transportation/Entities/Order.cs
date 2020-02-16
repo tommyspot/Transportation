@@ -18,7 +18,7 @@ namespace Transportation
         public long TotalAmount { get; set; }
         public string Note { get; set; }
         public bool Status { get; set; }
-
+        public string Unit { get; set; }
         public Order() {
             OrderDetails = new Collection<OrderDetail>();
         }
@@ -36,6 +36,7 @@ namespace Transportation
             json["orderDetails"] = BuildJsonArray(OrderDetails);
             json["note"] = Note;
             json["status"] = Status;
+            json["unit"] = Unit;
             return json;
         }
 
@@ -57,6 +58,7 @@ namespace Transportation
             TotalAmount = json.Value<long>("totalAmount");
             Note = json.Value<string>("note");
             Status = json.Value<bool>("status");
+            Unit = json.Value<string>("unit");
         }
 
         private JArray BuildJsonArray(Collection<OrderDetail> orderDetails)

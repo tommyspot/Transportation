@@ -20,15 +20,15 @@ namespace Transportation.Api
         }
 
         [Route(HttpVerb.Get, "/orders/page")]
-        public RestApiResult GetPerPage(string pageIndex, string pageSize)
+        public RestApiResult GetPerPage(string pageIndex, string pageSize, string search)
         {
-            return this.GetPerPageByStatus(pageIndex, pageSize, true);
+            return this.GetPerPageByStatus(pageIndex, pageSize, search, true);
         }
 
-        [Route(HttpVerb.Get, "/orders/pageSize/{pageSize}")]
-        public RestApiResult GetNumberPage(int pageSize)
+        [Route(HttpVerb.Get, "/orders/numberOfPages")]
+        public RestApiResult GetNumberPage(string pageSize, string search)
         {
-            return this.GetNumberPageByStatus(pageSize, true);
+            return this.GetNumberPageByStatus(pageSize, search, true);
         }
 
         [Route(HttpVerb.Get, "/deletedOrders")]
@@ -40,15 +40,15 @@ namespace Transportation.Api
         }
 
         [Route(HttpVerb.Get, "/deletedOrders/page")]
-        public RestApiResult GetDeletedOrdersPerPage(string pageIndex, string pageSize)
+        public RestApiResult GetDeletedOrdersPerPage(string pageIndex, string pageSize, string search)
         {
-            return this.GetPerPageByStatus(pageIndex, pageSize, false);
+            return this.GetPerPageByStatus(pageIndex, pageSize, search, false);
         }
 
-        [Route(HttpVerb.Get, "/deletedOrders/pageSize/{pageSize}")]
-        public RestApiResult GetDeletedOrdersNumberPage(int pageSize)
+        [Route(HttpVerb.Get, "/deletedOrders/numberOfPages")]
+        public RestApiResult GetDeletedOrdersNumberPage(string pageSize, string search)
         {
-            return this.GetNumberPageByStatus(pageSize, false);
+            return this.GetNumberPageByStatus(pageSize, search, false);
         }
 
         [Route(HttpVerb.Post, "/orders")]
@@ -151,7 +151,7 @@ namespace Transportation.Api
             }
         }
 
-        private void updateInventory(long productID, long soldQuantity) {
+        private void updateInventory(long productID, double soldQuantity) {
             Inventory inventory = ClarityDB.Instance.Inventories.FirstOrDefault(x => x.ProductID == productID);
             inventory.Quantity -= soldQuantity;
         }
@@ -201,7 +201,7 @@ namespace Transportation.Api
             return array;
         }
 
-        private RestApiResult GetPerPageByStatus(string pageIndex, string pageSize, bool status)
+        private RestApiResult GetPerPageByStatus(string pageIndex, string pageSize, string search, bool status)
         {
             int index = Int32.Parse(pageIndex);
             int size = Int32.Parse(pageSize);
@@ -209,18 +209,23 @@ namespace Transportation.Api
 
             var orders = ClarityDB.Instance.Orders
                 .Where(x => x.Status == status)
+                .Where(x => String.IsNullOrEmpty(search) || x.LicensePlate.IndexOf(search) > -1)
                 .OrderByDescending(x => x.ID)
                 .Skip(startIndex)
                 .Take(size);
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(orders) };
         }
 
-        private RestApiResult GetNumberPageByStatus(int pageSize, bool status)
+        private RestApiResult GetNumberPageByStatus(string pageSize, string search, bool status)
         {
-            var allRecords = ClarityDB.Instance.Orders.Where(x => x.Status == status).Count();
-            int numOfPages = allRecords % pageSize == 0
-                ? allRecords / pageSize
-                : allRecords / pageSize + 1;
+            int size = Int32.Parse(pageSize);
+            var allRecords = ClarityDB.Instance.Orders
+                .Where(x => x.Status == status)
+                .Where(x => String.IsNullOrEmpty(search) || x.LicensePlate.IndexOf(search) > -1)
+                .Count();
+            int numOfPages = allRecords % size == 0
+                ? allRecords / size
+                : allRecords / size + 1;
 
             JObject json = JObject.Parse(@"{'pages': '" + numOfPages + "'}");
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };

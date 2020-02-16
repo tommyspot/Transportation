@@ -20,26 +20,30 @@ namespace Transportation.Api
         }
 
         [Route(HttpVerb.Get, "/products/page")]
-        public RestApiResult GetPerPage(string pageIndex, string pageSize)
+        public RestApiResult GetPerPage(string pageIndex, string pageSize, string search)
         {
             int index = Int32.Parse(pageIndex);
             int size = Int32.Parse(pageSize);
             int startIndex = index * size;
 
             var products = ClarityDB.Instance.Products
+                .Where(x => String.IsNullOrEmpty(search) || x.Name.IndexOf(search) > -1)
                 .OrderByDescending(x => x.ID)
                 .Skip(startIndex)
                 .Take(size);
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(products) };
         }
 
-        [Route(HttpVerb.Get, "/products/pageSize/{pageSize}")]
-        public RestApiResult GetNumberPage(int pageSize)
+        [Route(HttpVerb.Get, "/products/numberOfPages")]
+        public RestApiResult GetNumberPage(string pageSize, string search)
         {
-            var allRecords = ClarityDB.Instance.Products.Count();
-            int numOfPages = allRecords % pageSize == 0
-                ? allRecords / pageSize
-                : allRecords / pageSize + 1;
+            int size = Int32.Parse(pageSize);
+            var allRecords = ClarityDB.Instance.Products
+                .Where(x => String.IsNullOrEmpty(search) || x.Name.IndexOf(search) > -1)
+                .Count();
+            int numOfPages = allRecords % size == 0
+                ? allRecords / size
+                : allRecords / size + 1;
 
             JObject json = JObject.Parse(@"{'pages': '" + numOfPages + "'}");
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
@@ -55,13 +59,14 @@ namespace Transportation.Api
         }
 
         [Route(HttpVerb.Get, "/productInfos/page")]
-        public RestApiResult GetProductInfoPerPage(string pageIndex, string pageSize)
+        public RestApiResult GetProductInfoPerPage(string pageIndex, string pageSize, string search)
         {
             int index = Int32.Parse(pageIndex);
             int size = Int32.Parse(pageSize);
             int startIndex = index * size;
 
             var products = ClarityDB.Instance.Products
+                .Where(x => String.IsNullOrEmpty(search) || x.Name.IndexOf(search) > -1)
                 .OrderByDescending(x => x.ID)
                 .Skip(startIndex)
                 .Take(size)
@@ -201,6 +206,5 @@ namespace Transportation.Api
 
             return productInfoList;
         }
-
     }
 }

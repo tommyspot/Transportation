@@ -12,10 +12,7 @@ module Clarity.Controller {
   export class ProductManagementController {
     public currentProduct: Model.ProductModel;
     public productService: service.ProductService;
-
     public productList: Array<Model.ProductModel>;
-    public productListFilter: Array<Model.ProductModel>;
-
     public numOfPages: number;
     public currentPage: number;
     public pageSize: number;
@@ -43,15 +40,14 @@ module Clarity.Controller {
       this.searchText = '';
       this.initProduct();
 
-      $scope.$watch('viewModel.searchText', value => {
-        if (this.productListFilter && this.productListFilter.length > 0) {
-          this.productList = $filter('filter')(this.productListFilter, value);
-        }
+      $scope.$watch('viewModel.searchText', (newValue, oldValue) => {
+          if (newValue === oldValue) return;
+          this.currentPage === 0 ? this.fetchProductListPerPage() : (() => { this.currentPage = 0; })();
+          this.fetchNumOfPages();
       });
 
       $scope.$watch('viewModel.currentPage', (newValue, oldValue) => {
         if (newValue === oldValue) return;
-        this.clearSearchText();
         this.fetchProductListPerPage();
       });
 
@@ -85,7 +81,6 @@ module Clarity.Controller {
       this.isLoading = true;
       this.productService.getPerPage(this.currentPage, this.pageSize, this.searchText, (results: Array<Model.ProductModel>) => {
         this.productList = results;
-        this.productListFilter = this.productList;
         this.isLoading = false;
       });
     }

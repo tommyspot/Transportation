@@ -23,6 +23,8 @@ module Clarity.Controller {
 
     public truckList: Array<Model.TruckModel>
     public employeeList: Array<Model.EmployeeModel>
+    public departureList: Array<string>
+    public destinationList: Array<string>
     public customerList: Array<Model.CustomerModel>
     public wagonList: Array<Model.WagonModel>;
     public wagonListView: Array<Model.WagonViewModel>;
@@ -85,6 +87,7 @@ module Clarity.Controller {
           this.initTruckList();
           this.initEmployeeList();
           this.initCustomerList();
+          this.initDepartureAndDestinationList();
         } else if (this.$location.path() === '/ql-toa-hang/toa-hang') {
           this.initWagonList();
         }
@@ -102,6 +105,7 @@ module Clarity.Controller {
           this.initTruckList();
           this.initEmployeeList();
           this.initCustomerList();
+          this.initDepartureAndDestinationList();
         }, null);
       }
     }
@@ -160,6 +164,13 @@ module Clarity.Controller {
     initCustomerList() {
       this.customerService.getAllCurtail((results: Array<Model.CustomerModel>) => {
         this.customerList = results;
+      }, null);
+    }
+
+    initDepartureAndDestinationList() {
+      this.wagonService.getAllDepartureAndDestination((results: any) => {
+        this.departureList = results.departures;
+        this.destinationList = results.destinations;
       }, null);
     }
 

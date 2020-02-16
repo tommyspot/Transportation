@@ -10,14 +10,16 @@ module Clarity.Service {
       this.url = '/api/orders';
     }
 
-    getDeletedOrdersPerPage(pageIndex, pageSize, successCallback: Function, errorCallback: Function) {
-      this.http.get(`/api/deletedOrders/page?pageIndex=${pageIndex}&pageSize=${pageSize}`)
+    getDeletedOrdersPerPage(pageIndex, pageSize, searchText: string, successCallback: Function, errorCallback: Function) {
+        const search = searchText ? searchText.trim() : '';
+        this.http.get(`/api/deletedOrders/page?pageIndex=${pageIndex}&pageSize=${pageSize}&search=${search}`)
         .success((data) => { this.doCallback(successCallback, data); })
         .error((data, status) => { this.doCallback(errorCallback, data, status); });
     }
 
-    getDeletedOrdersNumOfPages(pageSize, successCallback: Function, errorCallback: Function) {
-      this.http.get(`/api/deletedOrders/pageSize/${pageSize}`)
+    getDeletedOrdersNumOfPages(pageSize, searchText: string, successCallback: Function, errorCallback: Function) {
+        const search = searchText ? searchText.trim() : '';
+        this.http.get(`/api/deletedOrders/numberOfPages?pageSize=${pageSize}&search=${search}`)
         .success((data) => { this.doCallback(successCallback, data); })
         .error((data, status) => { this.doCallback(errorCallback, data, status); });
     }

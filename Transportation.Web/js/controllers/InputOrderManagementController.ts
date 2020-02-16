@@ -6,9 +6,8 @@
 declare var VERSION_NUMBER;
 
 module Clarity.Controller {
-	import service = Clarity.Service;
+  import service = Clarity.Service;
   import helper = Clarity.Helper;
-
   const formatSuffix = 'Formatted';
 
   export class InputOrderManagementController {
@@ -19,11 +18,9 @@ module Clarity.Controller {
 
     public inputOrderList: Array<Model.InputOrderModel>;
     public inputOrderListView: Array<Model.InputOrderViewModel>;
-    public inputOrderListViewFilter: Array<Model.InputOrderViewModel>;
-
     public productList: Array<Model.ProductModel>;
     public productNameList: Array<string>;
-    
+
     public numOfPages: number;
     public currentPage: number;
     public pageSize: number;
@@ -52,15 +49,14 @@ module Clarity.Controller {
       this.searchText = '';
       this.initInputOrder();
 
-      $scope.$watch('viewModel.searchText', value => {
-        if (this.inputOrderListViewFilter && this.inputOrderListViewFilter.length > 0) {
-          this.inputOrderListView = $filter('filter')(this.inputOrderListViewFilter, value);
-        }
+      $scope.$watch('viewModel.searchText', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        this.currentPage === 0 ? this.fetchInputOrderListPerPage() : (() => { this.currentPage = 0; })();
+        this.fetchNumOfPages();
       });
 
       $scope.$watch('viewModel.currentPage', (newValue, oldValue) => {
         if (newValue === oldValue) return;
-        this.clearSearchText();
         this.fetchInputOrderListPerPage();
       });
 
@@ -108,7 +104,6 @@ module Clarity.Controller {
       this.inputOrderService.getPerPage(this.currentPage, this.pageSize, this.searchText, (results: Array<Model.InputOrderModel>) => {
         this.inputOrderList = results;
         this.mapToInputOrderListView();
-        this.inputOrderListViewFilter = this.inputOrderListView;
         this.isLoading = false;
       });
     }
@@ -249,5 +244,5 @@ module Clarity.Controller {
       return this.inputOrderListView.some(wagon => wagon.isChecked);
     }
 
-	}
+  }
 }

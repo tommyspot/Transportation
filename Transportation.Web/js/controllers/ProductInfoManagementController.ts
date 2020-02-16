@@ -17,7 +17,6 @@ module Clarity.Controller {
     public currentProductInfo: Model.ProductInfoModel;
     public productInfoList: Array<Model.ProductInfoModel>;
     public productInfoListView: Array<Model.ProductInfoViewModel>;
-    public productInfoListViewFilter: Array<Model.ProductInfoViewModel>;
 
     public numOfPages: number;
     public currentPage: number;
@@ -48,15 +47,14 @@ module Clarity.Controller {
       this.searchText = '';
       this.initProduct();
 
-      $scope.$watch('viewModel.searchText', value => {
-        if (this.productInfoListViewFilter && this.productInfoListViewFilter.length > 0) {
-          this.productInfoListView = $filter('filter')(this.productInfoListViewFilter, value);
-        }
+      $scope.$watch('viewModel.searchText', (newValue, oldValue) => {
+          if (newValue === oldValue) return;
+          this.currentPage === 0 ? this.fetchProductInfoListPerPage() : (() => { this.currentPage = 0; })();
+          this.fetchNumOfPages();
       });
 
       $scope.$watch('viewModel.currentPage', (newValue, oldValue) => {
         if (newValue === oldValue) return;
-        this.clearSearchText();
         this.fetchProductInfoListPerPage();
       });
 
@@ -80,8 +78,8 @@ module Clarity.Controller {
     }
 
     fetchProductInfoListPerPage() {
-      this.isLoading = true;
-      this.productService.getProductInfoPerPage(this.currentPage, this.pageSize, (results: Array<Model.ProductInfoModel>) => {
+        this.isLoading = true;
+        this.productService.getProductInfoPerPage(this.currentPage, this.pageSize, this.searchText, (results: Array<Model.ProductInfoModel>) => {
         this.productInfoList = results;
         this.orderBy('name', true);
         this.isLoading = false;
@@ -116,10 +114,7 @@ module Clarity.Controller {
         : propertyName && propertyName === this.sortingCurrentPropertyName ? !this.sortingIsReverse : false;
       this.sortingCurrentPropertyName = propertyName;
       this.productInfoList = this.$filter('orderBy')(this.productInfoList, this.sortingCurrentPropertyName, this.sortingIsReverse);
-
-      this.clearSearchText();
       this.mapToProductInfoListView();
-      this.productInfoListViewFilter = this.productInfoListView;
     }
 
     exportReport() {

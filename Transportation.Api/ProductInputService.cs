@@ -123,9 +123,9 @@ namespace Transportation.Api
                 return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
             }
 
-            long newQuantity = json.Value<long>("quantity");
-            long oldQuantity = productInput.Quantity;
-            long deltaQuantity = newQuantity - oldQuantity;
+            double newQuantity = json.Value<double>("quantity");
+            double oldQuantity = productInput.Quantity;
+            double deltaQuantity = newQuantity - oldQuantity;
             UpdateInventoryAfterUpdateProductInput(productInput.ProductID, deltaQuantity);
 
             productInput.ApplyJson(json);
@@ -140,14 +140,14 @@ namespace Transportation.Api
             ClarityDB.Instance.SaveChanges();
         }
 
-        private void UpdateInventoryAfterDeleteProductInput(long productId, long quantity)
+        private void UpdateInventoryAfterDeleteProductInput(long productId, double quantity)
         {
             Inventory inventory = ClarityDB.Instance.Inventories.FirstOrDefault(x => x.ProductID == productId);
             inventory.Quantity -= quantity;
             ClarityDB.Instance.SaveChanges();
         }
 
-        private void UpdateInventoryAfterUpdateProductInput(long productId, long quantity)
+        private void UpdateInventoryAfterUpdateProductInput(long productId, double quantity)
         {
             Inventory inventory = ClarityDB.Instance.Inventories.FirstOrDefault(x => x.ProductID == productId);
             inventory.Quantity += quantity;

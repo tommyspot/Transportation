@@ -2,13 +2,13 @@
 module Clarity.Helper {
 
   export class MainHelper {
-		public authenticationService: Clarity.Service.AuthenticationService;
+    public authenticationService: Clarity.Service.AuthenticationService;
 
     constructor(private $http: ng.IHttpService,
       private $cookieStore: ng.ICookieStoreService,
       private $filter: ng.IFilterService) {
-			this.authenticationService = new Clarity.Service.AuthenticationService($http, $cookieStore);
-		};
+      this.authenticationService = new Clarity.Service.AuthenticationService($http, $cookieStore);
+    };
 
     getCurrentDateTimeString() {
       var d = new Date();
@@ -136,7 +136,7 @@ module Clarity.Helper {
       return date;
     }
 
-		formatDateTimeDDMMYYYYNumber(d: any) {
+    formatDateTimeDDMMYYYYNumber(d: any) {
       if (!(d instanceof Date)) {
         d = new Date(date);
       }
@@ -159,8 +159,12 @@ module Clarity.Helper {
 
     formatCurrency(value: number) {
       if (value)
-        return this.$filter('currency')(value, '', 0).trim();
+        return this.$filter('currency')(value, '', this.isInt(value) ? 0 : 1).trim();
       return '0';
+    }
+
+    isInt(n: number) {
+      return n % 1 === 0;
     }
 
     onCurrencyPropertyChanged(object: Object, propertyName: string, formattedPropertyName: string) {
@@ -176,7 +180,7 @@ module Clarity.Helper {
       propertyNames.forEach((property: string) => {
         if (object.hasOwnProperty(property)) {
           object[`${property}${formatSuffix}`] = this.formatCurrency(object[property]);
-        } 
+        }
       });
     }
 
@@ -198,6 +202,5 @@ module Clarity.Helper {
       }
       return null;
     }
-
   }
 }

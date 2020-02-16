@@ -6,9 +6,8 @@
 declare var VERSION_NUMBER;
 
 module Clarity.Controller {
-	import service = Clarity.Service;
+  import service = Clarity.Service;
   import helper = Clarity.Helper;
-
   const formatSuffix = 'Formatted';
 
   export class OrderManagementController {
@@ -21,7 +20,6 @@ module Clarity.Controller {
     public currentOrder: Model.OrderModel;
     public orderList: Array<Model.OrderModel>;
     public orderListView: Array<Model.OrderViewModel>;
-    public orderListViewFilter: Array<Model.OrderViewModel>;
 
     public inventoryViewList: Array<Model.InventoryViewModel>;
     public productList: Array<Model.ProductModel>;
@@ -62,15 +60,19 @@ module Clarity.Controller {
       this.searchText = '';
       this.initOrder();
 
-      $scope.$watch('viewModel.searchText', value => {
-        if (this.orderListViewFilter && this.orderListViewFilter.length > 0) {
-          this.orderListView = $filter('filter')(this.orderListViewFilter, value);
+      $scope.$watch('viewModel.searchText', (newValue, oldValue) => {
+        if (newValue === oldValue) return;
+        if (this.$location.path() === '/ql-garage/ban-hang') {
+          this.currentPage === 0 ? this.fetchOrderListPerPage() : (() => { this.currentPage = 0; })();
+          this.fetchNumOfPages();
+        } else if (this.$location.path() === '/ql-garage/ban-hang/da-xoa') {
+          this.currentPage === 0 ? this.fetchDeletedOrderListPerPage() : (() => { this.currentPage = 0; })();
+          this.fetchDeletedOrderNumOfPages();
         }
       });
 
       $scope.$watch('viewModel.currentPage', (newValue, oldValue) => {
         if (newValue === oldValue) return;
-        this.clearSearchText();
         if (this.$location.path() === '/ql-garage/ban-hang') {
           this.fetchOrderListPerPage();
         } else if (this.$location.path() === '/ql-garage/ban-hang/da-xoa') {
@@ -143,7 +145,7 @@ module Clarity.Controller {
 
     fetchDeletedOrderListPerPage() {
       this.isLoading = true;
-      this.orderService.getDeletedOrdersPerPage(this.currentPage, this.pageSize, (results: Array<Model.OrderModel>) => {
+      this.orderService.getDeletedOrdersPerPage(this.currentPage, this.pageSize, this.searchText, (results: Array<Model.OrderModel>) => {
         this.initOrderListAfterCallAsync(results);
       }, null);
     }
@@ -156,7 +158,7 @@ module Clarity.Controller {
     }
 
     fetchDeletedOrderNumOfPages() {
-      this.orderService.getDeletedOrdersNumOfPages(this.pageSize, (results: number) => {
+      this.orderService.getDeletedOrdersNumOfPages(this.pageSize, this.searchText, (results: number) => {
         this.currentPage = 0;
         this.numOfPages = parseInt(results['pages']);
       }, null);
@@ -165,7 +167,6 @@ module Clarity.Controller {
     initOrderListAfterCallAsync(results: Array<Model.OrderModel>) {
       this.orderList = results;
       this.mapToOrderListView();
-      this.orderListViewFilter = this.orderListView;
       this.isLoading = false;
     }
 
@@ -369,8 +370,7 @@ module Clarity.Controller {
       this.currentOrder.note = '';
       if (this.currentOrder && this.currentOrder.orderDetails && this.currentOrder.orderDetails.length) {
         for (var orderDetail of this.currentOrder.orderDetails) {
-          this.currentOrder.note += this.getProductById(orderDetail.productId).name + ':' + orderDetail.quantity +
-            ':' + orderDetail.price + ', ';
+          this.currentOrder.note += this.getProductById(orderDetail.productId).name + ':' + orderDetail.quantity + ', ';
         }
       }
     }

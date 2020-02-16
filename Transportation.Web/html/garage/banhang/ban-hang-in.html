@@ -2,12 +2,13 @@
   <div class="container">
     <div class="row margin-top-20">
       <div class="col-xs-8">
-          <h3 class="bold-text title-name">CÔNG TY TNHH MTV DỊCH VỤ VẬN TẢI DUYÊN HẢI</h3>
-          <p><span>Địa chỉ: Đường Nguyễn Công Trứ, P.Mỹ Hải, TP.Phan Rang - Tháp Chàm, Ninh Thuận</span></p>
-          <p><span>Điện thoại: 0683.827.666</span> &nbsp; -  &nbsp;<span>Email: duyenhaitransport@gmail.com</span></p>
-          <p><span class="bold-text">Khách hàng:</span> <span class="bold-text">{{::viewModel.currentOrder.customerName}}</span></p>
-          <p><span class="bold-text">Số xe:</span> <span class="bold-text">{{::viewModel.currentOrder.licensePlate}}</span></p>
-          <p><span class="bold-text">Mô tả:</span> <span>{{::viewModel.currentOrder.note}}</span></p>
+        <h3 class="bold-text title-name">CÔNG TY TNHH MTV DỊCH VỤ VẬN TẢI DUYÊN HẢI</h3>
+        <p><span>Địa chỉ: Đường Nguyễn Công Trứ, P. Mỹ Hải, TP. Phan Rang - Tháp Chàm, Ninh Thuận</span></p>
+        <p><span>Điện thoại: 0683.827.666</span> &nbsp; -  &nbsp;<span>Email: duyenhaitransport@gmail.com</span></p>
+        <p><span class="bold-text">Garage:</span> <span class="bold-text">{{::viewModel.currentOrder.customerName}}</span></p>
+        <p><span class="bold-text">Số xe:</span> <span class="bold-text">{{::viewModel.currentOrder.licensePlate}}</span></p>
+        <p><span>Mô tả:</span> <span>{{::viewModel.currentOrder.note}}</span></p>
+        <p><span>Đơn vị tính:</span> <span>{{::viewModel.currentOrder.unit}}</span></p>
       </div>
       <div class="col-xs-4">
         <h2 class="bold-text text-center title-name">PHIẾU BÁN HÀNG</h2>
@@ -23,7 +24,6 @@
               <tr>
                 <th class="text-center">STT</th>
                 <th class="text-center">Tên sản phẩm</th>
-                <th class="text-center">Đơn vị tính</th>
                 <th class="text-center">Số lượng</th>
                 <th class="text-center">Đơn giá</th>
                 <th class="text-center">Thành tiền</th>
@@ -33,7 +33,6 @@
               <tr data-ng-repeat="orderDetail in viewModel.currentOrder.orderDetails">
                 <td class="text-center">{{$index + 1}}</td>
                 <td class="text-center">{{viewModel.getProductById(orderDetail.productId).name}}</td>
-                <td class="text-center">{{::orderDetail.unit}}</td>
                 <td class="text-right">{{::orderDetail.quantity}}</td>
                 <td class="text-right">{{::orderDetail.price | currency: "" : 0}}</td>
                 <td class="text-right">{{::(orderDetail.price * orderDetail.quantity) | currency: "" : 0}}</td>
@@ -76,7 +75,7 @@
       </div>
     </div>
 
-    <hr class="hr"/>
+    <hr class="hr" />
 
     <div class="row">
       <div class="col-xs-3">

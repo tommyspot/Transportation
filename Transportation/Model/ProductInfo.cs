@@ -6,12 +6,12 @@ namespace Transportation
     public class ProductInfo
     {
         public string Name { get; set; }
-        public long SumOfInput { get; set; }
-        public long SumOfInputTotalAmount { get; set; }
-        public long SumOfSale { get; set; }
-        public long SumOfSaleTotalAmount { get; set; }
-        public long NumOfRemain { get; set; }
-        public long Profit { get; set; }
+        public double SumOfInput { get; set; }
+        public double SumOfInputTotalAmount { get; set; }
+        public double SumOfSale { get; set; }
+        public double SumOfSaleTotalAmount { get; set; }
+        public double NumOfRemain { get; set; }
+        public double Profit { get; set; }
         public ProductInfo() {
         }
 
@@ -38,12 +38,12 @@ namespace Transportation
         public void ApplyJson(JObject json)
         {
             Name = json.Value<string>("name");
-            SumOfInput = json.Value <long>("sumOfInput");
-            SumOfInputTotalAmount = json.Value<long>("sumOfInputTotalAmount");
-            SumOfSale = json.Value<long>("sumOfSale");
-            SumOfSaleTotalAmount = json.Value<long>("sumOfSaleTotalAmount");
-            NumOfRemain = json.Value<long>("numOfRemain");
-            Profit = json.Value<long>("profit");
+            SumOfInput = json.Value <double>("sumOfInput");
+            SumOfInputTotalAmount = json.Value<double>("sumOfInputTotalAmount");
+            SumOfSale = json.Value<double>("sumOfSale");
+            SumOfSaleTotalAmount = json.Value<double>("sumOfSaleTotalAmount");
+            NumOfRemain = json.Value<double>("numOfRemain");
+            Profit = json.Value<double>("profit");
         }
     }
 }
