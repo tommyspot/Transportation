@@ -360,7 +360,10 @@ namespace Transportation.Api
             dt.Columns.Add("Đơn vị tính", typeof(string));
 
             //Filter data by from/to date
-            List<Order> orders = ClarityDB.Instance.Orders.OrderByDescending(x => x.ID).ToList();
+            List<Order> orders = ClarityDB.Instance.Orders
+                .Where(x => x.Status)
+                .OrderByDescending(x => x.ID)
+                .ToList();
             List<Order> filteredOrders = new List<Order>();
             foreach (Order order in orders)
             {
