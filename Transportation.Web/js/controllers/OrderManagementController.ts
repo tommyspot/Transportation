@@ -196,7 +196,8 @@ module Clarity.Controller {
             inventoryView.productId = inventory.productId;
             inventoryView.productName = this.getProductById(inventory.productId).name;
             inventoryView.latestPrice = inventory.latestPrice;
-            inventoryView.quantity = inventory.quantity;
+            // inventoryView.quantity = inventory.quantity;
+            inventoryView.quantity = this.initInventoryQuantity(inventory, this.currentOrder);
             this.inventoryViewList.push(inventoryView);
           });
           // init max quantity for order detail
@@ -209,6 +210,18 @@ module Clarity.Controller {
       this.productService.getAll((results: Array<Model.ProductModel>) => {
         this.productList = results;
       }, null);
+    }
+
+    initInventoryQuantity(inventory: Model.InventoryModel, order: Model.OrderModel) {
+      if (order && order.orderDetails && order.orderDetails.length > 0) {
+        return order.orderDetails.reduce((acc: any, orderDeail: Model.OrderDetailModel) => {
+          if (inventory.productId === orderDeail.productId) {
+            acc += orderDeail.quantity;
+          }
+          return acc;
+        }, inventory.quantity);
+      }
+      return inventory.quantity;
     }
 
     initFormatPriceForOrderDetails(order: Model.OrderModel) {
@@ -342,13 +355,15 @@ module Clarity.Controller {
     }
 
     shouldOrderDetailSetDefault(orderDetail: Model.OrderDetailModel, index: number) {
-      if (this.originOrderDetails == null)  // Add new
+      if (!orderDetail.id) {  // Edit screen: add new a detail order after deleting
         return true;
-
-      const originOrderDetail = this.originOrderDetails && this.originOrderDetails[index];
-      if (originOrderDetail == null)  // Edit screen: add new a detail order
+      }
+      if (this.originOrderDetails == null) {  // Add new
         return true;
-
+      }
+      if (this.originOrderDetails[index] == null) { // Edit screen: add new a detail order
+        return true;
+      }
       return false;
     }
 
@@ -406,5 +421,19 @@ module Clarity.Controller {
       return this.orderListView.some(order => order.isChecked);
     }
 
+    filterInventoryView(currentOrder: Model.OrderModel, index: number) {
+      return (value: Model.InventoryModel) => {
+        if (currentOrder && currentOrder.orderDetails && currentOrder.orderDetails.length > 0) {
+          const selectedOrderDetails = currentOrder.orderDetails.filter((orderDetail, i) => {
+            return i !== index;
+          })
+          if (selectedOrderDetails && selectedOrderDetails.length === 0) {
+            return true;
+          }
+          return !selectedOrderDetails.some(orderDetail => value.productId == orderDetail.productId);
+        }
+        return true;
+      };
+    }
   }
 }

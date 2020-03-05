@@ -350,17 +350,17 @@ clarityApp.directive('validatorMax', function ($filter) {
           return true;
         }
 
-        var value = parseInt(viewValue.replace(/\./g, ''));
-        var max = parseInt(attrs.max);
+        var value = parseFloat(viewValue, 10);
+        var max = parseFloat(attrs.max, 10);
         if (value <= max) {
           return true;
         }
 
         // it is invalid
-        var newValue = typeof modelValue === 'number' ?
-          modelValue.toString() :
-          $filter('currency')(parseInt(modelValue.replace(/\./g, '')), '', 0).trim();
-
+        var newValue = typeof modelValue === 'number'
+            ? modelValue.toString()
+            : $filter('currency')(parseFloat(modelValue), 10).trim();
+          
         ctrl.$setViewValue(newValue);
         ctrl.$render();
         return false;

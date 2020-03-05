@@ -15,11 +15,15 @@ module Clarity.Controller {
     public exportService: service.ExportService;
     public wagonService: service.WagonService;
     public wagonSettlementService: service.WagonSettlementService;
+    public customerService: service.CustomerService;
 
     public isExportLoading: boolean;
     public isViewLoading: boolean;
     public fromDate: string;
     public toDate: string;
+    public isCheckedAll: boolean;
+    public selectedCustomerIds: Array<string>;
+    public customerList: Array<Model.CustomerModel>;
     public wagonReport: model.WagonReportModel;
     public wagonSettlementReport: model.WagonSettlementReportModel;
 
@@ -34,9 +38,18 @@ module Clarity.Controller {
       this.exportService = new service.ExportService($http);
       this.wagonService = new service.WagonService($http);
       this.wagonSettlementService = new service.WagonSettlementService($http);
+      this.customerService = new service.CustomerService($http);
+
       this.wagonReport = new model.WagonReportModel();
       this.wagonSettlementReport = new model.WagonSettlementReportModel();
       $scope.viewModel = this;
+      this.initCustomerList();
+    }
+
+    initCustomerList() {
+      this.customerService.getAllCurtail((results: Array<Model.CustomerModel>) => {
+        this.customerList = results;
+      }, null);
     }
 
     exportTruck() {
@@ -62,7 +75,14 @@ module Clarity.Controller {
 
     exportCustomer() {
       this.isExportLoading = true;
-      this.exportService.exportToExcel({ type: model.ExportType.Customer }, (data) => {
+      const selectedIds = this.isCheckedAll
+        ? this.customerList.map(({ id }) => id)
+        : this.selectedCustomerIds;
+      const jsonObject = {
+        type: model.ExportType.Customer,
+        selectedIds,
+      }
+      this.exportService.exportToExcel(jsonObject, (data) => {
         this.isExportLoading = false;
         window.location.href = '/output/' + data['fileName'];
       }, () => {
@@ -72,7 +92,7 @@ module Clarity.Controller {
 
     exportCustomerOrder() {
       this.isExportLoading = true;
-      let jsonObject = {
+      const jsonObject = {
         type: model.ExportType.OrderCustomer,
         fromDate: this.fromDate,
         toDate: this.toDate
