@@ -156,14 +156,15 @@
     <Content Include="html\dangnhap\user.html" />
     <Content Include="html\dangnhap\user-detail.html" />
     <Content Include="html\dangnhap\user-form.html" />
-    <Content Include="img\avatar1.jpeg" />
     <Content Include="img\favicon.ico" />
+    <Content Include="img\favicon1.ico" />
     <Content Include="img\hinh1.jpg" />
     <Content Include="img\hinh2.jpg" />
     <Content Include="img\hinh3.jpg" />
     <Content Include="img\hinh4.jpg" />
-    <Content Include="img\logo.gif" />
+    <Content Include="img\logo1.gif" />
     <Content Include="img\logo_dh.png" />
+    <Content Include="img\logo.gif" />
     <Content Include="img\menu-ico.svg" />
     <Content Include="img\loading.gif" />
     <Content Include="img\white-transparent.png" />

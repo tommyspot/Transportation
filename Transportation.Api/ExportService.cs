@@ -43,7 +43,8 @@ namespace Transportation.Api
                 }
                 else if (json.Value<int>("type") == (int)ExportType.Customer)
                 {
-                    dt = BuildDataTableForCustomer();
+                    string[] selectedIds = json.Value<JArray>("selectedIds").ToObject<string[]>();
+                    dt = BuildDataTableForCustomer(selectedIds);
                     fileName = "Baocao_KhachHang_" + DateTime.Now.ToString(formatStringDate);
                 }
                 else if (json.Value<int>("type") == (int)ExportType.Wagon)
@@ -168,7 +169,7 @@ namespace Transportation.Api
             return dt;
         }
 
-        private DataTable BuildDataTableForCustomer()
+        private DataTable BuildDataTableForCustomer(string[] selectedIds)
         {
             DataTable dt = new DataTable();
             dt.TableName = "KhachHang_" + DateTime.Now.ToString(formatStringDate);
@@ -193,7 +194,9 @@ namespace Transportation.Api
             }
 
             //Binding data
-            List<Customer> customers = ClarityDB.Instance.Customers.OrderByDescending(x => x.ID).ToList();
+            List<Customer> customers = ClarityDB.Instance.Customers
+                                        .Where(x => selectedIds.Any(id => id == x.ID.ToString()))
+                                        .OrderByDescending(x => x.ID).ToList();
             for (int i = 0; i < customers.Count; i++)
             {
                 var customer = customers[i];
@@ -474,7 +477,7 @@ namespace Transportation.Api
             }
             periodsFromWagonSettlements = periodsFromWagonSettlements.Distinct().ToList();
 
-            // From WagonSettlements
+            // From Payments
             var periodsFromPayments = ClarityDB.Instance.Payments
                 .Select(x => x.PaymentMonth + underline + x.PaymentYear)
                 .Distinct().ToList();

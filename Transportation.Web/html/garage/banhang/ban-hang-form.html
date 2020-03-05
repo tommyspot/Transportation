@@ -94,13 +94,18 @@
                     <select ng-attr-id="name-{{$index}}" ui-select2 class="form-control ui-select-2" data-ng-model="orderDetail.productId"
                             data-ng-change="viewModel.onInventoryViewChanged(orderDetail, $index)" required>
                       <option value="" selected="selected">--Chọn sản phẩm --</option>
-                      <option data-ng-repeat="inventory in viewModel.inventoryViewList" value="{{inventory.productId}}">{{inventory.productName}} [{{inventory.quantity}}]</option>
+                      <option
+                        data-ng-repeat="inventory in viewModel.inventoryViewList | filter: viewModel.filterInventoryView(viewModel.currentOrder, $index)"
+                        value="{{inventory.productId}}"
+                      >
+                        {{inventory.productName}} [{{inventory.quantity}}]
+                      </option>
                     </select>
                   </td>
                   <td class="text-center" data-ng-class="{'has-error': orderDetail.maxQuantity && orderForm['quantity-' + $index].$error.maxValue}">
                     <input class="form-control text-right" name="quantity-{{$index}}" type="number" step="0.5" min="0.5" max={{orderDetail.maxQuantity}}
                            data-ng-model="orderDetail.quantity" data-ng-change="viewModel.onQuantityOrderDetailChanged()" validator-max required/>
-                    <span class="required-field" data-ng-if="orderDetail.maxQuantity && orderForm['quantity-' + $index].$error.maxValue">
+                    <span class="required-field" data-ng-if="orderDetail.maxQuantity >= 0 && orderForm['quantity-' + $index].$error.maxValue">
                       SL &lt; {{orderDetail.maxQuantity}}
                     </span>
                   </td>
