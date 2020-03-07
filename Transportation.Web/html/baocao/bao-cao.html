@@ -39,42 +39,53 @@
             <!--TAB 3-->
             <div class="tab-pane fade" ng-class="{'in active': tab === 3}" data-ng-show="tab === 3">
               <div class="row">
+                <div class="col-sm-2">
+                  <div class="form-group">
+                    <label for="fromDate">Từ ngày</label>
+                    <datepicker class="date-picker" date-format="dd/MM/yyyy">
+                      <input id="fromDate" class="form-control" name="fromDate" type="text" ng-model="viewModel.customerReport.fromDate">
+                    </datepicker>
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <div class="form-group">
+                    <label for="toDate">Đến ngày</label>
+                    <datepicker class="date-picker" date-format="dd/MM/yyyy">
+                      <input id="toDate" class="form-control" name="toDate" type="text" ng-model="viewModel.customerReport.toDate">
+                    </datepicker>
+                  </div>
+                </div>
+                <div class="col-sm-8">
+                  <button class="btn btn-default download-btn from-to-date"
+                          data-ng-click="viewModel.exportCustomer()"
+                          data-ng-disabled="!viewModel.customerReport.fromDate || !viewModel.customerReport.toDate">
+                    Tải về
+                    &nbsp;<i data-ng-if="viewModel.isExportLoading" class="fa fa-spinner fa-pulse"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <input id="checkAllCustomers" type="checkbox" data-ng-model="viewModel.customerReport.isCheckedAll" />
+                    <label for="checkAllCustomers">Tất cả</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row" data-ng-if="!viewModel.customerReport.isCheckedAll">
                 <div class="col-sm-12">
                   <div class="form-group">
                     <label for="customerList">Khách hàng:</label>
-                    <select
-                      id="customerList"
-                      ui-select2
-                      multiple
-                      class="form-control ui-select-2"
-                      data-ng-model="viewModel.selectedCustomerIds"
-                      data-ng-disabled="viewModel.isCheckedAll"
-                    >
+                    <select id="customerList"
+                            ui-select2
+                            multiple
+                            class="form-control ui-select-2"
+                            data-ng-model="viewModel.customerReport.selectedIds">
                       <option data-ng-repeat="customer in viewModel.customerList" value="{{customer.id}}">
                         {{customer.fullName}}
                       </option>
                     </select>
                   </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="form-group">
-                    <input id="checkAllCustomers" type="checkbox" data-ng-model="viewModel.isCheckedAll" />
-                    <label for="checkAllCustomers">Tất cả</label>&nbsp;(Vì dữ liệu lớn nên sẽ phải <b>chờ lâu</b>. Vui lòng chọn từng khách hàng)
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-12">
-                  <button
-                    class="btn btn-default download-btn"
-                    data-ng-click="viewModel.exportCustomer()"
-                    data-ng-disabled="!viewModel.isCheckedAll && viewModel.selectedCustomerIds.length === 0"
-                  >
-                    Tải về
-                    &nbsp;<i data-ng-if="viewModel.isExportLoading" class="fa fa-spinner fa-pulse"></i>
-                  </button>
                 </div>
               </div>
             </div>

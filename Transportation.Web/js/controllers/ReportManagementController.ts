@@ -21,9 +21,8 @@ module Clarity.Controller {
     public isViewLoading: boolean;
     public fromDate: string;
     public toDate: string;
-    public isCheckedAll: boolean;
-    public selectedCustomerIds: Array<string>;
     public customerList: Array<Model.CustomerModel>;
+    public customerReport: model.CustomerReportModel;
     public wagonReport: model.WagonReportModel;
     public wagonSettlementReport: model.WagonSettlementReportModel;
 
@@ -40,6 +39,7 @@ module Clarity.Controller {
       this.wagonSettlementService = new service.WagonSettlementService($http);
       this.customerService = new service.CustomerService($http);
 
+      this.customerReport = new model.CustomerReportModel();
       this.wagonReport = new model.WagonReportModel();
       this.wagonSettlementReport = new model.WagonSettlementReportModel();
       $scope.viewModel = this;
@@ -75,11 +75,13 @@ module Clarity.Controller {
 
     exportCustomer() {
       this.isExportLoading = true;
-      const selectedIds = this.isCheckedAll
+      const selectedIds = this.customerReport.isCheckedAll
         ? this.customerList.map(({ id }) => id)
-        : this.selectedCustomerIds;
+        : this.customerReport.selectedIds;
       const jsonObject = {
         type: model.ExportType.Customer,
+        fromDate: this.customerReport.fromDate,
+        toDate: this.customerReport.toDate,
         selectedIds,
       }
       this.exportService.exportToExcel(jsonObject, (data) => {
