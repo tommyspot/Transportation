@@ -43,8 +43,10 @@ namespace Transportation.Api
                 }
                 else if (json.Value<int>("type") == (int)ExportType.Customer)
                 {
+                    DateTime fromDate = DateTime.ParseExact(json.Value<string>("fromDate"), formatDate, CultureInfo.InvariantCulture);
+                    DateTime toDate = DateTime.ParseExact(json.Value<string>("toDate"), formatDate, CultureInfo.InvariantCulture);
                     string[] selectedIds = json.Value<JArray>("selectedIds").ToObject<string[]>();
-                    dt = BuildDataTableForCustomer(selectedIds);
+                    dt = BuildDataTableForCustomer(fromDate, toDate, selectedIds);
                     fileName = "Baocao_KhachHang_" + DateTime.Now.ToString(formatStringDate);
                 }
                 else if (json.Value<int>("type") == (int)ExportType.Wagon)
@@ -169,7 +171,7 @@ namespace Transportation.Api
             return dt;
         }
 
-        private DataTable BuildDataTableForCustomer(string[] selectedIds)
+        private DataTable BuildDataTableForCustomer(DateTime fromDate, DateTime toDate, string[] selectedIds)
         {
             DataTable dt = new DataTable();
             dt.TableName = "KhachHang_" + DateTime.Now.ToString(formatStringDate);
@@ -186,7 +188,7 @@ namespace Transportation.Api
             dt.Columns.Add("Nhân viên thu nợ", typeof(string));
 
             // Build meta data for PhiPhatSinh/Payment for each month
-            var periods = GetPeriods();
+            var periods = GetPeriods(fromDate, toDate);
             foreach (string period in periods)
             {
                 dt.Columns.Add("Phát sinh - Tháng " + period, typeof(double));
@@ -464,11 +466,13 @@ namespace Transportation.Api
             long totalPaymentFromPayment = payments.Count() > 0 ? payments.Sum(x => x.PaymentAmount) : 0;
             return (totalPaymentFromWagonSettlement + totalPaymentFromPayment);
         }
-        private List<string> GetPeriods()
+        private List<string> GetPeriods(DateTime fromDate, DateTime toDate)
         {
             // From WagonSettlements
             var periodsFromWagonSettlements = new List<string>();
             var paymentDates = ClarityDB.Instance.WagonSettlements
+                .ToList()
+                .Where(x => isDateValid(x.PaymentDate, fromDate, toDate))
                 .Select(x => x.PaymentDate)
                 .Distinct();
             foreach (string paymentDate in paymentDates) {
@@ -479,13 +483,36 @@ namespace Transportation.Api
 
             // From Payments
             var periodsFromPayments = ClarityDB.Instance.Payments
+                .ToList()
+                .Where(x => isPaymentDateValid(x, fromDate, toDate))
                 .Select(x => x.PaymentMonth + underline + x.PaymentYear)
-                .Distinct().ToList();
+                .Distinct();
 
             return periodsFromWagonSettlements.Union(periodsFromPayments)
                 .OrderByDescending(x => x.Split(underline.ToCharArray()).Last())
                 .ThenByDescending(x => x.Split(underline.ToCharArray()).First())
                 .ToList();
+        }
+
+        private bool isDateValid(string strDate, DateTime fromDate, DateTime toDate) {
+            DateTime date = DateTime.ParseExact(strDate, formatDate, CultureInfo.InvariantCulture);
+            return DateTime.Compare(date, fromDate) >= 0 && DateTime.Compare(date, toDate) <= 0;
+        }
+
+        private bool isPaymentDateValid(Payment payment, DateTime fromDate, DateTime toDate)
+        {
+            int paymentMonth = payment.PaymentMonth;
+            int paymentYear = payment.PaymentYear;
+            if (((paymentYear == fromDate.Year && paymentMonth >= fromDate.Month) ||
+                paymentYear > fromDate.Year
+               ) &&
+               ((paymentYear == toDate.Year && paymentMonth <= toDate.Month) ||
+                paymentYear < toDate.Year
+               ))
+            {
+                return true;
+            }
+            return false;
         }
 
         private double GetPhiPhatSinhByCustomerIDInPeriod(long customerId, string period)

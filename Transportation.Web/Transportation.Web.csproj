@@ -199,6 +199,7 @@
     <TypeScriptCompile Include="js\model\CustomerModel.ts" />
     <TypeScriptCompile Include="js\model\TruckModel.ts" />
     <TypeScriptCompile Include="js\model\ExportTypeModel.ts" />
+    <TypeScriptCompile Include="js\model\CustomerReportModel.ts" />
     <TypeScriptCompile Include="js\model\WagonSettlementReportModel.ts" />
     <TypeScriptCompile Include="js\model\WagonReportModel.ts" />
     <TypeScriptCompile Include="js\model\WagonSettlementModel.ts" />
