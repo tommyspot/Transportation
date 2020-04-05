@@ -197,6 +197,9 @@ namespace Transportation.Api
 
                 productInfo.NumOfRemain = ClarityDB.Instance.Inventories.Any(x => x.ProductID == product.ID) ?
                     ClarityDB.Instance.Inventories.Where(x => x.ProductID == product.ID).FirstOrDefault().Quantity : 0;
+                
+                // TODO: Consider calculate as below
+                //productInfo.NumOfRemain = productInfo.SumOfInput - productInfo.SumOfSale;
 
                 productInfo.Profit = productInfo.SumOfInput != 0 ?
                     productInfo.SumOfSaleTotalAmount - (productInfo.SumOfSale * productInfo.SumOfInputTotalAmount / productInfo.SumOfInput) : 0;
