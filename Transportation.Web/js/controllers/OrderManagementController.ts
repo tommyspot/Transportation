@@ -247,23 +247,26 @@ module Clarity.Controller {
     removeOrders() {
       var confirmDialog = this.$window.confirm('Bạn có muốn xóa những đơn hàng được chọn?');
       if (confirmDialog) {
-        for (let i = 0; i < this.orderListView.length; i++) {
-          var order = this.orderListView[i];
-          if (order.isChecked) {
-            order.status = false;
-            this.orderService.changeOrderStatus(order, (data) => {
-              this.initOrderList();
-            }, () => { });
-          }
-        }
+        const selectedOrders = this.orderListView.filter((order) => order.isChecked);
+        this.deleteOrdersSync(selectedOrders);
       }
+    }
+
+    deleteOrdersSync(orders) {
+      if (orders.length === 0) {
+        this.initOrderList();
+        return;
+      }
+      this.orderService.deleteEntity(orders[0], (data) => {
+        const newOrders = orders.slice(1, orders.length);
+        this.deleteOrdersSync(newOrders);
+      }, null);
     }
 
     removeOrderInDetail(order: Model.OrderModel) {
       var confirmDialog = this.$window.confirm('Bạn có muốn xóa đơn hàng này?');
       if (confirmDialog) {
-        order.status = false;
-        this.orderService.changeOrderStatus(order, (data) => {
+        this.orderService.deleteEntity(order, (data) => {
           this.$location.path('/ql-garage/ban-hang');
         }, null);
       }
