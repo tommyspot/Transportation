@@ -396,6 +396,7 @@
     <None Include="Properties\PublishProfiles\hostvn_duyenhai.pubxml" />
     <None Include="Properties\PublishProfiles\Transportation.pubxml" />
     <None Include="Properties\PublishProfiles\VanTaiDuyenHai.pubxml" />
+    <Content Include="npm-shrinkwrap.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Transportation.Api\Transportation.Api.csproj">
