@@ -7,11 +7,14 @@ declare var VERSION_NUMBER;
 
 module Clarity.Controller {
 	import service = Clarity.Service;
-	import helper = Clarity.Helper;
+  import helper = Clarity.Helper;
+  const formatSuffix = 'Formatted';
 
   export class ProductManagementController {
     public currentProduct: Model.ProductModel;
     public productService: service.ProductService;
+    public mainHelper: helper.MainHelper;
+
     public productList: Array<Model.ProductModel>;
     public numOfPages: number;
     public currentPage: number;
@@ -28,9 +31,11 @@ module Clarity.Controller {
       private $location: ng.ILocationService,
       private $window: ng.IWindowService,
       private $filter: ng.IFilterService,
+      private $cookieStore: ng.ICookieStoreService,
       private $timeout: ng.ITimeoutService,
       private $routeParams: any) {
 
+      this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
       this.productService = new service.ProductService($http);
       $scope.viewModel = this;
 
@@ -96,6 +101,7 @@ module Clarity.Controller {
       if (this.currentProduct == null) {
         this.productService.getById(productId, (data) => {
           this.currentProduct = data;
+          this.currentProduct.priceFormatted = this.mainHelper.formatCurrency(data.price);
         }, null);
       }
     }
@@ -157,6 +163,10 @@ module Clarity.Controller {
     goToProductEditForm(event: Event, productId: number) {
       event.stopPropagation();
       this.$location.path(`/ql-garage/san-pham/sua/${productId}`);
+    }
+
+    formatCurrency(product: Model.ProductModel, propertyName: string) {
+      this.mainHelper.onCurrencyPropertyChanged(product, propertyName, `${propertyName}${formatSuffix}`);
     }
 
     clearSearchText() {

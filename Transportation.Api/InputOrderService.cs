@@ -151,14 +151,22 @@ namespace Transportation.Api
             productInput.CreatedDate = DateTime.Now;
             productInput.InputOrderID = inputOrder.ID;
             inputOrder.ProductInputs.Add(productInput);
-            //Increase quantity in Inventory
+            // Increase quantity in Inventory
             updateInventory(productInput);
+            // Update price back to Product
+            updateProductPrice(productInput);
         }
 
         private void updateInventory(ProductInput productInput) {
             Inventory inventory = ClarityDB.Instance.Inventories.FirstOrDefault(x => x.ProductID == productInput.ProductID);
             inventory.Quantity += productInput.Quantity;
             inventory.LatestPrice = productInput.SalePrice;
+        }
+
+        private void updateProductPrice(ProductInput productInput)
+        {
+            Product product = ClarityDB.Instance.Products.FirstOrDefault(x => x.ID == productInput.ProductID);
+            product.Price = productInput.SalePrice;
         }
 
         private void updateInventoryAfterDeleteInputOrder(long inputOrderID)

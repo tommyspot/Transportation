@@ -10,6 +10,7 @@ namespace Transportation
         [Required]
         public string Name { get; set; }
         public string Origin { get; set; }
+        public long Price { get; set; }
         public Product() {
         }
 
@@ -19,6 +20,7 @@ namespace Transportation
             json["id"] = ID;
             json["name"] = Name;
             json["origin"] = Origin;
+            json["price"] = Price;
             return json;
         }
 
@@ -34,6 +36,7 @@ namespace Transportation
             ID = json.Value<long>("id");
             Name = json.Value<string>("name");
             Origin = json.Value<string>("origin");
+            Price = json.Value<long>("price");
         }
     }
 }

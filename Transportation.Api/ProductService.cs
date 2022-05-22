@@ -96,7 +96,7 @@ namespace Transportation.Api
             ClarityDB.Instance.Products.Add(product);
             ClarityDB.Instance.SaveChanges();
             //Create inventory
-            CreateInventory(product.ID);
+            CreateInventory(product);
 
             return new RestApiResult { StatusCode = HttpStatusCode.OK };
         }
@@ -140,15 +140,32 @@ namespace Transportation.Api
 
             product.ApplyJson(json);
             ClarityDB.Instance.SaveChanges();
+            //Update inventory
+            UpdateInventoryAfterUpdateProduct(product);
+
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
         }
 
-        private void CreateInventory(long productId) {
+        private void CreateInventory(Product product) {
             Inventory inventory = new Inventory();
-            inventory.ProductID = productId;
+            inventory.ProductID = product.ID;
             inventory.Quantity = 0;
+            inventory.LatestPrice = product.Price;
             inventory.CreatedDate = DateTime.Now;
             ClarityDB.Instance.Inventories.Add(inventory);
+            ClarityDB.Instance.SaveChanges();
+        }
+        private void UpdateInventoryAfterUpdateProduct(Product product)
+        {
+            if (product == null) {
+                return;
+            }
+            Inventory inventory = ClarityDB.Instance.Inventories.FirstOrDefault(x => x.ProductID == product.ID);
+            if (inventory.LatestPrice == product.Price)
+            {
+                return;
+            }
+            inventory.LatestPrice = product.Price;
             ClarityDB.Instance.SaveChanges();
         }
 
