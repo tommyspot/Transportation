@@ -4,5 +4,6 @@ module Clarity.Enum {
     WagonManagement,
     GarageManagement,
     ReportManagement,
+    TransportationManagement,
   }
 }

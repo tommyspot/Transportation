@@ -12,5 +12,6 @@ namespace Transportation
 		WagonManagement,
         GarageManagement,
         ReportManagement,
+        TransportationManagement,
 	}
 }

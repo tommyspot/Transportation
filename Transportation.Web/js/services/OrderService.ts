@@ -30,5 +30,33 @@ module Clarity.Service {
         .error((data, status) => { this.doCallback(errorCallback, data, status); });
     }
 
+    getTruckInfoPerPage(
+      pageIndex: number,
+      pageSize: number,
+      searchText: string,
+      truckLicensePlate: string,
+      fromDate: string,
+      toDate: string,
+      successCallback: Function,
+      errorCallback?: Function) {
+      const search = searchText ? searchText.trim() : '';
+      this.http.get(`${this.url}/truckInfo/page?pageIndex=${pageIndex}&pageSize=${pageSize}&search=${search}&truckLicensePlate=${truckLicensePlate}&fromDate=${fromDate}&toDate=${toDate}`)
+        .success((data) => { this.doCallback(successCallback, data); })
+        .error((data, status) => { this.doCallback(errorCallback, data, status); });
+    }
+
+    getTruckInfoNumOfPages(
+      pageSize: number,
+      searchText: string,
+      truckLicensePlate: string,
+      fromDate: string,
+      toDate: string,
+      successCallback: Function,
+      errorCallback?: Function) {
+      const search = searchText ? searchText.trim() : '';
+      this.http.get(`${this.url}/truckInfo/numberOfPages?pageSize=${pageSize}&search=${search}&truckLicensePlate=${truckLicensePlate}&fromDate=${fromDate}&toDate=${toDate}`)
+        .success((data) => { this.doCallback(successCallback, data); })
+        .error((data, status) => { this.doCallback(errorCallback, data, status); });
+    }
   }
 }

@@ -4,11 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Globalization;
 
 namespace Transportation.Api
 {
     public class OrderService
     {
+        const string formatDate = "dd/MM/yyyy";
         public OrderService() { }
 
         [Route(HttpVerb.Get, "/orders")]
@@ -131,6 +133,57 @@ namespace Transportation.Api
             ClarityDB.Instance.SaveChanges();
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = order.ToJson() };
         }
+
+        [Route(HttpVerb.Get, "/orders/truckInfo/page")]
+        public RestApiResult GetTruckInfoPerPage(
+            string pageIndex,
+            string pageSize,
+            string search,
+            string truckLicensePlate,
+            string fromDate,
+            string toDate
+        )
+        {
+            int index = Int32.Parse(pageIndex);
+            int size = Int32.Parse(pageSize);
+            int startIndex = index * size;
+
+            var orders = ClarityDB.Instance.Orders
+                .Where(x => x.Status == true)
+                .Where(x => String.IsNullOrEmpty(search) || x.CustomerName.IndexOf(search) > -1)
+                .Where(x => x.LicensePlate == truckLicensePlate)
+                .ToList()
+                .Where(x => isDateValid(x.Date, fromDate, toDate))
+                .OrderByDescending(x => x.ID)
+                .Skip(startIndex)
+                .Take(size);
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = BuildJsonArray(orders) };
+        }
+
+        [Route(HttpVerb.Get, "/orders/truckInfo/numberOfPages")]
+        public RestApiResult GetTruckInfoNumberPage(
+            string pageSize,
+            string search,
+            string truckLicensePlate,
+            string fromDate,
+            string toDate
+        )
+        {
+            int size = Int32.Parse(pageSize);
+            var allRecords = ClarityDB.Instance.Orders
+                .Where(x => x.Status == true)
+                .Where(x => String.IsNullOrEmpty(search) || x.CustomerName.IndexOf(search) > -1)
+                .Where(x => x.LicensePlate == truckLicensePlate)
+                .ToList()
+                .Where(x => isDateValid(x.Date, fromDate, toDate))
+                .Count();
+            int numOfPages = allRecords % size == 0
+                ? allRecords / size
+                : allRecords / size + 1;
+
+            JObject json = JObject.Parse(@"{'pages': '" + numOfPages + "'}");
+            return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
+        }
         private void AddOrderDetailFromJson(long orderID, JObject json)
         {
             Order order = ClarityDB.Instance.Orders.FirstOrDefault(x => x.ID == orderID);
@@ -230,5 +283,14 @@ namespace Transportation.Api
             JObject json = JObject.Parse(@"{'pages': '" + numOfPages + "'}");
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = json };
         }
+
+        private bool isDateValid(string strDate, string fromDate, string toDate)
+        {
+            DateTime from = DateTime.ParseExact(fromDate, formatDate, CultureInfo.InvariantCulture);
+            DateTime to = DateTime.ParseExact(toDate, formatDate, CultureInfo.InvariantCulture);
+            DateTime date = DateTime.ParseExact(strDate, formatDate, CultureInfo.InvariantCulture);
+            return DateTime.Compare(date, from) >= 0 && DateTime.Compare(date, to) <= 0;
+        }
+
     }
 }

@@ -559,6 +559,10 @@ div.bootstrap {
       background-color: #FF9800;
     }
 
+    .manage-box.qlpt-box {
+      background-color: #2B5A74;
+    }
+
     .qlbc-box.qlbc-box {
       background-color: #27ae60;
     }
@@ -850,9 +854,7 @@ div.bootstrap {
         display: inline-block;
         width: 150px;
       }
-  }
-
-
+    }
   }
   
   .report-btn{
@@ -984,4 +986,49 @@ div.bootstrap {
     }
   }
 
+  .transportation-row{
+    margin: 0;
+    text-align: center;
+    padding: 12px;
+    border: 1px solid #ddd;
+
+    label{
+      line-height: 34px;
+      margin-right: 4px;
+      margin-bottom: 0;
+    }
+
+    .transportation-datepicker{
+      width: 150px;
+      margin-right: 4px;
+      float: none;
+      display: inline-block;
+
+      input {
+        display: inline-block;
+        width: 150px;
+      }
+    }
+
+    .ui-select-2{
+       width: 200px;
+       display: inline-block;
+       margin-right: 8px;
+       text-align: left;
+    }
+
+    .button{
+        border: none;
+        background-color: $transport-color-1;
+        height: 34px;
+        margin-top: 0 !important;
+        margin-left: 4px;
+        width: 90px;
+        color: white;
+
+        &:hover{
+          opacity: 0.8;
+        }
+      }
+  }
 }

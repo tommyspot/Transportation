@@ -1,0 +1,95 @@
+﻿<div id="transportationSection" class="bootstrap view-page">
+  <div class="container">
+    <div class="row action-row">
+      <div class="col-sm-9">
+        <span>
+          <label for="numOfProductInputs">Hiển thị</label>
+          <select id="numOfProductInputs" class="form-control show-records-per-page" data-ng-model="viewModel.pageSize" data-ng-change="viewModel.initPagination()" convert-to-number>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="999999">All</option>
+          </select>
+        </span>
+      </div>
+      <div class="col-sm-3 search-text-box">
+        <div class="form-group has-feedback">
+          <input class="form-control" type="text" data-ng-model="viewModel.searchText"
+                 data-ng-model-options="{ debounce: 500 }" placeholder="Tìm kiếm nhanh" />
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+                data-ng-click="viewModel.clearSearchText()"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row transportation-row">
+      <span>
+        <label for="truckLicensePlate">Số xe</label>
+        <select ui-select2 id="truckLicensePlate" name="truckLicensePlate" class="form-control ui-select-2" data-ng-model="viewModel.truckLicensePlate">
+          <option value="">--Chọn số xe --</option>
+          <option data-ng-repeat="truck in viewModel.truckList" value="{{truck.licensePlate}}">{{truck.licensePlate}}</option>
+        </select>
+      </span>
+      <span>
+        <label for="fromDate">Ngày bán</label>
+        <datepicker class="date-picker transportation-datepicker" date-format="dd/MM/yyyy">
+          <input id="fromDate" class="form-control" name="fromDate" type="text" data-ng-model="viewModel.fromDate" placeholder="Từ ngày" autocomplete="off">
+        </datepicker>
+
+        <datepicker class="date-picker transportation-datepicker" date-format="dd/MM/yyyy">
+          <input id="toDate" class="form-control" name="toDate" type="text" data-ng-model="viewModel.toDate" placeholder="Đến ngày" autocomplete="off">
+        </datepicker>
+      </span>
+      <button class="btn btn-default button" data-ng-click="viewModel.fetchOrderTruckInfo()"
+              data-ng-disabled="viewModel.isSubmitting || !viewModel.fromDate || !viewModel.toDate || !viewModel.truckLicensePlate">
+        Tìm xe <i data-ng-if="viewModel.isSubmitting" class="fa fa-spinner fa-pulse"></i>
+      </button>
+    </div>
+
+    <div class="row margin-top-20">
+      <div class="col-sm-12">
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered">
+            <thead>
+              <tr>
+                <th class="checkbox-width align-center">
+                  <input id="checkAllOrders" type="checkbox" data-ng-model="viewModel.isCheckedAll"
+                         data-ng-change="viewModel.selectAllProductsOnPage()" />
+                </th>
+                <th class="text-center col-search"><span>Tên Garage</span><i class="fa fa-search"></i></th>
+                <th class="col-sm-2 text-center">Ngày bán</th>
+                <th class="col-sm-5 text-center">Mô tả</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-ng-if="viewModel.isLoading">
+                <td class="text-center" colspan="9">
+                  <i class="fa fa-spinner fa-spin"></i>
+                </td>
+              </tr>
+              <tr data-ng-if="!viewModel.isLoading" data-ng-repeat="orderViewModel in viewModel.orderListView">
+                <td class="text-center" data-ng-click="$event.stopPropagation();">
+                  <input id="order-{{$index}}" type="checkbox" data-ng-model="orderViewModel.isChecked" />
+                </td>
+                <td>{{::orderViewModel.customerName}}</td>
+                <td class="text-center">{{::orderViewModel.date}}</td>
+                <td>
+                  <ul>
+                    <li data-ng-repeat="note in orderViewModel.notes">
+                      {{::note}}
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <custom-pagination data-ng-if="viewModel.orderListView.length > 0"
+                       num-of-pages="viewModel.numOfPages"
+                       current-page="viewModel.currentPage" />
+
+  </div>
+</div>

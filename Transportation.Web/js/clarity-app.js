@@ -136,6 +136,7 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
     controller: 'EmployeeManagementController',
     access: 'authorized'
   })
+
   // QUYET TOAN
   //.when('/ql-toa-hang/quyet-toan', {
   //  templateUrl: '/html/toahang/quyettoan/quyet-toan.html' + '?v=' + VERSION_NUMBER,
@@ -153,6 +154,7 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
   //  access: 'authorized'
   //})
 
+  // BAO CAO
   .when('/ql-bao-cao', {
     templateUrl: '/html/baocao/bao-cao.html' + '?v=' + VERSION_NUMBER,
     controller: 'ReportManagementController',
@@ -179,7 +181,7 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
     controller: '',
     access: 'share'
   })
-
+  // GARAGE
   .when('/ql-garage', {
     templateUrl: '/html/garage/ql-garage.html' + '?v=' + VERSION_NUMBER,
     controller: 'MainController',
@@ -264,7 +266,12 @@ var clarityApp = angular.module('clarityApp', ['ngCookies', 'ngRoute', 'ui.boots
     controller: 'ProductInfoManagementController',
     access: 'authorized'
   })
-
+  // THONG TIN PHUONG TIEN
+  .when('/ql-phuong-tien', {
+      templateUrl: '/html/phuongtien/phuong-tien.html' + '?v=' + VERSION_NUMBER,
+      controller: 'TransportationManagementController',
+      access: 'authorized'
+  })
   .otherwise({ redirectTo: '/' });
 });
 
@@ -466,6 +473,9 @@ clarityApp.run(function ($rootScope, $routeParams, $location, authenticationServ
             case '/ql-bao-cao':
               breadCrumb.name = 'Quản lý báo cáo';
               break;
+            case '/ql-phuong-tien':
+                breadCrumb.name = 'Thông tin phương tiện';
+                break;
             case '/ql-toa-hang/nhan-vien':
               breadCrumb.name = 'Nhân viên';
               break;
@@ -595,6 +605,7 @@ clarityApp.controller('ProductManagementController', Clarity.Controller.ProductM
 clarityApp.controller('OrderManagementController', Clarity.Controller.OrderManagementController);
 clarityApp.controller('InputOrderManagementController', Clarity.Controller.InputOrderManagementController);
 clarityApp.controller('ProductInfoManagementController', Clarity.Controller.ProductInfoManagementController);
+clarityApp.controller('TransportationManagementController', Clarity.Controller.TransportationManagementController);
 
 clarityApp.directive('actionButtonForm', Clarity.Directive.ActionButtonForm.Factory());
 clarityApp.directive('customPagination', Clarity.Directive.CustomPagination.Factory());

@@ -112,6 +112,7 @@
     <Content Include="font\font-awesome\css\font-awesome.min.css" />
     <Content Include="font\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="gulpfile.js" />
+    <Content Include="html\phuongtien\phuong-tien.html" />
     <Content Include="html\baocao\bao-cao.html" />
     <Content Include="html\garage\banhang\ban-hang-da-xoa.html" />
     <Content Include="html\garage\banhang\ban-hang-in.html" />
@@ -175,6 +176,7 @@
     <TypeScriptCompile Include="js\controllers\OrderManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\ProductInfoManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\ProductManagementController.ts" />
+    <TypeScriptCompile Include="js\controllers\TransportationManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\UserController.ts" />
     <TypeScriptCompile Include="js\controllers\ReportManagementController.ts" />
     <TypeScriptCompile Include="js\controllers\WagonSettlementManagementController.ts" />

@@ -17,6 +17,14 @@
         </div>
       </div>
 
+      <div class="manage-box qlpt-box" data-ng-if="viewModel.hasTransportationManagementPermission()"
+           data-ng-click="viewModel.goToTransportationManagement()">
+        <div class="wrapper-content">
+          <i class="fa fa-truck icon" aria-hidden="true"></i>
+          <h4>THÔNG TIN PHƯƠNG TIỆN</h4>
+        </div>
+      </div>
+
       <div class="manage-box qlbc-box" data-ng-if="viewModel.hasReportManagementPermission()"
            data-ng-click="viewModel.goToReportManagement()">
         <div class="wrapper-content">

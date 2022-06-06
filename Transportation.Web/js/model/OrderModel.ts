@@ -38,5 +38,6 @@ module Clarity.Model {
     public status: boolean;
     public unit: string;
     public isChecked: boolean;
+    public notes: string[];
   }
 }

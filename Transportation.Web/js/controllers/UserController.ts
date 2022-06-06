@@ -201,7 +201,7 @@ module Clarity.Controller {
     }
 
     getRoleName(role: number) {
-      const availableRoles = ['Admin', "Quản lý toa hàng", "Quản lý garage", "Quản lý báo cáo"];
+      const availableRoles = ['Admin', "Quản lý toa hàng", "Quản lý garage", "Quản lý báo cáo", "Thông tin phương tiện"];
       if (role >= availableRoles.length) return '';
       return availableRoles[role];
     }

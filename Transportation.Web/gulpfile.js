@@ -88,6 +88,7 @@ var config = {
 , 'js/controllers/OrderManagementController.js'
 , 'js/controllers/InputOrderManagementController.js'
 , 'js/controllers/ProductInfoManagementController.js'
+, 'js/controllers/TransportationManagementController.js'
 
 , 'js/directives/ActionButtonFormDirective.js'
 , 'js/directives/CustomPaginationDirective.js'

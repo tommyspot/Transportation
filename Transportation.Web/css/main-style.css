@@ -5356,6 +5356,8 @@ div.bootstrap {
       background-color: #2ecc71; }
     #ng-app #mainPage .manage-box.qldn-box, #ng-app #qlToaHangPage .manage-box.qldn-box, #ng-app #qlGarage .manage-box.qldn-box {
       background-color: #FF9800; }
+    #ng-app #mainPage .manage-box.qlpt-box, #ng-app #qlToaHangPage .manage-box.qlpt-box, #ng-app #qlGarage .manage-box.qlpt-box {
+      background-color: #2B5A74; }
     #ng-app #mainPage .qlbc-box.qlbc-box, #ng-app #qlToaHangPage .qlbc-box.qlbc-box, #ng-app #qlGarage .qlbc-box.qlbc-box {
       background-color: #27ae60; }
     #ng-app #mainPage .manage-box.sp-box, #ng-app #qlToaHangPage .manage-box.sp-box, #ng-app #qlGarage .manage-box.sp-box {
@@ -5604,3 +5606,35 @@ div.bootstrap {
       left: 4px;
       opacity: 0.7;
       font-size: 12px; }
+  #ng-app .transportation-row {
+    margin: 0;
+    text-align: center;
+    padding: 12px;
+    border: 1px solid #ddd; }
+    #ng-app .transportation-row label {
+      line-height: 34px;
+      margin-right: 4px;
+      margin-bottom: 0; }
+    #ng-app .transportation-row .transportation-datepicker {
+      width: 150px;
+      margin-right: 4px;
+      float: none;
+      display: inline-block; }
+      #ng-app .transportation-row .transportation-datepicker input {
+        display: inline-block;
+        width: 150px; }
+    #ng-app .transportation-row .ui-select-2 {
+      width: 200px;
+      display: inline-block;
+      margin-right: 8px;
+      text-align: left; }
+    #ng-app .transportation-row .button {
+      border: none;
+      background-color: #34495E;
+      height: 34px;
+      margin-top: 0 !important;
+      margin-left: 4px;
+      width: 90px;
+      color: white; }
+      #ng-app .transportation-row .button:hover {
+        opacity: 0.8; }

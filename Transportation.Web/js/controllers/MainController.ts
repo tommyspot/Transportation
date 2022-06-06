@@ -78,6 +78,10 @@ module Clarity.Controller {
             this.$location.path('/ql-garage/quan-ly');
         }
 
+        goToTransportationManagement() {
+          this.$location.path('/ql-phuong-tien');
+        }
+
         isAdminRole() {
           return this.authenticateService.getUserRole() == Enum.Role.Admin;
         }
@@ -92,6 +96,10 @@ module Clarity.Controller {
 
         hasReportManagementPermission() {
           return this.isAdminRole() || this.authenticateService.getUserRole() == Enum.Role.ReportManagement;
+        }
+
+        hasTransportationManagementPermission() {
+          return this.isAdminRole() || this.authenticateService.getUserRole() == Enum.Role.TransportationManagement;
         }
     }
 }
