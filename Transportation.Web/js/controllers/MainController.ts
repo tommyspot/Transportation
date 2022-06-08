@@ -101,5 +101,9 @@ module Clarity.Controller {
         hasTransportationManagementPermission() {
           return this.isAdminRole() || this.authenticateService.getUserRole() == Enum.Role.TransportationManagement;
         }
+
+        hasUserManagementPermission() {
+          return this.authenticateService.getUserRole() != Enum.Role.TransportationManagement;
+        }
     }
 }

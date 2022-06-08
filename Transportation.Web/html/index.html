@@ -33,7 +33,8 @@
         </div>
       </div>
 
-      <div class="manage-box qldn-box" data-ng-click="viewModel.goToUserManagement()">
+      <div class="manage-box qldn-box" data-ng-if="viewModel.hasUserManagementPermission()"
+           data-ng-click="viewModel.goToUserManagement()">
         <div class="wrapper-content">
           <span class="glyphicon glyphicon-user icon" aria-hidden="true"></span>
           <h4>QUẢN LÝ ĐĂNG NHẬP</h4>
