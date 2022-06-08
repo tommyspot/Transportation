@@ -24,14 +24,14 @@
 
     <div class="row transportation-row">
       <span>
-        <label for="truckLicensePlate">Số xe</label>
-        <select ui-select2 id="truckLicensePlate" name="truckLicensePlate" class="form-control ui-select-2" data-ng-model="viewModel.truckLicensePlate">
+        <label for="truckId">Số xe</label>
+        <select ui-select2 id="truckId" name="truckId" class="form-control ui-select-2" data-ng-model="viewModel.truckId">
           <option value="">--Chọn số xe --</option>
-          <option data-ng-repeat="truck in viewModel.truckList" value="{{truck.licensePlate}}">{{truck.licensePlate}}</option>
+          <option data-ng-repeat="truck in viewModel.truckList" value="{{truck.id}}">{{truck.licensePlate}}</option>
         </select>
       </span>
       <span>
-        <label for="fromDate">Ngày bán</label>
+        <label for="fromDate">Ngày</label>
         <datepicker class="date-picker transportation-datepicker" date-format="dd/MM/yyyy">
           <input id="fromDate" class="form-control" name="fromDate" type="text" data-ng-model="viewModel.fromDate" placeholder="Từ ngày" autocomplete="off">
         </datepicker>
@@ -41,12 +41,46 @@
         </datepicker>
       </span>
       <button class="btn btn-default button" data-ng-click="viewModel.fetchOrderTruckInfo()"
-              data-ng-disabled="viewModel.isSubmitting || !viewModel.fromDate || !viewModel.toDate || !viewModel.truckLicensePlate">
+              data-ng-disabled="viewModel.isSubmitting || !viewModel.fromDate || !viewModel.toDate || !viewModel.truckId">
         Tìm xe <i data-ng-if="viewModel.isSubmitting" class="fa fa-spinner fa-pulse"></i>
       </button>
     </div>
 
-    <div class="row margin-top-20">
+    <div class="row margin-top-20" data-ng-if="!!viewModel.currentTruck">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-sm-4">
+            <p><span class="bold-text">Nhãn hiệu:</span> <span>{{::viewModel.currentTruck.brand}}</span></p>
+          </div>
+          <div class="col-sm-4">
+            <p><span class="bold-text">Năm sản xuất:</span> <span>{{::viewModel.currentTruck.yearOfManufacture}}</span></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <p><span class="bold-text">Số khung:</span> <span>{{::viewModel.currentTruck.vin}}</span></p>
+          </div>
+          <div class="col-sm-4">
+            <p><span class="bold-text">Số máy:</span> <span>{{viewModel.currentTruck.engineNo}}</span></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <p><span class="bold-text">Ngày đăng kiểm:</span> <span>{{::viewModel.currentTruck.checkDate}}</span></p>
+          </div>
+          <div class="col-sm-4">
+            <p><span class="bold-text">Bảo hiểm đến:</span> <span>{{viewModel.currentTruck.insuranceDate}}</span></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <p><span class="bold-text">Tải trọng:</span> <span>{{::viewModel.currentTruck.weight}} tấn</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row margin-top-20" data-ng-if="!!viewModel.currentTruck">
       <div class="col-sm-12">
         <div class="table-responsive">
           <table class="table table-hover table-bordered">
@@ -56,9 +90,9 @@
                   <input id="checkAllOrders" type="checkbox" data-ng-model="viewModel.isCheckedAll"
                          data-ng-change="viewModel.selectAllProductsOnPage()" />
                 </th>
-                <th class="text-center col-search"><span>Tên Garage</span><i class="fa fa-search"></i></th>
-                <th class="col-sm-2 text-center">Ngày bán</th>
-                <th class="col-sm-5 text-center">Mô tả</th>
+                <th class="text-center">Tên Garage</th>
+                <th class="col-sm-2 text-center">Ngày</th>
+                <th class="col-sm-5 text-center col-search"><span>Mô tả</span><i class="fa fa-search"></i></th>
               </tr>
             </thead>
             <tbody>

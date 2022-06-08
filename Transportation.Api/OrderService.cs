@@ -150,7 +150,7 @@ namespace Transportation.Api
 
             var orders = ClarityDB.Instance.Orders
                 .Where(x => x.Status == true)
-                .Where(x => String.IsNullOrEmpty(search) || x.CustomerName.IndexOf(search) > -1)
+                .Where(x => String.IsNullOrEmpty(search) || x.Note.IndexOf(search) > -1)
                 .Where(x => x.LicensePlate == truckLicensePlate)
                 .ToList()
                 .Where(x => isDateValid(x.Date, fromDate, toDate))
@@ -172,7 +172,7 @@ namespace Transportation.Api
             int size = Int32.Parse(pageSize);
             var allRecords = ClarityDB.Instance.Orders
                 .Where(x => x.Status == true)
-                .Where(x => String.IsNullOrEmpty(search) || x.CustomerName.IndexOf(search) > -1)
+                .Where(x => String.IsNullOrEmpty(search) || x.Note.IndexOf(search) > -1)
                 .Where(x => x.LicensePlate == truckLicensePlate)
                 .ToList()
                 .Where(x => isDateValid(x.Date, fromDate, toDate))

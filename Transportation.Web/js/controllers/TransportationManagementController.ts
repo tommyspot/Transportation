@@ -19,6 +19,7 @@ module Clarity.Controller {
     public currentOrder: Model.OrderModel;
     public orderList: Array<Model.OrderModel>;
     public orderListView: Array<Model.OrderViewModel>;
+    public currentTruck: Model.TruckModel;
 
     public numOfPages: number;
     public currentPage: number;
@@ -27,7 +28,7 @@ module Clarity.Controller {
     public isLoading: boolean;
     public searchText: string;
 
-    public truckLicensePlate: string;
+    public truckId: number;
     public fromDate: string;
     public toDate: string;
     public isSubmitting: boolean;
@@ -50,6 +51,8 @@ module Clarity.Controller {
       this.currentPage = 0;
       this.pageSize = 10;
       this.searchText = '';
+      this.fromDate = '01/01/2020',
+      this.toDate = this.mainHelper.formatDateTimeDDMMYYYY(new Date());
       this.initTransportation();
 
       $scope.$watch('viewModel.searchText', (newValue, oldValue) => {
@@ -85,15 +88,21 @@ module Clarity.Controller {
       }, null);
     }
 
+    fetchTruckDetail() {
+      this.truckService.getById(this.truckId, (data: Model.TruckModel) => {
+        this.currentTruck = data;
+      }, null);
+    }
+
     fetchOrderListPerPage() {
-      if (!this.truckLicensePlate || !this.fromDate || !this.toDate)
+      if (!this.truckId || !this.fromDate || !this.toDate)
         return;
       this.isLoading = true;
       this.orderService.getTruckInfoPerPage(
         this.currentPage,
         this.pageSize,
         this.searchText,
-        this.truckLicensePlate,
+        this.getTruckLicensePlate(),
         this.fromDate,
         this.toDate,
         (results: Array<Model.OrderModel>) => {
@@ -102,12 +111,12 @@ module Clarity.Controller {
     }
 
     fetchNumOfPages() {
-      if (!this.truckLicensePlate || !this.fromDate || !this.toDate)
+      if (!this.truckId || !this.fromDate || !this.toDate)
         return;
       this.orderService.getTruckInfoNumOfPages(
         this.pageSize,
         this.searchText,
-        this.truckLicensePlate,
+        this.getTruckLicensePlate(),
         this.fromDate,
         this.toDate,
         (results: number) => {
@@ -144,7 +153,15 @@ module Clarity.Controller {
 
     fetchOrderTruckInfo() {
       this.isSubmitting = true;
+      this.fetchTruckDetail();
       this.initOrderList();
     };
+
+    getTruckLicensePlate() {
+      if (!this.truckList || !this.truckId) return '';
+      const selectedTrucks = this.truckList.filter(({ id }) => id == this.truckId);
+      if (!selectedTrucks[0]) return '';
+      return selectedTrucks[0].licensePlate;
+    }
   }
 }
