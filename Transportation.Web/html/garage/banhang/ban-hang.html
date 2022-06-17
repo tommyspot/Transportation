@@ -40,11 +40,11 @@
       <div class="col-sm-12">
         <label for="fromDate">Báo cáo</label>
         <datepicker class="date-picker garage-report-datepicker" date-format="dd/MM/yyyy">
-          <input id="fromDate" class="form-control" name="fromDate" type="text" data-ng-model="viewModel.fromDate" placeholder="Từ ngày">
+          <input id="fromDate" class="form-control" name="fromDate" type="text" data-ng-model="viewModel.fromDate" placeholder="Từ ngày" autocomplete="off">
         </datepicker>
 
         <datepicker class="date-picker garage-report-datepicker" date-format="dd/MM/yyyy">
-          <input id="toDate" class="form-control" name="toDate" type="text" data-ng-model="viewModel.toDate" placeholder="Đến ngày">
+          <input id="toDate" class="form-control" name="toDate" type="text" data-ng-model="viewModel.toDate" placeholder="Đến ngày" autocomplete="off">
         </datepicker>
 
         <button class="btn btn-default report-btn" data-ng-click="viewModel.exportOrder()"
@@ -64,7 +64,7 @@
 									<input id="checkAllOrders" type="checkbox" data-ng-model="viewModel.isCheckedAll"
 												 data-ng-change="viewModel.selectAllProductsOnPage()" />
 								</th>
-								<th class="col-sm-2 text-center">Số xe</th>
+                <th class="col-sm-2 text-center col-search"><span>Số xe</span><i class="fa fa-search"></i></th>
 								<th class="text-center">Tên Garage</th>
                 <th class="col-sm-2 text-center">Thành tiền</th>
                 <th class="col-sm-1 text-center">Giảm giá</th>

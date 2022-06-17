@@ -6,6 +6,7 @@ namespace Transportation
     public class ProductInfo
     {
         public string Name { get; set; }
+        public double Price { get; set; }
         public double SumOfInput { get; set; }
         public double SumOfInputTotalAmount { get; set; }
         public double SumOfSale { get; set; }
@@ -19,6 +20,7 @@ namespace Transportation
         {
             JObject json = new JObject();
             json["name"] = Name;
+            json["price"] = Price;
             json["sumOfInput"] = SumOfInput;
             json["sumOfInputTotalAmount"] = SumOfInputTotalAmount;
             json["sumOfSale"] = SumOfSale;
@@ -38,6 +40,7 @@ namespace Transportation
         public void ApplyJson(JObject json)
         {
             Name = json.Value<string>("name");
+            Price = json.Value<double>("price");
             SumOfInput = json.Value <double>("sumOfInput");
             SumOfInputTotalAmount = json.Value<double>("sumOfInputTotalAmount");
             SumOfSale = json.Value<double>("sumOfSale");

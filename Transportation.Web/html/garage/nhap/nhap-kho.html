@@ -32,7 +32,25 @@
       </div>
 		</div>
 
-		<div class="row">
+    <div class="row report-row">
+      <div class="col-sm-12">
+        <label for="fromDate">Báo cáo</label>
+        <datepicker class="date-picker garage-report-datepicker" date-format="dd/MM/yyyy">
+          <input id="fromDate" class="form-control" name="fromDate" type="text" data-ng-model="viewModel.fromDate" placeholder="Từ ngày" autocomplete="off">
+        </datepicker>
+
+        <datepicker class="date-picker garage-report-datepicker" date-format="dd/MM/yyyy">
+          <input id="toDate" class="form-control" name="toDate" type="text" data-ng-model="viewModel.toDate" placeholder="Đến ngày" autocomplete="off">
+        </datepicker>
+
+        <button class="btn btn-default report-btn" data-ng-click="viewModel.exportInputOrder()"
+                data-ng-disabled="!viewModel.fromDate || !viewModel.toDate">
+          Tải về <i data-ng-if="viewModel.isExportLoading" class="fa fa-spinner fa-pulse"></i>
+        </button>
+      </div>
+    </div>
+
+		<div class="row margin-top-20">
 			<div class="col-sm-12">
 				<div class="table-responsive">
 					<table class="table table-hover table-bordered">
@@ -42,7 +60,7 @@
 									<input id="checkAllProducts" type="checkbox" data-ng-model="viewModel.isCheckedAll"
 												 data-ng-change="viewModel.selectAllInputOrdersOnPage()" />
 								</th>
-								<th class="text-center">Tên nhà cung cấp</th>
+                <th class="text-center col-search"><span>Tên nhà cung cấp</span><i class="fa fa-search"></i></th>
                 <th class="col-sm-2 text-center">Số sản phẩm</th>
                 <th class="col-sm-2 text-center">Thành tiền</th>
                 <th class="col-sm-2 text-center">Ngày nhập hàng</th>

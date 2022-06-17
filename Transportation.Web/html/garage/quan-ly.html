@@ -11,11 +11,11 @@
 						<option value="999999">All</option>
 					</select>
 				</span>
-        <button type="button" class="btn btn-default" data-ng-click="viewModel.exportReport()">
+        <!--<button type="button" class="btn btn-default" data-ng-click="viewModel.exportReport()">
           <i class="fa fa-print" aria-hidden="true"></i>
           <span class="hidden-xs">In báo cáo</span>
           &nbsp;<i data-ng-if="viewModel.isExportLoading" class="fa fa-spinner fa-pulse"></i>
-        </button>
+        </button>-->
 			</div>
       <div class="col-sm-3 search-text-box">
         <div class="form-group has-feedback">
@@ -27,16 +27,35 @@
       </div>
 		</div>
 
-		<div class="row">
+    <div class="row report-row">
+      <div class="col-sm-12">
+        <label for="fromDate">Báo cáo</label>
+        <datepicker class="date-picker garage-report-datepicker" date-format="dd/MM/yyyy">
+          <input id="fromDate" class="form-control" name="fromDate" type="text" data-ng-model="viewModel.fromDate" placeholder="Từ ngày" autocomplete="off">
+        </datepicker>
+
+        <datepicker class="date-picker garage-report-datepicker" date-format="dd/MM/yyyy">
+          <input id="toDate" class="form-control" name="toDate" type="text" data-ng-model="viewModel.toDate" placeholder="Đến ngày" autocomplete="off">
+        </datepicker>
+
+        <button class="btn btn-default report-btn" data-ng-click="viewModel.exportProductInfo()"
+                data-ng-disabled="!viewModel.fromDate || !viewModel.toDate">
+          Tải về <i data-ng-if="viewModel.isExportLoading" class="fa fa-spinner fa-pulse"></i>
+        </button>
+      </div>
+    </div>
+
+		<div class="row margin-top-20">
 			<div class="col-sm-12">
 				<div class="table-responsive">
 					<table class="table table-hover table-bordered">
 						<thead>
 							<tr>
                 <th class="stt-width text-center">STT</th>
-								<th class="text-center pointer" data-ng-click="viewModel.orderBy('name')">Tên sản phẩm &nbsp;
-                  <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'name'" aria-hidden="true"
-                     data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}" ></i>
+                <th class="text-center col-search pointer" data-ng-click="viewModel.orderBy('name')">
+                  <span>Tên sản phẩm &nbsp;</span><i class="fa fa-search"></i>
+                  <i class="fa" data-ng-if="viewModel.sortingCurrentPropertyName === 'name'" aria-hidden="true"
+                     data-ng-class="{'fa-sort-asc sort-asc-ico': !viewModel.sortingIsReverse, 'fa-sort-desc sort-desc-ico': viewModel.sortingIsReverse}"></i>
                 </th>
                 <th class="main-width-column text-center pointer" data-ng-click="viewModel.orderBy('sumOfInput')">SL nhập &nbsp;
                   <i class="fa " data-ng-if="viewModel.sortingCurrentPropertyName === 'sumOfInput'" aria-hidden="true"

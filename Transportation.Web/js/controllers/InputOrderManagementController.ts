@@ -11,11 +11,12 @@ module Clarity.Controller {
   const formatSuffix = 'Formatted';
 
   export class InputOrderManagementController {
-    public currentInputOrder: Model.InputOrderModel;
     public inputOrderService: service.InputOrderService;
     public productService: service.ProductService;
+    public exportService: service.ExportService;
     public mainHelper: helper.MainHelper;
 
+    public currentInputOrder: Model.InputOrderModel;
     public inputOrderList: Array<Model.InputOrderModel>;
     public inputOrderListView: Array<Model.InputOrderViewModel>;
     public productList: Array<Model.ProductModel>;
@@ -29,6 +30,9 @@ module Clarity.Controller {
     public todayFormat: string;
     public searchText: string;
     public isSubmitting: boolean;
+    public fromDate: string;
+    public toDate: string;
+    public isExportLoading: boolean;
 
     constructor(private $scope,
       private $rootScope: IRootScope,
@@ -39,6 +43,7 @@ module Clarity.Controller {
       private $cookieStore: ng.ICookieStoreService,
       private $routeParams: any) {
 
+      this.exportService = new service.ExportService($http);
       this.mainHelper = new helper.MainHelper($http, $cookieStore, $filter);
       this.inputOrderService = new service.InputOrderService($http);
       this.productService = new service.ProductService($http);
@@ -242,6 +247,22 @@ module Clarity.Controller {
     hasSelectedInputOrder() {
       if (!this.inputOrderListView) return false;
       return this.inputOrderListView.some(wagon => wagon.isChecked);
+    }
+
+    exportInputOrder() {
+      this.isExportLoading = true;
+      let jsonObject = {
+        type: Model.ExportType.GarageInputOrder,
+        fromDate: this.fromDate,
+        toDate: this.toDate
+      }
+
+      this.exportService.exportToExcel(jsonObject, (data) => {
+        this.isExportLoading = false;
+        window.location.href = '/output/' + data['fileName'];
+      }, () => {
+        this.isExportLoading = false;
+      });
     }
 
   }

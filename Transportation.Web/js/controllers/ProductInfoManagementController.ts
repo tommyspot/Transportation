@@ -24,6 +24,8 @@ module Clarity.Controller {
     public isLoading: boolean;
     public isExportLoading: boolean;
     public searchText: string;
+    public fromDate: string;
+    public toDate: string;
 
     public sortingCurrentPropertyName: string;
     public sortingIsReverse: boolean;
@@ -132,6 +134,22 @@ module Clarity.Controller {
       if (this.searchText != '') {
         this.searchText = '';
       }
+    }
+
+    exportProductInfo() {
+      this.isExportLoading = true;
+      let jsonObject = {
+        type: Model.ExportType.GarageProductInfoOrder,
+        fromDate: this.fromDate,
+        toDate: this.toDate
+      }
+
+      this.exportService.exportToExcel(jsonObject, (data) => {
+        this.isExportLoading = false;
+        window.location.href = '/output/' + data['fileName'];
+      }, () => {
+        this.isExportLoading = false;
+      });
     }
 
 	}

@@ -70,6 +70,20 @@ namespace Transportation.Api
                     dt = BuildDataTableForGarageOrder(fromDate, toDate);
                     fileName = "Baocao_Garage_DonHang_" + DateTime.Now.ToString(formatStringDate);
                 }
+                else if (json.Value<int>("type") == (int)ExportType.GarageInputOrder)
+                {
+                    DateTime fromDate = DateTime.ParseExact(json.Value<string>("fromDate"), formatDate, CultureInfo.InvariantCulture);
+                    DateTime toDate = DateTime.ParseExact(json.Value<string>("toDate"), formatDate, CultureInfo.InvariantCulture);
+                    dt = BuildDataTableForGarageInputOrder(fromDate, toDate);
+                    fileName = "Baocao_Garage_NhapKho_" + DateTime.Now.ToString(formatStringDate);
+                }
+                else if (json.Value<int>("type") == (int)ExportType.GarageProductInfoOrder)
+                {
+                    DateTime fromDate = DateTime.ParseExact(json.Value<string>("fromDate"), formatDate, CultureInfo.InvariantCulture);
+                    DateTime toDate = DateTime.ParseExact(json.Value<string>("toDate"), formatDate, CultureInfo.InvariantCulture);
+                    dt = BuildDataTableForGarageProductInfoOrder(fromDate, toDate);
+                    fileName = "Baocao_Garage_SanPham_" + DateTime.Now.ToString(formatStringDate);
+                }
 
                 string fileNamePath = saveExcelFile(dt, fileName);
                 return new RestApiResult { Json = JObject.Parse(string.Format("{{ fileName: '{0}'}}", fileNamePath)) };
@@ -351,7 +365,7 @@ namespace Transportation.Api
         private DataTable BuildDataTableForGarageOrder(DateTime fromDate, DateTime toDate)
         {
             DataTable dt = new DataTable();
-            dt.TableName = "QuyetToan_" + DateTime.Now.ToString(formatStringDate);
+            dt.TableName = "BanHang_" + DateTime.Now.ToString(formatStringDate);
 
             //Add table headers going cell by cell.
             dt.Columns.Add("STT", typeof(int));
@@ -393,6 +407,130 @@ namespace Transportation.Api
             return dt;
         }
 
+        private DataTable BuildDataTableForGarageInputOrder(DateTime fromDate, DateTime toDate)
+        {
+            DataTable dt = new DataTable();
+            dt.TableName = "NhapKho_" + DateTime.Now.ToString(formatStringDate);
+
+            //Add table headers going cell by cell.
+            dt.Columns.Add("STT", typeof(int));
+            dt.Columns.Add("Tên garage", typeof(string));
+            dt.Columns.Add("Ngày nhập kho", typeof(string));
+            dt.Columns.Add("Tên sản phẩm", typeof(string));
+            dt.Columns.Add("Số lượng", typeof(double));
+            dt.Columns.Add("Giá nhập", typeof(double));
+            dt.Columns.Add("Thành tiền", typeof(double));
+            dt.Columns.Add("Giá bán", typeof(double));
+
+            // Filter data by from/to date
+            List<InputOrder> inputOrders = ClarityDB.Instance.InputOrders.OrderByDescending(x => x.ID).ToList();
+            List<InputOrder> filteredInputOrders = new List<InputOrder>();
+            foreach (InputOrder inputOrder in inputOrders)
+            {
+                if (!String.IsNullOrEmpty(inputOrder.Date))
+                {
+                    DateTime date = DateTime.ParseExact(inputOrder.Date, formatDate, CultureInfo.InvariantCulture);
+                    if (DateTime.Compare(date, fromDate) >= 0 && DateTime.Compare(date, toDate) <= 0)
+                    {
+                        filteredInputOrders.Add(inputOrder);
+                    }
+                }
+            }
+            // Bind data
+            int stt = 0;
+            foreach (var inputOrder in filteredInputOrders) {
+                List<ProductInput> products = ClarityDB.Instance.ProductInputs
+                    .Where(x => x.InputOrderID == inputOrder.ID)
+                    .OrderByDescending(x => x.ID)
+                    .ToList();
+                foreach (var product in products)
+                {
+                    stt++;
+                    dt.Rows.Add(new object[] { stt, inputOrder.Vendor, inputOrder.Date, product.Product.Name,
+                                           product.Quantity, product.InputPrice, product.Quantity * product.InputPrice, product.SalePrice});
+                }
+            }
+            return dt;
+        }
+        private DataTable BuildDataTableForGarageProductInfoOrder(DateTime fromDate, DateTime toDate)
+        {
+            DataTable dt = new DataTable();
+            dt.TableName = "SanPham_" + DateTime.Now.ToString(formatStringDate);
+
+            //Add table headers going cell by cell.
+            dt.Columns.Add("STT", typeof(int));
+            dt.Columns.Add("Tên sản phẩm", typeof(string));
+            dt.Columns.Add("Giá", typeof(double));
+            dt.Columns.Add("Số lượng bán", typeof(double));
+            dt.Columns.Add("Số lượng hiện tại", typeof(double));
+            dt.Columns.Add("Tổng giá trị bán", typeof(double));
+
+            // Filter data by from/to date
+            List<Order> orders = ClarityDB.Instance.Orders
+                .Where(x => x.Status)
+                .OrderByDescending(x => x.ID)
+                .ToList();
+            List<Order> filteredOrders = new List<Order>();
+            foreach (Order order in orders)
+            {
+                if (!String.IsNullOrEmpty(order.Date))
+                {
+                    DateTime date = DateTime.ParseExact(order.Date, formatDate, CultureInfo.InvariantCulture);
+                    if (DateTime.Compare(date, fromDate) >= 0 && DateTime.Compare(date, toDate) <= 0)
+                    {
+                        filteredOrders.Add(order);
+                    }
+                }
+            }
+            // Concat all orderDetails
+            var orderDetails = new List<OrderDetail>();
+            var distinctOrderDetails = new List<OrderDetail>();
+            foreach (var order in filteredOrders) {
+                foreach (var orderDetail in order.OrderDetails)
+                {
+                    orderDetails.Add(orderDetail);
+                    bool isExisted = distinctOrderDetails.Any(x => x.ProductID == orderDetail.ProductID);
+                    if (!isExisted)
+                    {
+                        distinctOrderDetails.Add(orderDetail);
+                    }
+                }
+            }
+            // Calculate sum of quantity vs SaleTotalAmount
+            var groupedOrderDetails = orderDetails
+                .GroupBy(x => x.ProductID)
+                .Select(x => new {
+                    ProductID = x.Key,
+                    SumOfQuantity = x.Sum(q => q.Quantity),
+                    SumOfSaleTotalAmount = x.Sum(q => q.Quantity * q.Price),
+                });
+            // Process data
+            var productInfoList = new List<ProductInfo>();
+            foreach (var orderDetail in distinctOrderDetails)
+            {
+                Product product = ClarityDB.Instance.Products.Where(x => x.ID == orderDetail.ProductID).FirstOrDefault();
+                ProductInfo productInfo = new ProductInfo();
+                productInfo.Name = product.Name;
+                productInfo.Price = product.Price;
+                productInfo.SumOfSale = groupedOrderDetails.Any(x => x.ProductID == orderDetail.ProductID) ?
+                    groupedOrderDetails.Where(x => x.ProductID == orderDetail.ProductID).FirstOrDefault().SumOfQuantity : 0;
+                productInfo.SumOfSaleTotalAmount = groupedOrderDetails.Any(x => x.ProductID == orderDetail.ProductID) ?
+                    groupedOrderDetails.Where(x => x.ProductID == orderDetail.ProductID).FirstOrDefault().SumOfSaleTotalAmount : 0;
+                productInfo.NumOfRemain = ClarityDB.Instance.Inventories.Any(x => x.ProductID == product.ID) ?
+                    ClarityDB.Instance.Inventories.Where(x => x.ProductID == product.ID).FirstOrDefault().Quantity : 0;
+                productInfoList.Add(productInfo);
+            }
+            // Bind data
+            int stt = 0;
+            foreach (var productInfo in productInfoList)
+            {
+                stt++;
+                dt.Rows.Add(new object[] { stt , productInfo.Name , productInfo.Price, productInfo.SumOfSale,
+                                           productInfo.NumOfRemain, productInfo.SumOfSaleTotalAmount });
+            }
+
+            return dt;
+        }
         private DataTable BuildDataTableForGarage(JArray jsonList)
         {
             DataTable dt = new DataTable();
