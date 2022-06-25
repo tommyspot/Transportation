@@ -39,7 +39,14 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="origin" class="col-sm-2 control-label">Giá</label>
+        <label for="origin" class="col-sm-2 control-label">Giá nhập</label>
+        <div class="col-sm-4">
+          <input class="form-control text-right" type="text" maxlength="15" data-ng-model="viewModel.currentProduct.inputPriceFormatted"
+                 data-ng-change="viewModel.formatCurrency(viewModel.currentProduct, 'inputPrice')" disabled />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="origin" class="col-sm-2 control-label">Giá bán</label>
         <div class="col-sm-4">
           <input class="form-control text-right" type="text" maxlength="15" data-ng-model="viewModel.currentProduct.priceFormatted"
                  data-ng-change="viewModel.formatCurrency(viewModel.currentProduct, 'price')" />

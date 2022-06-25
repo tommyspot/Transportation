@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json.Linq;
 
 namespace Transportation
@@ -10,6 +11,8 @@ namespace Transportation
         [Required]
         public string Name { get; set; }
         public string Origin { get; set; }
+        [NotMapped]
+        public long InputPrice { get; set; }
         public long Price { get; set; }
         public Product() {
         }
@@ -20,6 +23,7 @@ namespace Transportation
             json["id"] = ID;
             json["name"] = Name;
             json["origin"] = Origin;
+            json["inputPrice"] = InputPrice;
             json["price"] = Price;
             return json;
         }
@@ -36,6 +40,7 @@ namespace Transportation
             ID = json.Value<long>("id");
             Name = json.Value<string>("name");
             Origin = json.Value<string>("origin");
+            InputPrice = json.Value<long>("inputPrice");
             Price = json.Value<long>("price");
         }
     }

@@ -44,7 +44,8 @@
 								</th>
                 <th class="text-center col-search"><span>Tên sản phẩm</span><i class="fa fa-search"></i></th>
 								<th class="col-sm-3 text-center">Xuất xứ</th>
-                <th class="col-sm-3 text-center">Giá</th>
+                <th class="col-sm-2 text-center">Giá Nhập</th>
+                <th class="col-sm-2 text-center">Giá Bán</th>
                 <th class="edit-column-width text-center">Sửa</th>
                 <th class="detail-column-width text-center">Xem</th>
 							</tr>
@@ -61,6 +62,7 @@
 								</td>
 								<td>{{::product.name}}</td>
 								<td>{{::product.origin}}</td>
+                <td class="text-right">{{::product.inputPrice | currency: "" : 0}}</td>
                 <td class="text-right">{{::product.price | currency: "" : 0}}</td>
                 <td class="text-center edit-column" data-ng-click="viewModel.goToProductEditForm($event, product.id)">
                   <span class="glyphicon glyphicon-pencil"></span>

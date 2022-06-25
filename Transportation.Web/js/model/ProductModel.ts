@@ -8,6 +8,8 @@ module Clarity.Model {
     public isChecked: boolean;
     public price: number;
     public priceFormatted: string;
+    public inputPrice: number;
+    public inputPriceFormatted: string;
   }
 
   export class ProductInfoModel extends Model.BaseModel {

@@ -24,7 +24,15 @@
       </div>
       <div class="row">
         <div class="col-sm-2">
-          <p class="bold-text">Giá:</p>
+          <p class="bold-text">Giá nhập:</p>
+        </div>
+        <div class="col-sm-10">
+          <p>{{::viewModel.currentProduct.inputPrice  | currency: "" : 0}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <p class="bold-text">Giá bán:</p>
         </div>
         <div class="col-sm-10">
           <p>{{::viewModel.currentProduct.price  | currency: "" : 0}}</p>

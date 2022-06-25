@@ -102,6 +102,7 @@ module Clarity.Controller {
         this.productService.getById(productId, (data) => {
           this.currentProduct = data;
           this.currentProduct.priceFormatted = this.mainHelper.formatCurrency(data.price);
+          this.currentProduct.inputPriceFormatted = this.mainHelper.formatCurrency(data.inputPrice);
         }, null);
       }
     }

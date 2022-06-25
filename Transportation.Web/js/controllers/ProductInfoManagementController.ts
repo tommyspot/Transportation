@@ -7,7 +7,8 @@ declare var VERSION_NUMBER;
 
 module Clarity.Controller {
 	import service = Clarity.Service;
-	import helper = Clarity.Helper;
+  import helper = Clarity.Helper;
+  const MAX_PAGE_SIZE = 999999;
 
   export class ProductInfoManagementController {
     public mainHelper: helper.MainHelper;
@@ -23,6 +24,7 @@ module Clarity.Controller {
     public pageSize: number;
     public isLoading: boolean;
     public isExportLoading: boolean;
+    public isFullExportLoading: boolean;
     public searchText: string;
     public fromDate: string;
     public toDate: string;
@@ -96,7 +98,12 @@ module Clarity.Controller {
     }
 
     mapToProductInfoListView() {
-      this.productInfoListView = this.productInfoList.map((productInfo: Model.ProductInfoModel) => {
+      this.productInfoListView = this.mapProductInfoList(this.productInfoList);
+    }
+
+    mapProductInfoList(productInfoList: Array<Model.ProductInfoModel>) {
+      if (!productInfoList) return [];
+      return productInfoList.map((productInfo: Model.ProductInfoModel) => {
         const productInfoView = new Model.ProductInfoViewModel();
         productInfoView.id = productInfo.id;
         productInfoView.name = productInfo.name;
@@ -120,14 +127,15 @@ module Clarity.Controller {
     }
 
     exportReport() {
-      this.isExportLoading = true;
-      this.exportService.exportGarageToExcel(this.productInfoList, (data) => {
-        this.isExportLoading = false;
-        window.location.href = '/output/' + data['fileName'];
-        //this.exportService.deleteExcelFile(data['fileName'].split('/')[0], () => { }, null);
-      }, () => {
-        this.isExportLoading = false;
-      });
+      this.isFullExportLoading = true;
+      this.productService.getProductInfoPerPage(0, MAX_PAGE_SIZE, '', (results: Array<Model.ProductInfoModel>) => {
+        const productInfoList = this.$filter('orderBy')(results, 'name', false);
+        this.exportService.exportGarageToExcel(productInfoList, (data) => {
+          this.isFullExportLoading = false;
+          window.location.href = '/output/' + data['fileName'];
+          //this.exportService.deleteExcelFile(data['fileName'].split('/')[0], () => { }, null);
+        }, null);
+      }, null);
     }
 
     clearSearchText() {
@@ -147,9 +155,7 @@ module Clarity.Controller {
       this.exportService.exportToExcel(jsonObject, (data) => {
         this.isExportLoading = false;
         window.location.href = '/output/' + data['fileName'];
-      }, () => {
-        this.isExportLoading = false;
-      });
+      }, null);
     }
 
 	}

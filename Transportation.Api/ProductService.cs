@@ -111,6 +111,7 @@ namespace Transportation.Api
                 return new RestApiResult { StatusCode = HttpStatusCode.NotFound };
             }
 
+            product.InputPrice = GetLatestInputPrice(product);
             return new RestApiResult { StatusCode = HttpStatusCode.OK, Json = product.ToJson() };
         }
 
@@ -169,13 +170,27 @@ namespace Transportation.Api
             ClarityDB.Instance.SaveChanges();
         }
 
+        private JObject BuildJsonProduct(Product product)
+        {
+            product.InputPrice = GetLatestInputPrice(product);
+            return product.ToJson();
+        }
+        private long GetLatestInputPrice(Product product)
+        {
+            var inputProduct = ClarityDB.Instance.ProductInputs
+                .OrderByDescending(x => x.ID)
+                .FirstOrDefault(x => x.ProductID == product.ID);
+            return inputProduct != null ? inputProduct.InputPrice : 0;
+        }
+
         private JArray BuildJsonArray(IEnumerable<Product> products)
         {
             JArray array = new JArray();
 
             foreach (Product product in products)
             {
-                array.Add(product.ToJson());
+                JObject json = BuildJsonProduct(product);
+                array.Add(json);
             }
 
             return array;
